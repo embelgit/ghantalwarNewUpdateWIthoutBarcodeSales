@@ -1,0 +1,578 @@
+@charset "ISO-8859-1";
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+	background: #f0f0f0;
+	width: 100%;
+	overflow-x: hidden;
+}
+
+.miscellaneous {
+	position: relative;
+	margin-top: 25px;
+	left: 1%;
+}
+
+.miscellaneous input {
+	padding: 10px 10px;
+	margin-bottom: 30px;
+	width: 100%;
+	box-sizing: border-box;
+	box-shadow: none;
+	outline: none;
+	/* border: none; */
+	border: 1px solid #000;
+	/* border-bottom: 2px solid #a92626; */
+}
+
+.miscellaneous label {
+	position: absolute;
+	top: -23px;
+	left: 18px;
+	padding: 10px 0;
+	font-size: 16px;
+	color: #000;
+	pointer-events: none;
+	transition: .5s;
+	background-color: #f0f0f0;
+}
+
+.invoice_label_up label {
+	position: absolute;
+	top: 15px;
+	left: 20px;
+	padding: 0;
+	transition: 0.3s;
+}
+
+.invoice_label_up input:focus ~ label, .invoice_label_up input:valid ~
+	label {
+	top: -12px;
+	left: 25px;
+	font-size: 12px;
+	padding: 2px 4px;
+	background-color: #f0f0f0;
+	font-size: 16px;
+}
+
+.miscellaneous input[type="text"] {
+	border-radius: 9px;
+	border-color: #21409c;
+	background-color: #f0f0f0;
+}
+
+.miscellaneous input {
+	border-radius: 9px;
+	border-color: #21409c;
+	background-color: #f0f0f0;
+	padding: 13px;
+}
+
+.miscellaneous select {
+	border-radius: 9px;
+	border-color: #21409c;
+	background-color: #f0f0f0;
+	padding: 13px;
+}
+
+.miscellaneous select {
+	padding: 10px 10px;
+	margin-bottom: 30px;
+	width: 100%;
+	box-sizing: border-box;
+	box-shadow: none;
+	outline: none;
+	font-size: 16px;
+	font-weight: 700;
+	/* border: none; */
+
+	/* border-bottom: 2px solid #a92626; */
+}
+
+.invoice_grid {
+	margin-left: -32%;
+	margin-bottom: 5%;
+	margin-top: 0px;
+	width: 141%;
+}
+
+.invoice_grid1 {
+	margin-left: -30%;
+	margin-bottom: 5%;
+	margin-top: 0px;
+	width: 136%;
+}
+
+.invoice_grid_1 {
+	margin-left: -290px;
+	padding-top: 18px;
+	width: max-content;
+}
+
+.invoice_button input {
+	padding-bottom: 30px;
+	width: auto;
+}
+
+.miscellaneous textarea {
+	border-radius: 9px;
+	border-color: #21409c;
+	background-color: #f0f0f0;
+	padding: 13px;
+}
+
+.invoice_button_allPaymentWithLeftTabs input[type="button"] {
+	width: 124px;
+	padding-bottom: 10px;
+	margin-top: 28px;
+}
+
+.invoice_button_allPaymentWithLeftTabs input[type="reset"] {
+	width: 124px;
+	padding-bottom: 10px;
+	margin-top: 28px;
+}
+.invoice_button_allPaymentWithLeftTabs {
+    margin-left: 205px;
+}
+
+.bar {
+	position: relative;
+	display: block;
+}
+
+.bar:after, .bar:before {
+	content: "";
+	width: 0;
+	height: 2px;
+	bottom: 29px;
+	background: green;
+	position: absolute;
+	transition: all ease 0.2s;
+	-webkit-transition: all ease 0.2s;
+	-moz-transition: all ease 0.2s;
+}
+
+.bar:before {
+	left: 48%;
+}
+
+.bar:after {
+	right: 48%;
+}
+
+input:focus ~ .bar:before, input:focus ~ .bar:after {
+	width: 50%;
+}
+
+.col-md-offset-2 {
+	margin-left: 18.666667%;
+}
+
+.col-md-offset-3 {
+	margin-left: 24%;
+}
+
+#newtaxbutn {
+	padding-left: 18%;
+}
+
+.col-md-offset-4 {
+	margin-left: 18.66667%;
+}
+
+.col-lg-2.col-md-4.col-xs-4.col-xl-4 {
+	width: auto;
+}
+
+#barcodeh2 {
+	margin-left: 11%;
+	width: auto;
+	margin-top: 12px;
+}
+
+.col-lg-offset-3 {
+	margin-left: 23%;
+}
+
+.col-lg-2 {
+	margin-right: 5%;
+}
+
+#setdiscounth2 {
+	margin-left: 23%;
+}
+.invoice_button{
+	    margin-left: 20.6667%;
+}
+.col-md-5 {
+    width: 43.666667%;
+}
+.col-lg-offset-2 {
+    margin-left: 2.66667%;
+}
+.col-md-offset-6 {
+    margin-left: 22%;
+}
+#editbillh2 {
+    margin-top: 17px;
+    margin-left: 217px;
+}
+
+#editbillcol{
+	width: 104%;
+}
+#editbilltab {
+    margin-left: 29%;
+}
+.col-md-2.col-md-offset-2.align {
+    margin-top: 33;
+    margin-left: 15%;
+}
+.col-md-6.col-sm-12.col-xs-12.col-xl-4.col-lg-4.col-lg-offset-3 {
+    margin-left: 148px;
+}
+#transid{
+	width:40%;
+}
+#categorybaseinvent {
+    width: 40%;
+    margin-left: 300px;
+}
+#invoicebaseinvent{
+	width: 40%;
+}
+.invoice_button_categorybasedinventory {
+    margin-left: 376px;
+}
+#invoicereprint {
+    margin-top: 76px;
+}
+#invoicereprintcol {
+    width: 40%;
+    margin-left: 226px;
+}
+.editcustmerdetails {
+    margin-left: 16%;
+}
+	#salereportcont{
+	width: 90%;
+    margin-left: 6%;
+}
+@media only screen and (max-width: 1180px) {
+	.invoice_grid {
+		margin-left: -26%;
+		margin-bottom: 5%;
+		margin-top: 0px;
+		width: 133%;
+	}
+	#newtaxbutn {
+    padding-left: 26%;
+}
+	.col-md-offset-2 {
+		margin-left:-19.333333%;
+	}
+	.col-md-offset-3 {
+		margin-left: 25%;
+	}
+	.col-md-offset-4 {
+		margin-left: 21.66667%;
+	}
+	.col-lg-offset-2 {
+		margin-left: 10.66667%;
+	}
+	.col-lg-offset-3 {
+		margin-left: -20%;
+	}
+	.col-lg-2 {
+		margin-right: 0%;
+	}
+	#barcodeh2 {
+		margin-left: 11%;
+		width: auto;
+		margin-top: 12px;
+	}
+	#setdiscounth2 {
+		    margin-left: 22%;
+	}
+	.invoice_button{
+	margin-left: 24.6667%;
+}
+.col-md-5 {
+    width: 45.666667%;
+}
+	.col-md-2 {
+    margin-right: 3%;
+}
+.col-md-offset-6 {
+    margin-left: 23%;
+}
+#editbillh2 {
+    margin-top: 17px;
+    margin-left: 342px;
+}
+#editbillcol {
+    width: 104%;
+}
+#editbilltab {
+    margin-left: 24%;
+}
+.invoice_grid1 {
+    margin-left: -28%;
+    margin-bottom: 5%;
+    margin-top: 0px;
+    width: 136%;
+}
+.col-md-2.col-md-offset-2.align {
+    margin-top: 33;
+    margin-left: 24%;
+}
+#categorybaseinvent {
+    width: 40%;
+    margin-left: 274px;
+}
+.invoice_button_categorybasedinventory {
+    margin-left: 288px;
+}
+.col-lg-2.col-lg-offset-3 {
+    margin-left: 31%;
+}
+#invoicebaseinvent {
+    width: 40%;
+    margin-left: 81px;
+    margin-right: -80px;
+}
+.invoice_button_allPaymentWithLeftTabs {
+    margin-left: 174px;
+}
+#transid {
+    width: 40%;
+    margin-left: 170px;
+}
+.editcustmerdetails {
+    margin-left: 6%;
+}
+}
+
+@media only screen and (max-width: 991px) {
+	.invoice_grid {
+		margin-left: -33%;
+		margin-bottom: 5%;
+		margin-top: 0px;
+		width: 132%;
+	}
+	.invoice_grid1 {
+    margin-left: -32%;
+    margin-bottom: 5%;
+    margin-top: 0px;
+    width: 136%;
+}
+	#newtaxbutn {
+		padding-left: 16%;
+	}
+	.col-md-offset-2 {
+		margin-left: -36.666667%;
+	}
+	.col-md-offset-3 {
+		margin-left: 5%;
+	}
+	.col-md-offset-4 {
+		margin-left: 2.66667%;
+	}
+	.col-lg-offset-2 {
+		margin-left: 2.66667%;
+	}
+	.col-lg-offset-3 {
+		margin-left: -35%;
+	}
+	.col-md-2.control-label, .col-md-3 {
+		width: 21%;
+		/* position: absolute; */
+	}
+	#barcodeh2 {
+		margin-left: 8%;
+		width: auto;
+		margin-top: 20px;
+	}
+	.col-lg-2 {
+		margin-right: -4%;
+	}
+	#setdiscounth2 {
+		margin-left: 8.6667%;
+	}
+	.invoice_button{
+	margin-left: 11.6667%;
+}
+	.col-md-2 {
+    margin-right: -1%;
+}
+.col-md-offset-6 {
+    margin-left: 33%;
+}
+/* .col-md-2{
+	position:absolute;
+} */
+#editbillh2 {
+    margin-top: 22px;
+    margin-left: -3px;
+}
+#invoicebaseinvent {
+    width: 40%;
+    margin-left: 8px;
+    margin-right: -5px;
+}
+#categorybaseinvent {
+    width: 40%;
+    margin-left: 223px;
+}
+.invoice_button_categorybasedinventory {
+    margin-left: 265px;
+}
+#editbilltab {
+    margin-left: 28%;
+}
+.col-md-2.col-md-offset-2.align {
+    margin-top: 28px;
+    margin-left: 0%;
+}
+.invoice_button_allPaymentWithLeftTabs {
+    margin-left: 88px;
+}
+#transid {
+    width: 40%;
+    margin-left: 102px;
+}
+.editcustmerdetails {
+    margin-left: 6%;
+}
+}
+
+@media only screen and (max-width: 767px) {
+	.invoice_grid {
+		margin-left: -31%;
+		margin-bottom: 5%;
+		margin-top: 0px;
+		width: 132%;
+	}
+	#newtaxbutn {
+		padding-left: 14%;
+	}
+	.col-md-offset-2 {
+		margin-left: -21.666667%;
+	}
+	.col-md-offset-3 {
+    margin-left: -1%;
+    margin-top: 35px;
+}
+	.col-md-offset-4 {
+		margin-left: 5.66667%;
+		margin-top: 32px;
+	}
+	.col-md-2.control-label, .col-md-3 {
+		width: 23%;
+		/* position: absolute; */
+		margin-top: 3%;
+	}
+	.col-lg-offset-3 {
+		margin-left: -16%;
+	}
+	.col-lg-offset-2 {
+		margin-left: -5.33333%;
+	}
+
+	#barcodeh2 {
+		margin-left: 8%;
+		width: auto;
+		margin-top: 41px;
+	}
+	#setdiscounth2 {
+		    margin-left: 8.6667%;
+    margin-top: 36px;
+	}
+	.invoice_button{
+	    margin-left: 2.6667%;
+}
+/* .col-md-2 {
+    position: absolute;
+    margin-top: 30px;
+} */
+.col-md-offset-6 {
+    margin-left: 31%;
+}
+#editbillh2 {
+    margin-top: 47px;
+    margin-left: -3px;
+}
+#transid {
+    width: 51%;
+    margin-left: 93px;
+}
+#categorybaseinvent {
+    width: 59%;
+    margin-left: 259px;
+}
+.invoice_button_categorybasedinventory {
+    margin-left: 324px;
+}
+.invoice_grid1 {
+    margin-left: -32%;
+    margin-bottom: 5%;
+    margin-top: 0px;
+    width: 148%;
+}
+.invoice_button_allPaymentWithLeftTabs {
+    margin-left: 76px;
+}
+.col-md-2.col-md-offset-2.align {
+    margin-top: 49px;
+    margin-left: 5%;
+}
+#invoicebaseinvent {
+    width: 48%;
+    margin-left: 8px;
+    margin-right: -5px;
+}
+
+#invoicereprintcol {
+    width: 48%;
+}
+.editcustmerdetails {
+    margin-left: 2%;
+}
+}
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+	* {
+		margin: 0;
+		padding: 0;
+	}
+	col-md-6 {
+		width: 100%;
+	}
+	col-lg-6 {
+		width: 100%;
+	}
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+	body {
+		margin-top: 38px;
+	}
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+}
