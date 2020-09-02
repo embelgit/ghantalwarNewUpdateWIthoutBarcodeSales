@@ -531,6 +531,7 @@ public class SupplierDetailDao {
 					bean.setDiscount(Double.parseDouble(o[12].toString()));
 					bean.setRollsize(Double.parseDouble(o[13].toString()));
 					bean.setTotal(Double.parseDouble(o[6].toString()));
+					bean.setOriginalTotal(o[6].toString());
 					bean.setContactPerson(o[7].toString());
 					bean.setBarcodeNo(Long.parseLong(o[8].toString()));
 					bean.setOndate(o[9].toString());

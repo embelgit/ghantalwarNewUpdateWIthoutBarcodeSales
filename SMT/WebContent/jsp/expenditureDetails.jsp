@@ -84,40 +84,18 @@
 	
 		<!-- Value of 'name' attribute is used in customerDetails.js  -->
 		
-			<div class="row">
-			
-<!-- 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xl-2"></div> -->
-			<!-- <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 col-xl-1"></div> -->
-				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="expenditurecol" style="margin-top: 42px;">
-				
 						
-						<%
-							ExpenditureDetailsDao cdd = new ExpenditureDetailsDao();
-           						List cList =cdd.getAllExpenseNames();
-							%>
-						<input list="cat_drop" id="expenseName" class="" onchange="cheakForExpenditure()" required>
-						<datalist id="cat_drop">
-							<%
-					           for(int i=0;i<cList.size();i++)
-					           {
-					        	   ExpenditureDetailsBean cat=(ExpenditureDetailsBean)cList.get(i);
-							%>
-							<option data-value="<%=cat.getPkExpenseDetailsId()%>"
-								value="<%=cat.getExpenseName()%>">
-								<%
-				      			}
-				    		%>
-							
-						</datalist>
-						<span>Expenditure Name</span>
-						</div>
-			</div>			
 			
 			<div class="row">
 			
 <!-- 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xl-2"></div> -->
 			<!-- <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 col-xl-1"></div> -->
 				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="expenditurecol">
+				
+				<%
+							ExpenditureDetailsDao cdd = new ExpenditureDetailsDao();
+           						List cList =cdd.getAllExpenseNames();
+							%>
 						
 						<%
            					List eTList =cdd.getAllExpenseType();
@@ -136,6 +114,32 @@
 							
 						</datalist>
 						<span>Expenditure Type</span>
+						</div>
+			</div>
+			
+			<div class="row">
+			
+<!-- 			<div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-xl-2"></div> -->
+			<!-- <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 col-xl-1"></div> -->
+				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="expenditurecol">
+				
+						
+						
+						<input list="cat_drop" id="expenseName" class="" onchange="cheakForExpenditure()" required>
+						<datalist id="cat_drop">
+							<%
+					           for(int i=0;i<cList.size();i++)
+					           {
+					        	   ExpenditureDetailsBean cat=(ExpenditureDetailsBean)cList.get(i);
+							%>
+							<option data-value="<%=cat.getPkExpenseDetailsId()%>"
+								value="<%=cat.getExpenseName()%>">
+								<%
+				      			}
+				    		%>
+							
+						</datalist>
+						<span>Expenditure Name</span>
 						</div>
 			</div>
 			

@@ -243,15 +243,7 @@
 		
 		<div class="container" id="custdetal">
 			<div class="row">
-		 <div class="invoice_label_up">
-			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
-						<input id="disPercentage" name="disPercentage" type="text" autocomplete="off" required>
-						</datalist>
-			        	<label for="employeename">Discount (%)</label>
-			        	<div class="bar"></div>
-			        	
-				</div>
-				</div>
+
 		<div class="row">
 			<div class="col-md-4 col-lg-4"></div>
 			</div>
@@ -276,6 +268,16 @@
 				 	<div class="bar"></div>
 		   </div>
 		</div>
+		
+		<div class="invoice_label_up">
+			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+						<input id="disPercentage" name="disPercentage" type="text" autocomplete="off" required>
+						</datalist>
+			        	<label for="employeename">Discount (%)</label>
+			        	<div class="bar"></div>
+			        	
+				</div>
+				</div>
 					
 				
 			</div>
