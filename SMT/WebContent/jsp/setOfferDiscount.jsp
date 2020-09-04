@@ -271,7 +271,7 @@
 			
         <div class="invoice_label_up">
 		   <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
-				 <input id="toBarC" name="toBarC" type="text" autocomplete="off" required>
+				 <input id="toC" name="toBarC" type="text" autocomplete="off" required>
 				 <label for="middleName">Barcode No To<sup>*</sup></label>
 				 	<div class="bar"></div>
 		   </div>

@@ -837,7 +837,7 @@ position: fixed;
 										<div class="table-responsive" id="tables">
 											<table
 												class="table table-bordered table-striped table-condensed cf"
-												id="saleB2CGSTReport" class="display" style="border: 0.5px solid black;">
+												id="saleB2CGSTReport" class="display" style="border: 2px solid black; border-collapse: collapse;">
 												<thead>
 													<tr>
 														<th>Sr No</th>
@@ -924,7 +924,7 @@ position: fixed;
 						<div class="table-responsive" id="tables">
 							<table
 								class="table table-bordered table-striped table-condensed cf"
-								id="purchaseB2BGSTReport" class="display" style="border: 0.5px solid black;">
+								id="purchaseB2BGSTReport" class="display" style="border: 2px solid black; border-collapse: collapse;">
 								<thead>
 									<tr>
 										<th>Sr No</th>
