@@ -56,7 +56,7 @@ public class CategoryDao {
 		{
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
-			Query query = session.createQuery("from Category");
+			Query query = session.createQuery("from Category where activeYn='Y'");
 			list = query.list();
 		} catch (RuntimeException e) {
 			Log.error("Error in getAllMainCategories()", e);
@@ -101,7 +101,7 @@ public class CategoryDao {
 		try {
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
-			Query query = session.createQuery("from Category WHERE fkShopId = :fkShopId");
+			Query query = session.createQuery("from Category WHERE fkShopId = :fkShopId and activeYn='Y'");
 			query.setParameter("fkShopId", fkShopId);
 			list = query.list();
 		} catch (RuntimeException e) {
@@ -333,7 +333,7 @@ public class CategoryDao {
 			Long k = 0l;
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
-			Query query2 = session.createQuery("select categoryName, pkCategoryId from Category WHERE fkShopId = "+pkShopId);
+			Query query2 = session.createQuery("select categoryName, pkCategoryId from Category WHERE fkShopId = "+pkShopId+" and activeYn ='Y'");
 			List<Object[]> list = query2.list();
 			catList = new ArrayList<Category>(0);
 
