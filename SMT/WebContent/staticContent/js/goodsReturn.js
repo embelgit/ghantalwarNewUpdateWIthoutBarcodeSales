@@ -488,8 +488,8 @@ function getitems()
 
 								colNames : ["itemID", "Supplier<br>Name", "Bill<br>No.", "Date", "catId", "Category", "productId",
 											"Barcode", "Item<br>Name", "subCatId", "RollSize", "Size", "QTY", "Avl<br>QTY","Return<br>QTY", 
-											"Original<br>Buy<br>Price", "Returned<br>Buy<br>Price", "Discount", "GST", "IGST", "Return<br>Total", "Total", "Contact<br>Person",
-								             "Supplier Id", "Gross Total", "fkShopId"],
+											"Original<br>Buy<br>Price", "Returned<br>Buy<br>Price", "Discount", "GST", "IGST", "Return<br>Total",
+											"Total", "originalTotal", "Contact<br>Person", "Supplier Id", "Gross Total", "fkShopId"],
 								             autoheight: true,								             
 								             colModel : 
 								             [
@@ -630,9 +630,15 @@ function getitems()
 								            	 //formatter: 'integer',
 								             },
 								             {
+								            	 name : "originalTotal",
+								            	 width : 120,
+								            	 //formatter: 'integer',
+								            	 hidden : true,
+								             },
+								             {
 								            	 name : 'contactPerson',
 								            	 width : 160,
-								            	 hidden : true
+								            	 hidden : true,
 								             },
 								             {
 								            	 name : 'supplierId',
@@ -665,6 +671,8 @@ function getitems()
 								             {
 								            	 var rowId =$("#jqGrid").jqGrid('getGridParam','selrow');  
 								            	 var rowData = jQuery("#jqGrid").getRowData(rowId);
+								            	 var ids = jQuery("#jqGrid").jqGrid('getDataIDs');
+								            	 var count1 = jQuery("#jqGrid").jqGrid('getGridParam','records');
 								            	 var quantity = rowData['quantity'];
 								            	 var availquantity = rowData['availquantity'];
 								            	 var editQuantity = rowData['editQuantity'];
@@ -681,6 +689,7 @@ function getitems()
 								            	 var billNo = rowData['billNo'];
 								            	 var supplierName2 = rowData['supplierName2'];
 								            	 var grossTotal = rowData['grossTotal'];
+								            	 var originalTotal = rowData['originalTotal'];
 								            	 var totAmt = 0;
 								            	 var totalAmt = 0;
 								            	 var totAmt1 = 0;
@@ -695,12 +704,39 @@ function getitems()
 								            		 myAlert("Return Quantity Is Greater Than Availabel Quantity");
 								            		 
 								            		 var rtota = 0.00;
-								            		 var maiTota = total;
 								            		 var edit = 0;
+								            		 var totalGrossTotal = 0;
 							            		 	 $("#jqGrid").jqGrid("setCell", rowId, "returnTotal", rtota);
-						                    		 $("#jqGrid").jqGrid("setCell", rowId, "total", maiTota);
+						                    		 $("#jqGrid").jqGrid("setCell", rowId, "total", originalTotal);
 						                    		 $("#jqGrid").jqGrid("setCell", rowId, "editQuantity", edit);
 								            		 
+						                    		 for (var j = 0; j < count1; j++)
+													{
+					                    			 
+														var rowId = ids[j];
+														var rowData = jQuery("#jqGrid").getRowData(rowId);
+														var returnTotal = rowData['returnTotal'];
+														if(total == null || total == undefined || total == " " || total == "NaN")
+														{
+															total = 0;
+														}
+														
+														totalGrossTotal = +totalGrossTotal + +returnTotal;
+													}
+						                    		 
+						                    		// $("#jqGrid").jqGrid("setCell", rowId, "returnTotal", totalAmt1);
+									            	 
+									            	 var parseTotal=  $(this).jqGrid('getCol', 'returnTotal', false, 'sum');
+									            	 parseTotal = parseTotal.toFixed(2);
+									            	 $(this).jqGrid('footerData', 'set', { vat: "Total :" });
+									            	 $(this).jqGrid('footerData', 'set', { returnTotal: parseTotal});
+									            	 var parseTotal1=  $(this).jqGrid('getCol', 'total', false, 'sum');
+									            	 parseTotal1 = parseTotal1.toFixed(2);
+									            	 $(this).jqGrid('footerData', 'set', { total: parseTotal1});
+						                    		 
+						                    		 
+						                    		 document.getElementById("returnGrossTotal").value = totalGrossTotal.toFixed(2);						                    		 
+						                    		 
 								            		 return false;														
 								            	 }								            	 
 								            	 if(duplicateEditableBuyPrice != null || duplicateEditableBuyPrice != "0" || duplicateEditableBuyPrice != " " || duplicateEditableBuyPrice != "" || duplicateEditableBuyPrice != undefined)

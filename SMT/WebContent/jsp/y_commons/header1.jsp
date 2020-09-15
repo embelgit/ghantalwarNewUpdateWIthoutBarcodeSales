@@ -712,15 +712,15 @@ a.homer {
 							<li><a href="<%=path%>editEmployeeDetails.jsp">Edit Employee</a></li>
 						</ul>
 					</li>
-					<li><a href="<%=path%>expenditureDetails.jsp">Expenditure Management</a>
+					<li><a href="<%=path%>expenditureType.jsp">Expenditure Management</a>
 						<ul>
+							<li><a href="<%=path%>expenditureType.jsp">Expenditure Type</a></li>
 							<li><a href="<%=path%>expenditureDetails.jsp">Expenditure Details</a>
 								<ul>
 									<li><a href="<%=path%>expenditureList.jsp">Expenditure List</a></li>
 								</ul>
-							</li>
-							<li><a href="<%=path%>expenditureType.jsp">Expenditure Type</a></li>
-						</ul>	
+							</li>							
+						</ul>
 					</li>
 					
 					<li><a href="<%=path%>barcodeCopy.jsp">Barcode Reprint</a></li>

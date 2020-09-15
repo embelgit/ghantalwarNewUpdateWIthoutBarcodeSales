@@ -164,12 +164,13 @@ function reNameSubcategory()
 {
 	document.getElementById("btn").disabled = true;
 	var selectedSubCatId = $('#subcatId').val();
-
+	
 	var subcatId = selectedSubCatId.value;
 	var reNameCat= $('#reNameCat').val();
 	var params= {};
 	params ["reNameCat"] = reNameCat;
-	params ["subcatId"] = subcatId;
+	params ["subcatId"] = selectedSubCatId;
+
 	params["methodName"] = "reNameSubCategory";
 
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
@@ -196,7 +197,8 @@ function deleteSubCatagory()
 
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 	{   
-		successAlert(data);
+		alert(data);
+		//successAlert(data);
 	}
 	).error(function(jqXHR, textStatus, errorThrown){
 		if(textStatus==="timeout") {

@@ -95,9 +95,9 @@ function employeedetails()
 							document.empd.btn.disabled = false;
 							return false;
 						}	
-						var letterNumber = /^[a-zA-Z0-9, ]+$/;
+						/*var letterNumber = /^[a-zA-Z0-9, ]+$/;
 						if(document.empd.address.value.match(letterNumber))
-						{
+						{*/
 							if ( document.empd.zipCode.value == "" )
 							{
 								myAlert("Please Enter Pin Code");
@@ -115,13 +115,13 @@ function employeedetails()
 								document.empd.btn.disabled = false;
 								return false;
 							}
-						}
+						/*}
 						else
 						{
 							myAlert("Enter Alphabates Only in address..!!");
 							document.empd.btn.disabled = false;
 							return false;
-						}	
+						}*/	
 					}
 					else
 					{
@@ -189,7 +189,8 @@ function empDetails(){
 	params["methodName"] = "regDetails";
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 	{
-		successAlert(data);
+		alert(data);
+		//successAlert(data);
 		location.reload();
 	}
 	).error(function(jqXHR, textStatus, errorThrown){
@@ -397,8 +398,10 @@ function updateEmployeeDetails(){
 
 	params["methodName"] = "updateEmployeeDetails";
 
-	$.post('/SMT/jsp/utility/controller.jsp',params,function(data){
-		successAlert(data);
+	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
+	{
+		alert(data);
+		//successAlert(data);
 		location.reload();
 	}
 	).error(function(jqXHR, textStatus, errorThrown){

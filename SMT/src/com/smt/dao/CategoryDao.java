@@ -56,7 +56,7 @@ public class CategoryDao {
 		{
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
-			Query query = session.createQuery("from Category");
+			Query query = session.createQuery("from Category where activeYn='Y'");
 			list = query.list();
 		} catch (RuntimeException e) {
 			Log.error("Error in getAllMainCategories()", e);
@@ -101,7 +101,7 @@ public class CategoryDao {
 		try {
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
-			Query query = session.createQuery("from Category WHERE fkShopId = :fkShopId");
+			Query query = session.createQuery("from Category WHERE fkShopId = :fkShopId and activeYn='Y'");
 			query.setParameter("fkShopId", fkShopId);
 			list = query.list();
 		} catch (RuntimeException e) {
@@ -333,7 +333,7 @@ public class CategoryDao {
 			Long k = 0l;
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
-			Query query2 = session.createQuery("select categoryName, pkCategoryId from Category WHERE fkShopId = "+pkShopId);
+			Query query2 = session.createQuery("select categoryName, pkCategoryId from Category WHERE fkShopId = "+pkShopId+" and activeYn ='Y'");
 			List<Object[]> list = query2.list();
 			catList = new ArrayList<Category>(0);
 
@@ -362,7 +362,7 @@ public class CategoryDao {
 			Long k = 0l;
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
-			Query query2 = session.createSQLQuery("select subcat_name, pk_subcat_id, category_name from sub_categories left join categories on fk_rootcat_id = pk_category_id");
+			Query query2 = session.createSQLQuery("select subc.subcat_name, subc.pk_subcat_id, c.category_name from sub_categories subc left join categories c on fk_rootcat_id = pk_category_id WHERE subc.active_YN = 'Y'");
 			List<Object[]> list = query2.list();
 			catList = new ArrayList<SubCategory>(0);
 

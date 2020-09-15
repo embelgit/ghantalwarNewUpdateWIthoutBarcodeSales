@@ -210,7 +210,7 @@ margin-bottom: 40px;
 	{
 		document.good.btnSubmit1.disabled = true;
 		validateRegGoodReceive1();
-	}	
+	}
 </script>
 
 <script type="text/javascript" src="/SMT/staticContent/js/jquery.min.js"></script>

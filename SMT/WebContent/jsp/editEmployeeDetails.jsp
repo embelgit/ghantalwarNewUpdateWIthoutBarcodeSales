@@ -396,7 +396,7 @@
 						<input type="button" id="save" name="btn"
 							style="font-size: 17px; padding-top: 7px; width: 124;"
 							class="btn btn-large btn-success btn-md button_hw button_margin_right"
-							onclick="editEmployee()" value="Submit">
+							onclick="editEmployee()" value="Update">
 					</div>
 					<div class="col-md-2"  style="display:inline-block;">
 						<input id="save" name="btn"

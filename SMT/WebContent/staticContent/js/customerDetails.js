@@ -66,9 +66,9 @@ function customerDetails()
 					myAlert("Please Enter Customer Address.");
 					return false;
 				}	
-				var letterNumber = /^[a-zA-Z0-9, ]+$/;
+				/*var letterNumber = /^[a-zA-Z0-9, ]+$/;
 				if(address.match(letterNumber))
-				{
+				{*/
 					if (contactNo == "" )
 					{
 						myAlert("Please Enter Contact Number");
@@ -117,12 +117,12 @@ function customerDetails()
 						myAlert("Enter 10 Digits Only In Contact Number Field And All 0's Is invalid..!!");
 						return false;
 					}	
-				}
+				/*}
 				else
 				{
 					myAlert("Enter Alphabates Only in address field..!!");
 					return false;
-				}	
+				}*/	
 			}
 			else
 			{
@@ -366,7 +366,7 @@ function updateCustomerDetails()
 	var emailId = $('#emailId').val();
 	var zipCode = $('#zipCode').val();
 
-	if(emailId.length > 0)
+	/*if(emailId.length > 0)
 	{
 		var checkEmail = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 		if(emailId.match(checkEmail))
@@ -388,7 +388,7 @@ function updateCustomerDetails()
 			myAlert("Please Enter Valid Pin Code");
 			return false;
 		}
-	}
+	}*/
 	var params = {};
 	params["customerId"] = fkRootCustId;
 	params["firstName"] = firstName;	

@@ -327,8 +327,8 @@ position: fixed;
 									<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
 										id="addcatgry">
 										<select name="subcatId" id="subcatId"
-											style="background: #f0f0f0"></select> <label>Sub
-											Category</label>
+											style="background: #f0f0f0"></select> 
+											<label>Sub Category</label>
 									</div>
 								</div>
 
@@ -346,7 +346,7 @@ position: fixed;
 									<div align="center">
 										<div class="col-lg-2" style="display: inline-block;">
 											<input type="button" name="btn" id="btn"
-												onclick="isEmplty();" value="Save" style="width: 124;"
+												onclick="reNameSubcategory();" value="Update" style="width: 124;"
 												class="btn btn-success btn-md button_hw" />
 										</div>
 										<div class="col-lg-2" style="display: inline-block;">

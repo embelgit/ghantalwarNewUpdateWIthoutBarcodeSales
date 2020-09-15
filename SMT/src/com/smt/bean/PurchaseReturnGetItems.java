@@ -36,6 +36,7 @@ public class PurchaseReturnGetItems
 	private Long totalQuantity;
 	private String duplicateEditableBuyPrice;
 	private Long fkShopId;
+	private String originalTotal;
 	
 	public Double getRollsize() {
 		return rollsize;
@@ -291,5 +292,13 @@ public class PurchaseReturnGetItems
 
 	public void setFkShopId(Long fkShopId) {
 		this.fkShopId = fkShopId;
+	}
+
+	public String getOriginalTotal() {
+		return originalTotal;
+	}
+
+	public void setOriginalTotal(String originalTotal) {
+		this.originalTotal = originalTotal;
 	}	
 }
