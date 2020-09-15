@@ -63,7 +63,7 @@ function checkUser()
 	}
 	else
 	{
-		myAlert("Please Enter Valid Credentials");
+		alert("Please Enter Valid Credentials");
 		flag = 0;
 		return false;
 	}

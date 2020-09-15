@@ -229,7 +229,7 @@
 			
 					<div class="col-md-2 align" align="center" id="setdiscounth2"
 				style="padding-top: 11px;width:auto;">
-		<h2 class="form-name style_heading" style="font-size: 27px;">Set Discount Offer</h2>
+		<h2 class="form-name style_heading" style="font-size: 30px;">Set Discount Offer</h2>
 	</div>
 
 </div>

@@ -30,7 +30,7 @@ function suppDetailsDivAction(a)
     {
 		//$( "#suppDetailsDiv" ).dialog({height: 420, width:1000});
 		$( "#suppDetailsDiv" ).dialog({
-			height: 500,
+			height: 420,
 			width: 1000,
 			//autoOpen: false,
 			//modal: false,

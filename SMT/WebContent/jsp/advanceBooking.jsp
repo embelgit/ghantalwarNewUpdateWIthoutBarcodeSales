@@ -583,6 +583,12 @@
 		margin-left: 80px;
 	}
 }
+  #suppDetailsDiv{
+    width: auto;
+    min-height: 0px;
+    max-height: none;
+    height: 459.4px;
+    }
 </style>
 
 </head>

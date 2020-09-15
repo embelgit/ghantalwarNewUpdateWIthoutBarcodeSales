@@ -279,7 +279,7 @@ width: 110px;
 			</div>
 
 			<div class="col-md-2 align" id="editbillh2" align="center">
-				<span class="form-name style_heading" style="font-size: 27px;">Edit Bill</span>
+				<span class="form-name style_heading" style="font-size: 30px;">Edit Bill</span>
 			</div>
 		</div>
 		
