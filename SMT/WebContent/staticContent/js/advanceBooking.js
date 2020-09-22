@@ -30,11 +30,11 @@ function suppDetailsDivAction(a)
     {
 		//$( "#suppDetailsDiv" ).dialog({height: 420, width:1000});
 		$( "#suppDetailsDiv" ).dialog({
-			height: 420,
+			height: 540,
 			width: 1000,
 			//autoOpen: false,
 			//modal: false,
-			resizable: true,
+			resizable: false,
 			draggable: false,
 			position:
 			{

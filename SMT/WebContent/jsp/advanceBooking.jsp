@@ -583,12 +583,7 @@
 		margin-left: 80px;
 	}
 }
-  #suppDetailsDiv{
-    width: auto;
-    min-height: 0px;
-    max-height: none;
-    height: 459.4px;
-    }
+
 </style>
 
 </head>
@@ -649,7 +644,7 @@
 
 					<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
 						id="dayreport">
-						<div id="suppListDiv">
+						<div id="suppListDiv"  >
 
 							<%
 								SupplierDetailHelper poHelper = new SupplierDetailHelper();
@@ -696,7 +691,7 @@
 
 				<!-- <div class="container-fluid" style="border: 3px solid; padding-bottom: 20px; display: none; margin-bottom:35px;" id="suppDetailsDiv"> -->
 				<div class="container-fluid" id="suppDetailsDiv"
-					style="display: none;">
+					style="display: none;width: 1080px;height: 1080px;">
 					<div class="row" style="padding-top: 10px">
 						<div align="center">
 							<h2 class="form-name style_heading">Supplier Details</h2>
