@@ -15,7 +15,7 @@
 		
 		<property name="contactNumber" type="java.lang.String" column="contactNumber" />
 		
-		<property name="gstNo" type="java.lang.String" column="gstNo" />
+		<!-- <property name="gstNo" type="java.lang.String" column="gstNo" /> -->
 
 		<property name="shopAddress" type="java.lang.String" column="shopAddress" />
 		

@@ -54,7 +54,7 @@ public class SupplierDetailDao {
 		try {
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
-			query = session.createQuery("from SupplierDetail");
+			query = session.createQuery("from SupplierDetail where activeYn='Y'");
 			list = query.list();
 
 		} catch (RuntimeException e) {
@@ -125,7 +125,7 @@ public class SupplierDetailDao {
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
 			//query = session.createQuery("from SupplierDetail");
-			query = session.createQuery("from SupplierDetail");
+			query = session.createQuery("from SupplierDetail where activeYn='Y'");
 			list = query.list();
 		}
 		catch (RuntimeException e)
@@ -157,7 +157,7 @@ public class SupplierDetailDao {
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
 			//query = session.createQuery("from SupplierDetail");
-			query = session.createQuery("from SupplierDetail WHERE fkShopId = :fkShopId");
+			query = session.createQuery("from SupplierDetail WHERE fkShopId = :fkShopId and activeYn='Y'");
 			query.setParameter("fkShopId", fkShopId);
 			list = query.list();
 		}
@@ -309,7 +309,7 @@ public class SupplierDetailDao {
 			Long k = 0l;
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
-			Query query2 = session.createQuery("select supplierName, address, city, mobileno, contactPerson, email, panNo, pin  from SupplierDetail");
+			Query query2 = session.createQuery("select supplierName, address, city, mobileno, contactPerson, email, panNo, pin  from SupplierDetail where activeYn='Y'");
 
 			List<Object[]> list = query2.list();
 			catList = new ArrayList<SupplierDetail>(0);

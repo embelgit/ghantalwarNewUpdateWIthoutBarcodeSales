@@ -239,3 +239,130 @@ function totalProfitAndLoss()
 	}
 */
 }
+
+/*Profit and Loss Report for Expenditure*/
+function validateProfitAndLossForExp()
+{
+	var fisDateExpense = $("#fisDateExpense").val();
+	var endDateExpense = $("#endDateExpense").val();
+	var expTypeName = $("#expTypeName").val();
+	
+	if(fisDateExpense == null || fisDateExpense == "" || fisDateExpense == " " || fisDateExpense == undefined)
+	{
+		alert("Please Select Start Date");
+		return false;
+	}else{}
+		
+	if(endDateExpense == null || endDateExpense == "" || endDateExpense == " " || endDateExpense == undefined)
+	{
+		alert("Please Select End Date");
+		return false;		
+	}else{}
+	
+	if(expTypeName == null || expTypeName == "" || expTypeName == " " || expTypeName == undefined)
+	{
+		alert("Please Select Expenditure Type");
+		return false;		
+	}else{}
+	
+	allExpensesProfitAndLossForExpense();
+}
+
+function allExpensesProfitAndLossForExpense()
+{
+	var fisDateExpense = $("#fisDateExpense").val();
+	var endDateExpense = $("#endDateExpense").val();
+	//var expTypeName = $("#expTypeName").val();
+	
+	var input = document.getElementById('expTypeName'),
+	list = document.getElementById('expType_drop'),
+	i,expenseId;
+	for (i = 0; i < list.options.length; ++i) {
+		if (list.options[i].value === input.value) {
+			expenseId = list.options[i].getAttribute('data-value');
+		}
+	}
+	
+	var params= {};
+	params["fisDateExpense"] = fisDateExpense;
+	params["endDateExpense"] = endDateExpense;
+	params["expenseId"] = expenseId;
+	
+	params["methodName"] = "allExpensesProfitAndLossForExpenditure";
+
+	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
+	{
+		//To clear Table
+		$('#example1').dataTable().fnClearTable();
+
+		var jsonData = $.parseJSON(data);
+		var catmap = jsonData.list;
+
+		$(document).ready(function() {
+			$('#example1').DataTable( {
+
+				fnRowCallback : function(nRow, aData, iDisplayIndex){
+					$("th:first", nRow).html(iDisplayIndex +1);
+					return nRow;
+				},
+
+				"footerCallback": function ( row, data, start, end, display ) {
+					var api = this.api(), data;
+
+					// Remove the formatting to get integer data for summation
+					var intVal = function ( i ) {
+						return typeof i === 'string' ?
+								i.replace(/[\$,]/g, '')*1 :
+									typeof i === 'number' ?
+											i : 0;
+					};
+
+					// Total over this page
+					pageTotal = api
+					.column( 1 )
+					.data()
+					.reduce( function (a, b) {	
+						return intVal(a) + intVal(b);
+					}, 0 );
+
+					// Update footer
+					$( api.column( 1 ).footer() ).html(
+							'Rs'+' '+parseFloat(pageTotal).toFixed(2)
+					);
+					console.log( pageTotal);
+
+					var abc = pageTotal;
+					
+					document.getElementById('totalExpenseAmount').value = abc;
+				},
+
+				destroy: true,
+				searching: true,				      
+				columns: [
+				          {"data": "expenseName", "width": "5%" ,"defaultContent": "",},
+				          {"data": "expenseAmount", "width": "5%" ,"defaultContent": ""},
+				         ],
+				          dom : 'Bfrtip',
+				          buttons : [ 
+				                     { extend: 'copyHtml5', footer: true },
+				                     { extend: 'excelHtml5', footer: true },
+				                     { extend: 'csvHtml5', footer: true },
+				                     { extend : 'pdfHtml5', footer: true,
+				                    	 title : function() {
+				                    		 return "Today's Credit Report";
+				                    	 },
+				                    	 orientation : 'landscape',
+				                    	 pageSize : 'LEGAL',
+				                    	 titleAttr : 'PDF' 
+				                     } ]
+			} );
+		} );
+		var mydata = catmap;
+		$('#example1').dataTable().fnAddData(mydata);
+			}).error(function(jqXHR, textStatus, errorThrown){
+				if(textStatus==="timeout") {
+					$(loaderObj).hide();
+					$(loaderObj).find('#errorDiv').show();
+				}
+			});
+}

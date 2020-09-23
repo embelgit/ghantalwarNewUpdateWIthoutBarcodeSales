@@ -17,6 +17,7 @@ import com.smt.bean.CustomerBean;
 import com.smt.bean.ProductDetailBean;
 import com.smt.bean.PurchaseReturnGetItems;
 import com.smt.bean.SaleReturnBean;
+import com.smt.helper.AccessControlHelper;
 import com.smt.helper.AdvanceBookingHelper;
 import com.smt.helper.AllGraphHelper;
 import com.smt.helper.BankDetailsHelper;
@@ -2457,5 +2458,34 @@ public class Controller
 			Map leafcat = helper.getAllShopHelper();
 			String aa = toJson(leafcat);
 			return aa;
+		}
+		
+		public String allExpensesProfitAndLossForExpenditure(HttpServletRequest request, HttpServletResponse response) {
+			ProfitAndLossHelper helper = new ProfitAndLossHelper();
+			List categories = helper.getAllExpensesBetweenDateRangeForExpenditureHelper(request, response);
+			Map<String, List> returnMap = new HashMap<String, List>();
+			returnMap.put("list", categories);
+			System.out.println("$$$$$$$$$$$$$$$$" + returnMap);
+			return toJson(returnMap);
+		}
+		
+		//Access Control Data
+		public String getUserDetailsToAccessControl(HttpServletRequest request,	HttpServletResponse response) {
+			
+			AccessControlHelper helper =new AccessControlHelper();
+			Map map = helper.getUserDetailsForAccessControl(request,response);
+			String xyz = toJson(map);
+			System.out.println(xyz);
+			System.out.println("going out of controller");
+			return xyz;
+		}
+		
+		//Add Access Control Details
+		public String AddAccessControl(HttpServletRequest request,
+			HttpServletResponse response) {
+			System.out.println("IN CONTROLLER");
+			AccessControlHelper helper=new AccessControlHelper();
+			helper.AccessControlDetails(request, response);
+			return toJson("Data Added Successfully");
 		}
 }

@@ -2,6 +2,10 @@ package com.smt.dao;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -69,6 +73,39 @@ public class ShopDetailsDao
 			}
 		}
 
+		return list;
+	}
+	
+	public List getAllMainShop(HttpServletRequest request, HttpServletResponse response)
+	{
+		HttpSession session1 = request.getSession();
+		String shopId = (String) session1.getAttribute("shopId");
+		
+		Long pkShopId = Long.parseLong(shopId);
+		
+		HibernateUtility hbu = null;
+		Session session = null;
+		Query query = null;
+		List list = null;
+		try {
+			
+			System.out.println("ALL Shop Name====");
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			//query = session.createQuery("from SupplierDetail");
+			query = session.createQuery("from ShopDetailsBeanH WHERE pkShopId = :pkShopId");
+			query.setParameter("pkShopId", pkShopId);
+			list = query.list();
+		}
+		catch (RuntimeException e)
+		{
+			Log.error("Error in getAllShopName ", e);
+		}
+		finally {
+			if (session != null) {
+				hbu.closeSession(session);
+			}
+		}
 		return list;
 	}
 }

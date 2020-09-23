@@ -799,6 +799,7 @@ a.homer {
 					<li><a href="<%=path%>DayClosingReport.jsp">Day Closure Report</a></li>
 					<li><a href="<%=path%>allGstReports.jsp">GST Reports</a></li>
 					<li><a href="<%=path%>profitAndLoss.jsp">Profit And Loss</a></li>
+					<li><a href="<%=path%>profitandlossforexpenses.jsp">Profit And Loss For Expense</a></li>
 					<%-- <li><a href="<%=path%>purchaseReports.jsp">GST Wise Purchase Report</a></li>
 					<li><a href="<%=path%>gstSaleReport.jsp">GST Wise Sale Report</a></li> --%>
 					<li><a href="<%=path%>cashBookReports.jsp">Financial Transaction Report</a></li>
@@ -894,8 +895,14 @@ a.homer {
 			<%
 				if (type1.equals("admin")) {
 			%>
-			<li><a href="/SMT/jsp/create_user.jsp"><i
-					class="fa fa-user-o"></i> Create User</a></li>
+			<li><a href="<%=path%>create_user.jsp"><i
+					class="fa fa-file-zip-o"></i>HR</a>
+				<ul class="sub-menu">
+					<li><a href="<%=path%>create_user.jsp">Create User</a></li>
+					<li><a href="<%=path%>accessControl.jsp">Access Control</a></li>
+				</ul></li>
+			<!-- <li><a href="/SMT/jsp/create_user.jsp"><i
+					class="fa fa-user-o"></i> Create User</a></li> -->
 			<%
 				}
 			%>

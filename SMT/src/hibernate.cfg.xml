@@ -48,6 +48,7 @@
 		<mapping resource="com/smt/hibernate/bankPayment.hbm.xml" />
 		<mapping resource="com/smt/hibernate/shopDetails.hbm.xml" />
 		<mapping resource="com/smt/hibernate/expenditureType.hbm.xml" />
+		<mapping resource="com/smt/hibernate/accessControl.hbm.xml" />
 
 	</session-factory>
 

@@ -109,4 +109,47 @@ public class ProfitAndLossDao
 		}	
 		return expenseListI;
 	}
+	
+	public List<ProfitAndLossBean> getAllExpensesBetweenDateRangeForExpenditureDao(String fisDateExpense, String endDateExpense, String expenseId)
+	{
+		// TODO Auto-generated method stub
+		HibernateUtility hbu = null;
+		Session session = null;
+		List<ProfitAndLossBean> expenseList1 = null;
+
+		try
+		{
+			DecimalFormat df = new DecimalFormat("#.##");
+
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			
+			Query query3 = session.createSQLQuery("SELECT ed.expense_name, ep.total_amount,ed.insert_date FROM expenditure_details ed JOIN expenditure_payment ep ON ed.pk_expense_details_id = ep.fk_expense_detail_id WHERE ed.fkExpenseTypeId='"+expenseId+"' and ed.insert_date BETWEEN '"+fisDateExpense+"' AND '"+endDateExpense+"'");
+			 
+			List<Object[]> list1 = query3.list();
+
+			expenseList1 = new ArrayList<ProfitAndLossBean>(0);
+
+			for (Object[] object : list1)
+			{
+				ProfitAndLossBean reports = new ProfitAndLossBean();
+				
+				if(object[1] == null)
+				{}
+				else
+				{
+					reports.setExpenseName(object[0].toString());
+					reports.setExpenseAmount(df.format(Double.parseDouble(object[1].toString())));
+				}
+				
+				expenseList1.add(reports);
+			}
+
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return expenseList1;
+	}
 }

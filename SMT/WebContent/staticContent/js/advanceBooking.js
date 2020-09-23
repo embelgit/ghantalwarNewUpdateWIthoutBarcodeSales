@@ -669,7 +669,8 @@ function registerAdvanceBooking()
 	params["methodName"] = "regAdvanceBooking";
 
 	$.post('/SMT/jsp/utility/controller.jsp', params, function(data) {
-		successAlert(data);
+		//successAlert(data);
+		alert(data);
 		location.reload();
 	}).error(function(jqXHR, textStatus, errorThrown) {
 		if (textStatus === "timeout") {

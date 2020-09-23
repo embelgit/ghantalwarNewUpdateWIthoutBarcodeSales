@@ -127,7 +127,7 @@ function usrDetails(){
 	params["pan"] =pan;
 	params["methodName"] = "regUserDetails";
 
-	$.post('/Fertilizer/jsp/utility/controller.jsp',params,function(data)
+	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 			{
 		alert(data);
 		if(document.usd)

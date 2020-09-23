@@ -40,6 +40,20 @@ public class ProfitAndLossHelper
 
 		return exp1List;
 	}
+	
+	public List getAllExpensesBetweenDateRangeForExpenditureHelper(HttpServletRequest request, HttpServletResponse response)
+	{
+		
+		String fisDateExpense = request.getParameter("fisDateExpense");
+		String endDateExpense = request.getParameter("endDateExpense");
+		String expenseId = request.getParameter("expenseId");
+		
+		Map<Long, CreditDebitReportBean> map = new HashMap<Long, CreditDebitReportBean>();
 
+		ProfitAndLossDao dao = new ProfitAndLossDao();
+		List<ProfitAndLossBean> exp1List = dao.getAllExpensesBetweenDateRangeForExpenditureDao(fisDateExpense, endDateExpense, expenseId);
+
+		return exp1List;
+	}
 	
 }
