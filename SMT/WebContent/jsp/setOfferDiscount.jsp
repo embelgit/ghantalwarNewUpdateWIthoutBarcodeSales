@@ -243,14 +243,14 @@
 		
 		<div class="container" id="custdetal">
 			<div class="row">
-
+<!-- 
 		 <div class="col-md-4 col-lg-4"></div>
 
 
 		<div class="row">
 			<div class="col-md-4 col-lg-4"></div>
 
-			</div>
+			</div> -->
 			
 			 <div class="invoice_label_up">
 				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
@@ -272,7 +272,7 @@
 				 	<div class="bar"></div>
 		   </div>
 		</div>
-
+		</div>
 		<div class="row">
 		<div class="invoice_label_up">
 			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
@@ -284,7 +284,7 @@
 				</div>
 				</div>
 			
-
+			<div class="col-md-1"></div>
 		
 		<div class="invoice_label_up">
 			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
@@ -296,7 +296,8 @@
 				</div>
 				</div>
 
-					
+				
+				</div>	
 				
 			</div>
 			
@@ -317,7 +318,7 @@
 						</div>					
 				</div>
 			</div>
-		</div>
+		
 			</form>
 			</div>
 		</div>
