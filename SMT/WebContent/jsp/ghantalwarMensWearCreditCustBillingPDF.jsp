@@ -125,7 +125,6 @@ System.out.print(":::::::::::::::::::::::::::::::::::::::::Paid Amt"+paidAmt+"::
 	Double tax18 = 0.0;
 	Double tax28 = 0.0;
 	Double pendingBillPayment = 0.0;
-	String abc;
 	
 	try
 	{
