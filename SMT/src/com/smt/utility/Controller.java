@@ -408,11 +408,11 @@ public class Controller
 	}
 	
 	// delete Supplier Detail
-		public String deleteSupplier(HttpServletRequest request, HttpServletResponse response) {
-			SupplierDetailHelper helper = new SupplierDetailHelper();
-			helper.deleteSupplier(request, response);
-			return toJson("Supplier Deleted Successfully");
-		}
+	public String deleteSupplier(HttpServletRequest request, HttpServletResponse response) {
+		SupplierDetailHelper helper = new SupplierDetailHelper();
+		helper.deleteSupplier(request, response);
+		return toJson("Supplier Deleted Successfully");
+	}
 
 	// to add product Name
 	public String doProductDetail(HttpServletRequest request, HttpServletResponse response) throws IOException {

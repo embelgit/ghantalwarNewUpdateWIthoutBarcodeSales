@@ -744,17 +744,5 @@ public class SupplierDetailDao {
 		}
 
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+		
 }
