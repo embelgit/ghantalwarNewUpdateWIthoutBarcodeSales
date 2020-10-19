@@ -338,7 +338,7 @@ position: fixed;
 										<table
 											class="table table-bordered table-striped table-condensed cf"
 											id="supplierNameWiseTable" class="display"
-											style="border: 2px solid black; border-collapse: collapse;">
+											 style="border: 2px solid black; border-collapse: collapse;">
 											<thead>
 												<tr>
 													<th>Date</th>

@@ -213,7 +213,7 @@ function singleDatePurchase()
 				destroy: true,
 				searching: true,
 				orderable: true,
-				scrollY: '50vh',
+				/*scrollY: '50vh',*/
 
 				columns: [  
 				          {"data": "serialnumber", "width": "5%" ,"defaultContent": ""},
@@ -485,7 +485,7 @@ function purchaseReportBetweenTwoDates()
 				destroy: true,
 				searching: true,
 				orderable: true,
-				scrollY: '50vh',
+				/*scrollY: '50vh',*/
 				
 				columns: [  
 				          {"data": "serialnumber", "width": "5%", "defaultContent": ""},
@@ -782,7 +782,7 @@ function suppGstReportBetweenTwoDates()
 				destroy: true,
 				searching: true,
 				orderable: true,
-				scrollY: '50vh',
+				/*scrollY: '50vh',*/
 				
 				columns: [  
 				          {"data": "serialnumber", "width": "5%", "defaultContent": ""},

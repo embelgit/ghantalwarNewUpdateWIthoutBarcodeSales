@@ -626,7 +626,7 @@ width: auto;
 												%>
 											
 											</datalist>
-											<label for="middleName">Middle Name:<sup>*</sup></label>
+											<label for="middleName">Middle Name:<sup></sup></label>
 										</div>
 									</div>
 								</div>
@@ -682,7 +682,7 @@ width: auto;
 										<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
 											id="popupcreditcol">
 											<input id="emailId" name="emailId " required
-												type="text"> <label for="emailId">Email Id:<sup>*</sup></label>
+												type="text"> <label for="emailId">Email Id:<sup></sup></label>
 										</div>
 									</div>
 

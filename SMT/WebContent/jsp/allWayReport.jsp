@@ -67,7 +67,7 @@
 							style="overflow: hidden; width: 1315px; margin-left: 7px;">
 							<table
 								class="table table-bordered table-striped table-condensed cf"
-								id="currStock1" class="display">
+								id="currStock1" class="display" style="border: 2px solid black; border-collapse: collapse;">
 
 								<thead style="background-color: orange;">
 									<tr>

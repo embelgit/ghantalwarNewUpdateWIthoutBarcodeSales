@@ -355,7 +355,7 @@ width: 110px;
 										<table
 											class="table table-bordered table-striped table-condensed cf"
 											id="advanceBookingRangeWiseReport" class="display"
-											style="border: 1px solid black; border-collapse: collapse;">
+											 style="border: 2px solid black; border-collapse: collapse;">
 											<thead>
 												<tr>
 													<th>Sr No</th>
@@ -458,7 +458,7 @@ width: 110px;
 										<table
 											class="table table-bordered table-striped table-condensed cf"
 											id="advanceBookigSuppAndRangeWise" class="display"
-											style="border: 1px solid black; border-collapse: collapse;">
+											 style="border: 2px solid black; border-collapse: collapse;">
 											<thead>
 												<tr>
 													<th>Sr No</th>
@@ -523,7 +523,7 @@ width: 110px;
 										<table
 											class="table table-bordered table-striped table-condensed cf"
 											id="advanceBooking_BookingNoWise" class="display"
-											style="border: 1px solid black; border-collapse: collapse;">
+											 style="border: 2px solid black; border-collapse: collapse;">
 											<thead>
 												<tr>
 													<th>Sr No</th>

@@ -220,6 +220,7 @@ position: fixed;
     opacity: 0.6;
 }
 }
+
 </style>
 <body style="height: 863px; margin-top: 50px" class="vColor">
 <div class="row" style="min-height: 300px;">
@@ -289,7 +290,7 @@ position: fixed;
                  <div class="container">
 						<div class="table-responsive" id="tables">
 							<table
-								class="table table-bordered table-striped table-condensed cf"
+								class=" table-bordered table-striped table-condensed cf"
 								id="example" class="display"
 								style="border: 2px solid black; border-collapse: collapse;">
 								<thead>
@@ -837,7 +838,7 @@ position: fixed;
 										<div class="table-responsive" id="tables">
 											<table
 												class="table table-bordered table-striped table-condensed cf"
-												id="saleB2CGSTReport" class="display" style="border: 0.5px solid black;">
+												id="saleB2CGSTReport" class="display" style="border: 2px solid black; border-collapse: collapse;">
 												<thead>
 													<tr>
 														<th>Sr No</th>
@@ -924,7 +925,7 @@ position: fixed;
 						<div class="table-responsive" id="tables">
 							<table
 								class="table table-bordered table-striped table-condensed cf"
-								id="purchaseB2BGSTReport" class="display" style="border: 0.5px solid black;">
+								id="purchaseB2BGSTReport" class="display" style="border: 2px solid black; border-collapse: collapse;">
 								<thead>
 									<tr>
 										<th>Sr No</th>

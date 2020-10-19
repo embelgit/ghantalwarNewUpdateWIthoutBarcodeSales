@@ -199,6 +199,7 @@ function deleteSubCatagory()
 	{   
 		alert(data);
 		//successAlert(data);
+	
 	}
 	).error(function(jqXHR, textStatus, errorThrown){
 		if(textStatus==="timeout") {

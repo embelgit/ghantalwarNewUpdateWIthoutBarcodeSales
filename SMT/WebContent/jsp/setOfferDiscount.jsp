@@ -229,7 +229,7 @@
 			
 					<div class="col-md-2 align" align="center" id="setdiscounth2"
 				style="padding-top: 11px;width:auto;">
-		<h2 class="form-name style_heading" style="font-size: 27px;">Set Discount Offer</h2>
+		<h2 class="form-name style_heading" style="font-size: 30px;">Set Discount Offer</h2>
 	</div>
 
 </div>
@@ -243,10 +243,14 @@
 		
 		<div class="container" id="custdetal">
 			<div class="row">
+<!-- 
+		 <div class="col-md-4 col-lg-4"></div>
+
 
 		<div class="row">
 			<div class="col-md-4 col-lg-4"></div>
-			</div>
+
+			</div> -->
 			
 			 <div class="invoice_label_up">
 				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
@@ -263,11 +267,24 @@
 			
         <div class="invoice_label_up">
 		   <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
-				 <input id="toBarC" name="toBarC" type="text" autocomplete="off" required>
+				 <input id="toC" name="toBarC" type="text" autocomplete="off" required>
 				 <label for="middleName">Barcode No To<sup>*</sup></label>
 				 	<div class="bar"></div>
 		   </div>
 		</div>
+		</div>
+		<div class="row">
+		<div class="invoice_label_up">
+			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+						<input id="disPercentage" name="disPercentage" type="text" autocomplete="off" required>
+						</datalist>
+			        	<label for="employeename">Discount (%)</label>
+			        	<div class="bar"></div>
+			        	
+				</div>
+				</div>
+			
+			<div class="col-md-1"></div>
 		
 		<div class="invoice_label_up">
 			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
@@ -278,7 +295,9 @@
 			        	
 				</div>
 				</div>
-					
+
+				
+				</div>	
 				
 			</div>
 			
@@ -299,7 +318,7 @@
 						</div>					
 				</div>
 			</div>
-		</div>
+		
 			</form>
 			</div>
 		</div>
