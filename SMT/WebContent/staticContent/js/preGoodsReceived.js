@@ -12,7 +12,6 @@ function registerPreGOOD(){
 	for (var i = 0; i < count; i++) {
 
 		var idVal = "";
-		var x;
 		if(i != 0)
 		{
 			idVal = i ;
