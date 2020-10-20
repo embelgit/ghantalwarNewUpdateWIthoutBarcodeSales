@@ -249,11 +249,13 @@ body {
 
 nav {
 	display: block;
-	background: #8c7674
+	    width: 100%;
+	/* background: #8c7674 */
 }
 
 .menu {
 	display: block;
+	    width: 100%;
 }
 
 .menu li {
@@ -645,7 +647,7 @@ a.homer {
 	<input type="text" hidden="true" readonly="readonly" id="shopName" name="shopName" value="<%=shopName%>">
 
 
-	<nav class="navbar navbar-fixed-top" style="background-color: #f0f0f0;">
+	<nav class="navbar navbar-fixed-top" >
 	<div id="loading" style="visibility:hidden;"><h4>Sending Mail....</h4>
 		<img src="/SMT/staticContent/images/embellogo.png"
 											style="width: 100%; height: 100vh;opacity:0.2;" /></div>
