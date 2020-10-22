@@ -186,7 +186,8 @@ function getAllMAinCaregory()
 				          "info":     false,
 				          "scrollY": 300,
 				          "scrollX": true,
-				       
+				        
+			       
 				          columns: [
 				                    {"data": "serialnumber", "width": "5%", "defaultContent": ""},
 				                    {"data": "categoryName", "width": "5%", "defaultContent": ""},

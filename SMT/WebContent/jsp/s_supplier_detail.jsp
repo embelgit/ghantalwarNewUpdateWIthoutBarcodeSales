@@ -311,6 +311,12 @@ width: 110px;
 					 <span>GST/TIN/UIN No</span>
 				</div>
 			</div>
+			<div class="row">
+			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+					 <input type="text" id="" name="" class="" autocomplete="off" required/>
+					 <span>Supplier Account Details</span>
+				</div>
+			</div>
 		</div>
 			<div class="row col-md-offset-2">
 					<div class="col-md-1" id="supplierbtn">

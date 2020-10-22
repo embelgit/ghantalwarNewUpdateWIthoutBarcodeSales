@@ -422,16 +422,15 @@ a.homer {
 	color: white;
 	font-weight: bolder;
 	font-size: 12px;
-	position: fixed;
+	position: revert;
 	top: 19px;
-	right: 25px;
 }
 
 #currentUser {
 	color: orange;
 	font-weight: 600;
 	font-size: 17px;
-	position: fixed;
+	position: absolute;
 	top: 8px;
 	right: 10px;
 }
@@ -440,7 +439,7 @@ a.homer {
     color: orange;
     font-weight: 600;
     font-size: 17px;
-    position: fixed;
+    position: absolute;
     top: 5px;
     right: 150px;
 }
@@ -450,7 +449,7 @@ a.homer {
 	height: auto;
 	z-index: -1;
    	position: fixed;
-	top: 10%;
+	top: 11%;
 	right: 1%;
 	opacity: 0.6;
 }
