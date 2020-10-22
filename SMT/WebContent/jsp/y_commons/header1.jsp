@@ -744,7 +744,7 @@ a.homer {
 					<li><a href="<%=path%>editGoodRecieve.jsp">Edit Purchase(clt+P)</a></li>
 					<li><a href="<%=path%>s_purchase_return.jsp">Purchase
 							Return(clt+R)</a></li>
-					<%-- <li><a href="<%=path%>pdefect_module.jsp">Defect Module</a></li> --%>
+					<%-- <li><a href="<%=path%>pdefect_module.jsp">Defect Module</a></li>  --%>
 				</ul></li>
 			<%
 				}
