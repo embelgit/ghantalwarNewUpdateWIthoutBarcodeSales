@@ -141,7 +141,14 @@
 						</datalist>
 						<span>Expenditure Name</span>
 						</div>
+						
 			</div>
+			<!-- <div class="row">
+			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="">
+			 <input type="file" id="" name="" required>
+			 <span>Upload File</span>
+			</div>
+			</div> -->
 			
 			<div class="expenditurebutton ">
 			<div class="row">
@@ -152,6 +159,7 @@
 				<div class="col-md-2" id="expenditurebtn">
 					<input id="save" name="btn" class="btn btn-large btn-danger" type="reset" onclick="reset()" value="Cancel" style="padding-bottom: 10px;width:124px;">
 				</div>
+				
 				<div class="col-md-2" id="expenditurebtn">
 					<input id="list" name="btn" class="btn btn-large btn-info" type="button" onclick="getAllExpenditure()" value="List" style="padding-bottom: 10px;width:124px;">
 				</div>

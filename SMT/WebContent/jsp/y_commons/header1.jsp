@@ -668,7 +668,7 @@ a.homer {
 						</ul>
 					</li> --%>
 
-					<li><a href="<%=path%>y_category_subcategory.jsp">Category</a>
+					<li><a href="<%=path%>y_category_subcategory.jsp">Category(alt+C)</a>
 						<ul>
 							<li><a href="<%=path%>y_category_subcategory.jsp">Add Category</a>
 								<ul>
@@ -686,34 +686,34 @@ a.homer {
 							</li>
 						</ul>
 					</li>
-					<li><a href="<%=path%>y_product_detail.jsp">Products Management</a>
+					<li><a href="<%=path%>y_product_detail.jsp">Products Management(alt+P)</a>
 						<ul>
 							<li><a href="<%=path%>y_product_detail.jsp">Product Details</a></li>
 							<li><a href="<%=path%>s_item_list.jsp">Product List</a></li>
 						</ul>
 					</li>
-					<li><a href="<%=path%>s_supplier_detail.jsp">Supplier Management</a>
+					<li><a href="<%=path%>s_supplier_detail.jsp">Supplier Management(alt+S)</a>
 						<ul>
 							<li><a href="<%=path%>s_supplier_detail.jsp">Supplier Details</a></li>
 							<li><a href="<%=path%>s_supplier_list.jsp">Supplier List</a></li>
 							<li><a href="<%=path%>s_SupplierEdit.jsp">Edit Supplier</a></li>
 							<li><a href="<%=path%>s_SupplierDelete.jsp">Delete Supplier</a></li>
 						</ul></li>
-					<li><a href="<%=path%>customer_detail.jsp">Credit Customer Management</a>
+					<li><a href="<%=path%>customer_detail.jsp">Credit Customer Management(clt+alt+C)</a>
 						<ul>
 							<li><a href="<%=path%>customer_detail.jsp">Credit Customer</a></li>
 							<li><a href="<%=path%>creditCustomerList.jsp">Credit Customer List</a></li>
 							<li><a href="<%=path%>editCreditCustomerDetails.jsp">Edit Credit Customer</a></li>
 						</ul>
 					</li>
-					<li><a href="<%=path%>employee_detail.jsp">Employee Biodata</a>
+					<li><a href="<%=path%>employee_detail.jsp">Employee Biodata(clt+alt+B)</a>
 						<ul>
 							<li><a href="<%=path%>employee_detail.jsp">Employee Details</a></li>
 							<li><a href="<%=path%>employeeList.jsp">Employee List</a></li>
 							<li><a href="<%=path%>editEmployeeDetails.jsp">Edit Employee</a></li>
 						</ul>
 					</li>
-					<li><a href="<%=path%>expenditureType.jsp">Expenditure Management</a>
+					<li><a href="<%=path%>expenditureType.jsp">Expenditure Management(alt+E)</a>
 						<ul>
 							<li><a href="<%=path%>expenditureType.jsp">Expenditure Type</a></li>
 							<li><a href="<%=path%>expenditureDetails.jsp">Expenditure Details</a>
@@ -725,7 +725,7 @@ a.homer {
 					</li>
 					
 					<li><a href="<%=path%>barcodeCopy.jsp">Barcode Reprint</a></li>
-					<li><a href="<%=path%>bankDetails.jsp">Bank Details</a></li>
+					<li><a href="<%=path%>bankDetails.jsp">Bank Details(alt+B)</a></li>
 					<li><a href="<%=path%>shopDetails.jsp">Shop Details</a></li>
 				</ul></li>
 			<%
@@ -737,13 +737,14 @@ a.homer {
 			<li><a href="<%=path%>goodReceive.jsp"><i
 					class="fa fa-shopping-cart"></i>Good Receive</a>
 				<ul class="sub-menu">
-					<li><a href="<%=path%>goodReceive.jsp">Purchase</a></li>
-					<li><a href="<%=path%>s_po_received.jsp">Ready-Made Purchase</a></li>
-					<li><a href="<%=path%>advanceBooking.jsp">Advance Booking</a></li>
-					<li><a href="<%=path%>s_preGrnReg.jsp">Previous Goods Receive</a></li>
-					<li><a href="<%=path%>editGoodRecieve.jsp">Edit Purchase</a></li>
+					<li><a href="<%=path%>goodReceive.jsp">Purchase(alt+G)</a></li>
+					<li><a href="<%=path%>s_po_received.jsp">Ready-Made Purchase(alt+R)</a></li>
+					<li><a href="<%=path%>advanceBooking.jsp">Advance Booking(alt+A)</a></li>
+					<li><a href="<%=path%>s_preGrnReg.jsp">Previous Goods Receive(clt+alt+P)</a></li>
+					<li><a href="<%=path%>editGoodRecieve.jsp">Edit Purchase(clt+P)</a></li>
 					<li><a href="<%=path%>s_purchase_return.jsp">Purchase
-							Return</a></li>
+							Return(clt+R)</a></li>
+					<%-- <li><a href="<%=path%>pdefect_module.jsp">Defect Module</a></li> --%>
 				</ul></li>
 			<%
 				}
@@ -754,12 +755,13 @@ a.homer {
 			<li><a href="<%=path%>Miscellaneous.jsp"><i
 					class="fa fa-edit"></i>Sale Invoice</a>
 				<ul class="sub-menu">
-					<li><a href="<%=path%>Miscellaneous.jsp">Invoice</a></li>
-					<li><a href="<%=path%>Credit_Customer_Bill.jsp">Credit Customer Invoice</a></li>
+					<li><a href="<%=path%>Miscellaneous.jsp">Invoice(alt+I)</a></li>
+					<li><a href="<%=path%>Credit_Customer_Bill.jsp">Credit Customer Invoice(clt+C)</a></li>
 					<li><a href="<%=path%>setOfferDiscount.jsp">Set Offer Discount</a></li>
-					<li><a href="<%=path%>editBill.jsp">Edit Bill</a></li>
+					<li><a href="<%=path%>editBill.jsp">Edit Bill(clt+E)</a></li>
 					<%-- <li><a href="<%=path%>y_sale_return.jsp">Sale Return Invoice</a></li> --%>
-					<li><a href="<%=path%>testSaleReturn.jsp">Sale Return Invoice</a></li>
+					<li><a href="<%=path%>testSaleReturn.jsp">Sale Return Invoice(clt+alt+R)</a></li>
+					<%-- <li><a href="<%=path%>sdefect_module.jsp">Defect Module</a></li> --%>
 				</ul></li>
 			<%
 				}
