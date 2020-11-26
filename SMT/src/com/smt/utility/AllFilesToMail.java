@@ -345,6 +345,7 @@ public class AllFilesToMail
 			sb.append(",");
 			pw.write(sb.toString());
 			pw.close();
+			System.out.println("call");
 		}
 		catch (Exception e)
 		{
