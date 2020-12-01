@@ -394,6 +394,13 @@ public class ProductDetailHelper
 	}
 	
 	
+	public List getbillnumber() {
+
+		ProductDetailDao dao = new ProductDetailDao();
+		return dao.getbillNoDao();
+	}
+	
+	
 	public List productWisePurchaseReportHelper(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
 		String productId = request.getParameter("productId");

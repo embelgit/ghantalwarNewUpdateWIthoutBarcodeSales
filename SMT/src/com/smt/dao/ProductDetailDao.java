@@ -767,6 +767,42 @@ public class ProductDetailDao {
 	}
 	
 	
+	
+	public List getbillNoDao()
+	{
+		HibernateUtility hbu = null;
+		Session session = null;
+		List<Object[]> list = null;
+		List<ItemList> bill = null;
+		try {
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			Query query = session.createSQLQuery("SELECT BillNo,BillNo FROM otherbill WHERE BarcodeNo=0 GROUP BY BillNo ");
+			list = query.list();
+			bill = new ArrayList<ItemList>(0);
+			for (Object[] object : list)
+			{
+				ItemList reports = new ItemList();
+				reports.setBillNo(object[0].toString());
+				reports.setBillNo(object[1].toString());
+				bill.add(reports);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+
+				hbu.closeSession(session);
+			}
+		}
+		
+		System.out.println(Arrays.toString(bill.toArray()));
+		
+		return bill;
+	}
+	
+	
 	public List<PurchaseReport> productWisePurchaseReportDao(String productId)
 	{
 		// TODO Auto-generated method stub

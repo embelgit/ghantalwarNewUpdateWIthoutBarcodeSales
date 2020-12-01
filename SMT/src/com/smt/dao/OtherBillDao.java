@@ -1000,5 +1000,113 @@ public class OtherBillDao {
 
 	}
 	
+	
+	
+	public List<SaleReport> Taxinvoicewisesalereport(String TaxvoiceId, String userTypeRole, String userName, String BillFirstDate, String BillEndDate)
+	{
+		System.out.println("userTypeRole ====> "+userTypeRole);
+		System.out.println("userName ====> "+userName);
+		// TODO Auto-generated method stub
+		HibernateUtility hbu = null;
+		Session session = null;
+		Query query2 = null;
+		List<SaleReport> catList = null;
+		try
+		{
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			Long k = 1l;
+			Double total = 0.0;
+			Double discount = 0.0;
+			Double grossAmt = 0.0;
+			
+			if(userTypeRole.equalsIgnoreCase("admin"))
+			{
+				System.out.println("TaxvoiceId ===> "+TaxvoiceId);
+				query2 = session.createSQLQuery("select o.BillNo, o.CarNo, o.BarcodeNo, pr.productName, ct.category_name, o.SalePrice, o.OwnerName, o.ContactNo, o.totalperitem, o.Discount, o.Quantity, o.SalePWithoutTax, o.perProductdisPer, o.taxAmtAfterDiscount, o.Gst, o.Date, sb.subcat_name from otherbill o join categories ct on o.fkCatId=ct.pk_category_id JOIN sub_categories sb on o.fkSubCatId=sb.pk_subcat_id JOIN product_reg pr on o.fkProductId = pr.pkProductNameId where o.BillNo=:TaxvoiceId AND o.Quantity>0 AND o.BarcodeNo=0 AND o.Date BETWEEN :BillFirstDate AND :BillEndDate");
+			}
+			else if(userTypeRole != "admin")
+			{
+				System.out.println("TaxvoiceId ===> "+TaxvoiceId);
+				query2 = session.createSQLQuery("select o.BillNo, o.CarNo, o.BarcodeNo, pr.productName, ct.category_name, o.SalePrice, o.OwnerName, o.ContactNo, o.totalperitem, o.Discount, o.Quantity, o.SalePWithoutTax, o.perProductdisPer, o.taxAmtAfterDiscount, o.Gst, o.Date, sb.subcat_name from otherbill o join categories ct on o.fkCatId=ct.pk_category_id JOIN sub_categories sb on o.fkSubCatId=sb.pk_subcat_id JOIN product_reg pr on o.fkProductId = pr.pkProductNameId where o.BillNo=:TaxvoiceId AND o.Quantity>0 AND o.BarcodeNo=0 AND o.EmpType != 'admin' AND o.Date BETWEEN :BillFirstDate AND :BillEndDate");
+			}
+			
+			query2.setParameter("TaxvoiceId", TaxvoiceId);
+			query2.setParameter("BillFirstDate", BillFirstDate);
+			query2.setParameter("BillEndDate", BillEndDate);
+			
+			
+			List<Object[]> list = query2.list();
+			catList = new ArrayList<SaleReport>(0);
+
+			for (Object[] object : list)
+			{
+				SaleReport reports = new SaleReport();
+				
+				
+				Double quantity = Double.parseDouble(object[10].toString());
+				
+				
+				/*String quantity = object[10].toString();
+				if (quantity.equals("0"))
+				{
+					continue;
+				}
+				else
+				{*/
+					reports.setSrNo(k);
+					reports.setBillNo(Long.parseLong(object[0].toString()));
+					reports.setCarNo(object[1].toString());
+					reports.setBarcodeNo(Long.parseLong(object[2].toString()));
+					reports.setItemName(object[3].toString());
+					reports.setCategoryName(object[4].toString());
+					DecimalFormat f = new DecimalFormat("##.00");
+					String sp = f.format(object[5]);
+					reports.setSalePrice(Double.parseDouble(sp));
+					reports.setOwnerName(object[6].toString());
+					reports.setContactNo(Long.parseLong(object[7].toString()));
+					/*reports.setTotalAmt((double) Math.round(Double.parseDouble(object[8].toString())*100.0)/100.0);
+					reports.setDiscount((double) Math.round(Double.parseDouble(object[9].toString())*100.0)/100.0);*/
+					
+					total = (Double) object[8];
+					discount = (Double) object[9];
+					if(quantity == 0)
+					{
+						reports.setDiscount(0.0);
+						reports.setTotalAmt(Double.parseDouble(sp));
+					}
+					else
+					{
+						reports.setTotalAmt(total);
+						//reports.setTotalAmt(Double.parseDouble(df.format((quantity * Double.parseDouble(sp)) - discount)));
+						reports.setDiscount((double) Math.round(Double.parseDouble(object[9].toString())*100.0)/100.0);
+					}
+					
+					reports.setQuantity(Double.parseDouble(object[10].toString()));
+					grossAmt = total - discount;
+					reports.setGrossamt(Double.parseDouble(object[8].toString()));
+					reports.setSpWithoutTax(object[11].toString());
+					reports.setPerProductDisPer(object[12].toString());
+					reports.setAfterDisTaxAmt(object[13].toString());
+					reports.setGst(Double.parseDouble(object[14].toString()));
+					if(userTypeRole.equals("admin"))
+					{
+						reports.setGrBuyPriceExTax("N/A");
+					}
+					else
+					{
+						reports.setGrBuyPriceExTax("0");
+					}
+					reports.setSaleDate(object[15].toString());;
+					reports.setSubCatName(object[16].toString());
+					k++;
+				/*}*/
+				catList.add(reports);
+			 } 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return catList;
+	}
 
 }

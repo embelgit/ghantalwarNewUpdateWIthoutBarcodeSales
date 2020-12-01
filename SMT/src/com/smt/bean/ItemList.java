@@ -11,7 +11,18 @@ public class ItemList
 	private String size;
 	private String suppName;
 	private String voucherNo;
+	private String billNo;
 	
+
+	
+	public String getBillNo() {
+		return billNo;
+	}
+
+	public void setBillNo(String billNo) {
+		this.billNo = billNo;
+	}
+
 	public String getItem_name() {
 		return item_name;
 	}

@@ -687,6 +687,20 @@ public class OtherBillHelper
 
 			return exp1List;
 		}
+		
+		
+		public List Taxinvoicewithoutbarcode(HttpServletRequest request, HttpServletResponse response) {
+			// TODO Auto-generated method stub
+			long msBillNocust = Long.parseLong(request.getParameter("msBillNocust"));
+
+			Map<Long, SaleReport> map = new HashMap<Long, SaleReport>();
+
+			OtherBillDao dao = new OtherBillDao();
+			List<SaleReport> exp1List = dao.billnowiseCCSR(msBillNocust);
+
+			return exp1List;
+		}
+		
 
 	// Barcode No Wise Miscellaneos Sale Report
 	public List barcodenowiseMiscellaneoussell(HttpServletRequest request, HttpServletResponse response) {
@@ -884,4 +898,19 @@ public class OtherBillHelper
 		}
 	}
 
+	
+	public List Taxinvoicewisesalereport(HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+		String TaxvoiceId = request.getParameter("TaxvoiceId");
+		String userTypeRole = request.getParameter("userTypeRole");
+		String userName = request.getParameter("userName");
+		String BillFirstDate = request.getParameter("BillFirstDate");
+		String BillEndDate = request.getParameter("BillEndDate");
+		Map<Long, SaleReport> map = new HashMap<Long, SaleReport>();
+		OtherBillDao dao = new OtherBillDao();
+		List<SaleReport> exp1List = dao.Taxinvoicewisesalereport(TaxvoiceId,userTypeRole,userName, BillFirstDate, BillEndDate);
+		return exp1List;
+	}
+	
+	
 }

@@ -3990,6 +3990,7 @@ function categorySaleWise()
 	}
 
 	var userTypeRole = $("#userType").val();
+	
 	var userName = $("#userName").val();
 	var catFirstDate = $("#catFirstDate").val();
 	var catEndDate = $("#catEndDate").val();
@@ -19328,3 +19329,505 @@ function paymentDueDateWiseFn()
 				}
 			});
 }
+
+
+
+
+
+
+function taxinvoice()
+{
+	var params = {};
+
+	var input = document.getElementById('BillnoId'), list = document
+			.getElementById('BillnoList'), i, TaxvoiceId;
+	for (i = 0; i < list.options.length; ++i) {
+		if (list.options[i].value === input.value) {
+			TaxvoiceId = list.options[i].getAttribute('data-value');
+		}
+	}
+
+	var userTypeRole = $("#userType").val();
+	
+	var userName = $("#userName").val();
+	var BillFirstDate = $("#BillFirstDate").val();
+	var BillEndDate = $("#BillEndDate").val();
+	
+	if(TaxvoiceId == null || TaxvoiceId == "" || TaxvoiceId == " " || TaxvoiceId == undefined)
+	{
+		alert("Please Select Bill no");
+		return false;
+	}
+	
+	if(BillFirstDate == null || BillFirstDate == "" || BillFirstDate == " " || BillFirstDate == undefined)
+	{
+		alert("Please Select Start Date");
+		return false;
+	}
+	
+	if(BillEndDate == null || BillEndDate == "" || BillEndDate == " " || BillEndDate == undefined)
+	{
+		alert("Please Select End Date");
+		return false;
+	}
+
+	
+	params["userTypeRole"] = userTypeRole;
+	params["userName"] = userName;
+	params["TaxvoiceId"] = TaxvoiceId;
+	params["BillFirstDate"] = BillFirstDate;
+	params["BillEndDate"] = BillEndDate;
+	params["methodName"] = "TaxWiseSaleReport";
+	
+	$.post('/SMT/jsp/utility/controller.jsp',
+					params,
+					function(data) {
+						$('#saleTaxWise').dataTable().fnClearTable();
+						var jsonData = $.parseJSON(data);
+						var catmap = jsonData.list;
+						$(document)
+								.ready(
+										function() {
+											$('#saleTaxWise')
+													.DataTable(
+															{
+																fnRowCallback : function(
+																		nRow,
+																		aData,
+																		iDisplayIndex) {
+																	$(
+																			"th:first",
+																			nRow)
+																			.html(
+																					iDisplayIndex + 1);
+																	return nRow;
+																},
+																"footerCallback" : function(
+																		row,
+																		data,
+																		start,
+																		end,
+																		display) {
+																	var api = this
+																			.api(), data;
+
+																	// Remove
+																	// the
+																	// formatting
+																	// to get
+																	// integer
+																	// data for
+																	// summation
+																	var intVal = function(
+																			i) {
+																		return typeof i === 'string' ? i
+																				.replace(
+																						/[\$,]/g,
+																						'') * 1
+																				: typeof i === 'number' ? i
+																						: 0;
+																	};																
+
+																	// Total
+																	// over this
+																	// page
+																	pageTotal = api
+																			.column(
+																					6)
+																			.data()
+																			.reduce(
+																					function(
+																							a,
+																							b) {
+																						return intVal(a)
+																								+ intVal(b);
+																					},
+																					0);
+
+																	// Update
+																	// footer
+																	$(
+																			api
+																					.column(
+																							6)
+																					.footer())
+																			.html(
+																					str = pageTotal
+																							.toFixed(2));
+																	console
+																			.log(pageTotal);
+
+																	// Total
+																	// over this
+																	// page
+																	/*
+																	 * pageTotal =
+																	 * api
+																	 * .column(
+																	 * 7 )
+																	 * .data()
+																	 * .reduce(
+																	 * function
+																	 * (a, b) {
+																	 * return
+																	 * intVal(a) +
+																	 * intVal(b); },
+																	 * 0 );
+																	 * 
+																	 *  //
+																	 * Update
+																	 * footer $(
+																	 * api.column(
+																	 * 7
+																	 * ).footer()
+																	 * ).html(
+																	 * str =
+																	 * pageTotal.toFixed(2) );
+																	 * console.log(
+																	 * pageTotal);
+																	 */
+
+																	/*
+																	 * // Total
+																	 * over this
+																	 * page
+																	 * pageTotal =
+																	 * api
+																	 * .column(
+																	 * 8 )
+																	 * .data()
+																	 * .reduce(
+																	 * function
+																	 * (a, b) {
+																	 * return
+																	 * intVal(a) +
+																	 * intVal(b); },
+																	 * 0 );
+																	 * 
+																	 *  //
+																	 * Update
+																	 * footer $(
+																	 * api.column(
+																	 * 8
+																	 * ).footer()
+																	 * ).html(
+																	 * str =
+																	 * pageTotal.toFixed(2) );
+																	 * console.log(
+																	 * pageTotal);
+																	 */
+
+																	// Total
+																	// over this
+																	// page
+/*																	pageTotal = api
+																			.column(
+																					9)
+																			.data()
+																			.reduce(
+																					function(
+																							a,
+																							b) {
+																						return intVal(a)
+																								+ intVal(b);
+																					},
+																					0);
+
+																	// Update
+																	// footer
+																	$(
+																			api
+																					.column(
+																							9)
+																					.footer())
+																			.html(
+																					str = pageTotal
+																							.toFixed(2));
+																	console
+																			.log(pageTotal);
+
+																	// Total
+																	// over this
+																	// page
+																	pageTotal = api
+																			.column(
+																					10)
+																			.data()
+																			.reduce(
+																					function(
+																							a,
+																							b) {
+																						return intVal(a)
+																								+ intVal(b);
+																					},
+																					0);
+
+																	// Update
+																	// footer
+																	$(
+																			api
+																					.column(
+																							10)
+																					.footer())
+																			.html(
+																					str = pageTotal
+																							.toFixed(2));
+																	console
+																			.log(pageTotal);
+
+																	// Total
+																	// over this
+																	// page
+																	pageTotal = api
+																			.column(
+																					11)
+																			.data()
+																			.reduce(
+																					function(
+																							a,
+																							b) {
+																						return intVal(a)
+																								+ intVal(b);
+																					},
+																					0);
+
+																	// Update
+																	// footer
+																	$(
+																			api
+																					.column(
+																							11)
+																					.footer())
+																			.html(
+																					str = pageTotal
+																							.toFixed(2));
+																	console
+																			.log(pageTotal);
+*/																	
+																	
+																	// Total
+																	// over this
+																	// page
+																	pageTotal = api
+																			.column(
+																					12)
+																			.data()
+																			.reduce(
+																					function(
+																							a,
+																							b) {
+																						return intVal(a)
+																								+ intVal(b);
+																					},
+																					0);
+
+																	// Update
+																	// footer
+																	$(
+																			api
+																					.column(
+																							12)
+																					.footer())
+																			.html(
+																					str = pageTotal
+																							.toFixed(2));
+																	console
+																			.log(pageTotal);
+																	
+																	
+																	
+																	// Total
+																	// over this
+																	// page
+																	pageTotal = api.column(13).data().reduce(
+																					function(a,b) {
+																						return intVal(a)
+																								+ intVal(b);
+																					},
+																					0);
+
+																	// Update
+																	// footer
+																	$(
+																			api
+																					.column(
+																							13)
+																					.footer())
+																			.html(
+																					str = pageTotal
+																							.toFixed(2));
+																	console
+																			.log(pageTotal);
+																	
+																	// over this
+																	// page
+																	pageTotal = api
+																			.column(
+																					14)
+																			.data()
+																			.reduce(
+																					function(
+																							a,
+																							b) {
+																						return intVal(a)
+																								+ intVal(b);
+																					},
+																					0);
+
+																	// Update
+																	// footer
+																	$(
+																			api
+																					.column(
+																							14)
+																					.footer())
+																			.html(
+																					str = pageTotal
+																							.toFixed(2));
+																	console.log(pageTotal);
+																	
+																},
+																destroy : true,
+																searching : true,
+																"scrollY": 300,
+																"scrollX": true,
+																/*"scrollCollapse" : true,*/
+																////"paging" : false,
+																columns : [
+																		{
+																			"data" : "srNo",
+																			"width" : "5%",
+																			"defaultContent" : "",
+																		},
+																		{
+																			"data" : "billNo",
+																			"width" : "5%",
+																			"defaultContent" : "",
+																		},
+																		{
+																			"data" : "barcodeNo",
+																			"width" : "5%",
+																			"defaultContent" : ""
+																		},
+																		{
+																			"data" : "itemName",
+																			"width" : "5%",
+																			"defaultContent" : ""
+																		},
+																		{
+																			"data" : "categoryName",
+																			"width" : "5%",
+																			"defaultContent" : ""
+																		},
+																		{
+																			"data" : "subCatName",
+																			"width" : "5%",
+																			"defaultContent" : ""
+																		},
+																		{
+																			"data" : "quantity",
+																			"width" : "5%",
+																			"defaultContent" : ""
+																		},
+																		{
+																			"data" : "grBuyPriceExTax",
+																			"width" : "5%",
+																			"defaultContent" : "",
+																			"visible":false,
+																		},
+																		{
+																			"data" : "salePrice",
+																			"width" : "5%",
+																			"defaultContent" : ""
+																		},
+																		{
+																			"data" : "gst",
+																			"width" : "5%",
+																			"defaultContent" : ""
+																		},
+																		{
+																			"data" : "spWithoutTax",
+																			"width" : "5%",
+																			"defaultContent" : ""
+																		},																		
+																		{
+																			"data": "perProductDisPer",
+																			"width": "5%",
+																			"defaultContent": ""
+																		},																		 
+																		{
+																			"data" : "discount",
+																			"width" : "5%",
+																			"defaultContent" : ""
+																		},
+																		{
+																			"data": "afterDisTaxAmt",
+																		    "width": "5%",
+																		    "defaultContent": ""
+																		},
+																		{
+																			"data" : "totalAmt",
+																			"width" : "5%",
+																			"defaultContent" : ""
+																		},
+																		{
+																			"data" : "saleDate",
+																			"width" : "5%",
+																			"defaultContent" : ""
+																		}],
+																dom : 'Bfrtip',
+																buttons : [
+																		{
+																			extend : 'copyHtml5',
+																			footer : true,
+																			title : function()
+																			{
+																				return shopNameSD+"\n"+shopAddressSD+"\n"+shopContactNoSD+"\n"+shopGstNoSD+"\n"+shopEmailSD+"\n\n Tax Invoice W/O Barcode Wise Sale Report";
+																			},
+																		},
+																		{
+																			extend : 'excelHtml5',
+																			footer : true,
+																			title : function()
+																			{
+																				return shopNameSD+"\n"+shopAddressSD+"\n"+shopContactNoSD+"\n"+shopGstNoSD+"\n"+shopEmailSD+"\n\n Tax Invoice W/O Barcode Wise Sale Report";
+																			},
+																		},
+																		{
+																			extend : 'csvHtml5',
+																			footer : true,
+																			title : function()
+																			{
+																				return shopNameSD+"\n"+shopAddressSD+"\n"+shopContactNoSD+"\n"+shopGstNoSD+"\n"+shopEmailSD+"\n\n Tax Invoice W/O Barcode Wise Sale Report";
+																			},
+																		},
+																		{
+																			extend : 'pdfHtml5',
+																			footer : true,
+																			title : function()
+																			{
+																				return shopNameSD+"\n"+shopAddressSD+"\n"+shopContactNoSD+"\n"+shopGstNoSD+"\n"+shopEmailSD+"\n\n Tax Invoice W/O Barcode Wise Sale Report";
+																			},
+																			orientation : 'landscape',
+																			pageSize : 'LEGAL',
+																			titleAttr : 'PDF'
+																		},
+																		]
+															});
+										});
+						
+						var mydata = catmap;
+						$('#saleTaxWise').dataTable().fnAddData(mydata);
+					}).error(function(jqXHR, textStatus, errorThrown) {
+				if (textStatus === "timeout") {
+					$(loaderObj).hide();
+					$(loaderObj).find('#errorDiv').show();
+
+				}
+			});	
+}
+
+
+
+
+

@@ -1869,8 +1869,11 @@ width: 110px;
 										style="color: blue">GST Return</h4></a></li>
 							<li><a data-toggle="tab" href="#paymentModeWiseReport"><h4
 										style="color: blue">
-										Payment Mode<br>Wise
-									</h4></a></li>
+										Payment Mode<br>Wise</h4></a></li>
+									
+									<li><a data-toggle="tab" href="#barcode"><h4
+										style="color: blue">Tax Invoice Without<br> Barcode Wise</h4></a></li>
+									
 							<!-- <li><a data-toggle="tab" href="#paymentModeRangeWiseReport"><h4 style="color: blue">Payment Mode<br>Range Wise</h4></a></li> -->
 						</ul>
 
@@ -2671,12 +2674,131 @@ width: 110px;
 										</table>
 									</div>
 								</div>
+							</div>
+							
+							<div id="barcode" class="tab-pane">
+								<div class="miscellaneous">
+									<form class="form-horizontal" method="post" action=""
+										name="supReportBill">
+										<div class="container">
+											<div class="row">
+												<div class="invoice_label_up">
+													<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+														id="graphcolumnwidth">
 
 
+														<%
+															ProductDetailHelper pdh6 = new ProductDetailHelper();
+															List pList1 = pdh6.getbillnumber();
+														%>
+
+														<input list="BillnoList" id="BillnoId"
+															required>
+														<datalist id="BillnoList">
+															<%
+																for (int i = 0; i < pList1.size(); i++) {
+																	ItemList itemL = (ItemList) pList1.get(i);
+															%>
+															<option data-value="<%=itemL.getBillNo()%>"
+																value="<%=itemL.getBillNo()%>">
+																<%
+																	}
+																%>
+															
+														</datalist>
+														<label for=""> Select Bill No:<sup>*</sup></label>
+													</div>
+												</div>
+
+												<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+													id="graphcolumnwidth">
+													<input type="date" id="BillFirstDate" type="text"> <label
+														for="catFirstDate">From<sup style="color: red;">*</sup></label>
+												</div>
+												
+												<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+													id="graphcolumnwidth">
+													<input type="date" id="BillEndDate" placeholder="End Date"
+														type="text"> <label for="catEndDate">To<sup style="color: red;">*</sup></label>
+												</div>
+
+
+												<div class="col-md-2" id="btnsub">
+													<input type="button" id="btn" name="save"
+														class="btn btn-lg btn-success btn-md button_hw button_margin_right"
+														onclick="taxinvoice()" value="Search"
+														style="padding-bottom: 31px;" />
+												</div>
+
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="container">
+									<div class="table-responsive" id="tables">
+										<!-- style="margin-left: -3%;width: 116%;overflow-y:hidden;border:2px solid black;" -->
+										<table
+											class="table table-bordered table-striped table-condensed cf"
+											id="saleTaxWise" class="display"
+											style="border: 2px solid black; border-collapse: collapse;">
+											<thead>
+												<tr>
+													<th>Sr No</th>
+													<th>Bill No</th>
+													<th>Barcode No</th>
+													<th>Item Name</th>
+													<th>Category</th>
+													<th>Sub Category</th>
+													<th>Quantity</th>
+													<th>Buy Price<br>Excl. Tax
+													</th>
+													<th>Sale Price</th>
+													<th>GST<br>%
+													</th>
+													<th>Sale Price<br>Without Tax
+													</th>
+													<th>Discount<br>%
+													</th>
+													<th>Discount<br>Amount
+													</th>
+													<th>Tax Amount<br>After Discount
+													</th>
+													<th>Total Amount</th>
+													<th>Date</th>
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th colspan="6" style="text-align: right">Total:</th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
 
 							</div>
+							
+							
 						</div>
 					</div>
+
+
+
+
+
+
+
+
 
 					<!----- 	Currnt Stock reports ------>
 

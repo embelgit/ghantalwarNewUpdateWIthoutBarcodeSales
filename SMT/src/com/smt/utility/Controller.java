@@ -2488,4 +2488,18 @@ public class Controller
 			helper.AccessControlDetails(request, response);
 			return toJson("Data Added Successfully");
 		}
+		
+		
+		// get Taxinvoicewithoutbarcode Report
+		public String TaxWiseSaleReport(HttpServletRequest request, HttpServletResponse response)
+		{
+			OtherBillHelper helper = new OtherBillHelper();
+			List categories = helper.Taxinvoicewisesalereport(request, response);
+			Map<String, List> returnMap = new HashMap<String, List>();
+			returnMap.put("list", categories);
+			System.out.println("$$$$$$$$$$$$$$$$" + returnMap);
+			return toJson(returnMap);
+		}
+		
+		
 }
