@@ -64,6 +64,7 @@ body {
 	border-radius: 9px;
 	border-color: #21409c;
 	background-color: rgb(232, 240, 254) !important;
+	font-size:16px;
 }
 
 .logincontent label {
@@ -128,11 +129,13 @@ body {
 .logincontent input[type="text"] {
 	border-radius: 9px;
 	border-color: #21409c;
+	font-size:16px;
 }
 
 .logincontent input[type="password"] {
 	border-radius: 9px;
 	border-color: #21409c;
+	font-size:16px;
 }
 
 .logincontent input[type="button"] {
