@@ -1,5 +1,10 @@
 package com.smt.helper;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,6 +15,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -44,6 +50,33 @@ public class ProductDetailHelper
 		String fkSubCatId = request.getParameter("fkSubCatId");
 		String isBarcodeProduct = request.getParameter("isBarcodeProduct");
 		
+		String image=request.getParameter("image");
+		
+		System.out.println("image"+image);
+		
+		
+		File file=new File(image);
+		
+		byte[] bfile=new byte[(int) file.length()];
+		
+		try {
+			FileInputStream fi= new FileInputStream(file);
+			
+			try {
+				fi.read(bfile);
+				
+				fi.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		Date dateobj = new Date();
 
@@ -54,6 +87,7 @@ public class ProductDetailHelper
 
 		Integer count = Integer.parseInt(request.getParameter("count"));
 
+		
 		if(count == null || count == 0)
 		{
 			String color = request.getParameter("colorFinal");
@@ -147,6 +181,8 @@ public class ProductDetailHelper
 				pdreg.setFkShopId(Long.parseLong(shopId));
 				pdreg.setIsBarcodeProduct(isBarcodeProduct);
 	
+				pdreg.setImage(bfile);
+				
 				reg.doProductRegister(pdreg);
 			}
 		}

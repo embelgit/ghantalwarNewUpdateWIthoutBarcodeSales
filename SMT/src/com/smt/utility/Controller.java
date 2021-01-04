@@ -2501,5 +2501,105 @@ public class Controller
 			return toJson(returnMap);
 		}
 		
+		public String getsaleamount (HttpServletRequest request ,HttpServletResponse response)
+		{
+			GoodReceiveHelper helper=new GoodReceiveHelper();
+			List categories=helper.getsaleamount(request, response);
+			Map<String, List> returnMap = new HashMap<String, List>();
+			String xyz = toJson(categories);
+			System.out.println("data: - "+xyz);
+			System.out.println("going out of controller");
+			return xyz;	
+		}
 		
+		public String getsaleamountreg (HttpServletRequest request ,HttpServletResponse response)
+		{
+			GoodReceiveHelper helper=new GoodReceiveHelper();
+			List categories=helper.getsaleamount1(request, response);
+			Map<String, List> returnMap = new HashMap<String, List>();
+			String xyz = toJson(categories);
+			System.out.println("data: - "+xyz);
+			System.out.println("going out of controller");
+			return xyz;	
+		}
+		
+		public String getPurchase (HttpServletRequest request ,HttpServletResponse response)
+		{
+			GoodReceiveHelper helper=new GoodReceiveHelper();
+			List categories=helper.getPurchaseAmount(request, response);
+			Map<String, List> returnMap = new HashMap<String, List>();
+			String xyz = toJson(categories);
+			System.out.println("data: - "+xyz);
+			System.out.println("going out of controller");
+			return xyz;	
+		}
+		
+		
+		public String getlowStock (HttpServletRequest request ,HttpServletResponse response)
+		{
+			GoodReceiveHelper helper=new GoodReceiveHelper();
+			List categories=helper.getlowStock(request, response);
+			Map<String, List> returnMap = new HashMap<String, List>();
+			String xyz = toJson(categories);
+			System.out.println("data: - "+xyz);
+			System.out.println("going out of controller");
+			return xyz;	
+		}
+		
+		
+		public String getyestsaleamount (HttpServletRequest request ,HttpServletResponse response)
+		{
+			GoodReceiveHelper helper=new GoodReceiveHelper();
+			List categories=helper.getyestAmount(request, response);
+			Map<String, List> returnMap = new HashMap<String, List>();
+			String xyz = toJson(categories);
+			System.out.println("data: - "+xyz);
+			System.out.println("going out of controller");
+			return xyz;	
+		}
+		
+		
+		public String getyestsaleRegamount (HttpServletRequest request ,HttpServletResponse response)
+		{
+			GoodReceiveHelper helper=new GoodReceiveHelper();
+			List categories=helper.getyestAmount1(request, response);
+			Map<String, List> returnMap = new HashMap<String, List>();
+			String xyz = toJson(categories);
+			System.out.println("data: - "+xyz);
+			System.out.println("going out of controller");
+			return xyz;	
+		}
+		
+		public String getyestpurchaseamount (HttpServletRequest request ,HttpServletResponse response)
+		{
+			GoodReceiveHelper helper=new GoodReceiveHelper();
+			List categories=helper.getyestpurchaseAmount(request, response);
+			Map<String, List> returnMap = new HashMap<String, List>();
+			String xyz = toJson(categories);
+			System.out.println("data: - "+xyz);
+			System.out.println("going out of controller");
+			return xyz;	
+		}
+		
+		
+		
+		public String agewiseRangeController(HttpServletRequest request, HttpServletResponse response)
+		{
+			CustomerOrderHelper helper = new CustomerOrderHelper();
+			List categories = helper.advanceBookingRangeHelper(request, response);
+			Map<String, List> returnMap = new HashMap<String, List>();
+			returnMap.put("list", categories);
+			System.out.println("$$$$$$$$$$$$$$$$" + returnMap);
+			return toJson(returnMap);
+		}
+		
+		public String agewiseSupplierAndRangeController(HttpServletRequest request, HttpServletResponse response)
+		{
+			AdvanceBookingHelper helper = new AdvanceBookingHelper();
+			List categories = helper.agewiseSupplierAndRangeHelper(request, response);
+			Map<String, List> returnMap = new HashMap<String, List>();
+			returnMap.put("list", categories);
+			System.out.println("$$$$$$$$$$$$$$$$" + returnMap);
+			return toJson(returnMap);
+		}
 }

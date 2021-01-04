@@ -236,6 +236,20 @@ width: 110px;
 <div class="miscellaneous" id="suppliereditcol">
 	<form action="supplier" name="supd1" method="post">
 		<div class="container col-sm-offset-1">
+			
+					<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-1"></div>
+		<div class="col-md-1"></div>
+			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport" >
+			<select class="" id="type" name="type" name="Select Type">
+			
+			<option value="registered">Registered</option>
+			<option value="unregistered">Unregistered</option>
+			<option value="registeredcomposite">Registered Composite</option>
+			</select>  
+			</div>
+			</div>
 			<div class="row">
 			<div class="invoice_label_up">
 			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
@@ -348,6 +362,46 @@ width: 110px;
 						</div>
 						</div>
 			</div>
+		<div class="row">
+			<div class="invoice_label_up">
+		             <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+					 <input type="text" id="accname" name="accname"  required/>
+						<label>Supplier Account Name</label>
+						</div>
+						</div>
+						
+						<div class="col-md-1"></div>
+						
+					<div class="invoice_label_up">
+				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+					     <input type="text" id="account" name="account"  required/>
+						<label>Account Number</label>
+						</div>
+						</div>
+			</div>
+		<div class="row">
+			<div class="invoice_label_up">
+				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+					 <input type="text" id="ifsc" name="ifsc"  required/>
+						<label>IFSC Code</label>
+						</div>
+						</div>
+						
+					<div class="col-md-1"></div>
+					
+				<div class="invoice_label_up">
+                     <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+					     <input type="text" id="upid" name="upid" required/>
+						<label>UPI ID</label>
+						</div>
+						</div>
+			
+				
+			</div>
+
+			
+			
+			
         </div>
        
 			<div class="row">

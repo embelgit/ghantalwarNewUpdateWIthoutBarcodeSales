@@ -18,7 +18,35 @@ public class GetCreditCustomerDetails {
 	private Double balance;
 	private String aadhar;
 	private Long billNo1;
+	private Double purchasetotal;
+	private Double totalAmount1;
+	private Double totalAmount2;
+	
+	
+	public Double getPurchasetotal() {
+		return purchasetotal;
+	}
 
+	public void setPurchasetotal(Double purchasetotal) {
+		this.purchasetotal = purchasetotal;
+	}
+
+	public Double getTotalAmount1() {
+		return totalAmount1;
+	}
+
+	public void setTotalAmount1(Double totalAmount1) {
+		this.totalAmount1 = totalAmount1;
+	}
+	public Double getTotalAmount2() {
+		return totalAmount2;
+	}
+
+	public void setTotalAmount2(Double totalAmount2){
+		this.totalAmount2 = totalAmount2;
+	}
+	
+	
 	public Long getBillNo1() {
 		return billNo1;
 	}

@@ -34,6 +34,17 @@
 		<property name="activeYn" type="java.lang.String" column="active_YN" length="255" />
 		
 		<property name="fkShopId" type="java.lang.Long" column="fkShopId" />
+		
+		<property name="supplierType" type="java.lang.String" column="supplier_TaxType" length="255" />
+		
+		<property name="AccountName" type="java.lang.String" column="account_name" length="255" />
+			
+		<property name="ifsCcode1" type="java.lang.String" column="ifsc" length="255" />
+		
+		<property name="upiid" type="java.lang.String" column="upiid" length="255" />
+		
+		<property name="AccNumber" type="java.lang.Long" column="account_number" />
+		
 
 	</class>
 </hibernate-mapping>

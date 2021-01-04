@@ -359,6 +359,7 @@ function getitemData1()
 				        	  width:70,
 				        	  sortable: false,
 				        	  editable: true,
+				        	  classes: 'myBackGroundColor',
 				        	  editoptions:{
 									dataInit: function(element)
 								    {
@@ -388,6 +389,7 @@ function getitemData1()
 				        	  width:135,
 				        	  sortable: false,
 				        	  editable: true,
+				        	  classes: 'myBackGroundColor',
 				        	  editoptions:{
 									dataInit: function(element)
 								    {
@@ -412,6 +414,7 @@ function getitemData1()
 				        	  name:'sPWithoutTax',
 				        	  width:120,
 				        	  sortable: false,
+				        	  classes: 'myBackGroundColor',
 				          },
 				          {	
 				        	  name:'disPerForBill',
@@ -474,6 +477,7 @@ function getitemData1()
 				        	  width:140,
 				        	  sortable: false,
 				        	  //formatter: sumFmatter
+				        	  classes: 'myBackGroundColor',
 				          },
 				          {	
 				        	  name:'EmpName',//this is for take drop down in grid

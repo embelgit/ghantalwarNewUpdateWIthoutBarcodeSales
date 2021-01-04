@@ -17,6 +17,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 
 import com.itextpdf.text.log.SysoLogger;
+import com.smt.bean.AdvanceBookingBean;
 import com.smt.bean.BillBean;
 import com.smt.bean.CustomerBean;
 import com.smt.bean.GoodReceiveItemBean;
@@ -25,8 +26,10 @@ import com.smt.bean.PurchaseReportBean;
 import com.smt.bean.SaleReport;
 import com.smt.bean.SaleReports;
 import com.smt.bean.SaleReturnBean;
+import com.smt.bean.StocktemNameBean;
 import com.smt.bean.currentStock;
 import com.smt.bean.gstReturnbean;
+import com.smt.dao.AdvanceBookingDao;
 import com.smt.dao.CarEntryDao;
 import com.smt.dao.CustomerOrderDao;
 import com.smt.dao.GoodReciveDao;
@@ -333,7 +336,11 @@ public class CustomerOrderHelper {
 	{
 		// TODO Auto-generated method stub
 
+		
 		Long barcodeNo = Long.parseLong(request.getParameter("barcodeNo"));
+		
+		System.out.println(barcodeNo);	
+		
 		String userType = request.getParameter("userType");
 		String userName = request.getParameter("userName");
 		
@@ -1438,4 +1445,21 @@ public class CustomerOrderHelper {
 
 					return exp1List;
 				}				
+				
+				
+				public List advanceBookingRangeHelper(HttpServletRequest request, HttpServletResponse response)
+				{
+					// TODO Auto-generated method stub
+					String aBFisDate = request.getParameter("aBFisDate");
+					String aBEndDate = request.getParameter("aBEndDate");
+					System.out.println("aBFisDate "+aBFisDate);
+					System.out.println("aBEndDate "+aBEndDate);		
+					Map<Long, StocktemNameBean> map = new HashMap<Long, StocktemNameBean>();
+
+					StockDao dao = new StockDao();
+					List<StocktemNameBean> exp1List = dao.getbetweenageWiseItemnameStock(aBFisDate, aBEndDate);
+
+					return exp1List;
+				}
+				
 }

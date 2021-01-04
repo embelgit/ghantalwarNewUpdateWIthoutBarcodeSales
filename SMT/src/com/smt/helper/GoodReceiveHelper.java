@@ -8,6 +8,9 @@ import java.io.InputStreamReader;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -21,11 +24,13 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import com.smt.bean.BarcodeReportBean;
 import com.smt.bean.BillBean;
+import com.smt.bean.GetCreditCustomerDetails;
 import com.smt.bean.GoodReceiveItemBean;
 import com.smt.bean.GoodreciveBillBean;
 import com.smt.bean.PreviousGoodReceive;
 import com.smt.bean.PurchaseReport;
 import com.smt.bean.allTransactionId;
+import com.smt.bean.currentStock;
 import com.smt.dao.AdvanceBookingDao;
 import com.smt.dao.GoodReciveDao;
 import com.smt.dao.OtherBillDao;
@@ -1896,4 +1901,136 @@ public class GoodReceiveHelper
 		return exp1List;
 	}
 
+	
+	public List getsaleamount(HttpServletRequest request,HttpServletResponse response) 
+	{
+	    LocalDate todaydate = LocalDate.now();
+	    //LocalDate frstday = todaydate.withDayOfMonth(1);
+	    //LocalDate lstday = todaydate.withDayOfMonth(todaydate.lengthOfMonth());
+	   // System.out.println(frstday+" & "+lstday);
+	    
+         Map<Long,GetCreditCustomerDetails> map = new HashMap<Long,GetCreditCustomerDetails>();
+ 		
+         GoodReciveDao dao = new GoodReciveDao();
+ 		List<GetCreditCustomerDetails> stockList = dao.getsaleamt(todaydate, request);
+ 		
+ 		return stockList;
+	
+	}
+	
+	
+	
+	public List getsaleamount1(HttpServletRequest request,HttpServletResponse response) 
+	{
+	    LocalDate todaydate1 = LocalDate.now();
+	    //LocalDate frstday = todaydate.withDayOfMonth(1);
+	    //LocalDate lstday = todaydate.withDayOfMonth(todaydate.lengthOfMonth());
+	   // System.out.println(frstday+" & "+lstday);
+	    
+         Map<Long,BillBean> map = new HashMap<Long,BillBean>();
+ 		
+         GoodReciveDao dao = new GoodReciveDao();
+ 		List<BillBean> stockList = dao.getsaleamt1(todaydate1, request);
+ 		
+ 		return stockList;
+	
+	}
+
+	
+	public List getPurchaseAmount(HttpServletRequest request,HttpServletResponse response) 
+	{
+	    LocalDate todaydate1 = LocalDate.now();
+	    //LocalDate frstday = todaydate.withDayOfMonth(1);
+	    //LocalDate lstday = todaydate.withDayOfMonth(todaydate.lengthOfMonth());
+	   // System.out.println(frstday+" & "+lstday);
+	    
+         Map<Long,BillBean> map = new HashMap<Long,BillBean>();
+ 		
+         GoodReciveDao dao = new GoodReciveDao();
+ 		List<BillBean> stockList = dao.PurchaseAmount(todaydate1, request);
+ 		
+ 		return stockList;
+	
+	}
+	
+	
+	public List getyestAmount(HttpServletRequest request,HttpServletResponse response) 
+	{
+		
+		
+		LocalDate today = LocalDate.now();
+		LocalDate yesterday = today.minusDays(1);
+		
+		//Instant now = Instant.now();
+		//Instant yesterday = now.minus(1, ChronoUnit.DAYS);
+		System.out.println(LocalDate.now());
+		System.out.println(yesterday);
+         Map<Long,GetCreditCustomerDetails> map = new HashMap<Long,GetCreditCustomerDetails>();
+ 		
+         GoodReciveDao dao = new GoodReciveDao();
+ 		List<GetCreditCustomerDetails> stockList = dao.getyestsaleamt(yesterday, request);
+ 		
+ 		return stockList;
+	
+	}
+	
+	public List getyestAmount1(HttpServletRequest request,HttpServletResponse response) 
+	{
+		
+		
+		LocalDate today = LocalDate.now();
+		LocalDate yesterday = today.minusDays(1);
+		
+		//Instant now = Instant.now();
+		//Instant yesterday = now.minus(1, ChronoUnit.DAYS);
+		System.out.println(LocalDate.now());
+		System.out.println(yesterday);
+         Map<Long,GetCreditCustomerDetails> map = new HashMap<Long,GetCreditCustomerDetails>();
+ 		
+         GoodReciveDao dao = new GoodReciveDao();
+ 		List<GetCreditCustomerDetails> stockList = dao.getyestsaleamt1(yesterday, request);
+ 		
+ 		return stockList;
+	
+	}
+	
+	
+	public List getyestpurchaseAmount(HttpServletRequest request,HttpServletResponse response) 
+	{
+		
+		
+		LocalDate today = LocalDate.now();
+		LocalDate yesterday = today.minusDays(1);
+		
+		//Instant now = Instant.now();
+		//Instant yesterday = now.minus(1, ChronoUnit.DAYS);
+		System.out.println(LocalDate.now());
+		System.out.println(yesterday);
+         Map<Long,GetCreditCustomerDetails> map = new HashMap<Long,GetCreditCustomerDetails>();
+ 		
+         GoodReciveDao dao = new GoodReciveDao();
+ 		List<GetCreditCustomerDetails> stockList = dao.getyestsaleamt2(yesterday, request);
+ 		
+ 		return stockList;
+	
+	}
+	
+	
+	
+	public List getlowStock(HttpServletRequest request,HttpServletResponse response) 
+	{
+	    LocalDate todaydate1 = LocalDate.now();
+	    //LocalDate frstday = todaydate.withDayOfMonth(1);
+	    //LocalDate lstday = todaydate.withDayOfMonth(todaydate.lengthOfMonth());
+	   // System.out.println(frstday+" & "+lstday);
+	    
+         Map<Long,currentStock> map = new HashMap<Long,currentStock>();
+ 		
+         GoodReciveDao dao = new GoodReciveDao();
+ 		List<currentStock> stockList = dao.getslowstock(todaydate1, request);
+ 		
+ 		return stockList;
+	
+	}
+	
 }

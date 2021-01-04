@@ -84,6 +84,81 @@ public class SupplierDetail implements Serializable {
 	private String activeYn;
 	
 	private Long fkShopId;
+	
+	
+	private String AccountName;
+	private Long AccNumber;
+	private String ifsCcode1;
+	private String upiid;
+	
+private String SupplierType;
+
+	
+	
+	
+	
+	public String getSupplierType() {
+	return SupplierType;
+}
+
+public void setSupplierType(String supplierType) {
+	SupplierType = supplierType;
+}
+
+	
+
+	public SupplierDetail(Long supplierId, String address, Long serialnumber, Date anniversary, String bankName,
+		Date birthday, String branchName, String brand, String city, String contactPerson, Double creditLimit,
+		Long cstNo, String email, String ifscCode, String partyType, String paymentType, Long pin, String state,
+		String supplierName, Long tinNo, Long mobileno, Long micrNo, String panNo, Long accountNo, Double discount,
+		String suppCode, String gRItemName, String gRBarcode, String taxType, String activeYn, Long fkShopId,
+		String accountName, Long accNumber, String ifsCcode1, String upiid, String supplierType) {
+	super();
+	this.supplierId = supplierId;
+	this.address = address;
+	this.serialnumber = serialnumber;
+	this.anniversary = anniversary;
+	this.bankName = bankName;
+	this.birthday = birthday;
+	this.branchName = branchName;
+	this.brand = brand;
+	this.city = city;
+	this.contactPerson = contactPerson;
+	this.creditLimit = creditLimit;
+	this.cstNo = cstNo;
+	this.email = email;
+	this.ifscCode = ifscCode;
+	this.partyType = partyType;
+	this.paymentType = paymentType;
+	this.pin = pin;
+	this.state = state;
+	this.supplierName = supplierName;
+	this.tinNo = tinNo;
+	this.mobileno = mobileno;
+	this.micrNo = micrNo;
+	this.panNo = panNo;
+	this.accountNo = accountNo;
+	this.discount = discount;
+	this.suppCode = suppCode;
+	this.gRItemName = gRItemName;
+	this.gRBarcode = gRBarcode;
+	this.taxType = taxType;
+	this.activeYn = activeYn;
+	this.fkShopId = fkShopId;
+	AccountName = accountName;
+	AccNumber = accNumber;
+	this.ifsCcode1 = ifsCcode1;
+	this.upiid = upiid;
+	SupplierType = supplierType;
+}
+
+	public String getIfsCcode1() {
+		return ifsCcode1;
+	}
+
+	public void setIfsCcode1(String ifsCcode1) {
+		this.ifsCcode1 = ifsCcode1;
+	}
 
 	/** full constructor */
 	
@@ -96,43 +171,36 @@ public class SupplierDetail implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 
-	public SupplierDetail(Long supplierId, String address, Long serialnumber, Date anniversary, String bankName,
-			Date birthday, String branchName, String brand, String city, String contactPerson, Double creditLimit,
-			Long cstNo, String email, String ifscCode, String partyType, String paymentType, Long pin, String state,
-			String supplierName, Long tinNo, Long mobileno, Long micrNo, String panNo, Long accountNo, Double discount,
-			String suppCode, String gRItemName, String gRBarcode, String taxType, String activeYn, Long fkShopId) {
-		super();
-		this.supplierId = supplierId;
-		this.address = address;
-		this.serialnumber = serialnumber;
-		this.anniversary = anniversary;
-		this.bankName = bankName;
-		this.birthday = birthday;
-		this.branchName = branchName;
-		this.brand = brand;
-		this.city = city;
-		this.contactPerson = contactPerson;
-		this.creditLimit = creditLimit;
-		this.cstNo = cstNo;
-		this.email = email;
-		this.ifscCode = ifscCode;
-		this.partyType = partyType;
-		this.paymentType = paymentType;
-		this.pin = pin;
-		this.state = state;
-		this.supplierName = supplierName;
-		this.tinNo = tinNo;
-		this.mobileno = mobileno;
-		this.micrNo = micrNo;
-		this.panNo = panNo;
-		this.accountNo = accountNo;
-		this.discount = discount;
-		this.suppCode = suppCode;
-		this.gRItemName = gRItemName;
-		this.gRBarcode = gRBarcode;
-		this.taxType = taxType;
-		this.activeYn = activeYn;
-		this.fkShopId = fkShopId;
+	
+
+	
+
+	
+	
+	public String getAccountName() {
+		return AccountName;
+	}
+
+	public void setAccountName(String accountName) {
+		AccountName = accountName;
+	}
+
+	public Long getAccNumber() {
+		return AccNumber;
+	}
+
+	public void setAccNumber(Long accNumber) {
+		AccNumber = accNumber;
+	}
+
+	
+
+	public String getUpiid() {
+		return upiid;
+	}
+
+	public void setUpiid(String upiid) {
+		this.upiid = upiid;
 	}
 
 	public void setSupplierId(Long supplierId) {

@@ -48,9 +48,20 @@ public class SupplierDetailHelper
 		String panNo = request.getParameter("panNo");
 		String supcode = request.getParameter("supCode");
 		String taxName = request.getParameter("vatName");
+		
+		String supplierType = request.getParameter("type");
+		
+		String accountName = request.getParameter("accountname");
+		String accountnumber = request.getParameter("account");
+		String ifsc = request.getParameter("ifsc");
+		String upiid = request.getParameter("upiid");
 
 		SupplierDetail detail = new SupplierDetail();
 
+
+		
+		detail.setSupplierType(supplierType);
+		
 		if (!"".equals(address)) {
 
 			detail.setAddress(address);
@@ -106,6 +117,37 @@ public class SupplierDetailHelper
 			detail.setMobileno(Long.parseLong("00"));
 		}
 		
+		
+		if (!"".equals(accountName)) {
+
+			detail.setAccountName(accountName);
+		} else {
+			detail.setAccountName("N/A");
+		}
+		
+		
+		if (!"".equals(upiid)) {
+
+			detail.setUpiid(upiid);
+		} else {
+			detail.setUpiid("N/A");
+		}
+		
+		if (!"".equals(accountnumber)) {
+
+			detail.setAccNumber(Long.parseLong(accountnumber));
+		} else {
+			detail.setAccNumber(Long.parseLong("0"));
+		}
+		
+		if (!"".equals(ifsc)) {
+
+			detail.setIfsCcode1(ifsc);
+		} else {
+			detail.setIfsCcode1("N/A");
+		}
+		
+		
 		detail.setSuppCode(supcode);
 		detail.setTaxType(taxName);
 		detail.setActiveYn("Y");
@@ -128,6 +170,13 @@ public class SupplierDetailHelper
 		String panNo = request.getParameter("panNo");
 		String supplierName1 = request.getParameter("supplierName1");
 		String supplierName = request.getParameter("supplierName");
+		
+		String type = request.getParameter("type");
+		
+		String accname = request.getParameter("accname");
+		String account = request.getParameter("account");
+		String ifsc = request.getParameter("ifsc");
+		String upid = request.getParameter("upid");
 
 		HibernateUtility hbu = HibernateUtility.getInstance();
 		Session session = hbu.getHibernateSession();
@@ -135,6 +184,8 @@ public class SupplierDetailHelper
 
 		SupplierDetail det = (SupplierDetail) session.get(SupplierDetail.class, new Long(supplierName));
 
+		det.setSupplierType(type);
+		
 		det.setSupplierName(supplierName1);
 		
 		det.setSuppCode(supplierCode);
@@ -192,6 +243,43 @@ public class SupplierDetailHelper
 
 			det.setMobileno(Long.parseLong("00"));
 		}
+		
+		
+		
+		if (!"".equals(accname)) {
+
+			det.setAccountName(accname);
+		} else {
+
+			det.setAccountName("N/A");
+		}
+		
+		
+		if (!"".equals(account)) {
+
+			det.setAccNumber(Long.parseLong(account));
+		} else {
+
+			det.setAccNumber(Long.parseLong("00"));
+		}
+		
+		
+		if (!"".equals(ifsc)) {
+
+			det.setIfsCcode1(ifsc);
+		} else {
+
+			det.setIfsCcode1("N/A");
+		}
+		
+		if (!"".equals(upid)) {
+
+			det.setUpiid(upid);
+		} else {
+
+			det.setUpiid("N/A");
+		}
+		
 
 		session.saveOrUpdate(det);
 		transaction.commit();
@@ -216,23 +304,32 @@ public class SupplierDetailHelper
 	public Map getEditSupplier(Long suppilerId) {
 
 		SupplierDetailDao dao1 = new SupplierDetailDao();
+		
+		System.out.println("supplier id"+suppilerId);
 		List catList = dao1.getEditSupplier1(suppilerId);
 		
+		System.out.println("cat list"+catList);
+		
 		Map map = new HashMap();
-		for (int i = 0; i < catList.size(); i++) {
+		for (int i = 0; i < catList.size(); i++)
+		{
 			Object[] o = (Object[]) catList.get(i);
 			SupplierEditBean bean = new SupplierEditBean();
 			bean.setAddress((String) o[0]);
 			bean.setCity((String) o[1]);
 			bean.setContactPerson((String) o[2]);
-			bean.setPin((Long) o[3]);
+			bean.setPin(Long.parseLong(o[3].toString()));
 			bean.setEmail((String) o[4]);
-			bean.setMobileno((Long) o[5]);
+			bean.setMobileno(Long.parseLong(o[5].toString()));
 			bean.setPanNo((String) o[6]);
 			bean.setSupplierName((String) o[7]);
 			bean.setSuppCode((String) o[8]);
 			bean.setTaxType((String) o[9]);
-
+			bean.setAccountName((String) o[10]);
+			bean.setAccNumber(Long.parseLong(o[11].toString()));
+			bean.setIfsCcode1((String) o[12]);
+			bean.setUpiid((String) o[13]);
+			bean.setSupplierType((String) o[14]);
 			map.put(bean.getSupplierName(), bean);
 		}
 		return map;

@@ -97,7 +97,7 @@
 		<br> <br> <br> <br>
  -->		<div class="row" align="center">
 			<div class="table-responsive">
-				<table id="example"
+				<table id="example2"
 					class="table table-bordered table-striped table-condensed cf"
 					class="display"
 					style="border: 2px solid black; border-collapse: collapse;">

@@ -15,6 +15,7 @@ import com.smt.bean.AdvanceBookingBean;
 import com.smt.bean.ClientDetails;
 import com.smt.bean.GoodreciveBillBean;
 import com.smt.bean.PurchaseReportBean;
+import com.smt.bean.StocktemNameBean;
 import com.smt.hibernate.AdvanceBookingH;
 import com.smt.utility.HibernateUtility;
 
@@ -375,4 +376,55 @@ public class AdvanceBookingDao
 		}
 		return catList;
 	}
+	
+	
+	public List<StocktemNameBean> agewiseSupplierAndRangeDao(String supplierAB, String aBFisDateSuppWise, String aBEndDateSuppWise) {
+		HibernateUtility hbu = null;
+		Session session = null;
+		List<StocktemNameBean> catList = null;
+		try {
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			Query query2 = session.createSQLQuery("select  pr.ProductName, ct.Category_Name, gr.Date, sb.subcat_name, gr.size, gr.Quantity, gr.BarcodeNo, gr.BuyPrice, gr.SalePrice,sp.supplier_name from goodreceive gr join sub_categories sb on gr.fkSubCatId=sb.pk_subcat_id join categories ct on  gr.fkCatId = ct.pk_category_id JOIN product_reg pr on gr.fkProductId = pr.pkProductNameId JOIN supplier_details sp on sp.supplier_id=gr.FksuppId WHERE gr.FksuppId=:supplierAB AND (gr.purchaseEntryDate BETWEEN :aBFisDateSuppWise AND :aBEndDateSuppWise)");
+			query2.setParameter("supplierAB", supplierAB);
+			query2.setParameter("aBFisDateSuppWise", aBFisDateSuppWise);
+			query2.setParameter("aBEndDateSuppWise", aBEndDateSuppWise);
+			
+			List<Object[]> list = query2.list();
+			catList = new ArrayList<StocktemNameBean>(0);
+				int i=0;
+			for (Object[] object : list) {
+
+				StocktemNameBean reports = new StocktemNameBean();
+						i++;
+				Date dt2 = new Date();
+
+				Date dt1 = (Date) object[2];
+
+				long diff = dt2.getTime() - dt1.getTime();
+
+				Long diffInDays = (Long) ((dt2.getTime() - dt1.getTime()) / (1000 * 60 * 60 * 24));
+
+				System.out.println("diffInDays" + diffInDays);
+				reports.setSrno(i);
+				reports.setItemName(object[0].toString());
+				reports.setCatName(object[1].toString());
+				reports.setDatediff((diffInDays));
+				reports.setSubCatName(object[3].toString());
+				reports.setSize(object[4].toString());
+				reports.setQty2(object[5].toString());
+				reports.setBarcodeNo(object[6].toString());
+				reports.setBuyPrice(object[7].toString());
+				reports.setSalePrice(object[8].toString());
+				reports.setSupplierName(object[9].toString());
+				System.out.println("Date" + diffInDays);
+				catList.add(reports);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return catList;
+
+	}
+	
 }

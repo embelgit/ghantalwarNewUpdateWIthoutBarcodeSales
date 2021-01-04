@@ -75,6 +75,54 @@ public class SupplierEditBean {
 	private String pendingSuppBalance; 
 	private String pkSuppId;
 	
+	private String AccountName;
+	private Long AccNumber;
+	private String ifsCcode1;
+	private String upiid;
+	
+	private String supplierType;
+	
+	
+	public String getSupplierType() {
+		return supplierType;
+	}
+
+	public void setSupplierType(String supplierType) {
+		this.supplierType = supplierType;
+	}
+
+	public String getAccountName() {
+		return AccountName;
+	}
+
+	public void setAccountName(String accountName) {
+		AccountName = accountName;
+	}
+
+	public Long getAccNumber() {
+		return AccNumber;
+	}
+
+	public void setAccNumber(Long accNumber) {
+		AccNumber = accNumber;
+	}
+
+	public String getIfsCcode1() {
+		return ifsCcode1;
+	}
+
+	public void setIfsCcode1(String ifsCcode1) {
+		this.ifsCcode1 = ifsCcode1;
+	}
+
+	public String getUpiid() {
+		return upiid;
+	}
+
+	public void setUpiid(String upiid) {
+		this.upiid = upiid;
+	}
+
 	public String getAddress() {
 		return address;
 	}

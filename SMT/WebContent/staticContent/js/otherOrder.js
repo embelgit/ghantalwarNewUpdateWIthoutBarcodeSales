@@ -368,7 +368,7 @@ function getitemData1()
 				        	  width:70,
 				        	  editable: true,
 				        	  sortable: false,
-				        	  
+				        	  classes: 'myBackGroundColor',
 				        	  editoptions:{
 									dataInit: function(element)
 								    {
@@ -399,6 +399,7 @@ function getitemData1()
 				        	  width:130,
 				        	  sortable: false,
 				        	  editable: true,
+				        	  classes: 'myBackGroundColor',
 				        	  editoptions:{
 									dataInit: function(element)
 								    {
@@ -424,6 +425,7 @@ function getitemData1()
 				        	  width:120,
 				        	  sortable: false,
 				        	  //hidden:true
+				        	  classes: 'myBackGroundColor',
 				          },
 				          {	
 				        	  name:'disPerForBill',
@@ -493,6 +495,7 @@ function getitemData1()
 				        	  width:140,
 				        	  sortable: false,
 				        	  // formatter: sumFmatter
+				        	  classes: 'myBackGroundColor',
 				          },
 				         /*
 							 * { name: "employeeName1", width:250,

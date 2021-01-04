@@ -637,7 +637,7 @@ width:auto;
 
 						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
 							<select id='isBarcodeProduct' name="isBarcodeProduct">
-								<option value="selectOption">Select Product Type</option>
+								<option value="selectOption">Select Product Type </option>
 								<option value="Y">Yes</option>
 								<option value="N">No</option>
 							</select> <span class="sub">Is Barcode Product ?<sup style="color: red;">*</sup></span>
@@ -650,6 +650,13 @@ width:auto;
 							<span style="color: red; font-weight: bold;">*Can Assign Multiple Sizes For Single Products</span>
 							<br /> <br />
 							<span style="color: red; font-weight: bold;">*Please Give Size 'mtr' for fabric Type of Products</span> <label>Size </label>
+						</div>
+						
+						<div class="col-md-1"></div>
+						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+							id="dayreport">
+							<input type="file" id="image" name="image" value="Image"  >
+							<span class="sub">Add Image<sup style="color: red;"></sup></span>
 						</div>
 					</div>
 

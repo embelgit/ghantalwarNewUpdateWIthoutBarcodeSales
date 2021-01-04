@@ -398,6 +398,16 @@ public class OtherBillHelper
 			OtherBillDao dao = new OtherBillDao();
 			dao.registerBill(cust);
 			
+			
+
+			
+			
+			
+			
+			
+			
+			
+			
 			Long item_id = Long.parseLong(request.getParameter("item_id" + i));
 			System.out.println("item_id" + item_id);
 			GoodReciveDao good = new GoodReciveDao();

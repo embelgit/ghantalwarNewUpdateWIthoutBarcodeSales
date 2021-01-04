@@ -945,12 +945,9 @@ function getProductList()
 																			"Category<br>ID",																			
 																			"Sub<br>Category<br>Name",
 																			"subCatId",
-																			"HSN",
-																			"Color",
 																			"Roll<br>Size",
 																			"Size",
 																			"SizeFIXED",
-																			"Style",
 																			"Qty",
 																			"BuyPrice<br>Ex Tax",
 																			"Purchase<br>Code",
@@ -960,6 +957,9 @@ function getProductList()
 																			"IGST<br> %",
 																			"TAX<br>AMT",
 																			"Total",
+																			"HSN",
+																			"Color",
+																			"Style",
 																			"fkShopId",
 																			"Qty<br>Diff",
 																			"Buy<br>Diff",
@@ -994,16 +994,9 @@ function getProductList()
 																				name : "subCatId",
 																				width : 5,
 																				hidden : true,
+																				 
 																			},
-																			{
-																				name : "hsnsacno",
-																				width : 3,
-																			},
-																			{
-																				name : "color",
-																				editable : true,
-																				width : 3,
-																			},
+																			
 																			{
 																				id : "rollSize",
 																				name : "rollSize",
@@ -1022,12 +1015,7 @@ function getProductList()
 																				width : 3,
 																				hidden:true,
 																			},
-																			{
-																				id : "style",
-																				name : "style",
-																				width : 3,
-																				editable : true,
-																			},
+																			
 																			{
 																				name : "quantity",
 																				required : true,
@@ -1037,7 +1025,7 @@ function getProductList()
 																				name : "buyPrice",
 																				editable : true,
 																				width : 3,
-																				
+																				classes: 'myBackGroundColor',
 																				editoptions:{
 																					dataInit: function(element)
 																				    {
@@ -1062,6 +1050,7 @@ function getProductList()
 																				name : "actualprice",
 																				editable : true,
 																				width : 3,
+																				classes: 'myBackGroundColor',
 																				editoptions:{
 																					dataInit: function(element)
 																				    {
@@ -1140,6 +1129,22 @@ function getProductList()
 																				name : "Total",
 																				formatter : 'number',
 																				width : 5,
+																				classes: 'myBackGroundColor',
+																			},
+																			{
+																				name : "hsnsacno",
+																				width : 3,
+																			},
+																			{
+																				name : "color",
+																				editable : true,
+																				width : 3,
+																			},
+																			{
+																				id : "style",
+																				name : "style",
+																				width : 3,
+																				editable : true,
 																			},
 																			{
 																				name : "fkShopId",
@@ -2527,12 +2532,11 @@ function getProductList1()
 															"Sub<br>Category<br>Name",
 															"subCatId",
 															"Adv.<br>Booking No.",
-															"HSN/SAC",
-															"Color",
+															
 															"RollSize",
 															"Size",
 															"SizeFIXED",
-															"Style",
+															
 															"Quantity",
 															"BuyPrice<br>Ex Tax",
 															"Purchase Code",
@@ -2542,6 +2546,9 @@ function getProductList1()
 															"IGST %",
 															"TAX AMT",
 															"Total",
+															"HSN/SAC",
+															"Color",
+															"Style",
 															"fkShopId"
 															],
 													colModel : [
@@ -2576,15 +2583,7 @@ function getProductList1()
 																name : "bookingNoAB",
 																width : 10,
 															},
-															{
-																name : "hsnsacno",
-																width : 10,
-															},
-															{
-																name : "color",
-																width : 10,
-																editable : true,
-															},
+															
 															{
 																id : "rollSize",
 																name : "rollSize",
@@ -2606,12 +2605,7 @@ function getProductList1()
 																width : 10,
 																hidden:true,
 															},
-															{
-																id : "style",
-																name : "style",
-																width : 10,
-																editable : true,
-															},
+															
 															{
 																name : "quantity",
 																width : 10,
@@ -2739,6 +2733,23 @@ function getProductList1()
 																name : "Total",
 																width : 10,
 																formatter : 'number',
+																classes: 'myBackGroundColor',
+															},
+															
+															{
+																name : "hsnsacno",
+																width : 10,
+															},
+															{
+																name : "color",
+																width : 10,
+																editable : true,
+															},
+															{
+																id : "style",
+																name : "style",
+																width : 10,
+																editable : true,
 															},
 															{
 																name : "fkShopId",

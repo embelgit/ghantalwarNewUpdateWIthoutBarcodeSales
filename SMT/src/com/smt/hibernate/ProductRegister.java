@@ -23,15 +23,29 @@ public class ProductRegister
 	private Long fkShopId;
 	private String isBarcodeProduct;
 
+	private byte[] image;
+	
+	
+	
+	public byte[] getImage() {
+		return image;
+	}
+
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+
 	public ProductRegister() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+
+
 	public ProductRegister(Long pkProductId, Double vat, Long fkCategoryId, Long fkSubCategoryId, String itemName,
 			Date isInsertDate, String modelName, String hsnsacno, String size, String color, String catName,
-			Double buyPrice, Double salePrice, Long quantity, Category category, SubCategory subCategory,
-			Long fkShopId, String isBarcodeProduct) {
+			Double buyPrice, Double salePrice, Long quantity, Category category, SubCategory subCategory, Long fkShopId,
+			String isBarcodeProduct, byte[] image) {
 		super();
 		this.pkProductId = pkProductId;
 		this.vat = vat;
@@ -51,6 +65,7 @@ public class ProductRegister
 		this.subCategory = subCategory;
 		this.fkShopId = fkShopId;
 		this.isBarcodeProduct = isBarcodeProduct;
+		this.image = image;
 	}
 
 	public Long getPkProductId() {

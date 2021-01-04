@@ -140,6 +140,35 @@ public class SupplierDetailDao {
 		return list;
 	}
 	
+	
+	
+	public List getallBillNo()
+	{
+		HibernateUtility hbu = null;
+		Session session = null;
+		Query query = null;
+		List list = null;
+		try {
+			
+			System.out.println("ALL SUPPLIER bill No====");
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			//query = session.createQuery("from SupplierDetail");
+			query = session.createQuery("from GoodReceive GROUP BY BillNo");
+			list = query.list();
+		}
+		catch (RuntimeException e)
+		{
+			Log.error("Error in getAllSupplier ", e);
+		}
+		finally {
+			if (session != null) {
+				hbu.closeSession(session);
+			}
+		}
+		return list;
+	}
+	
 	public List getAllMainSuppliersShopWise(HttpServletRequest request, HttpServletResponse response)
 	{
 		HttpSession session1 = request.getSession();
@@ -241,8 +270,13 @@ public class SupplierDetailDao {
 		try {
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
-			query = session.createQuery("select s.address, s.city, s.contactPerson, s.pin, s.email, s.mobileno, s.panNo, s.supplierName,s.suppCode, taxType from SupplierDetail s where supplierId =" + suppilerId);
+			//query = session.createQuery("select s.address, s.city, s.contactPerson, s.pin, s.email, s.mobileno, s.panNo, s.supplierName,s.suppCode, taxType from SupplierDetail s where supplierId =" + suppilerId);
+			System.out.println("in dao id"+suppilerId);
+			query = session.createSQLQuery("select s.address,s.city,s.contact_person,s.pin,s.email,s.mobileNo,s.pan_no,s.supplier_name,s.SuppCode,s.taxType,s.account_name,s.account_number,s.ifsc,s.upiid,s.supplier_TaxType from supplier_details s  where s.supplier_id =" +suppilerId);
+			
 			list = query.list();
+			System.out.println("list"+list);
+			
 		} catch (RuntimeException e) {
 			Log.error("Error in getEditSupplier1", e);
 		}

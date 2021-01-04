@@ -82,6 +82,9 @@ function subCategoryDetailsDivAction(a)
 
 function valProductDetail()
 {
+	
+	
+	
 	var catId = $("#catIdPD").val();
 	var fkSubCatId = $("#fkSubCatId").val();
 	var itemName = $("#itemNamePD").val();
@@ -91,6 +94,10 @@ function valProductDetail()
 	var isBarcodeProduct = $("#isBarcodeProduct").val();
 	//var vatPatternRes = vatPattern.test(vat);
 
+	
+	var image= $("#image").val();
+	//alert(image);
+	
 	if (catId != null && catId != "" && catId != " ") {
 		if (fkSubCatId != null && fkSubCatId != "" && fkSubCatId != " ") {
 			if (itemName != null && itemName != "" && itemName != " ") {
@@ -175,7 +182,8 @@ function productDetails()
 	var modelName = $("#modelName").val();
 	var popUpProductJspId = $("#popUpProductJspId").val();
 	var isBarcodeProduct = $("#isBarcodeProduct").val();
-	
+	var image= $('#image').val();
+	//alert(image);
 	params ["shopId"] = shopId;
 	params["itemName"] = itemName;
 	params["hsnsacno"] = hsnsacno;
@@ -185,6 +193,8 @@ function productDetails()
 	params["fkSubCatId"] =fkSubCatId;
 	params["count"] = count;
 	params["isBarcodeProduct"] = isBarcodeProduct;
+	params["image"] = image;
+	
 	params["methodName"] = "doProductDetail";
 
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)

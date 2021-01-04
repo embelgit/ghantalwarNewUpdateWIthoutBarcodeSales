@@ -18,6 +18,16 @@ public class currentStock {
 	private String subCatName;
 	private Double returnquantity;;
 	
+	private Long pkStockid;
+	
+	
+	
+	public Long getPkStockid() {
+		return pkStockid;
+	}
+	public void setPkStockid(Long pkStockid) {
+		this.pkStockid = pkStockid;
+	}
 	public String getCatName() {
 		return catName;
 	}

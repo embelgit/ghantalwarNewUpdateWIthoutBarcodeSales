@@ -580,4 +580,51 @@ public class StockDao
 		
 		return catList;
 	}
+	
+	
+	public List<StocktemNameBean> getbetweenageWiseItemnameStock(String aBFisDate, String aBEndDate) {
+		HibernateUtility hbu = null;
+		Session session = null;
+		List<StocktemNameBean> catList = null;
+		try {
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			Query query2 = session.createSQLQuery("select pr.ProductName, ct.Category_Name, gr.Date, sb.subcat_name, gr.size, gr.Quantity, gr.BarcodeNo, gr.BuyPrice, gr.SalePrice from goodreceive gr join sub_categories sb on gr.fkSubCatId=sb.pk_subcat_id join categories ct on gr.fkCatId = ct.pk_category_id JOIN product_reg pr on gr.fkProductId = pr.pkProductNameId WHERE (gr.purchaseEntryDate BETWEEN :aBFisDate AND :aBEndDate)");
+			query2.setParameter("aBFisDate", aBFisDate);
+			query2.setParameter("aBEndDate", aBEndDate);
+			List<Object[]> list = query2.list();
+			catList = new ArrayList<StocktemNameBean>(0);
+				int i=0;
+			for (Object[] object : list) {
+
+				StocktemNameBean reports = new StocktemNameBean();
+						i++;
+				Date dt2 = new Date();
+
+				Date dt1 = (Date) object[2];
+
+				long diff = dt2.getTime() - dt1.getTime();
+
+				Long diffInDays = (Long) ((dt2.getTime() - dt1.getTime()) / (1000 * 60 * 60 * 24));
+
+				System.out.println("diffInDays" + diffInDays);
+				reports.setSrno(i);
+				reports.setItemName(object[0].toString());
+				reports.setCatName(object[1].toString());
+				reports.setDatediff((diffInDays));
+				reports.setSubCatName(object[3].toString());
+				reports.setSize(object[4].toString());
+				reports.setQty2(object[5].toString());
+				reports.setBarcodeNo(object[6].toString());
+				reports.setBuyPrice(object[7].toString());
+				reports.setSalePrice(object[8].toString());
+				System.out.println("Date" + diffInDays);
+				catList.add(reports);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return catList;
+
+	}
 }

@@ -19830,4 +19830,374 @@ function taxinvoice()
 
 
 
+function AgewisebetweenrangeWise()
+{
+	var params = {};
+	var aBFisDate = $("#aBFisDate").val();
+	var aBEndDate = $("#aBEndDate").val();
+	alert(aBFisDate+aBEndDate);
 
+	params["aBFisDate"] = aBFisDate;
+	params["aBEndDate"] = aBEndDate;
+
+	params["methodName"] = "agewiseRangeController";
+
+	$.post('/SMT/jsp/utility/controller.jsp',
+					params,
+					function(data) {
+		$('#example').dataTable().fnClearTable();
+		var jsonData = $.parseJSON(data);
+		var catmap = jsonData.list;
+		$(document).ready(function() {
+			$('#example').DataTable( {
+				fnRowCallback : function(nRow, aData, iDisplayIndex){
+					$("th:first", nRow).html(iDisplayIndex +1);
+					return nRow;
+				},
+
+				"footerCallback": function ( row, data, start, end, display ) {
+					var api = this.api(), data;
+					// Remove the formatting to get integer data for summation
+					var intVal = function ( i ) {
+						return typeof i === 'string' ?
+								i.replace(/[\$,]/g, '')*1 :
+									typeof i === 'number' ?
+											i : 0;
+					};
+					
+					
+					
+					
+					// Total
+					// over this
+					// page
+					pageTotal = api
+							.column(
+									7)
+							.data()
+							.reduce(
+									function(
+											a,
+											b) {
+										return intVal(a)
+												+ intVal(b);
+									},
+									0);
+
+					// Update
+					// footer
+					$(
+							api
+									.column(
+											7)
+									.footer())
+							.html(
+
+									parseFloat(
+											pageTotal)
+											.toFixed(
+													2)
+
+							);
+					console
+							.log(pageTotal);																	
+			
+					
+					// Total
+					// over this
+					// page
+					pageTotal = api
+							.column(
+									8)
+							.data()
+							.reduce(
+									function(
+											a,
+											b) {
+										return intVal(a)
+												+ intVal(b);
+									},
+									0);
+
+					// Update
+					// footer
+					$(
+							api
+									.column(
+											8)
+									.footer())
+							.html(
+
+									parseFloat(
+											pageTotal)
+											.toFixed(
+													2)
+
+							);
+					console
+							.log(pageTotal);	
+					
+				},
+																destroy: true,
+																searching: true,
+																"scrollY": 300,
+															    "scrollX": true,
+																columns: [  
+																	{"data": "Srno", "width": "5%", "defaultContent": ""},
+															          	  {"data": "barcodeNo", "width": "5%", "defaultContent": ""},
+																          {"data": "catName", "width": "5%", "defaultContent": ""},
+																          {"data": "subCatName", "width": "5%", "defaultContent": ""},
+																          {"data": "itemName", "width": "5%", "defaultContent": ""},
+																          {"data": "size", "width": "5%", "defaultContent": ""},
+																          {"data": "qty2", "width": "5%", "defaultContent": ""},
+																          {"data": "buyPrice", "width": "5%", "defaultContent": ""},
+																          {"data": "salePrice", "width": "5%", "defaultContent": ""},
+																          {"data": "datediff", "width": "5%", "defaultContent": ""}, 
+																          ],
+																          dom : 'Bfrtip',
+																          buttons : [ 
+																                     { extend: 'copyHtml5', footer: true,
+																                    	 title : function() {
+																                    		 return "Agewise Inventory Item Stock Report";
+																                    	 },
+																                    	 orientation : 'landscape',
+																                    	 pageSize : 'LEGAL',
+																                    	 titleAttr : 'PDF' 
+																                      },
+																                     { extend: 'excelHtml5', footer: true,
+																	                    	 title : function() {
+																	                    		 return "Agewise Inventory Item Stock Report";
+																	                    	 },
+																	                    	 orientation : 'landscape',
+																	                    	 pageSize : 'LEGAL',
+																	                    	 titleAttr : 'PDF' },
+																                     { extend: 'csvHtml5', footer: true,
+																		                    	 title : function() {
+																		                    		 return "Agewise Inventory Item Stock Report";
+																		                    	 },
+																		                    	 orientation : 'landscape',
+																		                    	 pageSize : 'LEGAL',
+																		                    	 titleAttr : 'PDF' },
+																                     { extend : 'pdfHtml5', footer: true,
+																                    	 title : function() {
+																                    		 return "Agewise Inventory Item Stock Report";
+																                    	 },
+																                    	 orientation : 'landscape',
+																                    	 pageSize : 'LEGAL',
+																                    	 titleAttr : 'PDF' 
+																                     } ]
+															} );
+														} );
+														var mydata = catmap;
+														$('#example').dataTable().fnAddData(mydata);
+															}).error(function(jqXHR, textStatus, errorThrown){
+																if(textStatus==="timeout") {
+																	$(loaderObj).hide();
+																	$(loaderObj).find('#errorDiv').show();
+																}
+															});
+												}
+
+
+
+
+
+function agewiseSupplierAndRangeWise()
+{
+	var params = {};
+	
+	var input = document.getElementById('supplierAB'), 
+	list = document.getElementById('sup_dropAB'), i, supplierAB;
+	for (i = 0; i < list.options.length; ++i)
+	{
+		if (list.options[i].value === input.value)
+		{
+			supplierAB = list.options[i].getAttribute('data-value');
+		}
+	}
+	
+	var aBFisDateSuppWise = $("#aBFisDateSuppWise").val();
+	var aBEndDateSuppWise = $("#aBEndDateSuppWise").val();
+	
+	if(supplierAB == null || supplierAB == undefined || supplierAB == "" || supplierAB == " ")
+	{
+		alert("Please Select Supplier");
+		return false;
+	}
+	
+	if(aBFisDateSuppWise == null || aBFisDateSuppWise == undefined || aBFisDateSuppWise == "" || aBFisDateSuppWise == " ")
+	{
+		alert("Please Select Start Date");
+		return false;
+	}
+	
+	if(aBEndDateSuppWise == null || aBEndDateSuppWise == undefined || aBEndDateSuppWise == "" || aBEndDateSuppWise == " ")
+	{
+		alert("Please Select End Date");
+		return false;
+	}
+
+	params["supplierAB"] = supplierAB;
+	params["aBFisDateSuppWise"] = aBFisDateSuppWise;
+	params["aBEndDateSuppWise"] = aBEndDateSuppWise;
+
+	params["methodName"] = "agewiseSupplierAndRangeController";
+
+	$.post('/SMT/jsp/utility/controller.jsp',
+			params,
+			function(data) {
+$('#example1').dataTable().fnClearTable();
+var jsonData = $.parseJSON(data);
+var catmap = jsonData.list;
+$(document).ready(function() {
+	$('#example1').DataTable( {
+		fnRowCallback : function(nRow, aData, iDisplayIndex){
+			$("th:first", nRow).html(iDisplayIndex +1);
+			return nRow;
+		},
+
+		"footerCallback": function ( row, data, start, end, display ) {
+			var api = this.api(), data;
+			// Remove the formatting to get integer data for summation
+			var intVal = function ( i ) {
+				return typeof i === 'string' ?
+						i.replace(/[\$,]/g, '')*1 :
+							typeof i === 'number' ?
+									i : 0;
+			};
+			
+			
+			
+			
+			// Total
+			// over this
+			// page
+			pageTotal = api
+					.column(
+							8)
+					.data()
+					.reduce(
+							function(
+									a,
+									b) {
+								return intVal(a)
+										+ intVal(b);
+							},
+							0);
+
+			// Update
+			// footer
+			$(
+					api
+							.column(
+									8)
+							.footer())
+					.html(
+
+							parseFloat(
+									pageTotal)
+									.toFixed(
+											2)
+
+					);
+			console
+					.log(pageTotal);																	
+	
+			
+			// Total
+			// over this
+			// page
+			pageTotal = api
+					.column(
+							9)
+					.data()
+					.reduce(
+							function(
+									a,
+									b) {
+								return intVal(a)
+										+ intVal(b);
+							},
+							0);
+
+			// Update
+			// footer
+			$(
+					api
+							.column(
+									9)
+							.footer())
+					.html(
+
+							parseFloat(
+									pageTotal)
+									.toFixed(
+											2)
+
+					);
+			console
+					.log(pageTotal);	
+			
+		},
+														destroy: true,
+														searching: true,
+														"scrollY": 300,
+													    "scrollX": true,
+														columns: [ 
+															
+																  {"data": "Srno", "width": "5%", "defaultContent": ""},
+																  
+													          	  {"data": "barcodeNo", "width": "5%", "defaultContent": ""},
+													          	{"data": "SupplierName", "width": "5%", "defaultContent": ""},
+														          {"data": "catName", "width": "5%", "defaultContent": ""},
+														          {"data": "subCatName", "width": "5%", "defaultContent": ""},
+														          {"data": "itemName", "width": "5%", "defaultContent": ""},
+														          {"data": "size", "width": "5%", "defaultContent": ""},
+														          {"data": "qty2", "width": "5%", "defaultContent": ""},
+														          {"data": "buyPrice", "width": "5%", "defaultContent": ""},
+														          {"data": "salePrice", "width": "5%", "defaultContent": ""},
+														        //  {"data": "datediff", "width": "5%", "defaultContent": ""}, 
+														          ],
+														          dom : 'Bfrtip',
+														          buttons : [ 
+														                     { extend: 'copyHtml5', footer: true,
+														                    	 title : function() {
+														                    		 return "Agewise Inventory Item Stock Report";
+														                    	 },
+														                    	 orientation : 'landscape',
+														                    	 pageSize : 'LEGAL',
+														                    	 titleAttr : 'PDF' 
+														                      },
+														                     { extend: 'excelHtml5', footer: true,
+															                    	 title : function() {
+															                    		 return "Agewise Inventory Item Stock Report";
+															                    	 },
+															                    	 orientation : 'landscape',
+															                    	 pageSize : 'LEGAL',
+															                    	 titleAttr : 'PDF' },
+														                     { extend: 'csvHtml5', footer: true,
+																                    	 title : function() {
+																                    		 return "Agewise Inventory Item Stock Report";
+																                    	 },
+																                    	 orientation : 'landscape',
+																                    	 pageSize : 'LEGAL',
+																                    	 titleAttr : 'PDF' },
+														                     { extend : 'pdfHtml5', footer: true,
+														                    	 title : function() {
+														                    		 return "Agewise Inventory Item Stock Report";
+														                    	 },
+														                    	 orientation : 'landscape',
+														                    	 pageSize : 'LEGAL',
+														                    	 titleAttr : 'PDF' 
+														                     } ]
+													} );
+												} );
+												var mydata = catmap;
+												$('#example1').dataTable().fnAddData(mydata);
+													}).error(function(jqXHR, textStatus, errorThrown){
+														if(textStatus==="timeout") {
+															$(loaderObj).hide();
+															$(loaderObj).find('#errorDiv').show();
+														}
+													});
+										}

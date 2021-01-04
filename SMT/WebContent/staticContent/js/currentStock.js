@@ -508,11 +508,11 @@ function getCategoryWiseItemnameStock()
 
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 			{
-		$('#example').dataTable().fnClearTable();
+		$('#example2').dataTable().fnClearTable();
 		var jsonData = $.parseJSON(data);
 		var catmap = jsonData.list;
 		$(document).ready(function() {
-			$('#example').DataTable( {
+			$('#example2').DataTable( {
 				fnRowCallback : function(nRow, aData, iDisplayIndex){
 					$("th:first", nRow).html(iDisplayIndex +1);
 					return nRow;
@@ -651,7 +651,7 @@ function getCategoryWiseItemnameStock()
 			} );
 		} );
 		var mydata = catmap;
-		$('#example').dataTable().fnAddData(mydata);
+		$('#example2').dataTable().fnAddData(mydata);
 			}).error(function(jqXHR, textStatus, errorThrown){
 				if(textStatus==="timeout") {
 					$(loaderObj).hide();

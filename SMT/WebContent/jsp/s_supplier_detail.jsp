@@ -14,7 +14,7 @@
      <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <script type="text/javascript" src="/SMT/staticContent/y_js/bootstrap.min.js"></script>
 	 <script type="text/javascript" src="/SMT/staticContent/y_js/bootbox.min.js"></script>
-     <script src="/SMT/staticContent/y_js/jquery-1.12.3.min.js"></script>
+    <!--  <script src="/SMT/staticContent/y_js/jquery-1.12.3.min.js"></script> -->
      <script src="/SMT/staticContent/y_js/supplier.js"></script>
 	 <link rel="stylesheet" type="text/css" href="/SMT/staticContent/css/supplierDetails.css">
 
@@ -236,9 +236,29 @@ width: 110px;
 					<hr style="border-top-color: #c1b1b1;">
 				</div>
 			</div>
+			
+			
 		<form action="supplier" name="supd" method="post">
 	<div class="supplierfields">
 	<div class="container">
+	
+		<div class="row">
+		<div class="col-md-1"></div>
+		<div class="col-md-1"></div>
+		<div class="col-md-1"></div>
+			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport" >
+			<select class="" id="type" name="type" name="Select Type">
+			<option value="selectoption" >Select Supplier Type </option>
+			<option value="registered">Registered</option>
+			<option value="unregistered">Unregistered</option>
+			<option value="registeredcomposite">Registered Composite</option>
+			</select> 
+			
+			
+			
+			 
+			</div>
+			</div>
 		<div class="row">
 				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
 			
@@ -313,10 +333,30 @@ width: 110px;
 			</div>
 			<div class="row">
 			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
-					 <input type="text" id="" name="" class="" autocomplete="off" required/>
-					 <span>Supplier Account Details</span>
+					 <input type="text" id="accountname" name="" class="" autocomplete="off" required/>
+					 <span>Supplier Account Name</span>
 				</div>
+				<div class="col-lg-1 col-md-1"></div>
+				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+					 <input type="text" id="account" name="" class="" autocomplete="off" required/>
+					 <span>Account Number</span>
+				</div>
+				
 			</div>
+			
+			<div class="row">
+			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+					 <input type="text" id="ifsc" name="" class="" autocomplete="off" required/>
+					 <span>IFSC Code</span>
+				</div>
+				<div class="col-lg-1 col-md-1"></div>
+				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+					 <input type="text" id="upiid" name="" class="" autocomplete="off" required/>
+					 <span>UPI ID</span>
+				</div>
+				
+			</div>
+			
 		</div>
 			<div class="row col-md-offset-2">
 					<div class="col-md-1" id="supplierbtn">

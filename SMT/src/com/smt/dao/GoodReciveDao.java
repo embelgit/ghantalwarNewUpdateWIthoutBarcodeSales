@@ -3,11 +3,16 @@ package com.smt.dao;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.text.DecimalFormat;
+import java.time.Instant;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -16,6 +21,7 @@ import org.jfree.util.Log;
 
 import com.smt.bean.BarcodeReportBean;
 import com.smt.bean.BillBean;
+import com.smt.bean.GetCreditCustomerDetails;
 import com.smt.bean.GetTransactionId;
 import com.smt.bean.GoodReceiveItemBean;
 import com.smt.bean.GoodreciveBillBean;
@@ -25,6 +31,7 @@ import com.smt.bean.PurchaseReport;
 import com.smt.bean.PurchaseReportBean;
 import com.smt.bean.SaleReport;
 import com.smt.bean.allTransactionId;
+import com.smt.bean.currentStock;
 import com.smt.hibernate.GoodReceive;
 import com.smt.hibernate.OtherBill;
 import com.smt.utility.HibernateUtility;
@@ -2802,6 +2809,357 @@ public class GoodReciveDao {
 				e.printStackTrace();
 			}
 			return catList;
+		}
+		
+		public List<GetCreditCustomerDetails> getsaleamt(LocalDate todaydate, HttpServletRequest request) 
+		{
+			HttpSession usersession = request.getSession(true);
+			String userid = (String)usersession.getAttribute("userid");
+			String shopid = (String)usersession.getAttribute("shopid");
+
+			HibernateUtility hbu=null;
+			Session session=null;
+			List<GetCreditCustomerDetails> stockList = null;
+			try
+			{
+				hbu = HibernateUtility.getInstance();
+				session = hbu.getHibernateSession();
+				   
+				//Query query = session.createSQLQuery("SELECT ProductName, CompanyName, weight, quantity, stock_in_kg AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND stock_in_kg !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, Stock_in_ltr AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND Stock_in_ltr !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, total_piece_quantity AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND total_piece_quantity !=0");
+		        Query query = session.createSQLQuery("SELECT pkCrediBillId,GrossTotal FROM creditcustomerbill WHERE Date='"+todaydate+"' GROUP BY BillNo");
+
+		List<Object[]> list = query.list();
+		stockList = new ArrayList<GetCreditCustomerDetails>(0);
+		Double w=0d;
+		int i=0;
+		GetCreditCustomerDetails reports = new GetCreditCustomerDetails();
+		for (Object[] object : list) {
+			
+
+			
+				String b= object[1].toString();
+					
+				Double aa = Double.parseDouble(b);
+					
+				w=w+aa;
+		System.out.println("b - - - -------   "+b);
+		System.out.println("aa - - -   "+aa);
+		System.out.println("w - - - -  "+w);
+		i++;
+		System.out.println("i - - "+i);
+//				stockList.add(reports); 
+			
+				}
+		reports.setTotalAmount(w);
+		System.out.println("set sale  -  "+reports.getTotalAmount());
+		stockList.add(reports);
+		}
+			catch(Exception e)
+			{
+				e.printStackTrace();	
+			}
+			return stockList;	
+
+		}
+		
+		public List<BillBean> getsaleamt1(LocalDate todaydate1, HttpServletRequest request) 
+		{
+			HttpSession usersession = request.getSession(true);
+			String userid = (String)usersession.getAttribute("userid");
+			String shopid = (String)usersession.getAttribute("shopid");
+
+			HibernateUtility hbu=null;
+			Session session=null;
+			List<BillBean> stockList = null;
+			try
+			{
+				hbu = HibernateUtility.getInstance();
+				session = hbu.getHibernateSession();
+				   
+				//Query query = session.createSQLQuery("SELECT ProductName, CompanyName, weight, quantity, stock_in_kg AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND stock_in_kg !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, Stock_in_ltr AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND Stock_in_ltr !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, total_piece_quantity AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND total_piece_quantity !=0");
+		        Query query = session.createSQLQuery("SELECT pkOtherBillId,GrossTotal FROM otherbill WHERE Date='"+todaydate1+"' GROUP BY BillNo");
+
+		List<Object[]> list = query.list();
+		stockList = new ArrayList<BillBean>(0);
+		Double w=0d;
+		int i=0;
+		BillBean reports = new BillBean();
+		for (Object[] object : list) {
+			
+			
+			
+				String b= object[1].toString();
+					
+				Double aa = Double.parseDouble(b);
+					
+				w=w+aa;
+		System.out.println("b - - - -------   "+b);
+		System.out.println("aa - - -   "+aa);
+		System.out.println("w - - - -  "+w);
+		i++;
+		System.out.println("i - - "+i);
+//				stockList.add(reports); 
+			
+				}
+		reports.setTotal(w);
+		System.out.println("set sale  -  "+reports.getTotal());
+		stockList.add(reports);
+		}
+			catch(Exception e)
+			{
+				e.printStackTrace();	
+			}
+			return stockList;	
+
+		}
+		public List<BillBean> PurchaseAmount(LocalDate todaydate1, HttpServletRequest request) 
+		{
+			HttpSession usersession = request.getSession(true);
+			String userid = (String)usersession.getAttribute("userid");
+			String shopid = (String)usersession.getAttribute("shopid");
+
+			HibernateUtility hbu=null;
+			Session session=null;
+			List<BillBean> stockList = null;
+			try
+			{
+				hbu = HibernateUtility.getInstance();
+				session = hbu.getHibernateSession();
+				   
+				//Query query = session.createSQLQuery("SELECT ProductName, CompanyName, weight, quantity, stock_in_kg AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND stock_in_kg !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, Stock_in_ltr AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND Stock_in_ltr !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, total_piece_quantity AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND total_piece_quantity !=0");
+		        Query query = session.createSQLQuery("SELECT PkGoodRecId,GrossTotal FROM goodreceive WHERE Date='"+todaydate1+"' GROUP BY BillNo");
+
+		List<Object[]> list = query.list();
+		stockList = new ArrayList<BillBean>(0);
+		Double w=0d;
+		int i=0;
+		BillBean reports = new BillBean();
+		for (Object[] object : list) {
+			
+			
+			
+				String b= object[1].toString();
+					
+				Double aa = Double.parseDouble(b);
+					
+				w=w+aa;
+		System.out.println("b - - - -------   "+b);
+		System.out.println("aa - - -   "+aa);
+		System.out.println("w - - - -  "+w);
+		i++;
+		System.out.println("i - - "+i);
+//				stockList.add(reports); 
+			
+				}
+		reports.setPurchaseTotal(w);
+		System.out.println("set sale  -  "+reports.getPurchaseTotal());
+		stockList.add(reports);
+		}
+			catch(Exception e)
+			{
+				e.printStackTrace();	
+			}
+			return stockList;	
+
+		}
+		
+		
+		public List<currentStock> getslowstock(LocalDate todaydate1, HttpServletRequest request) 
+		{
+			HttpSession usersession = request.getSession(true);
+			String userid = (String)usersession.getAttribute("userid");
+			String shopid = (String)usersession.getAttribute("shopid");
+
+			HibernateUtility hbu=null;
+			Session session=null;
+			List<currentStock> stockList = null;
+			try
+			{
+				hbu = HibernateUtility.getInstance();
+				session = hbu.getHibernateSession();
+				//Query query = session.createSQLQuery("SELECT ProductName, CompanyName, weight, quantity, stock_in_kg AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND stock_in_kg !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, Stock_in_ltr AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND Stock_in_ltr !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, total_piece_quantity AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND total_piece_quantity !=0");
+		        Query query = session.createSQLQuery("select pk_stock_details_id,ItemName from stock_details where Quantity < 10");
+
+		List<Object[]> list = query.list();
+		stockList = new ArrayList<currentStock>(0);
+		Double w=0d;
+		int i=0;
+
+		for (Object[] object : list) {
+			currentStock reports = new currentStock();	
+
+			String aa = object[1].toString();
+			reports.setPkStockid(Long.parseLong(object[0].toString()));
+			reports.setItemName(object[1].toString());
+			//	reports.setGrossTotal(Double.parseDouble(object[1].toString()));
+//			System.out.println("set sale return  -  "+reports.getGrossTotal());	
+			stockList.add(reports);
+			
+				}
+
+
+		}
+			catch(Exception e)
+			{
+				e.printStackTrace();	
+			}
+			return stockList;	
+
+		}
+
+		
+		
+		public List<GetCreditCustomerDetails> getyestsaleamt(LocalDate yesterday, HttpServletRequest request) 
+		{
+			HttpSession usersession = request.getSession(true);
+			String userid = (String)usersession.getAttribute("userid");
+			String shopid = (String)usersession.getAttribute("shopid");
+
+			HibernateUtility hbu=null;
+			Session session=null;
+			List<GetCreditCustomerDetails> stockList = null;
+			try
+			{
+				hbu = HibernateUtility.getInstance();
+				session = hbu.getHibernateSession();
+				   
+				//Query query = session.createSQLQuery("SELECT ProductName, CompanyName, weight, quantity, stock_in_kg AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND stock_in_kg !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, Stock_in_ltr AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND Stock_in_ltr !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, total_piece_quantity AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND total_piece_quantity !=0");
+		        Query query = session.createSQLQuery("SELECT pkCrediBillId,GrossTotal FROM creditcustomerbill WHERE Date='"+yesterday+"' GROUP BY BillNo");
+
+		List<Object[]> list = query.list();
+		stockList = new ArrayList<GetCreditCustomerDetails>(0);
+		Double w=0d;
+		int i=0;
+		GetCreditCustomerDetails reports = new GetCreditCustomerDetails();
+		for (Object[] object : list) {
+			
+
+			
+				String b= object[1].toString();
+					
+				Double aa = Double.parseDouble(b);
+					
+				w=w+aa;
+		System.out.println("b - - - -------   "+b);
+		System.out.println("aa - - -   "+aa);
+		System.out.println("w - - - -  "+w);
+		i++;
+		System.out.println("i - - "+i);
+//				stockList.add(reports); 
+			
+				}
+		reports.setTotalAmount1(w);
+		System.out.println("set sale  -  "+reports.getTotalAmount1());
+		stockList.add(reports);
+		}
+			catch(Exception e)
+			{
+				e.printStackTrace();	
+			}
+			return stockList;	
+
+		}
+		
+		public List<GetCreditCustomerDetails> getyestsaleamt1(LocalDate yesterday, HttpServletRequest request) 
+		{
+			HttpSession usersession = request.getSession(true);
+			String userid = (String)usersession.getAttribute("userid");
+			String shopid = (String)usersession.getAttribute("shopid");
+
+			HibernateUtility hbu=null;
+			Session session=null;
+			List<GetCreditCustomerDetails> stockList = null;
+			try
+			{
+				hbu = HibernateUtility.getInstance();
+				session = hbu.getHibernateSession();
+				   
+				//Query query = session.createSQLQuery("SELECT ProductName, CompanyName, weight, quantity, stock_in_kg AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND stock_in_kg !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, Stock_in_ltr AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND Stock_in_ltr !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, total_piece_quantity AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND total_piece_quantity !=0");
+		        Query query = session.createSQLQuery("SELECT pkOtherBillId,GrossTotal FROM otherbill WHERE Date='"+yesterday+"' GROUP BY BillNo");
+
+		List<Object[]> list = query.list();
+		stockList = new ArrayList<GetCreditCustomerDetails>(0);
+		Double w=0d;
+		int i=0;
+		GetCreditCustomerDetails reports = new GetCreditCustomerDetails();
+		for (Object[] object : list) {
+			
+
+			
+				String b= object[1].toString();
+					
+				Double aa = Double.parseDouble(b);
+					
+				w=w+aa;
+		System.out.println("b - - - -------   "+b);
+		System.out.println("aa - - -   "+aa);
+		System.out.println("w - - - -  "+w);
+		i++;
+		System.out.println("i - - "+i);
+//				stockList.add(reports); 
+			
+				}
+		reports.setTotalAmount2(w);
+		System.out.println("set sale  -  "+reports.getTotalAmount2());
+		stockList.add(reports);
+		}
+			catch(Exception e)
+			{
+				e.printStackTrace();	
+			}
+			return stockList;	
+
+		}
+	
+		public List<GetCreditCustomerDetails> getyestsaleamt2(LocalDate yesterday, HttpServletRequest request) 
+		{
+			HttpSession usersession = request.getSession(true);
+			String userid = (String)usersession.getAttribute("userid");
+			String shopid = (String)usersession.getAttribute("shopid");
+
+			HibernateUtility hbu=null;
+			Session session=null;
+			List<GetCreditCustomerDetails> stockList = null;
+			try
+			{
+				hbu = HibernateUtility.getInstance();
+				session = hbu.getHibernateSession();
+				   
+				//Query query = session.createSQLQuery("SELECT ProductName, CompanyName, weight, quantity, stock_in_kg AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND stock_in_kg !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, Stock_in_ltr AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND Stock_in_ltr !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, total_piece_quantity AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND total_piece_quantity !=0");
+		        Query query = session.createSQLQuery("SELECT PkGoodRecId,GrossTotal FROM goodreceive WHERE Date='"+yesterday+"' GROUP BY BillNo");
+
+		List<Object[]> list = query.list();
+		stockList = new ArrayList<GetCreditCustomerDetails>(0);
+		Double w=0d;
+		int i=0;
+		GetCreditCustomerDetails reports = new GetCreditCustomerDetails();
+		for (Object[] object : list) {
+			
+
+			
+				String b= object[1].toString();
+					
+				Double aa = Double.parseDouble(b);
+					
+				w=w+aa;
+		System.out.println("b - - - -------   "+b);
+		System.out.println("aa - - -   "+aa);
+		System.out.println("w - - - -  "+w);
+		i++;
+		System.out.println("i - - "+i);
+//				stockList.add(reports); 
+			
+				}
+		reports.setPurchasetotal(w);
+		System.out.println("set Purchase  -  "+reports.getPurchasetotal());
+		stockList.add(reports);
+		}
+			catch(Exception e)
+			{
+				e.printStackTrace();	
+			}
+			return stockList;	
+
 		}
 		
 		

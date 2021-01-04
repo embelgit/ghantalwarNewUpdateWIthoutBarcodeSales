@@ -787,7 +787,7 @@ a.homer {
 					<li><a href="<%=path%>BarcodeWiseStock.jsp">Barcode Based Inventory</a></li>
 					<li><a href="<%=path%>BillNoWiseStock.jsp">Invoice Based Inventory</a></li>
 					<li><a href="<%=path%>lowstockalert.jsp">Low Inventory Items</a></li>
-					<li><a href="<%=path%>ageWiseProductReport.jsp">Agewise Inventory</a></li>
+					<li><a href="<%=path%>AgewiseReport.jsp">Agewise Product Inventory</a></li>
 					<%-- <li><a href="<%=path%>allWayStock.jsp">All Way Stock</a></li> --%>
 				</ul></li>
 			<%
@@ -947,6 +947,27 @@ a.homer {
 	</script>
 
 
+<script>
+var li = document.getElementsByID("li");
+
+for(var i = 0;i<li.length;i++){
+	li[i].addEventListener("click", modal1);
+    li[i].addEventListener("click", Logout);
+  
+}
+
+function modal1()
+{
+	$('#myModal').modal('show');
+}
+
+
+ 
+/* function myScript(e){
+    alert(e.target.attributes.id.value);       
+} */
+
+</script>
 
 
 	<script src="/SMT/staticContent/y_js/jquery-2.1.3.min.js"></script>
@@ -982,10 +1003,10 @@ a.homer {
 			s.parentNode.insertBefore(ga, s);
 		})();
 	</script>
-		<script>
+	<!-- 	<script>
 var preloader=document.getElementById("loading");
 function loader(){
 	preloader.style.visibility = "visible";
 }
-</script>
+</script> -->
 	<!-- header end -->

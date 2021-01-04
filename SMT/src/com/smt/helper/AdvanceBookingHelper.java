@@ -13,6 +13,7 @@ import com.smt.bean.AdvanceBookingBean;
 import com.smt.bean.ClientDetails;
 import com.smt.bean.PurchaseReportBean;
 import com.smt.bean.SaleReport;
+import com.smt.bean.StocktemNameBean;
 import com.smt.dao.AdvanceBookingDao;
 import com.smt.dao.OtherBillDao;
 import com.smt.hibernate.AdvanceBookingH;
@@ -173,4 +174,21 @@ public class AdvanceBookingHelper
 		return exp1List;
 	}
 
+	public List agewiseSupplierAndRangeHelper(HttpServletRequest request, HttpServletResponse response)
+	{
+		// TODO Auto-generated method stub
+		String supplierAB = request.getParameter("supplierAB");
+		String aBFisDateSuppWise = request.getParameter("aBFisDateSuppWise");
+		String aBEndDateSuppWise = request.getParameter("aBEndDateSuppWise");
+		
+		System.out.println("supplierAB "+supplierAB);
+		System.out.println("aBFisDateSuppWise "+aBFisDateSuppWise);
+		System.out.println("aBEndDateSuppWise "+aBEndDateSuppWise);		
+		Map<Long, StocktemNameBean> map = new HashMap<Long, StocktemNameBean>();
+
+		AdvanceBookingDao dao = new AdvanceBookingDao();
+		List<StocktemNameBean> exp1List = dao.agewiseSupplierAndRangeDao(supplierAB, aBFisDateSuppWise, aBEndDateSuppWise);
+
+		return exp1List;
+	}
 }

@@ -51,6 +51,10 @@ function emptyFields()
 	document.getElementById("panNo").value = "";
 	document.getElementById("supplierName").value = "";
 	document.getElementById("supplierCode").value = "";
+	document.getElementById("accountname").value = "";
+	document.getElementById("account").value = "";
+	document.getElementById("ifsc").value = "";
+	document.getElementById("upiid").value = "";
 }
 
 /*
@@ -60,7 +64,17 @@ function emptyFields()
 	3. SUPPLIER DETAILS
 */ 
 function validateSupplierDetails()
+
 {
+	
+	var accountname=$('#accountname').val();
+	var account = $('#account').val();
+	var ifsc = $('#ifsc').val();
+	var upiid = $('#upiid').val();
+	var type = $('#type').val();
+	
+	//alert(type);
+	
 	var supplierName= $('#supplierName').val();
 	var city= $('#city').val();
 	var mobileno= $('#mobileno').val();
@@ -73,8 +87,13 @@ function validateSupplierDetails()
 	var SupplierNamePatternRes = SupplierNamePattern.test(supplierName);
 	var monoPattern = /^\d{10}$/;
 	var monoPatternRes = monoPattern.test(mobileno);
+
+	
+	if(type !="selectoption")
+	{
 	
 	if(supplierName != null && supplierName != "" && supplierName != " ")
+	
 	{
 		if(SupplierNamePatternRes){
 			if(city != null && city != "" && city != " ")
@@ -152,6 +171,11 @@ function validateSupplierDetails()
 		return false;
 	}
 }
+	else{
+		myAlert("Please Select Supplier Type !");
+		return false;
+	}
+}
 
 /*
 	CHANGES IN THIS FUNCTION IS GOING TO REFLECT in GOOD RECEIVE
@@ -185,6 +209,13 @@ function supplierDetails()
 	var supCode = $('#supplierCode').val();
 	var popJspId = $('#popJspId').val();
 	var vatName = $('#vatName').val();
+	var type = $('#type').val();
+	
+	var accountname=$('#accountname').val();
+	var account = $('#account').val();
+	var ifsc = $('#ifsc').val();
+	var upiid = $('#upiid').val();
+
 	var params= {};
 	params ["shopId"] = shopId;
 	params ["supplierName"] = supplierName;
@@ -197,6 +228,11 @@ function supplierDetails()
 	params ["panNo"] = panNo;
 	params ["supCode"] = supCode;
 	params ["vatName"] = vatName;
+	params ["type"] = type;
+	params ["accountname"] = accountname;
+	params ["account"] = account;
+	params ["ifsc"] = ifsc;
+	params ["upiid"] = upiid;
 
 	params["methodName"] = "doSupplierDetails";
 
@@ -218,6 +254,14 @@ function supplierDetails()
 				document.getElementById("panNo").value = "";
 				document.getElementById("supplierName").value = "";
 				document.getElementById("supplierCode").value = "";
+				
+				document.getElementById("type").value = "";
+				document.getElementById("accountname").value = "";
+				document.getElementById("account").value = "";
+				document.getElementById("ifsc").value = "";
+				document.getElementById("upiid").value = "";
+				
+				
 				document.getElementById("supplierId").value = supplierName;
 			}
 		}
@@ -282,6 +326,14 @@ function editsupplier()
 		$("#panNo").append($("<input/>").attr("value","").text());
 		$("#supplierName1").append($("<input/>").attr("value","").text());
 		$("#supplierCode").append($("<input/>").attr("value","").text());
+		
+		$("#accname").append($("<input/>").attr("value","").text());
+		$("#account").append($("<input/>").attr("value","").text());
+		$("#ifsc").append($("<input/>").attr("value","").text());
+		$("#upid").append($("<input/>").attr("value","").text());
+		
+		$("#type").append($("<input/>").attr("value","").text());
+		
 		var params= {};
 		params["methodName"] = "getSupplier";
 		params["supplierName"]= mainCat;
@@ -300,6 +352,13 @@ function editsupplier()
 				document.getElementById("panNo").value = v.panNo;
 				document.getElementById("supplierName1").value = v.supplierName;
 				document.getElementById("supplierCode").value = v.suppCode;
+				
+				document.getElementById("accname").value = v.AccountName;
+				document.getElementById("account").value = v.AccNumber;
+				document.getElementById("ifsc").value = v.ifsCcode1;
+				document.getElementById("upid").value = v.upiid;
+				document.getElementById("type").value = v.supplierType;
+				
 			});
 		}).error(function(jqXHR, textStatus, errorThrown)
 			{
@@ -459,6 +518,13 @@ function editsupplier1()
 	var panNo=$('#panNo').val();
 	
 	
+	var type=$('#type').val();
+	var accname=$('#accname').val();
+	var account=$('#account').val();
+	var ifsc=$('#ifsc').val();
+	var upid=$('#upid').val();
+	
+	
 	if(email != "N/A")
 	{
 		if(email.length > 0)
@@ -510,6 +576,13 @@ function editsupplier1()
 	params ["productType"] = productType;
 	params ["mobileno"] = mobileno;
 	params ["panNo"] = panNo;
+	params ["type"] = type;
+	
+	params ["accname"] = accname;
+	params ["account"] = account;
+	params ["ifsc"] = ifsc;
+	params ["upid"] = upid;
+
 
 	params["methodName"] = "editSupp";
 

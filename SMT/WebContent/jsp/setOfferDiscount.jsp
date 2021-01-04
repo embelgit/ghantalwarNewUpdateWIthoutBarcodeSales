@@ -9,7 +9,7 @@
 <title>Set Offer Discount</title>
 
 </head>
-<script type="text/javascript" src="/SMT/staticContent/js/jquery-1.12.3.min.js"></script>
+<!--  <script type="text/javascript" src="/SMT/staticContent/js/jquery-1.12.3.min.js"></script>-->
 <link rel="stylesheet" href="/SMT/staticContent/y_css/ui.jqgrid.min.css">
 <link rel="stylesheet" href="/SMT/staticContent/y_css/jquery-ui.css">
 <link rel="stylesheet" href="/SMT/staticContent/y_css/ui.jqgrid.css">

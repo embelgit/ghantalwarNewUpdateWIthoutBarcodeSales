@@ -21,6 +21,13 @@
 		<property name="itemName" type="java.lang.String" column="ProductName"
 			not-null="true" length="128" />
 
+
+     		
+    <property
+        name="image"
+        column="file"
+    />
+    
 		<property name="color" type="java.lang.String" column="color" />
 
 		<property name="size" type="java.lang.String" column="size" />
