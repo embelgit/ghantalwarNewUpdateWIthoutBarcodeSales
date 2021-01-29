@@ -166,7 +166,7 @@ function purchaseReturn()
 	$.post('/SMT/jsp/utility/controller.jsp', params, function(data)
 	{
 		successAlert(data);
-		location.reload();
+		//location.reload();
 		//window.open("purchaseReturnPDF.jsp");
 		window.open("ghantalwarMensWearPurchaseReturnPDF.jsp");
 	}).error(function(jqXHR, textStatus, errorThrown)

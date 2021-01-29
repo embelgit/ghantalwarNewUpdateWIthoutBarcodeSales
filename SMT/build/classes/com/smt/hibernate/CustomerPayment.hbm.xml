@@ -13,7 +13,7 @@
 
 		<property name="customer" type="java.lang.Long" column="fk_customer_id"	length="20" />
 
-		<!-- <property name="billNo" type="java.lang.Long" column="bill_no" length="20" /> -->
+		<property name="billNo" type="java.lang.Long" column="bill_no" length="20" /> 
 
 		<property name="chequeNum" type="java.lang.String" column="cheque_num" length="20" />
 

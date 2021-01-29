@@ -2978,7 +2978,7 @@ public class GoodReciveDao {
 				hbu = HibernateUtility.getInstance();
 				session = hbu.getHibernateSession();
 				//Query query = session.createSQLQuery("SELECT ProductName, CompanyName, weight, quantity, stock_in_kg AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND stock_in_kg !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, Stock_in_ltr AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND Stock_in_ltr !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, total_piece_quantity AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND total_piece_quantity !=0");
-		        Query query = session.createSQLQuery("select pk_stock_details_id,ItemName from stock_details where Quantity < 10");
+		        Query query = session.createSQLQuery("select pk_stock_details_id,ItemName from stock_details where Quantity > 0 AND Quantity < 10");
 
 		List<Object[]> list = query.list();
 		stockList = new ArrayList<currentStock>(0);

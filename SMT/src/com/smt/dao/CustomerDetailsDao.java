@@ -542,8 +542,8 @@ public class CustomerDetailsDao {
 		{
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
-			//Query query = session.createSQLQuery("select totalperitem , Date, Discount  from creditcustomerbill  where BillNo='" + billNo + "'AND fkCrediCustId=" + creditCustomer);
-			Query query = session.createSQLQuery("select totalperitem, Date, Discount from creditcustomerbill where fkCrediCustId = "+ creditCustomer+" AND fkShopId = "+shopId+" AND totalperitem > 0");
+			Query query = session.createSQLQuery("select totalperitem , Date, Discount  from creditcustomerbill  where BillNo='" + billNo + "'AND fkCrediCustId=" + creditCustomer);
+			//Query query = session.createSQLQuery("select totalperitem, Date, Discount from creditcustomerbill where fkCrediCustId = "+ creditCustomer+" AND fkShopId = "+shopId+" AND totalperitem > 0");
 			list = query.list();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -564,12 +564,21 @@ public class CustomerDetailsDao {
 		HibernateUtility hbu = null;
 		Session session = null;
 		List list = null;
+		
+		System.out.println(billNo+"bill no");
+		System.out.println(creditCustomer+"customer id");
+		
 		try
 		{
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
 			//Query query = session.createSQLQuery("SELECT s.payment, s.bill_no, c.totalperitem, c.Discount,s.total_amount, s.balance from credit_customer_payment s left join creditcustomerbill c on c.BillNo = s.bill_no WHERE s.bill_no ='" + billNo + "' AND s.fk_customer_id='" + creditCustomer + "' group BY  s.pk_credit_customer_id;");
-			Query query = session.createSQLQuery("SELECT s.payment, c.totalperitem, c.Discount, s.total_amount, s.balance, c.pending_bill_payment from credit_customer_payment s left join creditcustomerbill c on c.fkCrediCustId = s.fk_customer_id WHERE s.fk_customer_id = "+creditCustomer+" AND s.fkShopId = "+shopId+" group BY  s.pk_credit_customer_id;");
+			//Query query = session.createSQLQuery("SELECT s.payment, c.totalperitem, c.Discount, s.total_amount, s.balance, c.pending_bill_payment from credit_customer_payment s left join creditcustomerbill c on c.fkCrediCustId = s.fk_customer_id WHERE s.fk_customer_id = "+creditCustomer+" AND s.fkShopId = "+shopId+" group BY  s.pk_credit_customer_id;");
+			
+			Query query = session.createSQLQuery("SELECT balance , total_amount from credit_customer_payment WHERE bill_no =:billNo AND  fk_customer_id =:creditCustomer ORDER BY pk_credit_customer_id DESC LIMIT 1");
+			query.setParameter("billNo", billNo);
+			query.setParameter("creditCustomer", creditCustomer);
+			
 			list = query.list();
 		}
 		catch(Exception e)
@@ -588,18 +597,27 @@ public class CustomerDetailsDao {
 		return list;
 	}
 
-	public Double getTotalAmt(String billNo)
+	public Double getTotalAmt(String billNo,String creditCustomer)
 	{
 		HibernateUtility hbu = null;
 		Session session = null;
 		List<Object[]> list = null;
 		Double totalAmount = null;
+		Double totalAmt = null;
+		String newBal = "";
 		List<GetCreditCustomerDetails> itemlist = null;
 		try {
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
 			//Query query = session.createSQLQuery("select GrossTotal, Date from creditcustomerbill  where BillNo=" + billNo);
-			Query query = session.createSQLQuery("select pending_bill_payment, Date from creditcustomerbill where fkCrediCustId = "+billNo+" LIMIT 1");
+		//	Query query = session.createSQLQuery("select pending_bill_payment, Date from creditcustomerbill where fkCrediCustId = "+billNo+" LIMIT 1");
+			System.out.println(billNo+"bill no");
+			System.out.println(creditCustomer+"customer id");
+			Query query = session.createSQLQuery("SELECT GrossTotal,SUM(totalperitem) from creditcustomerbill WHERE BillNo=:billNo and fkCrediCustId=:creditCustomer GROUP BY BillNo");
+			//query.setParameter("shopId", shopId);
+			query.setParameter("creditCustomer", creditCustomer);
+			query.setParameter("billNo",billNo);
+			
 			list = query.list();
 			itemlist = new ArrayList<GetCreditCustomerDetails>(0);
 
@@ -607,8 +625,16 @@ public class CustomerDetailsDao {
 
 				GetCreditCustomerDetails bean = new GetCreditCustomerDetails();
 
-				String newBal = (objects[0].toString());
-				totalAmount = Double.valueOf(newBal);
+				if(objects[0] == null)
+				{
+					newBal = "0";
+					totalAmt = Double.valueOf(newBal);
+				}
+				else
+				{
+					newBal = (objects[0].toString());
+					totalAmt = Double.valueOf(newBal);					
+				}
 
 				itemlist.add(bean);
 			}
@@ -623,7 +649,7 @@ public class CustomerDetailsDao {
 				hbu.closeSession(session);
 			}
 		}
-		return totalAmount;
+		return totalAmt;
 
 	}
 

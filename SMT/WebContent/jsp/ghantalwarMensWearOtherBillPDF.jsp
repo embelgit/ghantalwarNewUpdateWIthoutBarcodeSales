@@ -116,6 +116,9 @@
 	String userName = "";
 	String cashAmount = "";
 	String cardAmount = "";
+	
+	String cashAmountupi = "";
+	String UpiAmount = "";
 	String saleRerturnCreditAmount = "";
 	Double tax5 = 0.0;
 	Double tax12 = 0.0;
@@ -146,7 +149,7 @@
 		conn = DriverManager.getConnection(DatabaseProperties.dbUrl, DatabaseProperties.dbUser, DatabaseProperties.dbPassword);
 		Statement stmt = conn.createStatement();
 
-		ResultSet rs = stmt.executeQuery("select ob.ItemName, ob.CategoryName, ob.Quantity, ob.SalePrice, ob.ContactNo, ob.OwnerName, ob.TotalAmount, ob.Discount, ob.GrossTotal, ob.Date, ob.totalperitem, ob.TaxAmount, ob.credit_Customer_Name, ob.mobile_No, ob.Gst, ob.Igst, ob.HsnSacNo, ob.payment_mode, ob.BarcodeNo, ob.employee_Name, ob.billTime, sb.subcat_name, ob.FkSaleEmployeeId, ud.userName, cashCard_cashAmount, cashCard_cardAmount, totalSaleReturnAmt, taxAmtAfterDiscount from otherbill ob join sub_categories sb on ob.fkSubCatId = sb.pk_subcat_id join user_details ud on ob.EmpId_Fk = ud.pk_user_id where BillNo ="+billno);
+		ResultSet rs = stmt.executeQuery("select ob.ItemName, ob.CategoryName, ob.Quantity, ob.SalePrice, ob.ContactNo, ob.OwnerName, ob.TotalAmount, ob.Discount, ob.GrossTotal, ob.Date, ob.totalperitem, ob.TaxAmount, ob.credit_Customer_Name, ob.mobile_No, ob.Gst, ob.Igst, ob.HsnSacNo, ob.payment_mode, ob.BarcodeNo, ob.employee_Name, ob.billTime, sb.subcat_name, ob.FkSaleEmployeeId, ud.userName, cashCard_cashAmount, cashCard_cardAmount, totalSaleReturnAmt, taxAmtAfterDiscount,cashupi_cashAmount,cashupi_upiAmount from otherbill ob join sub_categories sb on ob.fkSubCatId = sb.pk_subcat_id join user_details ud on ob.EmpId_Fk = ud.pk_user_id where BillNo ="+billno);
 		System.out.println("Query Execute");
 		
 		Date d1 = new Date();
@@ -577,6 +580,8 @@
 				cardAmount = rs.getString("cashCard_cardAmount");
 				saleRerturnCreditAmount = rs.getString("totalSaleReturnAmt");
 
+				 cashAmountupi = rs.getString("cashupi_cashAmount");
+				 UpiAmount = rs.getString("cashupi_upiAmount");
 				userName = rs.getString("userName");
 
 				discount = String.valueOf(rs.getDouble("Discount"));
@@ -1720,6 +1725,13 @@
 				footerTable_cell3.setBorder(Rectangle.NO_BORDER);
 				footerTable3.addCell(footerTable_cell3);
 			}
+			else if (paymentMode.equalsIgnoreCase("Upi"))
+			{
+				footerTable_cell3 = new PdfPCell(new Phrase("Upi Amount: "+df.format(Total - Double.parseDouble(saleRerturnCreditAmount)), font8Bold));
+				footerTable_cell3.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				footerTable_cell3.setBorder(Rectangle.NO_BORDER);
+				footerTable3.addCell(footerTable_cell3);
+			}
 			else if (paymentMode.equalsIgnoreCase("cashandcard"))
 			{
 				footerTable_cell3 = new PdfPCell(new Phrase("Cash Amount: "+cashAmount, font8Bold));
@@ -1732,7 +1744,27 @@
 				footerTable_cell3.setBorder(Rectangle.NO_BORDER);
 				footerTable3.addCell(footerTable_cell3);
 			}
+			
+			
+			
+			
+			
+			
+			
+			else if (paymentMode.equalsIgnoreCase("cashAndupi"))
+			{
+				footerTable_cell3 = new PdfPCell(new Phrase("Cash Amount: "+cashAmountupi, font8Bold));
+				footerTable_cell3.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				footerTable_cell3.setBorder(Rectangle.NO_BORDER);
+				footerTable3.addCell(footerTable_cell3);
+
+				footerTable_cell3 = new PdfPCell(new Phrase("Upi Amount: "+UpiAmount, font8Bold));
+				footerTable_cell3.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				footerTable_cell3.setBorder(Rectangle.NO_BORDER);
+				footerTable3.addCell(footerTable_cell3);
+			}
 			else{}
+			
 
 			if (Double.parseDouble(saleRerturnCreditAmount) > 0)
 			{

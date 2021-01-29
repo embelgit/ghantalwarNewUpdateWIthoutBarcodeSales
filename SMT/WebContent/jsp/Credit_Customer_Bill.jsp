@@ -835,6 +835,8 @@ width: auto;
 								<option value="cash">Cash</option>
 								<option value="card">Card</option>
 								<option value="cashAndCard">Cash And Card</option>
+								<option value="Upi">Upi</option>
+								<option value="cashAndupi">Cash And Upi</option>
 							</select> <label for="creditPaymentMode">Payment Mode</label>
 							<div class="row " style="margin-top: 10px;">
 
@@ -894,6 +896,34 @@ width: auto;
 								</div>
 							</div>
 
+                 <div id="cash_and_upi">
+								<div class="col-md-4"></div>
+								<div class="row">
+									<div class="invoice_label_up">
+										<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-3"
+											id="cashcol">
+											<input type="text" name="cashupi_cashAmount1"
+												id="cashupi_cashAmount1" required /> <label>Cash
+												Amount</label>
+										</div>
+									</div>
+								</div>
+
+
+								<div class="col-md-4"></div>
+								<div class="row">
+									<div class="invoice_label_up">
+										<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-3"
+											id="cashcol">
+											<input type="text" name="cashCard_upiAmount"
+												id="cashCard_upiAmount" required /> <label>Upi
+												Amount</label>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
 
 						</div>
 
@@ -906,32 +936,54 @@ width: auto;
 	           	$("#cheque_no").hide(); 
 	           	$("#neft_acc_no").hide(); 
 	           	$("#card_no").hide();
+	           	$("#cash_and_upi").hide();
 	           	}
 	          	 else if($(this).attr("value")=="card"){
 	          		$("#cash_and_card").hide();
+	          		$("#cash_and_upi").hide();
 	          		$("#card_no").hide(); 	
 	          		$("#neft_acc_no").hide(); 
 	        		$("#cheque_no").hide();
 	           }
 	          	 else if($(this).attr("value")=="neft"){
+	          		$("#cash_and_upi").hide();
 	          		$("#cash_and_card").hide();
 	           		$("#neft_acc_no").hide(); 	
 	           		$("#card_no").hide(); 
 	        		$("#cheque_no").hide();
 	            }
 	          	 else if($(this).attr("value")=="cash"){
-	          		$("#cash_and_card").hide();
+	          		$("#cash_and_upi").hide();
+	          		 $("#cash_and_card").hide();
 	            		$("#neft_acc_no").hide(); 
 	            		$("#cheque_no").hide();
 	            		$("#card_no").hide(); 
 	             }
 	         	else if($(this).attr("value")=="cashAndCard")
 		        {
+	         		$("#cash_and_upi").hide();
 	          		$("#cash_and_card").show();
             		$("#neft_acc_no").hide(); 
             		$("#cheque_no").hide();
             		$("#card_no").hide(); 
 	             }
+	           	
+	         	else if($(this).attr("value")=="cashAndupi")
+		        {
+	         		$("#cash_and_card").hide();
+	          		$("#cash_and_upi").show();
+            		$("#neft_acc_no").hide(); 
+            		$("#cheque_no").hide();
+            		$("#card_no").hide(); 
+	             }
+	         	else if($(this).attr("value")=="Upi"){
+	          		$("#cash_and_card").hide();
+	          		$("#cash_and_upi").hide();
+	          		$("#card_no").hide(); 	
+	          		$("#neft_acc_no").hide(); 
+	        		$("#cheque_no").hide();
+	           }
+	           	
 	       });
 	   }).change();
 		});	

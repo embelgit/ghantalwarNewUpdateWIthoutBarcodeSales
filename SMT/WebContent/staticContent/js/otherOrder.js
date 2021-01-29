@@ -1432,7 +1432,9 @@ function resotherbill()
 	var key = $('#key').val();
 	var monoPattern = /^\d{10}$/;
 	var monoPatternRes = monoPattern.test(mobileno);
-	
+	cashupi_cashAmount = $('#cashupi_cashAmount').val();
+	cashCard_upiAmount = $('#cashCard_upiAmount').val();
+	//alert(cashupi_cashAmount+cashCard_upiAmount);
 	/*
 	 * if (document.custord.employee1.value == "") { myAlert("Select Employee
 	 * Name."); return false; }
@@ -1654,7 +1656,7 @@ function resOtherBill()
 	var cashCard_cardAmount = "";
 	var cashAmount = "";
 	var cardAmount = "";
-	
+	var UpiAmount = "";
 	if(paymentMode == "cashAndCard")
 	{
 		cashCard_cashAmount = $('#cashCard_cashAmount').val();
@@ -1728,6 +1730,85 @@ function resOtherBill()
 		}			 
 	}
 	
+	else if(paymentMode == "Upi")
+	{
+		if(+totalCreditAmt > 0)
+		{
+			UpiAmount = +totalAmount - +totalCreditAmt;
+		}			 
+	}
+	
+	
+	
+	if(paymentMode == "cashAndupi")
+	{
+		cashCard_cashAmount1 = $('#cashCard_cashAmount1').val();
+		cashCard_upiAmount = $('#cashCard_upiAmount').val();
+		if(cashCard_cashAmount1 == undefined || cashCard_cashAmount1 == null || cashCard_cashAmount1 == "" || cashCard_cashAmount1 == " ")
+		{
+			myAlert("Please Enter Cash Amount");
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+		else
+		{
+			var checkCashAmt = /^[0-9]+\.?[0-9]*$/;
+			if(cashCard_cashAmount1.match(checkCashAmt))
+			{
+				
+				
+				//alert(cashupi_cashAmount+"in if");
+				params["cashCard_cashAmount1"] = cashCard_cashAmount1;
+			}
+			else
+			{
+				myAlert("Please Enter Valid Cash Amount");
+				document.custord.btnSubmit.disabled = false;
+				return false;
+			}
+		}
+		if(cashCard_upiAmount == undefined || cashCard_upiAmount == null || cashCard_upiAmount == "" || cashCard_upiAmount == " ")
+		{
+			myAlert("Please Enter Card Amount");
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+		else
+		{
+			var checkCardAmt = /^[0-9]+\.?[0-9]*$/;
+			if(cashCard_upiAmount.match(checkCardAmt))
+			{
+				params["cashCard_upiAmount"] = cashCard_upiAmount;
+			}
+			else
+			{
+				myAlert("Please Enter Valid Cash Amount");
+				document.custord.btnSubmit.disabled = false;
+				return false;
+			}
+		}
+		
+		if((+cashupi_cashAmount + +cashCard_upiAmount) > +grossTotal)
+		{
+			myAlert("Cash Amount + Card Amount is Greater Than Total Amount");
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+		else if((+cashupi_cashAmount + +cashCard_upiAmount) < +grossTotal)
+		{
+			myAlert("Cash Amount + Card Amount is Less Than Total Amount");
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	var newBill = $('#newBill').val();
 	var userType = $('#userType').val();
 	var userName = $('#userName').val();
@@ -1762,6 +1843,7 @@ function resOtherBill()
 	params["totalCreditAmt"] = totalCreditAmt;
 	params["cashAmount"] = cashAmount;
 	params["cardAmount"] = cardAmount;
+	params["UpiAmount"] = UpiAmount;
 	params["methodName"] = "registerOtherBill";
 
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)

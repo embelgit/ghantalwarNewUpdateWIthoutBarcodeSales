@@ -290,7 +290,8 @@ public class DayClosureReportDao
 	        	 UserDetail userDetail1 = (UserDetail) query1.uniqueResult();
 	        	 type2 = userDetail1.getTypeId();
 	        	 uid = userDetail1.getPkUserId();
-		         
+	        	 
+		         System.out.println("error is here");
 	        	 System.out.println("uid ******************************>>>>>>>>> "+uid);
 		         System.out.println("USERTYPE ******************************>>>>>>>>> "+type2);
 		         System.out.println("USERNAME ******************************>>>>>>>>> "+name2);
@@ -310,11 +311,11 @@ public class DayClosureReportDao
 			else
 			{
 				//query = session.createSQLQuery("select ob.pkOtherBillId, SUM(ob.SalePrice-Discount) from otherbill ob where ob.Date='"+date+"' AND ob.payment_mode='cash' AND ob.EmpId_Fk="+uid);
-				query = session.createSQLQuery("select COUNT(*), COALESCE(sum(ob.cashCard_cashAmount),0) from (select DISTINCT BillNo, cashCard_cashAmount from creditcustomerbill WHERE Date = :date AND (payment_mode='cashAndCard' OR payment_mode='cash') AND cEmpIdFk = :uid AND Quantity > 0) ob;");
+				query = session.createSQLQuery("select COUNT(*), COALESCE(sum(ob.cashCard_cashAmount),0) from (select DISTINCT BillNo, cashCard_cashAmount from creditcustomerbill WHERE Date =:date AND (payment_mode='cashAndCard' OR payment_mode='cash') AND Quantity > 0) ob;");
 			}
 			
 			query.setParameter("date", date);
-			query.setParameter("uid", uid);
+			//query.setParameter("uid", uid);
 			
 			list = query.list();
 			System.out.println("SIZE OF LIST getTodayCashAmountDao ====> "+list.size());
@@ -378,11 +379,11 @@ public class DayClosureReportDao
 			else
 			{
 				//query = session.createSQLQuery("select ob.pkOtherBillId, SUM(ob.SalePrice-Discount) from otherbill ob where ob.Date='"+date+"' AND ob.payment_mode='cash' AND ob.EmpId_Fk="+uid);
-				query = session.createSQLQuery("select COUNT(*), COALESCE(sum(ob.cashCard_cardAmount),0) from (select DISTINCT BillNo, cashCard_cardAmount from creditcustomerbill WHERE Date = :date AND (payment_mode='cashAndCard' OR payment_mode='card') AND cEmpIdFk = :uid AND Quantity > 0) ob;");
+				query = session.createSQLQuery("select COUNT(*), COALESCE(sum(ob.cashCard_cardAmount),0) from (select DISTINCT BillNo, cashCard_cardAmount from creditcustomerbill WHERE Date = :date AND (payment_mode='cashAndCard' OR payment_mode='card')  AND Quantity > 0) ob;");
 			}
 			
 			query.setParameter("date", date);
-			query.setParameter("uid", uid);
+			//query.setParameter("uid", uid);
 			
 			list = query.list();
 			System.out.println("SIZE OF LIST getTodayCashAmountDao ====> "+list.size());

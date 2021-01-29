@@ -87,7 +87,7 @@ public class CustomerPaymentHelper
 		CustomerPaymentBean bean = new CustomerPaymentBean();
 
 		bean.setCustomer(Long.parseLong(customer));
-		//bean.setBillNo(Long.parseLong(billNo));
+		bean.setBillNo(Long.parseLong(billNo));
 		//bean.setBillNo(0l);
 
 		if (!"".equals(personname)) {
@@ -168,10 +168,11 @@ public class CustomerPaymentHelper
 		Session session2 = hbu2.getHibernateSession();
 		System.out.println("customer ====> "+customer);
 		// Query to get latest paid amount
-		//Query query = session.createSQLQuery("SELECT balance ,bill_no from credit_customer_payment WHERE bill_no =:billNo ORDER BY pk_credit_customer_id  DESC LIMIT 1 ;");
-		Query query = session.createSQLQuery("SELECT ccp.balance, ccp.fk_customer_id from credit_customer_payment ccp WHERE ccp.fk_customer_id = :customer AND ccp.fkShopId = :shopId ORDER BY pk_credit_customer_id  DESC LIMIT 1 ");
+		Query query = session.createSQLQuery("SELECT balance ,bill_no from credit_customer_payment WHERE bill_no =:billNo AND fk_customer_id = :customer ORDER BY pk_credit_customer_id  DESC LIMIT 1 ;");
+		//Query query = session.createSQLQuery("SELECT ccp.balance, ccp.fk_customer_id from credit_customer_payment ccp WHERE ccp.fk_customer_id = :customer AND ccp.fkShopId = :shopId ORDER BY pk_credit_customer_id  DESC LIMIT 1 ");
+		query.setParameter("billNo", billNo);
 		query.setParameter("customer", customer);
-		query.setParameter("shopId", shopId);
+		//query.setParameter("shopId", shopId);
 		List<Object[]> list = query.list();
 
 		System.out.println("Calc total");
@@ -204,8 +205,8 @@ public class CustomerPaymentHelper
 
 				System.out.println("List size" + stkList2.size());
 				
-				//Query query2 = session2.createQuery("UPDATE CreditCustomerBill set pending_bill_payment = "+newBal+" WHERE BillNo = "+billNo+" AND fkCrediCustId = "+customer);
-				Query query2 = session2.createQuery("UPDATE CreditCustomerBill set pending_bill_payment = "+newBal+" WHERE fkCrediCustId = "+customer+" AND fkShopId = "+shopId);
+				Query query2 = session2.createQuery("UPDATE CreditCustomerBill set pending_bill_payment = "+newBal+" WHERE BillNo = "+billNo+" AND fkCrediCustId = "+customer);
+				//Query query2 = session2.createQuery("UPDATE CreditCustomerBill set pending_bill_payment = "+newBal+" WHERE fkCrediCustId = "+customer+" AND fkShopId = "+shopId);
 		        query2.executeUpdate();
 
 				/*for (int j = 0; j < stkList2.size(); j++) {
@@ -241,8 +242,8 @@ public class CustomerPaymentHelper
 					List stkList2 = dao1.getAllSaleEntry();
 
 					System.out.println("List size" + stkList2.size());
-					//Query query2 = session2.createQuery("UPDATE CreditCustomerBill set pending_bill_payment = "+newBal+" WHERE BillNo = "+billNo+" AND fkCrediCustId = "+customer);
-					Query query2 = session2.createQuery("UPDATE CreditCustomerBill set pending_bill_payment = "+newBal+" WHERE fkCrediCustId = "+customer+" AND fkShopId = "+shopId);
+					Query query2 = session2.createQuery("UPDATE CreditCustomerBill set pending_bill_payment = "+newBal+" WHERE BillNo = "+billNo+" AND fkCrediCustId = "+customer);
+				//	Query query2 = session2.createQuery("UPDATE CreditCustomerBill set pending_bill_payment = "+newBal+" WHERE fkCrediCustId = "+customer+" AND fkShopId = "+shopId);
 			        query2.executeUpdate();
 					
 					/*for (int j = 0; j < stkList2.size(); j++) {
@@ -292,8 +293,8 @@ public class CustomerPaymentHelper
 
 				System.out.println("List size" + stkList2.size());
 				
-				//Query query2 = session2.createQuery("UPDATE CreditCustomerBill set pending_bill_payment = "+newBal+" WHERE BillNo = "+billNo+" AND fkCrediCustId = "+customer);
-				Query query2 = session2.createQuery("UPDATE CreditCustomerBill set pending_bill_payment = "+newBal+" WHERE fkCrediCustId = "+customer+" AND fkShopId = "+shopId);
+				Query query2 = session2.createQuery("UPDATE CreditCustomerBill set pending_bill_payment = "+newBal+" WHERE BillNo = "+billNo+" AND fkCrediCustId = "+customer);
+				//Query query2 = session2.createQuery("UPDATE CreditCustomerBill set pending_bill_payment = "+newBal+" WHERE fkCrediCustId = "+customer+" AND fkShopId = "+shopId);
 		        query2.executeUpdate();
 
 				/*for (int j = 0; j < stkList2.size(); j++) {
@@ -329,8 +330,8 @@ public class CustomerPaymentHelper
 					List stkList2 = dao1.getAllSaleEntry();
 
 					System.out.println("List size" + stkList2.size());
-					//Query query2 = session2.createQuery("UPDATE CreditCustomerBill set pending_bill_payment = "+newBal+" WHERE BillNo = "+billNo+" AND fkCrediCustId = "+customer);
-					Query query2 = session2.createQuery("UPDATE CreditCustomerBill set pending_bill_payment = "+newBal+" WHERE fkCrediCustId = "+customer+" AND fkShopId = "+shopId);
+					Query query2 = session2.createQuery("UPDATE CreditCustomerBill set pending_bill_payment = "+newBal+" WHERE BillNo = "+billNo+" AND fkCrediCustId = "+customer);
+					//Query query2 = session2.createQuery("UPDATE CreditCustomerBill set pending_bill_payment = "+newBal+" WHERE fkCrediCustId = "+customer+" AND fkShopId = "+shopId);
 			        query2.executeUpdate();
 
 					/*for (int j = 0; j < stkList2.size(); j++) {

@@ -39,6 +39,9 @@ public class BillEdit
 	private String netPaymentAmount;
 	private String spWithoutTax;
 	
+	private String oldUpiAmount;
+	private String oldUpiCashAmount;
+	
 	public Long getPkBillId() {
 		return pkBillId;
 	}
@@ -325,5 +328,22 @@ public class BillEdit
 
 	public void setSpWithoutTax(String spWithoutTax) {
 		this.spWithoutTax = spWithoutTax;
-	}	
+	}
+
+	public String getOldUpiAmount() {
+		return oldUpiAmount;
+	}
+
+	public void setOldUpiAmount(String oldUpiAmount) {
+		this.oldUpiAmount = oldUpiAmount;
+	}
+
+	public String getOldUpiCashAmount() {
+		return oldUpiCashAmount;
+	}
+
+	public void setOldUpiCashAmount(String oldUpiCashAmount) {
+		this.oldUpiCashAmount = oldUpiCashAmount;
+	}
+	
 }

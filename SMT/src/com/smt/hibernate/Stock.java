@@ -20,10 +20,25 @@ public class Stock {
 	private String buyPrice;
 	private String salePrice;
 	private Long fkShopId;
+	private String color;
+	
+
+	public Stock() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
 
 	public Stock(long pkStockId, String itemName, String catName, double quantity, Date updateDate, String date,
 			Long datediff, String qty2, String size, String subCatName, Long fkCategoryId, Long fkProductId,
-			String barcodeNo, String buyPrice, String salePrice, Long fkShopId) {
+			String barcodeNo, String buyPrice, String salePrice, Long fkShopId, String color) {
 		super();
 		PkStockId = pkStockId;
 		this.itemName = itemName;
@@ -41,11 +56,7 @@ public class Stock {
 		this.buyPrice = buyPrice;
 		this.salePrice = salePrice;
 		this.fkShopId = fkShopId;
-	}
-
-	public Stock() {
-		super();
-		// TODO Auto-generated constructor stub
+		this.color = color;
 	}
 
 	public Long getDatediff() {

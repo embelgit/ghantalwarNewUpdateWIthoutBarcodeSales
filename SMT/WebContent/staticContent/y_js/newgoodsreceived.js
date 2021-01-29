@@ -161,7 +161,7 @@ function setOfferDiscount()
 {
 	var disPercentage = $('#disPercentage').val();
 	var fromBarC = $('#fromBarC').val();
-	var toBarC = $('#toBarC').val();
+	var toBarC = $('#toC').val();
 	var hundredPer = 100;
 	
 	if(disPercentage == null || disPercentage == "")
@@ -232,8 +232,10 @@ function setOfferDiscount()
 	params["methodName"] = "setOfferDiscount";
 	
 	$.post('/SMT/jsp/utility/controller.jsp', params, function(data) {
-		alert(data);
-		location.reload();
+	
+		successAlert("Data Added Successfully");
+		//	alert(data);
+		//location.reload();
 	}).error(function(jqXHR, textStatus, errorThrown) {
 		if (textStatus === "timeout") {
 			$(loaderObj).hide();

@@ -169,9 +169,9 @@ public class SupplierCashBankHelper
 		Session session2 = hbu2.getHibernateSession();
 
 		// Query to get latest paid amount
-		//Query query = session.createSQLQuery("SELECT balance ,bill_no from supplier_payment WHERE bill_no =:billNo ORDER BY  pk_supplier_payment_id  DESC LIMIT 1 ;");
-		Query query = session.createSQLQuery("SELECT balance, fk_supplier_id from supplier_payment WHERE fk_supplier_id=:supplier ORDER BY pk_supplier_payment_id  DESC LIMIT 1;");
-		//query.setParameter("billNo", billNo);
+		Query query = session.createSQLQuery("SELECT balance ,bill_no from supplier_payment WHERE bill_no =:billNo AND fk_supplier_id=:supplier ORDER BY  pk_supplier_payment_id  DESC LIMIT 1 ;");
+		//Query query = session.createSQLQuery("SELECT balance, fk_supplier_id from supplier_payment WHERE fk_supplier_id=:supplier ORDER BY pk_supplier_payment_id  DESC LIMIT 1;");
+		query.setParameter("billNo", billNo);
 		query.setParameter("supplier", supplier);
 		List<Object[]> list = query.list();
 		int count = 0;
@@ -208,8 +208,8 @@ public class SupplierCashBankHelper
 
 				System.out.println("List size" + stkList2.size());
 				System.out.println("NEW BALANCE =====> "+newBal);
-				//Query query2 = session2.createQuery("UPDATE GoodReceive set pending_bill_payment = "+newBal+" WHERE BillNo = "+billNo+" AND FksuppId = "+supplier);
-				Query query2 = session2.createQuery("UPDATE GoodReceive set pending_bill_payment = "+newBal+" WHERE FksuppId = "+supplier);
+				Query query2 = session2.createQuery("UPDATE GoodReceive set pending_bill_payment = "+newBal+" WHERE BillNo = "+billNo+" AND FksuppId = "+supplier);
+				//Query query2 = session2.createQuery("UPDATE GoodReceive set pending_bill_payment = "+newBal+" WHERE FksuppId = "+supplier);
 		        query2.executeUpdate();
 
 				/*for (int j = 0; j < stkList2.size(); j++) {
@@ -254,8 +254,8 @@ public class SupplierCashBankHelper
 
 					System.out.println("List size" + stkList2.size());
 					System.out.println("NEW BALANCE =====> "+newBal);
-					//Query query2 = session2.createQuery("UPDATE GoodReceive set pending_bill_payment = "+newBal+" WHERE BillNo = "+billNo+" AND FksuppId = "+supplier);
-					Query query2 = session2.createQuery("UPDATE GoodReceive set pending_bill_payment = "+newBal+" WHERE FksuppId = "+supplier);
+					Query query2 = session2.createQuery("UPDATE GoodReceive set pending_bill_payment = "+newBal+" WHERE BillNo = "+billNo+" AND FksuppId = "+supplier);
+					//Query query2 = session2.createQuery("UPDATE GoodReceive set pending_bill_payment = "+newBal+" WHERE FksuppId = "+supplier);
 			        query2.executeUpdate();
 
 					/*for (int j = 0; j < stkList2.size(); j++) {
@@ -318,8 +318,8 @@ public class SupplierCashBankHelper
 
 				System.out.println("List size" + stkList2.size());
 				System.out.println("NEW BALANCE =====> "+newBal);
-				/*Query query2 = session2.createQuery("UPDATE GoodReceive set pending_bill_payment = "+newBal+" WHERE BillNo = "+billNo+" AND FksuppId = "+supplier);*/
-				Query query2 = session2.createQuery("UPDATE GoodReceive set pending_bill_payment = "+newBal+" WHERE FksuppId = "+supplier);
+				Query query2 = session2.createQuery("UPDATE GoodReceive set pending_bill_payment = "+newBal+" WHERE BillNo = "+billNo+" AND FksuppId = "+supplier);
+				//Query query2 = session2.createQuery("UPDATE GoodReceive set pending_bill_payment = "+newBal+" WHERE FksuppId = "+supplier);
 		        query2.executeUpdate();
 
 				/*for (int j = 0; j < stkList2.size(); j++)
@@ -367,8 +367,8 @@ public class SupplierCashBankHelper
 					List stkList2 = dao1.getAllPurschaseEntry();
 					System.out.println("NEW BALANCE =====> "+newBal);
 					System.out.println("List size" + stkList2.size());
-					/*Query query2 = session2.createQuery("UPDATE GoodReceive set pending_bill_payment = "+newBal+" WHERE BillNo = "+billNo+" AND FksuppId = "+supplier);*/
-					Query query2 = session2.createQuery("UPDATE GoodReceive set pending_bill_payment = "+newBal+" WHERE FksuppId = "+supplier);
+					Query query2 = session2.createQuery("UPDATE GoodReceive set pending_bill_payment = "+newBal+" WHERE BillNo = "+billNo+" AND FksuppId = "+supplier);
+					//Query query2 = session2.createQuery("UPDATE GoodReceive set pending_bill_payment = "+newBal+" WHERE FksuppId = "+supplier);
 			        query2.executeUpdate();
 
 					/*for (int j = 0; j < stkList2.size(); j++) {

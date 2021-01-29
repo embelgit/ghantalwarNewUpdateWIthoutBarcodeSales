@@ -534,6 +534,142 @@ public class StockDao
 		return catList;  
 	}
 	
+	
+	public List getAllProductForNotification1(HttpServletRequest request, HttpServletResponse response)
+	{
+		HttpSession session1 = request.getSession();
+		String shopId = (String) session1.getAttribute("shopId");
+		
+		DecimalFormat df = new DecimalFormat("#.##");
+		com.smt.utility.HibernateUtility hbu = null;
+		Session session = null;
+		List<Stock> catList = null;
+		try {
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			//Query query = session.createSQLQuery("select ItemName,CategoryName,Quantity,UpdateDate from stock_details where quantity < 10");
+			Query query = session.createSQLQuery("select pr.ProductName,ct.category_name, sd.Quantity,gr.Date,gr.size,gr.BarcodeNo,gr.color from stock_details sd JOIN categories ct ON sd.fk_Cat_Id=ct.pk_category_id JOIN product_reg pr ON sd.fk_Product_Id=pr.pkProductNameId JOIN goodreceive gr on gr.fkProductId=pr.pkProductNameId where gr.fkShopId = "+shopId+" AND sd.Quantity > 10 AND sd.Quantity < 20 GROUP BY gr.fkProductId");
+			List<Object[]> list = query.list();
+			catList = new ArrayList<Stock>(0);
+			System.out.println("List Size" + list.size());
+
+			for (Object[] object : list)
+			{
+				Stock reports = new Stock();
+				
+				reports.setItemName(object[0].toString());
+				reports.setCatName(object[1].toString());
+				reports.setQuantity(Double.parseDouble(object[2].toString()));
+				
+				reports.setDate(object[3].toString());
+				reports.setSize(object[4].toString());
+				reports.setBarcodeNo(object[5].toString());
+				reports.setColor(object[6].toString());
+				catList.add(reports);
+				System.out.println(reports.getItemName()+" "+reports.getCatName()+" "+reports.getQuantity()+" "+reports.getSize()+" "+reports.getDate());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				hbu.closeSession(session);
+			}
+		}
+
+		return catList;  
+	}
+	
+	
+	public List getAllProductForNotification3(HttpServletRequest request, HttpServletResponse response)
+	{
+		HttpSession session1 = request.getSession();
+		String shopId = (String) session1.getAttribute("shopId");
+		
+		DecimalFormat df = new DecimalFormat("#.##");
+		com.smt.utility.HibernateUtility hbu = null;
+		Session session = null;
+		List<Stock> catList = null;
+		try {
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			//Query query = session.createSQLQuery("select ItemName,CategoryName,Quantity,UpdateDate from stock_details where quantity < 10");
+			Query query = session.createSQLQuery("select pr.ProductName,ct.category_name, sd.Quantity,gr.Date,gr.size,gr.BarcodeNo,gr.color from stock_details sd JOIN categories ct ON sd.fk_Cat_Id=ct.pk_category_id JOIN product_reg pr ON sd.fk_Product_Id=pr.pkProductNameId JOIN goodreceive gr on gr.fkProductId=pr.pkProductNameId where gr.fkShopId = "+shopId+" AND sd.Quantity > 0 AND sd.Quantity < 10 GROUP BY gr.fkProductId");
+			List<Object[]> list = query.list();
+			catList = new ArrayList<Stock>(0);
+			System.out.println("List Size" + list.size());
+
+			for (Object[] object : list)
+			{
+				Stock reports = new Stock();
+				
+				reports.setItemName(object[0].toString());
+				reports.setCatName(object[1].toString());
+				reports.setQuantity(Double.parseDouble(object[2].toString()));
+				
+				reports.setDate(object[3].toString());
+				reports.setSize(object[4].toString());
+				reports.setBarcodeNo(object[5].toString());
+				reports.setColor(object[6].toString());
+				catList.add(reports);
+				System.out.println(reports.getItemName()+" "+reports.getCatName()+" "+reports.getQuantity()+" "+reports.getSize()+" "+reports.getDate());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				hbu.closeSession(session);
+			}
+		}
+
+		return catList;  
+	}
+	
+	
+	public List getAllProductForNotification2(HttpServletRequest request, HttpServletResponse response)
+	{
+		HttpSession session1 = request.getSession();
+		String shopId = (String) session1.getAttribute("shopId");
+		
+		DecimalFormat df = new DecimalFormat("#.##");
+		com.smt.utility.HibernateUtility hbu = null;
+		Session session = null;
+		List<Stock> catList = null;
+		try {
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			//Query query = session.createSQLQuery("select ItemName,CategoryName,Quantity,UpdateDate from stock_details where quantity < 10");
+			Query query = session.createSQLQuery("select pr.ProductName,ct.category_name, sd.Quantity,gr.Date,gr.size,gr.BarcodeNo,gr.color from stock_details sd JOIN categories ct ON sd.fk_Cat_Id=ct.pk_category_id JOIN product_reg pr ON sd.fk_Product_Id=pr.pkProductNameId JOIN goodreceive gr on gr.fkProductId=pr.pkProductNameId where gr.fkShopId = "+shopId+" AND sd.Quantity > 20 AND sd.Quantity < 40 GROUP BY gr.fkProductId");
+			List<Object[]> list = query.list();
+			catList = new ArrayList<Stock>(0);
+			System.out.println("List Size" + list.size());
+
+			for (Object[] object : list)
+			{
+				Stock reports = new Stock();
+				
+				reports.setItemName(object[0].toString());
+				reports.setCatName(object[1].toString());
+				reports.setQuantity(Double.parseDouble(object[2].toString()));
+				
+				reports.setDate(object[3].toString());
+				reports.setSize(object[4].toString());
+				reports.setBarcodeNo(object[5].toString());
+				reports.setColor(object[6].toString());
+				catList.add(reports);
+				System.out.println(reports.getItemName()+" "+reports.getCatName()+" "+reports.getQuantity()+" "+reports.getSize()+" "+reports.getDate());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				hbu.closeSession(session);
+			}
+		}
+
+		return catList;  
+ 
+	}
+	
 	public List<GoodReceive> getBarcodeBasedStockDao(String shopId)
 	{
 		// TODO Auto-generated method stub

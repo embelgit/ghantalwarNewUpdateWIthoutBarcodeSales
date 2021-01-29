@@ -52,7 +52,9 @@ public class SupplierDetailHelper
 		String supplierType = request.getParameter("type");
 		
 		String accountName = request.getParameter("accountname");
+		System.out.println(accountName+"account name");
 		String accountnumber = request.getParameter("account");
+		System.out.println(accountnumber);
 		String ifsc = request.getParameter("ifsc");
 		String upiid = request.getParameter("upiid");
 
@@ -134,9 +136,10 @@ public class SupplierDetailHelper
 		}
 		
 		if (!"".equals(accountnumber)) {
-
 			detail.setAccNumber(Long.parseLong(accountnumber));
+			
 		} else {
+			
 			detail.setAccNumber(Long.parseLong("0"));
 		}
 		

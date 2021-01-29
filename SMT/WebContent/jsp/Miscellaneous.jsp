@@ -189,6 +189,22 @@ function isNumber(evt)
     return true;
 }
 
+
+function Returncash() {
+	var grossTotal=document.getElementById("grossTotal").value;
+	var Cashbycust=document.getElementById("Cashbycust").value; 
+	
+	if(Cashbycust=="" || Cashbycust==null )
+		{
+		//duty= document.getElementById("RetCash").value=0;
+		var rate=(Cashbycust-grossTotal);
+    	document.getElementById("RetCash").value = Math.round(rate);
+		}
+	else {
+		var rate=(Cashbycust-grossTotal);
+    	document.getElementById("RetCash").value = Math.round(rate);
+	}
+}
 </script>
 <%
 	Long BillNo = 1l;
@@ -624,6 +640,8 @@ function isNumber(evt)
 								<option value="cash">Cash</option>
 								<option value="card">Card</option>
 								<option value="cashAndCard">Cash And Card</option>
+								<option value="Upi">Upi</option>
+								<option value="cashAndupi">Cash And Upi</option>
 							</select> <label for="paymentMode">Payment Mode:</label>
 							<div class="row ">
 								<div id="cheque_no">
@@ -686,9 +704,41 @@ function isNumber(evt)
 									</div>
 								</div>
 							</div>
+							
+							<div id="cash_and_upi">
+								<div class="col-md-4"></div>
+
+								<div class="row">
+									<div class="invoice_label_up">
+										<div
+											class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4 col-lg-offset-1"
+											id="cashcol">
+
+
+											<input type="text" name="cashCard_cashAmount1"
+												id="cashCard_cashAmount1" required /> <label>Cash
+												Amount</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-4"></div>
+								<div class="row">
+									<div class="invoice_label_up">
+										<div
+											class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4 col-lg-offset-1"
+											id="cashcol">
+											<input type="text" name="cashCard_upiAmount"
+												id="cashCard_upiAmount" required /> <label>Upi
+												Amount</label>
+										</div>
+									</div>
+								</div>
+							</div>
 
 						</div>
 
+							
 
 						<script>
 		$(document).ready(function(){
@@ -700,6 +750,7 @@ function isNumber(evt)
 		           	$("#neft_acc_no").hide(); 
 		           	$("#card_no").hide();
 		           	$("#cash_and_card").hide();
+		           	$("#cash_and_upi").hide();
 	           	}
 	          	 else if($(this).attr("value")=="card")
 		        {
@@ -707,6 +758,7 @@ function isNumber(evt)
 	          		$("#neft_acc_no").hide(); 
 	        		$("#cheque_no").hide();
 		           	$("#cash_and_card").hide();
+		           	$("#cash_and_upi").hide();
 	            }
 	          	else if($(this).attr("value")=="neft")
 		        {
@@ -714,6 +766,7 @@ function isNumber(evt)
 	           		$("#card_no").hide(); 
 	        		$("#cheque_no").hide();
 		           	$("#cash_and_card").hide();
+		           	$("#cash_and_upi").hide();
 	            }
 	          	else if($(this).attr("value")=="cash")
 		        {
@@ -721,6 +774,7 @@ function isNumber(evt)
             		$("#cheque_no").hide();
             		$("#card_no").hide();
 		           	$("#cash_and_card").hide();
+		           	$("#cash_and_upi").hide();
 	            }
 	          	else if($(this).attr("value")=="cashAndCard")
 		        {
@@ -728,7 +782,23 @@ function isNumber(evt)
             		$("#neft_acc_no").hide(); 
             		$("#cheque_no").hide();
             		$("#card_no").hide(); 
+            		$("#cash_and_upi").hide();
 	             }
+	          	else if($(this).attr("value")=="cashAndupi")
+		        {
+	         		$("#cash_and_card").hide();
+	          		$("#cash_and_upi").show();
+            		$("#neft_acc_no").hide(); 
+            		$("#cheque_no").hide();
+            		$("#card_no").hide(); 
+	             }
+	         	else if($(this).attr("value")=="Upi"){
+	          		$("#cash_and_card").hide();
+	          		$("#cash_and_upi").hide();
+	          		$("#card_no").hide(); 	
+	          		$("#neft_acc_no").hide(); 
+	        		$("#cheque_no").hide();
+	           }
 	       });
 	   }).change();
 		});	
@@ -752,6 +822,22 @@ function isNumber(evt)
 						</div>
 					</div>
 
+<div class="row">
+
+						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-3"
+							id="taxcol">
+							<input type="text"  id="Cashbycust" onchange="Returncash()" /> <label
+								for="Cashbycust">Cash Given By Customer </label>
+						</div>
+						 <div class="col-md-1"></div>
+						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+							id="taxcol">
+
+							<input type="text" id="RetCash" readonly="readonly"
+								style="background-color: red;"/> <label> Return Cash
+								</label>
+						</div>
+					</div>
 
 					<div class="invoice_button col-md-offset-1">
 						<div class="row">

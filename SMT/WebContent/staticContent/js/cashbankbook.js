@@ -729,6 +729,10 @@ function getCreditCustomerBillDetails()
 	this.getTotalAmountByBill = getTotalAmountByBill;
 }
 
+
+
+
+
 function getTotalAmountByBill()
 {
 	var input = document.getElementById('creditCustomer'),

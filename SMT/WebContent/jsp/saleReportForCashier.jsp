@@ -1,3 +1,4 @@
+<%@page import="com.smt.helper.CreditCustomerBillHelper"%>
 <%@page import="com.smt.dao.ProductDetailDao"%>
 <%@page import="com.smt.bean.ItemList"%>
 <%@page import="com.smt.helper.ProductDetailHelper"%>
@@ -300,6 +301,8 @@ h4 {
 				<ul class="nav nav-tabs tabs-left">
 					<li class="active" id="li"><a href="#sell" data-toggle="tab" class="left-tab-new">Sale Reports</a></li>
 					<li id="li"><a href="#miscellaneous" data-toggle="tab" class="left-tab-new">Sale Return Reports</a></li>
+				<li id="li"><a href="#credit" data-toggle="tab"
+						class="left-tab-new">Credit Customer Sale Reports</a></li>	
 					<li id="li"><a href="#stock" data-toggle="tab" class="left-tab-new">Stock Reports</a></li>
 				</ul>
 			</div>
@@ -1201,6 +1204,787 @@ h4 {
 
 
 
+<!---------- Credit Customer Bill Reports ------->
+
+					<div class="tab-pane" id="credit">
+						<div class="row">
+							<div align="center">
+								<h2 class="form-name style_heading">Credit Customer Sale
+									Reports</h2>
+							</div>
+							<div class="row">
+								<div class="col-sm-offset-1 col-md-10">
+									<hr style="border-top-color: #c1b1b1;">
+								</div>
+							</div>
+						</div>
+						<ul class="nav nav-tabs">
+							<li class="active"><a data-toggle="tab"
+								href="#creditSingleDate"><h4 style="color: blue">Datewise</h4></a></li>
+							<li><a data-toggle="tab" href="#creditTwoDate"><h4
+										style="color: blue">Range</h4></a></li>
+							<li><a data-toggle="tab" href="#creditCategoryWise"><h4
+										style="color: blue">Category Wise</h4></a></li>
+							<li><a data-toggle="tab" href="#creditProductWise"><h4
+										style="color: blue">Product Wise</h4></a></li>
+							<li><a data-toggle="tab" href="#creditBillNoWise"><h4
+										style="color: blue">Bill No Wise</h4></a></li>
+							<li><a data-toggle="tab" href="#creditBarcodeNoWise"><h4
+										style="color: blue">Barcode No Wise</h4></a></li>
+							<li><a data-toggle="tab" href="#paymentModeWiseReportForCC"><h4
+										style="color: blue">Payment Mode Wise</h4></a></li>
+						</ul>
+
+						<div class="tab-content" style="float: left">
+
+							<!--  Credit Customer Sale for single date -->
+
+							<div id="creditSingleDate" class="tab-pane fade in active">
+								<div class="miscellaneous" style="left:">
+									<form class="form-horizontal" method="post" action="">
+										<div class="container">
+											<div class="row">
+												<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+													id="graphcolumnwidth">
+													<input type="date" id="csDate" type="text"> <label
+														for="">From<sup>*</sup></label>
+												</div>
+
+
+												<div class="col-md-2" id="btnsub">
+
+													<input type="button" id="btn" name="save"
+														class="btn btn-lg btn-success btn-md button_hw button_margin_right"
+														onclick="creditSingleDate()" value="Search"
+														style="padding-bottom: 31px;" />
+
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="container">
+
+									<div class="table-responsive" id="tables">
+										<table
+											class="table table-bordered table-striped table-condensed cf"
+											id="creditSingleDateReport" class="display"
+											style="border: 2px solid black; border-collapse: collapse;">
+											<thead>
+												<tr>
+													<th>Sr No</th>
+													<th>Bill No</th>
+													<th>Customer Name</th>
+													<th>Barcode No</th>
+													<th>Category Name</th>
+													<th>Item Name</th>
+													<th>Quantity</th>
+													<th>Sale Price</th>
+													<th>Tax (%)</th>
+													<th>Sale Price<br>Without Tax
+													</th>
+													<th>Discount (%)</th>
+													<th>Discount<br>Amount
+													</th>
+													<th>Tax Amount<br>After Discount
+													</th>
+													<th>Total Price</th>
+													<!-- <th>Tax (%)</th>
+														<th>Tax Amount</th> 
+														<th>Gross Total</th>
+														-->
+
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th colspan="6" style="text-align: right">Total:</th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<!-- <th></th> -->
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+
+
+							</div>
+
+							<!-------Credit Customer Sale between Two dates ------->
+
+							<div id="creditTwoDate" class="tab-pane">
+
+								<div class="miscellaneous" style="left:">
+									<form class="form-horizontal" method="post" action="">
+										<div class="container">
+											<div class="row">
+
+												<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+													id="graphcolumnwidth">
+													<input type="date" id="csfisDate" type="text"> <label
+														for="startDate">From<sup style="color: red;">*</sup></label>
+												</div>
+
+
+
+
+												<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+													id="graphcolumnwidth">
+													<input type="date" id="csendDate" type="text"> <label
+														for="endDate">To<sup style="color: red;">*</sup></label>
+												</div>
+
+
+
+												<div class="col-md-2" id="btnsub">
+													<input type="button" id="btn" name="save"
+														class="btn btn-lg btn-success btn-md button_hw button_margin_right"
+														onclick="creditTwoDate()" value="Search"
+														style="padding-bottom: 31px;" />
+												</div>
+
+											</div>
+										</div>
+									</form>
+								</div>
+
+								<div class="container">
+
+									<div class="table-responsive" id="tables">
+										<table
+											class="table table-bordered table-striped table-condensed cf"
+											id="creditTwoDateReport" class="display"
+											style="border: 2px solid black; border-collapse: collapse;">
+											<thead>
+												<tr>
+													<th>Sr No</th>
+													<th>Bill No</th>
+													<th>Customer Name</th>
+													<th>Barcode No</th>
+													<th>CategoryName</th>
+													<th>Item Name</th>
+													<th>Quantity</th>
+													<th>SalePrice</th>
+													<th>Tax (%)</th>
+													<th>Sale Price<br>Without Tax
+													</th>
+													<th>Discount (%)</th>
+													<th>Discount<br>Amount
+													</th>
+													<th>Tax Amount<br>After Discount
+													</th>
+													<th>Total Price</th>
+													<th>Date</th>
+
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th colspan="6" style="text-align: right">Total:</th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+
+
+							</div>
+
+							<!-- 	Category Name wise Credit Customer Sale Reports -->
+
+							<div id="creditCategoryWise" class="tab-pane">
+
+								<div class="miscellaneous" style="left:">
+									<form class="form-horizontal" method="post" action="">
+
+										<div class="row">
+											<div class="invoice_label_up">
+												<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+													id="graphcolumnwidth">
+													<%
+														CategoryHelper ch3 = new CategoryHelper();
+														List lis3 = ch3.getCategorys();
+													%>
+
+													<input list="cscatId_drop" id="cscatId" required>
+													<datalist id="cscatId_drop">
+														<%
+															for (int i = 0; i < lis3.size(); i++) {
+																CategoryDetails item3 = (CategoryDetails) lis3.get(i);
+														%>
+														<option data-value="<%=item3.getCatId()%>"
+															value="<%=item3.getCatName()%>">
+															<%
+																}
+															%>
+														
+													</datalist>
+													<label for="">select Category<sup>*</sup></label>
+												</div>
+											</div>
+
+
+											<div class="col-md-2" id="btnsub">
+												<input type="button" id="btn" name="save"
+													class="btn btn-lg btn-success btn-md button_hw button_margin_right"
+													onclick="creditSaleWiseCustomer()" value="Search"
+													style="padding-bottom: 31px;" />
+											</div>
+
+										</div>
+									</form>
+								</div>
+
+								<div class="container">
+									<div class="table-responsive" id="tables">
+										<table
+											class="table table-bordered table-striped table-condensed cf"
+											id="creditSaleWiseCustomerReport" class="display"
+											style="border: 2px solid black; border-collapse: collapse;">
+											<thead>
+												<tr>
+													<th>Sr No</th>
+													<th>Bill No</th>
+													<th>Customer Name</th>
+													<th>Barcode No</th>
+													<th>Category Name</th>
+													<th>Item Name</th>
+													<th>Quantity</th>
+													<th>Sale Price</th>
+													<th>Tax (%)</th>
+													<th>Sale Price<br>Without Tax
+													</th>
+													<th>Discount (%)</th>
+													<th>Discount<br>Amount
+													</th>
+													<th>Tax Amount<br>After Discount
+													</th>
+													<th>Total Price</th>
+													<th>Sale Date</th>
+
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th colspan="6" style="text-align: right">Total:</th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+
+
+							</div>
+
+
+							<!----------------------------------------- 	PAYMENT MODE WISE Credit Customer Sale Reports --------------------------------------------------->
+
+							<div id="paymentModeWiseReportForCC" class="tab-pane fade">
+
+								<div class="miscellaneous" style="left:;">
+									<form class="form-horizontal" method="post" action="">
+										<div class="container">
+											<div class="row">
+
+
+												<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+													id="graphcolumnwidth">
+													<input type="date" id="startDateForCC" type="text">
+													<label for="startDateForCC">From<sup style="color: red;">*</sup></label>
+												</div>
+
+
+
+
+												<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+													id="graphcolumnwidth">
+													<input type="date" id="endDateForCC" type="text"> <label
+														for="endDateForCC">To<sup style="color: red;">*</sup></label>
+												</div>
+
+
+
+											</div>
+
+											<div class="row">
+
+
+
+
+												<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+													id="graphcolumnwidth">
+													<select id="paymentModeForCC">
+														<option value="cash">Cash</option>
+														<option value="card">Card</option>
+														<option value="cashAndCard">Cash And Card</option>
+													</select> <label for="paymentModeForCC">Payment Mode</label>
+												</div>
+
+												<div class="col-md-2" id="btnsub">
+													<input type="button" id="btn" name="save"
+														class="btn btn-lg btn-success btn-md button_hw button_margin_right"
+														onclick="paymentModeWiseReportForCC()" value="Search"
+														style="padding-bottom: 28px;" />
+												</div>
+
+
+											</div>
+										</div>
+									</form>
+								</div>
+
+								<div class="container">
+									<div class="table-responsive" id="tables">
+										<table
+											class="table table-bordered table-striped table-condensed cf"
+											id="paymentModeWiseReportTableForCC" class="display"
+											style="border: 2px solid black; border-collapse: collapse;">
+											<thead>
+												<tr>
+													<th>Bill No</th>
+													<th>Customer Name</th>
+													<th>Cash Amount</th>
+													<th>Card Amount</th>
+													<th>Credit Amount</th>
+													<th>Total</th>
+													<th>Payment Mode</th>
+													<th>Date</th>
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th colspan="2" style="text-align: right">Total:</th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+
+
+							</div>
+
+
+
+							<!----------------------------------------- 	PRODUCT Name wise Credit Customer Sale Reports --------------------------------------------------->
+
+							<div id="creditProductWise" class="tab-pane">
+
+								<div class="miscellaneous" style="left:">
+									<form class="form-horizontal" method="post" action="">
+										<div class="container">
+											<div class="row">
+												<div class="invoice_label_up">
+													<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+														id="graphcolumnwidth">
+
+														<%
+															CreditCustomerBillHelper ccbh = new CreditCustomerBillHelper();
+															List ccbhList = ccbh.getCcbProductListHelper();
+														%>
+
+														<input list="csproductId_drop" id="csproductId" required>
+														<datalist id="csproductId_drop">
+															<%
+																for (int i = 0; i < ccbhList.size(); i++) {
+																	ItemList ccbProductList = (ItemList) ccbhList.get(i);
+															%>
+															<option data-value="<%=ccbProductList.getPkProductId()%>"
+																value="<%=ccbProductList.getItem_name()%>">
+																<%
+																	}
+																%>
+															
+														</datalist>
+														<label for=""> Select Product<sup>*</sup></label>
+
+													</div>
+												</div>
+
+												<div class="col-md-2" id="btnsub">
+
+													<input type="button" id="btn" name="save"
+														class="btn btn-lg btn-success btn-md button_hw button_margin_right"
+														onclick="prtoductWiserCreditCustomerSaleReport()"
+														value="Search" style="padding-bottom: 31px;" />
+
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+
+								<div class="container">
+									<div class="table-responsive" id="tables">
+										<table
+											class="table table-bordered table-striped table-condensed cf"
+											id="creditSaleProductWiseReport" class="display"
+											style="border: 2px solid black; border-collapse: collapse;">
+											<thead>
+												<tr>
+													<th>Sr No</th>
+													<th>Bill No</th>
+													<th>Customer Name</th>
+													<th>Barcode No</th>
+													<th>Category Name</th>
+													<th>Item Name</th>
+													<th>Quantity</th>
+													<th>Sale Price</th>
+													<th>Tax (%)</th>
+													<th>Sale Price<br>Without Tax
+													</th>
+													<th>Discount (%)</th>
+													<th>Discount<br>Amount
+													</th>
+													<th>Tax Amount<br>After Discount
+													</th>
+													<th>Total Price</th>
+													<th>Sale Date</th>
+
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th colspan="6" style="text-align: right">Total:</th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+
+
+
+							</div>
+							<!-- ==============================================- 	Bill No wise Credit Customer Sale Reports =============================================================-->
+
+							<div id="creditBillNoWise" class="tab-pane">
+
+								<div class="miscellaneous" style="left:">
+									<form class="form-horizontal" method="post" action="">
+										<div class="container">
+											<div class="row">
+												<div class="invoice_label_up">
+													<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+														id="graphcolumnwidth">
+
+														<%
+															CreditCustBillDao cs1 = new CreditCustBillDao();
+															List lrst4 = cs1.getBillNo(request, response);
+														%>
+
+														<input list="csBillNocust_id" id="csBillNocust" required>
+														<datalist id="csBillNocust_id">
+															<%
+																for (int i = 0; i < lrst4.size(); i++) {
+																	BillCopy bli = (BillCopy) lrst4.get(i);
+															%>
+															<option data-value="<%=bli.getBillNo()%>"
+																value="<%=bli.getBillNo()%>    <%=bli.getCustName()%> <%=bli.getLastName()%>">
+																<%
+																	}
+																%>
+															
+														</datalist>
+														<label for=""> Select Bill No<sup>*</sup></label>
+													</div>
+												</div>
+
+
+
+												<div class="col-md-2" id="btnsub">
+													<input type="button" id="btn" name="save"
+														class="btn btn-lg btn-success btn-md button_hw button_margin_right"
+														onclick="billnowiseCreditsell()" value="Search"
+														style="padding-bottom: 31px;" />
+												</div>
+
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="container">
+									<div class="table-responsive" id="tables">
+										<table
+											class="table table-bordered table-striped table-condensed cf"
+											id="billnowiseCredit" class="display"
+											style="border: 2px solid black; border-collapse: collapse;">
+											<thead>
+												<tr>
+													<th>Sr No</th>
+													<th>Bill No</th>
+													<th>Customer Name</th>
+													<th>Barcode No</th>
+													<th>Category Name</th>
+													<th>Item Name</th>
+													<th>Quantity</th>
+													<th>Sale Price</th>
+													<th>Tax (%)</th>
+													<th>Sale Price<br>Without Tax
+													</th>
+													<th>Discount (%)</th>
+													<th>Discount<br>Amount
+													</th>
+													<th>Tax Amount<br>After Discount
+													</th>
+													<th>Total Price</th>
+													<th>Sale Date</th>
+
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th colspan="6" style="text-align: right">Total:</th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+
+
+							</div>
+
+							<!------------------------------------------------------ Barcode No wise Credit Customer Sale Reports -------------------------------------------------------------->
+
+							<div id="creditBarcodeNoWise" class="tab-pane">
+
+								<div class="miscellaneous" style="left:">
+									<form class="form-horizontal" method="post" action="">
+										<div class="container">
+											<div class="row">
+
+												<div class="invoice_label_up">
+													<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+														id="graphcolumnwidth">
+
+														<input type="text" id="barcodeCredit" type="text" required>
+														<label for=""> Barcode No:<sup>*</sup>
+														</label>
+													</div>
+												</div>
+
+
+
+												<div class="col-md-2" id="btnsub">
+													<input type="button" id="btn" name="save"
+														class="btn btn-lg btn-success btn-md button_hw button_margin_right"
+														onclick="barcodenowiseCredit()" value="Search"
+														style="padding-bottom: 31px;" />
+												</div>
+
+
+
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="container">
+									<div class="table-responsive" id="tables">
+										<table
+											class="table table-bordered table-striped table-condensed cf"
+											id="barcodewiseCredit" class="display"
+											style="border: 2px solid black; border-collapse: collapse;">
+											<thead>
+												<tr>
+													<th>Sr No</th>
+													<th>Bill No</th>
+													<th>Customer Name</th>
+													<th>Barcode No</th>
+													<th>Category Name</th>
+													<th>Item Name</th>
+													<th>Quantity</th>
+													<th>Sale Price</th>
+													<th>Tax (%)</th>
+													<th>Sale Price<br>Without Tax
+													</th>
+													<th>Discount (%)</th>
+													<th>Discount<br>Amount
+													</th>
+													<th>Tax Amount<br>After Discount
+													</th>
+													<th>Total Price</th>
+													<th>Date</th>
+
+
+												</tr>
+											</thead>
+											<tfoot>
+												<tr>
+													<th colspan="6" style="text-align: right">Total:</th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+													<th></th>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+								</div>
+
+
+							</div>
+
+
+							<!----------------------------------------------------------------- payment Mode Wise Reports FOR CC ------------------------------------------------------>
+
+
+
+							<div id="paymentModeWiseReportForCC" class="tab-pane fade">
+
+								<form class="form-horizontal" method="post" action="">
+									<fieldset>
+										<div class="row form-group">
+											<label class="col-md-2 control-label" for="pmDateForCC">
+												Start Date:<sup style="color: red;">*</sup></label>
+											<div class="col-md-3">
+												<div class="input-group">
+													<span class="input-group-addon"> <i
+														class="glyphicon glyphicon-calendar"></i>
+													</span> <input type="date" id="pmDateForCC"
+														placeholder="Start Date" class="form-control input-md"
+														type="text">
+												</div>
+											</div>
+
+											<label class="col-md-2 control-label" for="pmDate22ForCC">
+												End Date:<sup style="color: red;">*</sup></label>
+											<div class="col-md-3">
+												<div class="input-group">
+													<span class="input-group-addon"> <i
+														class="glyphicon glyphicon-calendar"></i>
+													</span> <input type="date" id="pmDate22ForCC"
+														placeholder="End Date" class="form-control input-md"
+														type="text">
+												</div>
+											</div>
+										</div>
+
+										<div class="row form-group">
+
+
+											<label class="col-md-2 control-label" for="paymentMode">Payment
+												Mode:</label>
+											<div class="col-md-3">
+												<div class="input-group">
+													<span class="input-group-addon"> <i
+														class="glyphicon glyphicon-calendar"></i>
+													</span> <select class="form-control" id="paymentModeForCC">
+														<option value="cash">Cash</option>
+														<option value="card">Card</option>
+														<option value="cashAndCard">Cash And Card</option>
+													</select>
+												</div>
+											</div>
+
+											<div class="row form-group">
+												<div class="col-md-1 col-sm-offset-1">
+													<div class="input-group">
+														<input type="button" id="btn" name="save"
+															style="height: 27px; padding: 0px;"
+															class="btn btn-lg btn-success btn-md button_hw button_margin_right"
+															onclick="paymentModeRangeWiseReport()" value="Search" />
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+										<div class="table-responsive" id="tables">
+											<table
+												class="table table-bordered table-striped table-condensed cf"
+												id="paymentModeWiseReportTable" class="display"
+												style="border: 2px solid black; border-collapse: collapse;">
+												<thead>
+													<tr>
+														<th>Bill No</th>
+														<th>Customer Name</th>
+														<th>Cash Amount</th>
+														<th>Card Amount</th>
+														<th>Credit Amount</th>
+														<th>Total</th>
+														<th>Payment Mode</th>
+														<th>Date</th>
+													</tr>
+												</thead>
+												<tfoot>
+													<tr>
+														<th colspan="2" style="text-align: right">Total:</th>
+														<th></th>
+														<th></th>
+														<th></th>
+														<th></th>
+														<th></th>
+														<th></th>
+													</tr>
+												</tfoot>
+											</table>
+										</div>
+									</fieldset>
+								</form>
+							</div>
+
+
+
+
+
+
+
+
+
+						</div>
+					</div>
 
 
 

@@ -1,5 +1,27 @@
+
+
+function successAlert(msg)
+{
+	var dialog = bootbox.dialog({
+    message: '<p class="text-center">'+msg.fontcolor("green").fontsize(5)+'</p>',
+    closeButton: false
+   });
+   setTimeout(function()
+   {
+	dialog.modal('hide');
+	location.reload();
+   }, 1500);
+}
+
 function editBill1()
 {		
+	
+	var oldCashAmount = $('#oldCashAmount').val();
+	var oldCardAmount = $('#oldCardAmount').val();
+	var oldUPIAmount = $('#oldUPIAmount').val();
+	var oldUpidAmount = $('#oldUpidAmount').val();
+	
+	//alert("oldCashAmount"+oldCashAmount+"oldCardAmount"+oldCardAmount+"oldUPIAmount"+oldUPIAmount+"oldUpidAmount"+oldUpidAmount);
 	var firstNameSm = '';
 	var lastNameSm = '';
 	var mobileNo = $('#mobileNo').val();
@@ -66,8 +88,13 @@ function editBill1()
 	var lastPaymentMode = '';
 	var cashCard_cashAmount = '';
 	var cashCard_cardAmount = '';
+	var cashupi_cashAmount='';
+	var cashupi_upiAmount='';
 	var oldCashAmount = $('#oldCashAmount').val();
 	var oldCardAmount = $('#oldCardAmount').val();
+	var oldUPIAmount = $('#oldUPIAmount').val();
+	var oldUpidAmount = $('#oldUpidAmount').val();
+	
 	var finalCreditAmount = $("#finalCreditAmount").val();
 	var paymentMode = $("#paymentMode").val();
 
@@ -77,9 +104,78 @@ function editBill1()
 		paymentMode = lastPaymentMode;
 		cashCard_cashAmount = $('#oldCashAmount').val();
 		cashCard_cardAmount = $('#oldCardAmount').val();
+		cashupi_cashAmount = $('#oldUPIAmount').val();
+		cashupi_upiAmount = $('#oldUpidAmount').val();
 		
 		params["cashCard_cashAmount"] = cashCard_cashAmount;
 		params["cashCard_cardAmount"] = cashCard_cardAmount;
+		params["cashupi_cashAmount"] = cashupi_cashAmount;
+		params["cashupi_upiAmount"] = cashupi_upiAmount;
+	}
+	else if(paymentMode == "cashAndupi")
+	{	
+		cashupi_cashAmount = $('#cashupi_cashAmount').val();
+		cashupi_upiAmount = $('#cashupi_upiAmount').val();
+		if(cashupi_cashAmount == undefined || cashupi_cashAmount == null || cashupi_cashAmount == "" || cashupi_cashAmount == " ")
+		{
+			myAlert("Please Enter Cash Amount");
+			//document.custord.btnSubmit1.disabled = false;
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+		else
+		{
+			var checkCashAmt = /^[0-9]+\.?[0-9]*$/;
+			if(cashupi_cashAmount.match(checkCashAmt))
+			{
+				params["cashupi_cashAmount"] = cashupi_cashAmount;
+			}
+			else
+			{
+				myAlert("Please Enter Valid Cash Amount");
+				//document.custord.btnSubmit1.disabled = false;
+				document.custord.btnSubmit.disabled = false;
+				return false;
+			}
+		}
+		if(cashupi_upiAmount == undefined || cashupi_upiAmount == null || cashupi_upiAmount == "" || cashupi_upiAmount == " ")
+		{
+			myAlert("Please Enter Upi Amount");
+			//document.custord.btnSubmit1.disabled = false;
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+		else
+		{
+			var checkCardAmt = /^[0-9]+\.?[0-9]*$/;
+			if(cashupi_upiAmount.match(checkCardAmt))
+			{
+				params["cashupi_upiAmount"] = cashupi_upiAmount;
+			}
+			else
+			{
+				myAlert("Please Enter Valid Cash Amount");
+				//document.custord.btnSubmit1.disabled = false;
+				document.custord.btnSubmit.disabled = false;
+				return false;
+			}
+		}
+		
+
+		if((+cashupi_cashAmount + +cashupi_upiAmount) > (+oldCashAmount + +oldCardAmount))
+		{
+			myAlert("Cash Amount + Upi Amount is Greater Than "+(+totalAmount - +finalCreditAmount));
+			//document.custord.btnSubmit.disabled = false;
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+		else if((+cashupi_cashAmount + +cashupi_upiAmount) < (+oldCashAmount + +oldCardAmount))
+		{
+			myAlert("Cash Amount + Card Amount is Less Than "+(+totalAmount - +finalCreditAmount));
+			document.custord.btnSubmit.disabled = false;
+			//document.custord.btnSubmit.disabled = false;
+			return false;
+		}
 	}
 	else if(paymentMode == "cashAndCard")
 	{	
@@ -126,13 +222,13 @@ function editBill1()
 			}
 		}
 		
-		if((+cashCard_cashAmount + +cashCard_cardAmount) > (+oldCashAmount + +oldCardAmount))
+		if((+cashCard_cashAmount + +cashCard_cardAmount) > (+oldUPIAmount + +oldUpidAmount))
 		{
 			myAlert("Cash Amount + Card Amount is Greater Than "+(+totalAmount - +finalCreditAmount));
 			document.custord.btnSubmit.disabled = false;
 			return false;
 		}
-		else if((+cashCard_cashAmount + +cashCard_cardAmount) < (+oldCashAmount + +oldCardAmount))
+		else if((+cashCard_cashAmount + +cashCard_cardAmount) < (+oldUPIAmount + +oldUpidAmount))
 		{
 			myAlert("Cash Amount + Card Amount is Less Than "+(+totalAmount - +finalCreditAmount));
 			document.custord.btnSubmit.disabled = false;
@@ -151,8 +247,9 @@ function editBill1()
 
 	$.post('/SMT/jsp/utility/controller.jsp', params, function(data) 
 	{
-		alert(data);
-		location.reload();
+		successAlert(data);
+		//alert(data);
+		//location.reload();
 	}).error(function(jqXHR, textStatus, errorThrown) {
 		if (textStatus === "timeout") {
 			$(loaderObj).hide();
@@ -244,6 +341,13 @@ function editCreditCustBill()
 	var lastPaymentMode = '';
 	var cashCard_cashAmount = '';
 	var cashCard_cardAmount = '';
+	
+	var cashUpi_cashAmount='';
+	var cashUpi_upiAmount='';
+	
+	var oldupiCashAmount= $('#oldUPIAmountCC').val();
+	
+	var oldupiAmount= $('#oldUpidAmountCC').val();
 	var oldCashAmount = $('#oldCashAmountCC').val();
 	var oldCardAmount = $('#oldCardAmountCC').val();
 	var finalCreditAmount = $("#finalCreditAmountCC").val();
@@ -256,19 +360,27 @@ function editCreditCustBill()
 		paymentMode = lastPaymentMode;
 		cashCard_cashAmount = $('#oldCashAmountCC').val();
 		cashCard_cardAmount = $('#oldCardAmountCC').val();
-				
+		cashUpi_cashAmount=$('#oldUPIAmountCC').val();
+		cashUpi_upiAmount=$('#oldUpidAmountCC').val();
+			
 		params["cashCard_cashAmount"] = cashCard_cashAmount;
 		params["cashCard_cardAmount"] = cashCard_cardAmount;
+		params["cashUpi_cashAmount"] = cashUpi_cashAmount;
+		params["cashUpi_upiAmount"] = cashUpi_upiAmount;
 	}
-	else if(paymentMode == "cashCC")
+	else if(paymentMode == "cash")
 	{
 		paymentMode = "cash";
 	}
-	else if(paymentMode == "cardCC")
+	else if(paymentMode == "card")
 	{
 		paymentMode = "card";
 	}
-	else if(paymentMode == "cashAndCardCC")
+	else if(paymentMode == "Upi")
+	{
+		paymentMode = "Upi";
+	}
+	else if(paymentMode == "cashAndCard")
 	{		
 		cashCard_cashAmount = $('#cashCard_cashAmountCC').val();
 		cashCard_cardAmount = $('#cashCard_cardAmountCC').val();
@@ -325,6 +437,65 @@ function editCreditCustBill()
 		paymentMode = "cashAndCard";
 	}
 	
+	
+	else if(paymentMode == "cashAndupi")
+	{		
+		cashUpi_cashAmount = $('#cashupi_cashAmountCC').val();
+		cashUpi_upiAmount = $('#cashupi_upiAmountCC').val();
+		if(cashUpi_cashAmount == undefined || cashUpi_cashAmount == null || cashUpi_cashAmount == "" || cashUpi_cashAmount == " ")
+		{
+			myAlert("Please Enter Cash Amount");
+			document.ccEdit.creditBtn.disabled = false;
+			return false;
+		}
+		else
+		{
+			var checkCashAmt = /^[0-9]+\.?[0-9]*$/;
+			if(cashUpi_cashAmount.match(checkCashAmt))
+			{
+				params["cashUpi_cashAmount"] = cashUpi_cashAmount;
+			}
+			else
+			{
+				myAlert("Please Enter Valid Cash Amount");
+				document.ccEdit.creditBtn.disabled = false;
+				return false;
+			}
+		}
+		if(cashUpi_upiAmount == undefined || cashUpi_upiAmount == null || cashUpi_upiAmount == "" || cashUpi_upiAmount == " ")
+		{
+			myAlert("Please Enter Upi Amount");
+			document.ccEdit.creditBtn.disabled = false;
+			return false;
+		}
+		else
+		{
+			var checkCardAmt = /^[0-9]+\.?[0-9]*$/;
+			if(cashUpi_upiAmount.match(checkCardAmt))
+			{
+				params["cashUpi_upiAmount"] = cashUpi_upiAmount;
+			}
+			else
+			{
+				myAlert("Please Enter Valid Cash Amount");
+				document.ccEdit.creditBtn.disabled = false;
+				return false;
+			}
+		}
+		
+		if((+cashUpi_cashAmount + +cashUpi_upiAmount) == +netPaymentAmountCC)
+		{}
+		else
+		{
+			myAlert("Cash Amount + Upi Amount is Must Be Equal To Net Paid Amount");
+			document.ccEdit.creditBtn.disabled = false;
+			return false;
+		}
+		
+		paymentMode = "cashAndupi";
+	}
+	
+	
 	params["count"] = count;
 	params["totalAmount"] = totalAmount;
 	params["paymentMode"] = paymentMode;
@@ -334,8 +505,9 @@ function editCreditCustBill()
 
 	$.post('/SMT/jsp/utility/controller.jsp', params, function(data) 
 	{
-		alert(data);
-		location.reload();
+		successAlert(data);
+		//alert(data);
+		//location.reload();
 	}).error(function(jqXHR, textStatus, errorThrown) {
 		if (textStatus === "timeout") {
 			$(loaderObj).hide();
@@ -426,8 +598,11 @@ function billeditCreditCust()
 	params["methodName"] = "creditCustEditBillTaxInvoice";	
 
 	$.post('/SMT/jsp/utility/controller.jsp', params, function(data) {
-		alert(data);
-		location.reload();
+		
+		successAlert(data);
+		
+		//alert(data);
+		//location.reload();
 	
 	}).error(function(jqXHR, textStatus, errorThrown) {
 		if (textStatus === "timeout") {
@@ -514,6 +689,9 @@ function getSaleItems2()
 					document.getElementById("oldCashAmount").value = v.oldCashAmount;
 					document.getElementById("oldCardAmount").value = v.oldCardAmount;
 					document.getElementById("finalCreditAmount").value = v.totalSaleReturnAmt;
+					document.getElementById("oldUpidAmount").value = v.oldUpiAmount;
+					document.getElementById("oldUPIAmount").value = v.oldUpiCashAmount;
+					
 					$("#jqGrid2").jqGrid({
 								datatype : "local",
 
@@ -1566,6 +1744,8 @@ function getCreditCustEditBill()
 					document.getElementById("finalCreditAmountCC").value = v.totalSaleReturnAmt;
 					document.getElementById("netPaymentAmountCC").value = v.netPaymentAmount;
 					document.getElementById("grossTotalCC").value = v.grossamt;
+					document.getElementById("oldUPIAmountCC").value = v.oldUpiCashAmount;
+					document.getElementById("oldUpidAmountCC").value = v.oldUpiAmount;
 					
 					$("#jqGrid1").jqGrid(
 							{

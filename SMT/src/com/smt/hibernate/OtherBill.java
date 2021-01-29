@@ -51,12 +51,17 @@ public class OtherBill {
 	private Double totalSaleReturnCreditAmt;
 	private Long fkSuppId;
 	private Long fkShopId;
-
+	private Double cashupi_cashAmount;
+	private Double cashupi_upiAmount;
+	
+	
+	
 	public OtherBill() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
+	
 	public OtherBill(Long pkBillId, String itemName, double quantity, Double salePrice, Double grossamt,
 			Date current_date, Double totalAmt, Long billNo, String categoryName, Long pkItemId, Long barcodeNo,
 			Double discount, Double totalperItem, String ownerName, String carNo, Long contactNo, String hsnSacNo,
@@ -65,7 +70,8 @@ public class OtherBill {
 			String bankName, String empType, Long empIdFK, String size, Double taxAmtAfterDiscount,
 			Double perProductdisPer, Double spWithoutTaxAmount, Long fkSaleEmployeeId, Long fkProductId,
 			Long fkSubCatId, Long fkCatId, Date billTime, String style, Double cashCard_cashAmount,
-			Double cashCard_cardAmount, Double totalSaleReturnCreditAmt, Long fkSuppId, Long fkShopId) {
+			Double cashCard_cardAmount, Double totalSaleReturnCreditAmt, Long fkSuppId, Long fkShopId,
+			Double cashupi_cashAmount, Double cashupi_upiAmount) {
 		super();
 		this.pkBillId = pkBillId;
 		this.itemName = itemName;
@@ -114,7 +120,30 @@ public class OtherBill {
 		this.totalSaleReturnCreditAmt = totalSaleReturnCreditAmt;
 		this.fkSuppId = fkSuppId;
 		this.fkShopId = fkShopId;
+		this.cashupi_cashAmount = cashupi_cashAmount;
+		this.cashupi_upiAmount = cashupi_upiAmount;
 	}
+
+
+	public Double getCashupi_cashAmount() {
+		return cashupi_cashAmount;
+	}
+
+
+	public void setCashupi_cashAmount(Double cashupi_cashAmount) {
+		this.cashupi_cashAmount = cashupi_cashAmount;
+	}
+
+
+	public Double getCashupi_upiAmount() {
+		return cashupi_upiAmount;
+	}
+
+
+	public void setCashupi_upiAmount(Double cashupi_upiAmount) {
+		this.cashupi_upiAmount = cashupi_upiAmount;
+	}
+
 
 	public String getChequeNum() {
 		return chequeNum;

@@ -234,6 +234,15 @@ public class OtherBillHelper
 
 			String cashCard_cardAmount = request.getParameter("cashCard_cardAmount");
 			
+			
+			String cashupi_cashAmount = request.getParameter("cashCard_cashAmount1");
+
+			String cashupi_upiAmount = request.getParameter("cashCard_upiAmount");
+			
+			
+			System.out.println("upi cash amount :-"+cashupi_cashAmount);
+			System.out.println("upi amount :-"+cashupi_upiAmount);
+			
 			String totalCreditAmt = request.getParameter("totalCreditAmt");
 			if(totalCreditAmt == null || totalCreditAmt.isEmpty())
 			{
@@ -292,6 +301,8 @@ public class OtherBillHelper
 				}
 				cust.setCashCard_cashAmount(0.0);
 				
+				cust.setCashupi_cashAmount(0.0);
+				cust.setCashupi_upiAmount(0.0);
 				int cardNumLength = cardNum.length();
 				if (cardNumLength > 0) {
 
@@ -327,7 +338,56 @@ public class OtherBillHelper
 					cust.setCashCard_cashAmount(Double.parseDouble(grossTotal));
 				}
 				cust.setCashCard_cardAmount(0.0);
-			}			
+				cust.setCashupi_cashAmount(0.0);
+				cust.setCashupi_upiAmount(0.0);
+			}
+			
+			else if (paymentMode.equals("Upi"))
+			{				
+				if(Double.parseDouble(totalCreditAmt) > 0)
+				{
+					String upiAmount = request.getParameter("UpiAmount");
+					cust.setCashupi_cashAmount(Double.parseDouble(upiAmount));
+				}
+				else
+				{
+					cust.setCashupi_cashAmount(Double.parseDouble(grossTotal));
+				}
+				cust.setCashupi_upiAmount(0.0);
+				cust.setCashCard_cardAmount(0.0);
+				cust.setCashCard_cashAmount(0.0);
+				
+			}	
+			
+			if (paymentMode.equals("cashAndupi"))
+			{
+				if(cashupi_cashAmount.equals("") || cashupi_cashAmount.isEmpty() || cashupi_cashAmount == null)
+				{
+					
+					System.out.println("inside if of upi cash 0");
+					cust.setCashupi_cashAmount(0.0);
+				}
+				else
+				{
+					System.out.println("inside else of upi cash "+cashupi_cashAmount);
+					cust.setCashupi_cashAmount(Double.parseDouble(cashupi_cashAmount));
+				}
+				
+				if(cashupi_upiAmount.equals("") || cashupi_upiAmount.isEmpty() || cashupi_upiAmount == null)
+				{
+					System.out.println("inside if of upi  0 ");
+					cust.setCashupi_upiAmount(0.0);
+				}
+				else
+				{
+					System.out.println("inside if of upi amount "+cashupi_upiAmount);
+					cust.setCashupi_upiAmount(Double.parseDouble(cashupi_upiAmount));
+				}
+				
+				cust.setCashCard_cardAmount(0.0);
+				cust.setCashCard_cashAmount(0.0);
+			}
+			
 			
 			if (paymentMode.equals("cashAndCard"))
 			{
@@ -348,8 +408,10 @@ public class OtherBillHelper
 				{
 					cust.setCashCard_cardAmount(Double.parseDouble(cashCard_cardAmount));
 				}
+				cust.setCashupi_cashAmount(0.0);
+				cust.setCashupi_upiAmount(0.0);
+				
 			}
-			
 			String total = request.getParameter("total" + i);
 			cust.setTotalperItem(Double.parseDouble(total));
 			
@@ -879,18 +941,41 @@ public class OtherBillHelper
 				{	
 					cust.setCashCard_cashAmount(Double.parseDouble(totalAmount) - saleReturnCAmt);
 					cust.setCashCard_cardAmount(0.0);
+					cust.setCashupi_cashAmount(0.0);
+					cust.setCashupi_upiAmount(0.0);
 				}
 				else if(paymentMode.equals("card"))
 				{
 					cust.setCashCard_cardAmount(Double.parseDouble(totalAmount) - saleReturnCAmt);
 					cust.setCashCard_cashAmount(0.0);
+					cust.setCashupi_cashAmount(0.0);
+					cust.setCashupi_upiAmount(0.0);
+				}
+				else if(paymentMode.equals("Upi"))
+				{
+					cust.setCashCard_cardAmount(0.0);
+					cust.setCashCard_cashAmount(0.0);
+					cust.setCashupi_cashAmount(0.0);
+					cust.setCashupi_upiAmount(Double.parseDouble(totalAmount) - saleReturnCAmt);
 				}
 				else if(paymentMode.equals("cashAndCard"))
 				{
 					String cashCard_cashAmount = request.getParameter("cashCard_cashAmount");
 					String cashCard_cardAmount = request.getParameter("cashCard_cardAmount");
 					cust.setCashCard_cashAmount(Double.parseDouble(cashCard_cashAmount));
-					cust.setCashCard_cardAmount(Double.parseDouble(cashCard_cardAmount));					
+					cust.setCashCard_cardAmount(Double.parseDouble(cashCard_cardAmount));
+					cust.setCashupi_cashAmount(0.0);
+					cust.setCashupi_upiAmount(0.0);
+				}
+				
+				else if(paymentMode.equals("cashAndupi"))
+				{
+					String cashupi_cashAmount = request.getParameter("cashupi_cashAmount");
+					String cashupi_upiAmount = request.getParameter("cashupi_upiAmount");
+					cust.setCashupi_cashAmount(Double.parseDouble(cashupi_cashAmount));
+					cust.setCashupi_upiAmount(Double.parseDouble(cashupi_upiAmount));	
+					cust.setCashCard_cardAmount(0.0);
+					cust.setCashCard_cashAmount(0.0);
 				}
 				
 				obd.updateBill(cust);

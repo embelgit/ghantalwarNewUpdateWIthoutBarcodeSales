@@ -1282,6 +1282,9 @@ public class CustomerOrderHelper {
 						bean.setTotalDiscount(Double.parseDouble(df.format(totalDiscount)));
 						bean.setSpWithoutTax(o[27].toString());
 						
+						bean.setOldUpiCashAmount(o[28].toString());
+						bean.setOldUpiAmount(o[29].toString());
+						
 						System.out.println("***************" + o[0]);
 						k++;
 						bean.setBillProCount(k);
@@ -1344,9 +1347,33 @@ public class CustomerOrderHelper {
 						
 						double cashPay = Double.parseDouble(o[20].toString());
 						double cardPay = Double.parseDouble(o[21].toString());
+						String paymentMode=(o[19].toString());
+						bean.setOldUpiCashAmount(o[25].toString());
+						bean.setOldUpiAmount(o[26].toString());
 						double saleReturnPay = Double.parseDouble(o[22].toString());
 						double totalAmt1 = Double.parseDouble(o[24].toString());
-						bean.setNetPaymentAmount(df.format(Double.parseDouble(o[20].toString())+Double.parseDouble(o[21].toString())));
+						if(paymentMode.equals("cashAndCard")) {
+							System.out.println("inside cashAndcard");
+							bean.setNetPaymentAmount(df.format(Double.parseDouble(o[20].toString())+Double.parseDouble(o[21].toString())));
+						}
+						else if (paymentMode.equals("cashAndupi")) {
+							System.out.println(" inside cashAndupi");
+							bean.setNetPaymentAmount(df.format(Double.parseDouble(o[25].toString())+Double.parseDouble(o[26].toString())));
+						}
+						else if (paymentMode.equals("cash")) {
+							System.out.println("inside cash");
+							bean.setNetPaymentAmount(df.format(Double.parseDouble(o[20].toString())+Double.parseDouble(o[21].toString())));
+						}
+						else if (paymentMode.equals("card")) {
+							System.out.println("inside card");
+							bean.setNetPaymentAmount(df.format(Double.parseDouble(o[20].toString())+Double.parseDouble(o[21].toString())));
+						}
+						else if (paymentMode.equals("Upi")) {
+							System.out.println("inside upi");
+							bean.setNetPaymentAmount(df.format(Double.parseDouble(o[25].toString())+Double.parseDouble(o[26].toString())));
+						}
+						
+						
 						totalProductAmount = totalProductAmount + Double.parseDouble(o[6].toString());
 						totalDiscount = totalDiscount + Double.parseDouble(o[7].toString());
 						
@@ -1355,6 +1382,7 @@ public class CustomerOrderHelper {
 						bean.setGrossamt(Double.parseDouble(df.format((totalAmt1) - (cashPay + cardPay + saleReturnPay))));
 						
 						bean.setSpWithoutTax(o[23].toString());
+						
 						k++;
 						bean.setBillProCount(k);
 						map.put(bean.getPkBillId(), bean);

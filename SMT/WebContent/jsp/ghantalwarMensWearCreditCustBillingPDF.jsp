@@ -119,6 +119,8 @@ System.out.print(":::::::::::::::::::::::::::::::::::::::::Paid Amt"+paidAmt+"::
 	String userName = "";
 	String cashAmount = "";
 	String cardAmount = "";
+	String cashAmountupi = "";
+	String upiAmount = "";
 	String saleRerturnCreditAmount = "";
 	Double tax5 = 0.0;
 	Double tax12 = 0.0;
@@ -150,7 +152,7 @@ System.out.print(":::::::::::::::::::::::::::::::::::::::::Paid Amt"+paidAmt+"::
 		conn = DriverManager.getConnection(DatabaseProperties.dbUrl, DatabaseProperties.dbUser, DatabaseProperties.dbPassword);
 		Statement stmt = conn.createStatement();
 
-		ResultSet rs = stmt.executeQuery("SELECT ccb.ItemName, ccb.CategoryName, ccb.Quantity, ccb.SalePrice, s.contact_no, ccb.TotalAmount, ccb.Discount, ccb.GrossTotal, ccb.Date, ccb.totalperitem, ccb.TaxAmount, s.first_name, s.last_name, ccb.Gst, ccb.Igst, ccb.HsnSacNo, ccb.payment_mode, ccb.BarcodeNo, ccb.billTime, sb.subcat_name, ccb.FkSaleEmployeeId, ud.userName, ccb.cashCard_cashAmount, ccb.cashCard_cardAmount, ccb.totalSaleReturnAmt, ccb.FkSaleEmployeeId, ccb.pending_bill_payment, ccb.taxAmtAfterDiscount FROM creditcustomerbill ccb JOIN customer_details s ON ccb.fkCrediCustId=s.pk_customer_id JOIN sub_categories sb ON ccb.fkSubCatId=sb.pk_subcat_id JOIN user_details ud on ccb.cEmpIdFk=ud.pk_user_id where ccb.BillNo = "+billno);
+		ResultSet rs = stmt.executeQuery("SELECT ccb.ItemName, ccb.CategoryName, ccb.Quantity, ccb.SalePrice, s.contact_no, ccb.TotalAmount, ccb.Discount, ccb.GrossTotal, ccb.Date, ccb.totalperitem, ccb.TaxAmount, s.first_name, s.last_name, ccb.Gst, ccb.Igst, ccb.HsnSacNo, ccb.payment_mode, ccb.BarcodeNo, ccb.billTime, sb.subcat_name, ccb.FkSaleEmployeeId, ud.userName, ccb.cashCard_cashAmount, ccb.cashCard_cardAmount, ccb.totalSaleReturnAmt, ccb.FkSaleEmployeeId, ccb.pending_bill_payment, ccb.taxAmtAfterDiscount,ccb.cashupi_cashAmunt,ccb.cashupi_UpiAmount FROM creditcustomerbill ccb JOIN customer_details s ON ccb.fkCrediCustId=s.pk_customer_id JOIN sub_categories sb ON ccb.fkSubCatId=sb.pk_subcat_id JOIN user_details ud on ccb.cEmpIdFk=ud.pk_user_id where ccb.BillNo = "+billno);
 		System.out.println("Query Execute");
 		Date d1 = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MMM-yyyy");
@@ -583,7 +585,8 @@ System.out.print(":::::::::::::::::::::::::::::::::::::::::Paid Amt"+paidAmt+"::
 				cashAmount = rs.getString("cashCard_cashAmount");
 				cardAmount = rs.getString("cashCard_cardAmount");
 				saleRerturnCreditAmount = rs.getString("totalSaleReturnAmt");
-
+                cashAmountupi =rs.getString("cashupi_cashAmunt");
+                upiAmount=rs.getString("cashupi_UpiAmount");
 				userName = rs.getString("userName");
 
 				discount = String.valueOf(rs.getDouble("Discount"));
@@ -1737,6 +1740,21 @@ System.out.print(":::::::::::::::::::::::::::::::::::::::::Paid Amt"+paidAmt+"::
 				footerTable_cell3.setBorder(Rectangle.NO_BORDER);
 				footerTable3.addCell(footerTable_cell3);
 			}
+			
+			else if (paymentMode.equalsIgnoreCase("Upi"))
+			{
+				footerTable_cell3 = new PdfPCell(new Phrase("Net Paid Amount: "+cashAmountupi, font8Bold));
+				footerTable_cell3.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				footerTable_cell3.setBorder(Rectangle.NO_BORDER);
+				footerTable3.addCell(footerTable_cell3);
+				
+				footerTable_cell3 = new PdfPCell(new Phrase("Upi Amount: "+cashAmountupi, font8Bold));
+				footerTable_cell3.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				footerTable_cell3.setBorder(Rectangle.NO_BORDER);
+				footerTable3.addCell(footerTable_cell3);
+			}
+			
+			
 			else if (paymentMode.equalsIgnoreCase("cashandcard"))
 			{
 				footerTable_cell3 = new PdfPCell(new Phrase("Net Paid Amount: "+df.format(Double.parseDouble(cashAmount) + Double.parseDouble(cardAmount)), font8Bold));
@@ -1750,6 +1768,23 @@ System.out.print(":::::::::::::::::::::::::::::::::::::::::Paid Amt"+paidAmt+"::
 				footerTable3.addCell(footerTable_cell3);
 
 				footerTable_cell3 = new PdfPCell(new Phrase("Card Amount: "+cardAmount, font8Bold));
+				footerTable_cell3.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				footerTable_cell3.setBorder(Rectangle.NO_BORDER);
+				footerTable3.addCell(footerTable_cell3);
+			}
+			else if (paymentMode.equalsIgnoreCase("cashAndupi"))
+			{
+				footerTable_cell3 = new PdfPCell(new Phrase("Net Paid Amount: "+df.format(Double.parseDouble(cashAmountupi) + Double.parseDouble(upiAmount)), font8Bold));
+				footerTable_cell3.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				footerTable_cell3.setBorder(Rectangle.NO_BORDER);
+				footerTable3.addCell(footerTable_cell3);
+				
+				footerTable_cell3 = new PdfPCell(new Phrase("Cash Amount: "+cashAmountupi, font8Bold));
+				footerTable_cell3.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				footerTable_cell3.setBorder(Rectangle.NO_BORDER);
+				footerTable3.addCell(footerTable_cell3);
+
+				footerTable_cell3 = new PdfPCell(new Phrase("Upi Amount: "+upiAmount, font8Bold));
 				footerTable_cell3.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				footerTable_cell3.setBorder(Rectangle.NO_BORDER);
 				footerTable3.addCell(footerTable_cell3);

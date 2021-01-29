@@ -500,6 +500,9 @@ position: fixed;
 		margin-left: 6px;
 	}
 }
+#suppDetailsDiv {
+    height: 50% !important;
+}*/
 </style>
 <script type="text/javascript">
 	function isNumberForExpense(evt)
@@ -621,10 +624,27 @@ position: fixed;
 				<hr style="border-top-color: #000000;">
 			</div>
 		</div>
-		
 		<div class="popup">
 		<div class="miscellaneous">
 			<div class="container" style="width: auto;" id="custdetal">
+			
+			<div class="row form-group">
+		<div class="col-md-1"></div>
+		<div class="col-md-1"></div>
+		<div class="col-md-1"></div>
+			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport" >
+			<select class="" id="type" name="type" name="Select Type">
+			<option value="selectoption" >Select Supplier Type </option>
+			<option value="registered">Registered</option>
+			<option value="unregistered">Unregistered</option>
+			<option value="registeredcomposite">Registered Composite</option>
+			</select> 
+			
+			
+			
+			 
+			</div>
+			</div>
 			
 			<div class="row form-group">	
 						

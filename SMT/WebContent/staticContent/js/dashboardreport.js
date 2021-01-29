@@ -35,7 +35,7 @@ var jsonData = $.parseJSON(data);
 
 
 function getsalereg(){
-	alert("ok");
+	//alert("ok");
 	
 	var params={};
 	params["methodName"] = "getsaleamountreg";

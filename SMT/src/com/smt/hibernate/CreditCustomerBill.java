@@ -52,6 +52,10 @@ public class CreditCustomerBill
 	private Date cPaymentDueDate;
 	private Long fkSuppId;
 	private Long fkShopId;
+	
+	private Double cashupi_cashAmount;
+	private Double cashupi_upidAmount;
+	
 
 	public CreditCustomerBill(Long pkCreditBillId, Long fkRootCustId, String itemName, Double quantity,
 			Double salePrice, Double grossamt, Date current_date, Double totalAmt, Long billNo, String categoryName,
@@ -62,7 +66,7 @@ public class CreditCustomerBill
 			Double taxAmtAfterDiscount, Double perProductdisPer, Double spWithoutTaxAmount, String saleDate,
 			Long fkSaleEmployeeId, Long fkProductId, Long fkSubCatId, Long fkCatId, Date billTime, String style,
 			Double cashCard_cashAmount, Double cashCard_cardAmount, Double totalSaleReturnCreditAmt,
-			Date cPaymentDueDate, Long fkSuppId, Long fkShopId) {
+			Date cPaymentDueDate, Long fkSuppId, Long fkShopId, Double cashupi_cashAmount, Double cashupi_upidAmount) {
 		super();
 		this.pkCreditBillId = pkCreditBillId;
 		this.fkRootCustId = fkRootCustId;
@@ -112,11 +116,29 @@ public class CreditCustomerBill
 		this.cPaymentDueDate = cPaymentDueDate;
 		this.fkSuppId = fkSuppId;
 		this.fkShopId = fkShopId;
+		this.cashupi_cashAmount = cashupi_cashAmount;
+		this.cashupi_upidAmount = cashupi_upidAmount;
 	}
 
 	public CreditCustomerBill() {
 		super();
 		// TODO Auto-generated constructor stub
+	}
+
+	public Double getCashupi_cashAmount() {
+		return cashupi_cashAmount;
+	}
+
+	public void setCashupi_cashAmount(Double cashupi_cashAmount) {
+		this.cashupi_cashAmount = cashupi_cashAmount;
+	}
+
+	public Double getCashupi_upidAmount() {
+		return cashupi_upidAmount;
+	}
+
+	public void setCashupi_upidAmount(Double cashupi_upidAmount) {
+		this.cashupi_upidAmount = cashupi_upidAmount;
 	}
 
 	public String getBillNo1() {

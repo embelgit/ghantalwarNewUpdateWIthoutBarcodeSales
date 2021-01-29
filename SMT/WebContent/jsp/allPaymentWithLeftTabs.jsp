@@ -480,7 +480,7 @@ width: 110px;
 											%>
 											<!-- <input list="sup_drop" id="supplier" onchange="bill.getAllBills(); bill.getTotalAmtByBills();" class="form-control"> -->
 											<input list="sup_drop" id="supplier"
-												onchange="bill.getTotalAmtByBills();" required >
+												onchange="bill.getAllBills();" required >
 											<datalist id="sup_drop">
 												<%
 													for (int i = 0; i < sList.size(); i++) {
@@ -498,15 +498,32 @@ width: 110px;
 								
 									<div class="col-md-1"></div>
 									
+									<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+									 <select id="billNo" name="billNo" type="text" required onchange="bill.getTotalAmtByBills()"  ></select>
 									
-										<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+								
+									
+									</div>
+										
+										</div>
+									
+								
+
+<div class="row">
+								<div class="invoice_label_up ">
+									<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
 											<input type="date"
 												id="suppPayDate" name="suppPayDate" value="<%=todayDate%>">
 												<label for="suppPayDate">Date</label>
 												</div>
-										</div>
+									</div>
 									
-								
+									<div class="col-md-1"></div>
+									
+										
+									
+								</div>
+
 
 								<div class="row">
 								<div class="invoice_label_up ">
@@ -806,7 +823,7 @@ width: 110px;
 											%>
 											<!-- <input list="cust_drop" id="creditCustomer"  class="form-control"  onchange="getBillByCustomer(); getTotalAmountByBill();"> -->
 											<input list="cust_drop" id="creditCustomer"
-												 onchange="getTotalAmountByBill();" required>
+												 onchange="getBillByCustomer();" required>
 											<datalist id="cust_drop">
 												<%
 													for (int i = 0; i < cList.size(); i++) {
@@ -826,14 +843,29 @@ width: 110px;
 										  
 									<div class="col-md-1"></div>
 									
+									<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+									 <select id="billNo1" name="billNo" type="text" required onchange="getTotalAmountByBill()"  ></select>
 									
-									 <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
-										
-											<input type="date" id="ccPayDate" name="ccPayDate" value="<%=todayDate%>" >
-											<label for="ccPayDate">Date</label>
-											</div>
+								
+									
+									</div>
+									 
 									
 								 </div>
+<div class="row">
+								<div class="invoice_label_up ">
+									<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+											<input type="date"
+												id="ccPayDate" name="ccPayDate" value="<%=todayDate%>">
+												<label for="ccPayDate">Date</label>
+												</div>
+									</div>
+									
+									<div class="col-md-1"></div>
+									
+										
+									
+								</div>
 									
 								
 								<div class="row">

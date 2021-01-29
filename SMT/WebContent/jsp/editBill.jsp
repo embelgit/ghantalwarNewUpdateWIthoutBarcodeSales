@@ -404,6 +404,8 @@ width: 110px;
 										<option value="cash">Cash</option>
 										<option value="card">Card</option>
 										<option value="cashAndCard">Cash And Card</option>
+										<option value="Upi">Upi</option>
+										<option value="cashAndupi">Cash And Upi</option>
 								</select>	
 									<label for="paymentMode">Edit Payment Mode:</label> 
 									</div>
@@ -422,24 +424,48 @@ width: 110px;
 	          		$("#cash_and_card").hide();
 	          		$("#cashAmountDiv").hide();
 	          		$("#cardAmountDiv").hide();
+	          		$("#upicashAmountDiv").hide();
+	          		$("#upiAmountDiv").hide();
             	}
 	       		else if($(this).attr("value")=="cash")
 		        {
 	          		$("#cash_and_card").hide();
 	          		$("#cashAmountDiv").hide();
 	          		$("#cardAmountDiv").hide();
+	          		$("#upicashAmountDiv").hide();
+	          		$("#upiAmountDiv").hide();
 	            }
 	       		else if($(this).attr("value")=="card")
 		        {
 	          		$("#cash_and_card").hide();
 	          		$("#cashAmountDiv").hide();
 	          		$("#cardAmountDiv").hide();
-	            } 
+	          		$("#upicashAmountDiv").hide();
+	          		$("#upiAmountDiv").hide();
+	            }
+	       		else if($(this).attr("value")=="Upi")
+		        {
+	          		$("#cash_and_card").hide();
+	          		$("#cashAmountDiv").hide();
+	          		$("#cardAmountDiv").hide();
+	          		$("#upicashAmountDiv").hide();
+	          		$("#upiAmountDiv").hide();
+	            }
 	          	else if($(this).attr("value")=="cashAndCard")
 		        {
 	          		//$("#cash_and_card").show();
 	          		$("#cashAmountDiv").show();
 	          		$("#cardAmountDiv").show();
+	          		$("#upicashAmountDiv").hide();
+	          		$("#upiAmountDiv").hide();
+	            }
+	          	else if($(this).attr("value")=="cashAndupi")
+		        {
+	          		//$("#cash_and_card").show();
+	          		$("#upicashAmountDiv").show();
+	          		$("#upiAmountDiv").show();
+	          		$("#cashAmountDiv").hide();
+	          		$("#cardAmountDiv").hide();
 	            }
 	       });
 	   }).change();
@@ -459,27 +485,56 @@ width: 110px;
 					<input type="text" readonly="readonly" id="oldCashAmount" />
 					<label>Cash Amount </label>
 					</div>
+					
+					<div class="col-md-1"></div> 
+					
+					
 	   </div>	
-				 <div class="row">
-	                <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12 " id="editbillcol">
-				  	<input type="text" readonly="readonly" id="oldCardAmount"/>
-				    <label>Card Amount </label>
-				    </div>
-				</div>
+				
 				
 				<div class="row">
-					<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12" id="editbillcol">	
-					<input type="text" readonly="readonly" id="finalCreditAmount"/>
-					<label>Credit Amount </label>
-					</div>
+				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12 " id="editbillcol">
+				  	<input type="text" readonly="readonly" id="oldUPIAmount"/>
+				    <label>Upi Cash Amount </label>
+				    </div>
+					
 				
 			
 				</div>
+				<div class="row">
+		<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12" id="editbillcol">
+		<input type="text" readonly="readonly" id="finalCreditAmount"/>
+					<label>Credit Amount </label>
+		</div>
+		</div>
 			</div>
 					<div class="col-md-1"></div>  
 		
 				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
-					  <div class="row">
+					 
+		
+		
+		<div class="row">
+		<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12 " id="editbillcol">
+				  	<input type="text" readonly="readonly" id="oldCardAmount"/>
+				    <label>Card Amount </label>
+				    </div>
+				    
+		</div>		    
+		
+		<div class="row">
+		
+				    
+				    
+				    <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12 " id="editbillcol">
+				  	<input type="text" readonly="readonly" id="oldUpidAmount"/>
+				    <label>Upi Amount </label>
+				    </div>
+				    
+				    
+		</div>	
+		
+		 <div class="row">
 				<div class="invoice_label_up ">
 					<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12" id="editbillcol">
 				<div  id="cardAmountDiv">
@@ -505,15 +560,36 @@ width: 110px;
 		</div>
 		
 		<div class="row">
-		<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12" id="editbillcol">
-				
+				<div class="invoice_label_up ">
+					<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12" id="editbillcol">
+				<div  id="upiAmountDiv">
+						<input type="text" name="cashupi_upiAmount" id="cashupi_cashAmount" required/>  
+						<label>Cash Amount</label> 
+						</div>	
+				</div>
+				</div>
+		</div>
 		
+		
+		
+		
+		<div class="row">	
+		<div class="invoice_label_up ">
+				<div  id="upicashAmountDiv">
+				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12" id="editbillcol">
+						<input type="text" name="cashupi_cashAmount" id="cashupi_upiAmount" required/>  
+						<label>Upi Amount</label>  
+				</div>
+				</div>
+				</div>
+		</div>
+		
+		<div class="row">
+		<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12" id="editbillcol">		
+		 <div class="col-md-1"></div>
 				<input type="text" id="grossTotal" style="background-color: #fab787;" readonly="readonly"/>
 				<label> Gross Total</label>
 				</div>
-			
-
-		
         </div>
 
 	</div>
@@ -650,10 +726,12 @@ width: 110px;
 							
 						 <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">	
 	           					<select id="paymentModeCC">
-	           							<option value="noneCC">Select</option>
-										<option value="cashCC">Cash</option>
-										<option value="cardCC">Card</option>
-										<option value="cashAndCardCC">Cash And Card</option>
+	           							<option value="none">Select</option>
+										<option value="cash">Cash</option>
+								<option value="card">Card</option>
+								<option value="cashAndCard">Cash And Card</option>
+								<option value="Upi">Upi</option>
+								<option value="cashAndupi">Cash And Upi</option>
 								</select>	
 								<label for="paymentModeCC">Edit Payment Mode</label> 
 								</div>
@@ -667,96 +745,179 @@ width: 110px;
 	       	$(this).find("option:selected").each(function()
 	       	{
 	       		
-	       		if($(this).attr("value")=="noneCC")
+	       		if($(this).attr("value")=="none")
 		        {
 	          		$("#cash_and_cardCC").hide();
 	          		$("#cashAmountDivCC").hide();
 	          		$("#cardAmountDivCC").hide();
+	          		$("#upicashAmountDivCC").hide();
+	          		$("#upiAmountDivCC").hide();
             	}
-	       		else if($(this).attr("value")=="cashCC")
+	       		else if($(this).attr("value")=="cash")
 		        {
 	          		$("#cash_and_cardCC").hide();
 	          		$("#cashAmountDivCC").hide();
 	          		$("#cardAmountDivCC").hide();
+	          		$("#upicashAmountDivCC").hide();
+	          		$("#upiAmountDivCC").hide();
 	            }
-	       		else if($(this).attr("value")=="cardCC")
+	       		else if($(this).attr("value")=="card")
 		        {
 	          		$("#cash_and_cardCC").hide();
 	          		$("#cashAmountDivCC").hide();
 	          		$("#cardAmountDivCC").hide();
-	            } 
-	          	else if($(this).attr("value")=="cashAndCardCC")
+	          		$("#upicashAmountDivCC").hide();
+	          		$("#upiAmountDivCC").hide();
+	            }
+	       		else if($(this).attr("value")=="Upi")
+		        {
+	          		$("#cash_and_cardCC").hide();
+	          		$("#cashAmountDivCC").hide();
+	          		$("#cardAmountDivCC").hide();
+	          		$("#upicashAmountDivCC").hide();
+	          		$("#upiAmountDivCC").hide();
+	            }
+	          	else if($(this).attr("value")=="cashAndCard")
 		        {
 	          		//$("#cash_and_card").show();
 	          		$("#cashAmountDivCC").show();
 	          		$("#cardAmountDivCC").show();
+	          		$("#upicashAmountDivCC").hide();
+	          		$("#upiAmountDivCC").hide();
+	            }
+	          	else if($(this).attr("value")=="cashAndupi")
+		        {
+	          		//$("#cash_and_card").show();
+	          		$("#upicashAmountDivCC").show();
+	          		$("#upiAmountDivCC").show();
+	          		$("#cashAmountDivCC").hide();
+	          		$("#cardAmountDivCC").hide();
 	            }
 	       });
 	   }).change();
 		});	
 		</script>
-	
-
 	 </div>
 	 
 	
 	<div class="row">
-     <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
-			
-			<div class="row">		
-			 <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="editbillcol">
-					<input type="text" readonly="readonly" id="oldCashAmountCC"/>
+	
+	<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+       <div class="row">
+					<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12" id="editbillcol">
+					<input type="text" readonly="readonly" id="oldCashAmountCC" />
 					<label>Cash Amount </label>
 					</div>
-		   </div>
-			<div class="row">	
-			 <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="editbillcol">
-					<input type="text" readonly="readonly"  id="oldCardAmountCC" />
-				 	<label>Card Amount</label>
-				 	</div>
-				 </div>	
-				 <div class="row">		
-				 	 <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="editbillcol">
-					<input type="text" readonly="readonly" id="finalCreditAmountCC"/>
-					<label>Credit Amount</label>
-					</div>
-					</div>
-		</div>			
 					
-			 <div class="col-md-1"></div> 		
+					<div class="col-md-1"></div> 
 					
-	<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">	
-	 <div class="invoice_label_up ">
-		 <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="editbillcol">
-				<div class="row" id="cashAmountDivCC">
+					
+	   </div>	
 				
-				<input type="text" name="cashCard_cashAmountCC" id="cashCard_cashAmountCC" required/>  
-							<label>Cash Amount</label>  
+				
+				<div class="row">
+				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12 " id="editbillcol">
+				  	<input type="text" readonly="readonly" id="oldUPIAmountCC"/>
+				    <label>Upi Cash Amount </label>
+				    </div>
 					
+				
+			
 				</div>
-				</div>
+				<div class="row">
+		<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12" id="editbillcol">
+		<input type="text" readonly="readonly" id="finalCreditAmountCC"/>
+					<label>Credit Amount </label>
+		</div>
+		</div>
 			</div>
-			
-			 <div class="invoice_label_up ">
-		<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="editbillcol">
-				<div class="row" id="cardAmountDivCC">
-					
-					    <input type="text" name="cashCard_cardAmountCC" id="cashCard_cardAmountCC" required/>  
-						<label>Card Amount</label>  
-					
+					<div class="col-md-1"></div>  
+		
+				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+					 
+		
+		
+		<div class="row">
+		<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12 " id="editbillcol">
+				  	<input type="text" readonly="readonly" id="oldCardAmountCC"/>
+				    <label>Card Amount </label>
+				    </div>
+				    
+		</div>		    
+		
+		<div class="row">
+		
+				    
+				    
+				    <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12 " id="editbillcol">
+				  	<input type="text" readonly="readonly" id="oldUpidAmountCC"/>
+				    <label>Upi Amount </label>
+				    </div>
+				    
+				    
+		</div>	
+		
+		 <div class="row">
+				<div class="invoice_label_up ">
+					<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12" id="editbillcol">
+				<div  id="cardAmountDivCC">
+						<input type="text" name="cashCard_cardAmount" id="cashCard_cardAmountCC" required/>  
+						<label>Card Amount</label> 
+						</div>	
+				</div>
+				</div>
+		</div>
+		
+		
+		
+		
+		<div class="row">	
+		<div class="invoice_label_up ">
+				<div  id="cashAmountDivCC">
+				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12" id="editbillcol">
+						<input type="text" name="cashCard_cashAmount" id="cashCard_cashAmountCC" required/>  
+						<label>Cash Amount</label>  
 				</div>
 				</div>
 				</div>
-				<div class="row">	
-				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="editbillcol">
-			
-					<input type="text" id="grossTotalCC" style="background-color: #fab787;" readonly="readonly" />
-					<label>Gross Total</label>
-					</div>
-					</div>
-   </div>
+		</div>
+		
+		<div class="row">
+				<div class="invoice_label_up ">
+					<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12" id="editbillcol">
+				<div  id="upiAmountDivCC">
+						<input type="text" name="cashupi_upiAmount" id="cashupi_cashAmountCC" required/>  
+						<label>Cash Amount</label> 
+						</div>	
+				</div>
+				</div>
+		</div>
+		
+		
+		
+		
+		<div class="row">	
+		<div class="invoice_label_up ">
+				<div  id="upicashAmountDivCC">
+				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12" id="editbillcol">
+						<input type="text" name="cashupi_cashAmountCC" id="cashupi_upiAmountCC" required/>  
+						<label>Upi Amount</label>  
+				</div>
+				</div>
+				</div>
+		</div>
+		
+		<div class="row">
+		<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-12" id="editbillcol">		
+		 <div class="col-md-1"></div>
+				<input type="text" id="grossTotalCC" style="background-color: #fab787;" readonly="readonly"/>
+				<label> Gross Total</label>
+				</div>
+        </div>
+
+	</div>
 	
-</div>		
+</div>	 		
 		</div>
 	   	
 			<div class="row" id="newtaxbutn">

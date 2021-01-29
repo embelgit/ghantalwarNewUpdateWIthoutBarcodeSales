@@ -87,11 +87,11 @@ public class SupplierAccountDetailsDao {
 		{
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
-			//Query query = session.createSQLQuery("select s.GrossTotal,s.Total from goodreceive s where s.BillNo=:billNo And s.FksuppId=:supplierId");
-			Query query = session.createSQLQuery("select SUM(s.Total), s.pending_bill_payment from goodreceive s where s.FksuppId=:supplierId AND s.fkShopId=:shopId");
-			//query.setParameter("billNo", billNo);
+			Query query = session.createSQLQuery("select s.GrossTotal,s.Total from goodreceive s where s.BillNo=:billNo And s.FksuppId=:supplierId ");
+			//Query query = session.createSQLQuery("select SUM(s.Total), s.pending_bill_payment from goodreceive s where s.FksuppId=:supplierId AND s.fkShopId=:shopId");
+			query.setParameter("billNo", billNo);
 			query.setParameter("supplierId", supplierId);
-			query.setParameter("shopId", shopId);
+			//query.setParameter("shopId", shopId);
 			list = query.list();
 
 		} catch (Exception e) {
@@ -119,10 +119,10 @@ public class SupplierAccountDetailsDao {
 			session = hbu.getHibernateSession();
 			//Query query = session.createSQLQuery("SELECT s.payment , g.GrossTotal, s.total_amount, s.balance from supplier_payment s left join goodreceive g ON g.BillNo = s.bill_no WHERE g.BillNo =:billNo AND g.FksuppId =:supplier group by pk_supplier_payment_id");
 			//Query query = session.createSQLQuery("SELECT s.payment , g.GrossTotal, s.total_amount, s.balance from supplier_payment s left join goodreceive g ON g.BillNo = s.bill_no WHERE s.bill_no =:billNo AND s.fk_supplier_id =:supplier group by pk_supplier_payment_id");
-			Query query = session.createSQLQuery("SELECT s.payment, SUM(g.Total), s.total_amount, s.balance from supplier_payment s left join goodreceive g ON g.FksuppId = s.fk_supplier_id WHERE s.fk_supplier_id =:supplier AND s.fkShopId =:shopId group by pk_supplier_payment_id desc limit 1");
-			//query.setParameter("billNo", billNo);
+			Query query = session.createSQLQuery("SELECT balance , total_amount from supplier_payment WHERE bill_no =:billNo AND fk_supplier_id =:supplier ORDER BY pk_supplier_payment_id DESC LIMIT 1");
+			query.setParameter("billNo", billNo);
 			query.setParameter("supplier", supplier);
-			query.setParameter("shopId", shopId);
+			//query.setParameter("shopId", shopId);
 			list = query.list();
 
 		}
@@ -152,9 +152,10 @@ public class SupplierAccountDetailsDao {
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
 			//Query query = session.createSQLQuery("select s.GrossTotal,s.Total from goodreceive s left join supplier_payment g ON s.FksuppId = g.fk_supplier_id where s.BillNo=:billNo And s.FksuppId=:supplier ORDER BY s.Total AND s.GrossTotal DESC LIMIT 1");
-			Query query = session.createSQLQuery("select SUM(s.Total), g.total_amount, g.balance from goodreceive s left join supplier_payment g ON s.FksuppId = g.fk_supplier_id where s.FksuppId=:supplier AND s.fkShopId=:shopId");
-			query.setParameter("shopId", shopId);
+			Query query = session.createSQLQuery("select s.GrossTotal,SUM(s.Total) from goodreceive s where s.BillNo=:billNo And s.FksuppId=:supplier GROUP BY s.BillNo");
+			//query.setParameter("shopId", shopId);
 			query.setParameter("supplier", supplier);
+			query.setParameter("billNo",billNo);
 			list = query.list();
 			itemlist = new ArrayList<GetSupplierDetails>(0);
 

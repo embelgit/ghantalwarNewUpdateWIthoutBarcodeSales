@@ -289,7 +289,7 @@ function getitemData1()
 			}
 			$("#list4").jqGrid({
 				datatype: "local",
-				colNames:['pk_temp_id', 'item_id', 'Barcode<br>NO', 'Category','Category<br>Id','Sub<br>tegory', 'Sub<br>Category<br>ID', 'Product', 'Product<br>Id', 
+				colNames:['pk_temp_id', 'item_id', 'Barcode<br>NO', 'Category','Category<br>Id','Sub<br>Category', 'Sub<br>Category<br>ID', 'Product', 'Product<br>Id', 
 						  'Style','HSN/SAC', 'ROll<br>Size', 'Quantity', 'Size', 'Good Receive Quantity', 'S.P./Unit', 'fixedSalePrice', 'S.P.<br>W/O<br>Tax', 'Dis<br>%', 'Dis<br>Amt', 
 						  'S.P.<br>After<br>Dis', 'GST<br>%', 'Tax<br>Amt', 'Tax Amt<br>After<br>Discnt', 'IGST%', 'Total<br>Amt', 'Employee<br>Name', 'forTotal', 'fkSuppId', 'fkShopId'],
 				colModel:[ 
@@ -304,7 +304,7 @@ function getitemData1()
 				          {
 				        	  name:'barcodeNo',
 				        	  sortable: false,
-				        	  width:70,				    	
+				        	  width:80,				    	
 				          },
 				          
 				          {	
@@ -1327,6 +1327,11 @@ function getCustomers()
 
 function regcreditcustomerbill()
 {
+	cashupi_cashAmount = $('#cashupi_cashAmount1').val();
+	
+	cashupi_cardAmount = $('#cashCard_upiAmount').val();
+	//alert(cashupi_cashAmount+"upi amount"+cashupi_cardAmount)
+	
 	if(document.custord.creditCustomer.value == "")
 	{
 		myAlert("Select Customer Name.");
@@ -1566,7 +1571,7 @@ function regCreditCustomerBill123()
 	
 	var cashAmount = "";	
 	var cardAmount = "";
-
+	var UpiAmount = "";
 	if(paymentMode == "cashAndCard")
 	{
 		if(cashCard_cashAmount == undefined || cashCard_cashAmount == null || cashCard_cashAmount == "" || cashCard_cashAmount == " ")
@@ -1634,6 +1639,14 @@ function regCreditCustomerBill123()
 	{
 		cardAmount = +paidAmt;		 
 	}
+	else if(paymentMode == "Upi")
+	{
+		UpiAmount = +paidAmt;
+		
+		//alert(UpiAmount);
+		
+		
+	}
 	
 	var userType = $('#userType').val();
 	var userName = $('#userName').val();
@@ -1651,6 +1664,103 @@ function regCreditCustomerBill123()
 	}
 			
 	if((+totalCreditAmt + (+cashCard_cashAmount + +cashCard_cardAmount)) > +totalAmount)
+	{	
+		myAlert("Plase Check All Payment Amounts\nIt Is Greater Than Total Amount");
+		document.custord.btnSubmit.disabled = false;
+		return false;
+	}
+	else{}
+	
+	
+	cashupi_cashAmount = $('#cashupi_cashAmount1').val();
+	if(cashupi_cashAmount == "" || cashupi_cashAmount == null || cashupi_cashAmount == " " || cashupi_cashAmount == undefined)
+	{
+		cashupi_cashAmount = 0;
+	}else{}
+	
+	cashupi_cardAmount = $('#cashCard_upiAmount').val();
+	if(cashupi_cardAmount == "" || cashupi_cardAmount == null || cashupi_cardAmount == " " || cashupi_cardAmount == undefined)
+	{
+		cashupi_cardAmount = 0;
+	}else{}
+	
+	
+	
+	
+		
+	
+
+	if(paymentMode == "cashAndupi")
+	{
+		if(cashupi_cashAmount == undefined || cashupi_cashAmount == null || cashupi_cashAmount == "" || cashupi_cashAmount == " ")
+		{
+			myAlert("Please Enter Cash Amount");
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+		else
+		{
+			var checkCashAmt = /^[0-9]+\.?[0-9]*$/;
+			if(cashupi_cashAmount.match(checkCashAmt))
+			{
+				params["cashupi_cashAmount"] = cashupi_cashAmount;
+				
+				
+				//alert(cashupi_cashAmount);
+			}
+			else
+			{
+				myAlert("Please Enter Valid Cash Amount");
+				document.custord.btnSubmit.disabled = false;
+				return false;
+			}
+		}
+		if(cashupi_cardAmount == undefined || cashupi_cardAmount == null || cashupi_cardAmount == "" || cashupi_cardAmount == " ")
+		{
+			myAlert("Please Enter Upi Cash Amount");
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+		else
+		{
+			var checkCardAmt = /^[0-9]+\.?[0-9]*$/;
+			if(cashupi_cardAmount.match(checkCardAmt))
+			{
+				params["cashupi_cardAmount"] = cashupi_cardAmount;
+				
+				//alert(cashupi_cardAmount);
+				
+			}
+			else
+			{
+				myAlert("Please Enter Valid Upi Cash Amount");
+				document.custord.btnSubmit.disabled = false;
+				return false;
+			}
+		}
+		
+		if((+cashupi_cashAmount + +cashupi_cardAmount) != +paidAmt)
+		{
+			myAlert("Cash Amount + Upi Amount Must be Equals to Net Paid Amount");
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+		else{}
+		/*
+			if((+cashCard_cashAmount + +cashCard_cardAmount) < +grossTotal)
+			{
+				myAlert("Cash Amount + Card Amount is Less Than Total Amount");
+				document.custord.btnSubmit.disabled = false;
+				return false;
+			}
+		*/
+	}
+	
+	
+	
+	
+	
+	if((+totalCreditAmt + (+cashupi_cashAmount + +cashupi_cardAmount)) > +totalAmount)
 	{	
 		myAlert("Plase Check All Payment Amounts\nIt Is Greater Than Total Amount");
 		document.custord.btnSubmit.disabled = false;
@@ -1681,6 +1791,10 @@ function regCreditCustomerBill123()
 	params["totalCreditAmt"] = totalCreditAmt;
 	params["cashAmount"] = cashAmount;
 	params["cardAmount"] = cardAmount;
+	
+	//params["CashAmount"] = CashAmount;
+	params["UpiAmount"] = UpiAmount;
+	
 	params["cPaymentDueDate"] = cPaymentDueDate;
 	
 	params["methodName"] = "regCreditCustomerBill";

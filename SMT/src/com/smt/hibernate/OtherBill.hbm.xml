@@ -95,7 +95,11 @@
 		
 		<property name="fkSuppId" type="java.lang.Long" column="fkSuppId" length="20" />
 		
-		<property name="fkShopId" type="java.lang.Long" column="fkShopId" />		
+		<property name="fkShopId" type="java.lang.Long" column="fkShopId" />	
+		
+		<property name="cashupi_cashAmount" type="java.lang.Double" column="cashupi_cashAmount" />
+		
+		<property name="cashupi_upiAmount" type="java.lang.Double" column="cashupi_upiAmount" />	
 				
 	</class>
 </hibernate-mapping> 

@@ -161,9 +161,9 @@ function saleReturn()
 
 	$.post('/SMT/jsp/utility/controller.jsp', params, function(data) {
 		successAlert(data);
-		location.reload();
+		//location.reload();
 		//window.open("PDFSaleReturn.jsp");
-		window.open("ghantalwarMensWearPDFSaleReturn.jsp");
+		//window.open("ghantalwarMensWearPDFSaleReturn.jsp");
 	}).error(function(jqXHR, textStatus, errorThrown) {
 		if (textStatus === "timeout") {
 			$(loaderObj).hide();
@@ -467,8 +467,8 @@ function saleReturn1()
 	params["methodName"] = "returnSale1";
 
 	$.post('/SMT/jsp/utility/controller.jsp', params, function(data) {
-		successAlert(data);
-		location.reload();
+		//successAlert(data);
+		//location.reload();
 		//window.open("PDFSaleReturn.jsp");
 		window.open("ghantalwarMensWearPDFSaleReturn.jsp");
 	}).error(function(jqXHR, textStatus, errorThrown) {

@@ -787,6 +787,7 @@ a.homer {
 					<li><a href="<%=path%>BarcodeWiseStock.jsp">Barcode Based Inventory</a></li>
 					<li><a href="<%=path%>BillNoWiseStock.jsp">Invoice Based Inventory</a></li>
 					<li><a href="<%=path%>lowstockalert.jsp">Low Inventory Items</a></li>
+					<li><a href="<%=path%>lowstockalertReport.jsp">Low Stock Inventory</a></li>
 					<li><a href="<%=path%>AgewiseReport.jsp">Agewise Product Inventory</a></li>
 					<%-- <li><a href="<%=path%>allWayStock.jsp">All Way Stock</a></li> --%>
 				</ul></li>

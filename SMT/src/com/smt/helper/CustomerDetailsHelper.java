@@ -15,6 +15,7 @@ import org.hibernate.Transaction;
 
 import com.smt.bean.BillCopy;
 import com.smt.bean.GetCreditCustomerDetails;
+import com.smt.bean.GetSupplierDetails;
 import com.smt.dao.CustomerDetailsDao;
 import com.smt.dao.ExpenditureDetailsDao;
 import com.smt.hibernate.CustomerDetailsBean;
@@ -217,7 +218,7 @@ public class CustomerDetailsHelper {
 		{
 			GetCreditCustomerDetails bean = new GetCreditCustomerDetails();
 			//Double totalAmt = dao.getTotalAmt(billNo);
-			Double totalAmt = dao.getTotalAmt(creditCustomer);
+			Double totalAmt = dao.getTotalAmt(billNo,creditCustomer);
 			bean.setBalance(totalAmt);
 			map.put(bean.getBalance(), bean);
 		}
@@ -226,50 +227,18 @@ public class CustomerDetailsHelper {
 			for (int i = 0; i < list.size(); i++)
 			{
 				Object[] o = (Object[]) list.get(i);
-				GetCreditCustomerDetails bean = new GetCreditCustomerDetails();
+				GetSupplierDetails bean = new GetSupplierDetails();
+        Double newBal = (Double.parseDouble(o[0].toString()));
+					
 				
-				String newBal = (o[0].toString());
-				String totalPerItem = (o[1].toString());
-				String discount = (o[2].toString());
-				if( i == (list.size()-1))
-				{
-					lastTotalAmt = (o[3].toString());
-					lastBalance = (o[4].toString());
-				}
-				else
-				{
-					continue;
-				}
-				Double total = Double.valueOf(totalPerItem);
-				Double discount1 = Double.valueOf(discount);
-				Double totalAmt = Double.valueOf(totalAmount1);
-				Double lastAmt = Double.valueOf(lastTotalAmt);
-				latestbalanceAmt = Double.valueOf(lastBalance);
-				if(totalAmount1 != lastTotalAmt)
-				{
-					diffrenceTotal = lastAmt - totalAmt;
-					System.out.println("Difference Total"+diffrenceTotal);
-				}
-				total2 = total2 + total;
-				totalDiscount = totalDiscount + discount1;
-				System.out.println("total calculate discount"+totalDiscount);
-				total3 = total2 - totalDiscount;
-				System.out.println("Total after Discount  "+total2);
-				System.out.println("Total after Discount  "+total3);
-				Double newBal1 = Double.valueOf(newBal);
-				totalAfterPayment = latestbalanceAmt - diffrenceTotal;
-				System.out.println(totalAfterPayment + "NEW BALANCE");
+				//Double newBal1 = Double.valueOf(newBal);
+					System.out.println(newBal+"NEW BALANCE");
+					
+						bean.setBalance(newBal);
+					
 				
-				if( i == (list.size()-1))
-				{
-					//bean.setBalance(Double.parseDouble(df.format(totalAfterPayment)));
-					bean.setBalance(Double.parseDouble(o[5].toString()));
-				}
-				else
-				{
-					continue;
-				}
-				System.out.println("***************" + o[0]);
+				
+				System.out.println("***************"+o[0]);
 				map.put(bean.getBalance(), bean);
 			}
 		}

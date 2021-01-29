@@ -2644,7 +2644,7 @@ public class CustomerOrderDao {
 			session = hbu.getHibernateSession();
 			System.out.println("BillNo :: " + billNo);
 
-			Query query = session.createSQLQuery("select s.pkOtherBillId, ct.category_name, pr.ProductName, s.BarcodeNo, s.Quantity, s.SalePrice, s.ContactNo, (s.SalePrice - s.Discount), s.Discount, s.GrossTotal, s.Date, s.size, s.TaxAmount, s.Gst, s.Igst, s.perProductdisPer, s.taxAmtAfterDiscount, CONCAT(s.FkSaleEmployeeId, ' ', s.employee_Name), s.pkOtherBillId, s.credit_Customer_Name, s.mobile_No, s.payment_mode, cashCard_cashAmount, cashCard_cardAmount, totalSaleReturnAmt, TotalAmount, totalperitem, s.SalePWithoutTax from otherbill s JOIN categories ct on s.fkCatId = ct.pk_category_id JOIN sub_categories sb ON s.fkSubCatId = sb.pk_subcat_id JOIN product_reg pr ON s.fkProductId = pr.pkProductNameId where s.BillNo = :billNo AND s.fkShopId = :shopId");
+			Query query = session.createSQLQuery("select s.pkOtherBillId, ct.category_name, pr.ProductName, s.BarcodeNo, s.Quantity, s.SalePrice, s.ContactNo, (s.SalePrice - s.Discount), s.Discount, s.GrossTotal, s.Date, s.size, s.TaxAmount, s.Gst, s.Igst, s.perProductdisPer, s.taxAmtAfterDiscount, CONCAT(s.FkSaleEmployeeId, ' ', s.employee_Name), s.pkOtherBillId, s.credit_Customer_Name, s.mobile_No, s.payment_mode, cashCard_cashAmount, cashCard_cardAmount, totalSaleReturnAmt, TotalAmount, totalperitem, s.SalePWithoutTax,s.cashupi_cashAmount,s.cashupi_upiAmount from otherbill s JOIN categories ct on s.fkCatId = ct.pk_category_id JOIN sub_categories sb ON s.fkSubCatId = sb.pk_subcat_id JOIN product_reg pr ON s.fkProductId = pr.pkProductNameId where s.BillNo = :billNo AND s.fkShopId = :shopId");
 			query.setParameter("billNo", billNo);
 			query.setParameter("shopId", shopId);
 			list = query.list();
@@ -2674,7 +2674,7 @@ public class CustomerOrderDao {
 			session = hbu.getHibernateSession();
 			System.out.println("BillNo :: " + billNo);
 
-			Query query = session.createSQLQuery("select s.pkCrediBillId, s.CategoryName, s.ItemName, s.BarcodeNo, s.Quantity, s.SalePrice, s.totalperitem, s.Discount, s.GrossTotal, s.Date, s.size, s.fkCrediCustId, s.BillNo, s.Gst, s.Igst, s.TaxAmount, s.taxAmtAfterDiscount, s.perProductdisPer, CONCAT(s.FkSaleEmployeeId, ' ', s.EmpName), s.payment_mode, s.cashCard_cashAmount, s.cashCard_cardAmount, s.totalSaleReturnAmt, s.SalePWithoutTax, TotalAmount from creditcustomerbill s where s.BillNo = :billNo and s.Quantity>0 AND s.fkShopId = :shopId");
+			Query query = session.createSQLQuery("select s.pkCrediBillId, s.CategoryName, s.ItemName, s.BarcodeNo, s.Quantity, s.SalePrice, s.totalperitem, s.Discount, s.GrossTotal, s.Date, s.size, s.fkCrediCustId, s.BillNo, s.Gst, s.Igst, s.TaxAmount, s.taxAmtAfterDiscount, s.perProductdisPer, CONCAT(s.FkSaleEmployeeId, ' ', s.EmpName), s.payment_mode, s.cashCard_cashAmount, s.cashCard_cardAmount, s.totalSaleReturnAmt, s.SalePWithoutTax, TotalAmount,cashupi_cashAmunt,cashupi_UpiAmount from creditcustomerbill s where s.BillNo = :billNo and s.Quantity>0 AND s.fkShopId = :shopId");
 			query.setParameter("billNo", billNo);
 			query.setParameter("shopId", shopId);
 
