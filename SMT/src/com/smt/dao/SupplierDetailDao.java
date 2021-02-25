@@ -343,7 +343,7 @@ public class SupplierDetailDao {
 			Long k = 0l;
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
-			Query query2 = session.createQuery("select supplierName, address, city, mobileno, contactPerson, email, panNo, pin  from SupplierDetail where activeYn='Y'");
+			Query query2 = session.createSQLQuery("select supplier_name, address, city, mobileno, contact_person, email, pan_no, pin,supplier_TaxType,account_name,account_number,ifsc,upiid  from supplier_details where active_YN='Y'");
 
 			List<Object[]> list = query2.list();
 			catList = new ArrayList<SupplierDetail>(0);
@@ -360,7 +360,11 @@ public class SupplierDetailDao {
 				reports.setEmail(object[5].toString());
 				reports.setPanNo(object[6].toString());
 				reports.setPin(Long.parseLong(object[7].toString()));
-
+				reports.setSupplierType(object[8].toString());
+				reports.setAccountName(object[9].toString());
+				reports.setAccNumber(Long.parseLong(object[10].toString()));
+				reports.setIfsCcode1(object[11].toString());
+				reports.setUpiid(object[12].toString());
 				catList.add(reports);
 
 			}

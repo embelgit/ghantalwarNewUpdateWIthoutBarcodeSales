@@ -4,6 +4,206 @@ var shopContactNoSD = "Contact No";
 var shopGstNoSD = "shop GST no";
 var shopEmailSD = "Shop Email Id";
 
+
+
+function CurrentStock()
+{
+	var params = {};
+
+	params["methodName"] = "getAllStock1";
+
+	$.post('/SMT/jsp/utility/controller.jsp',
+					params,
+					function(data)
+					{
+						$('#currStock1').dataTable().fnClearTable();
+
+						var jsonData = $.parseJSON(data);
+						var catmap = jsonData.list;
+
+						$(document).ready(function()
+								{
+									// Setup - add a text input to each
+									// footer cell
+											$('#currStock1 thead th').each(
+															function() {
+																var title = $(
+																		this)
+																		.text();
+																$(this)
+																		.html(
+																				'<label>'
+																						+ title
+																						+ '</label><input type="text" size=22 placeholder="Search '
+																						+ title
+																						+ '" />');
+															});
+
+											var total = $('#currStock1').DataTable(
+															{	
+																fnRowCallback : function(
+																		nRow,
+																		aData,
+																		iDisplayIndex) {
+																	$("th:first",
+																			nRow)
+																			.html(
+																					iDisplayIndex + 1);
+																	return nRow;
+																},
+																
+																"sPaginationType" : "full_numbers",
+																destroy : true,
+																searching : true,
+																
+																"columnDefs" : [
+																		{
+																			"orderable" : false,
+																			"targets" : '_all'
+																		},
+																		
+																/*
+																 * {
+																 * "orderable":
+																 * false,
+																 * "targets": 1 }, {
+																 * "orderable":
+																 * false,
+																 * "targets": 2 }, {
+																 * "orderable":
+																 * false,
+																 * "targets": 3 }, {
+																 * "orderable":
+																 * false,
+																 * "targets": 4 }, {
+																 * "orderable":
+																 * false,
+																 * "targets": 5 },
+																 */
+																],																
+																destroy : true,
+																searching : true,
+																"scrollY": 300,
+																"scrollX": true,
+																/*"scrollCollapse" : true,*/
+																//"paging" : false,
+																columns : [
+																		
+																		{
+																			"data" : "itemName",
+																			"width" : "5%",
+																			"defaultContent" : ""
+																		},
+																		{
+																			"data" : "catName",
+																			"width" : "5%",
+																			"defaultContent" : ""
+																		},
+																		{
+																			"data" : "avQuantity",
+																			"width" : "5%",
+																			"defaultContent" : ""
+																		},
+																		
+																		{
+																			"data" : "size",
+																			"width" : "5%",
+																			"defaultContent" : ""
+																		},
+																		{
+																			"data" : "color",
+																			"width" : "5%",
+																			"defaultContent" : ""
+																		},
+																		
+																		
+																		],
+																		
+																dom : 'Bfrtip',
+																buttons : [
+																		{
+																			extend : 'copyHtml5',
+																			footer : true,
+																			title : function()
+																			{
+																				return shopNameSD+" \n "+shopAddressSD+" \n "+shopContactNoSD+" \n "+shopGstNoSD+" \n "+shopEmailSD+" \n\nALL WAY STOCK REPORT";
+																			},
+																			orientation : 'landscape',
+																			pageSize : 'LEGAL',
+																			titleAttr : 'copy'
+																		},
+																		{
+																			extend : 'excelHtml5',
+																			footer : true,
+																			title : function()
+																			{
+																				return shopNameSD+" \n "+shopAddressSD+" \n "+shopContactNoSD+" \n "+shopGstNoSD+" \n "+shopEmailSD+" \n\nALL WAY STOCK REPORT";
+																			},
+																			orientation : 'landscape',
+																			pageSize : 'LEGAL',
+																			titleAttr : 'excel'
+																		},
+																		{
+																			extend : 'csvHtml5',
+																			footer : true,
+																			title : function()
+																			{
+																				return shopNameSD+" \n "+shopAddressSD+" \n "+shopContactNoSD+" \n "+shopGstNoSD+" \n "+shopEmailSD+" \n\nALL WAY STOCK REPORT";
+																			},
+																			orientation : 'landscape',
+																			pageSize : 'LEGAL',
+																			titleAttr : 'PDF'
+																		},
+																		{
+																			extend : 'pdfHtml5',
+																			footer : true,
+																			title : function()
+																			{
+																				return shopNameSD+" \n "+shopAddressSD+" \n "+shopContactNoSD+" \n "+shopGstNoSD+" \n "+shopEmailSD+" \n\nALL WAY STOCK REPORT";
+																			},
+																			orientation : 'landscape',
+																			pageSize : 'LEGAL',
+																			titleAttr : 'PDF'
+																		} ],
+																		
+																"scrollY": 300,
+															    "scrollX": true,
+																"scrollCollapse" : true,
+																//"paging" : false,
+															});
+
+											$('#currStock1').css('display', '');
+											total.columns.adjust().draw();
+
+											total.columns().every(
+															function() {
+																var that = this;
+
+																$(
+																		'input',
+																		this
+																				.header())
+																		.on(
+																				'keyup change',
+																				function() {
+																					if (that
+																							.search() !== this.value) {
+																						that
+																								.search(
+																										this.value)
+																								.draw();
+																					}
+																				});
+															});
+										});
+						var mydata = catmap;
+						$('#currStock1').dataTable().fnAddData(mydata);
+					});
+}
+
+
+
+
 function getTodayDate()
 {
 	var today = new Date();

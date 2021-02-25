@@ -87,7 +87,7 @@ var jsonData = $.parseJSON(data);
 	if(data.length < 28){
 	
 	document.getElementById("purchaseid").value = 0;
-	getlowstock();
+	//getlowstock();
 	getyestsale5();
 		return false;
 	}
@@ -102,8 +102,8 @@ var jsonData = $.parseJSON(data);
 	
 			document.getElementById("purchaseid").value = v.PurchaseTotal;
 
-			getlowstock();
-			
+			//getlowstock();
+			getyestsale5();
 				});
 
 		
@@ -121,12 +121,14 @@ function getlowstock(){
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 			{
 		var jsonData = $.parseJSON(data);
+		
+		//alert(data)
 		if(data.length < 28){
 			var ss = "No Low Stock Product Available";
 //			document.getElementById("lowstock").value = ss;
 			$("#lowstock").append($("<option></option>").attr("value","").text(ss));
 			
-			getyestsale5();		
+			//getyestsale5();		
 		
 		}
 		var catmap = jsonData.list;
@@ -138,9 +140,9 @@ function getlowstock(){
 //			document.getElementById("lowstock").value = v.productName;
 			$("#lowstock").append($("<option></option>").attr("value",v.pkStockid).text(v.itemName));
 				
-				
-			getyestsale5();
-				
+			//$("#Mostsell").append($("<option></option>").attr("value",v.fkproductid).text(v.productName+","+v.color+","+v.size+","+v.quantity));	
+			//getyestsale5();
+			categoryWiseSaleGraph();
 				});
 
 		
@@ -250,7 +252,7 @@ var jsonData = $.parseJSON(data);
 	
 			document.getElementById("purchaseid1").value = v.purchasetotal;
 
-		//getyestsale6();
+		Mostsell();
 				});
 
 		
@@ -259,3 +261,119 @@ var jsonData = $.parseJSON(data);
 		}
 	});
 } 
+
+
+function Mostsell(){
+//	alert("ok");
+	
+	var params={};
+	params["methodName"] = "MostsellProduct";
+
+	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
+			{
+var jsonData = $.parseJSON(data);
+	
+	if(data.length < 28){
+		var ss = "No product should sell more than 10 pics";
+	//document.getElementById("Mostsell").value = 0;
+	
+		$("#Mostsell").append($("<option></option>").attr("value","").text(ss));
+		//return false;
+	}
+
+		var catmap = jsonData.list;
+		var count=0;
+		$.each(jsonData,function(i,v)
+				{
+			
+	
+			//document.getElementById("Mostsell").value = v.purchasetotal;
+
+			$("#Mostsell").append($("<option></option>").attr("value",v.fkproductid).text(v.productName+","+v.color+","+v.size+","+v.quantity));
+			count++;
+		//getlowstock();
+				});
+		getlowstock();
+		
+	}).error(function(jqXHR, textStatus, errorThrown){
+		if(textStatus==="timeout") {
+		}
+	});
+} 
+function categoryWiseSaleGraph()
+{	
+	var userTypeRole = $("#userType").val();
+	var userName = $("#userName").val();
+	
+	var params = {};
+	
+	params["userTypeRole"] = userTypeRole;
+	params["userName"] = userName;
+	
+	params["methodName"] = "categoryWiseSaleGraphController";
+	
+	$.post('/SMT/jsp/utility/controller.jsp',params,
+	function(data)
+	{		
+		alert(data);
+		$('#categoryWiseSaleGraphTable').dataTable().fnClearTable();
+		var jsonData = $.parseJSON(data);
+		var catmap = jsonData.list;
+		$(document)
+				.ready(
+						function()
+						{							
+							var processed_json = new Array();   
+							var headingArray = new Array();   
+				             // Populate series
+				             for (i = 0; i < catmap.length; i++)
+				             {   
+				            	 processed_json.push(catmap[i].saleQty);
+				            	 headingArray.push(catmap[i].saleCatName);
+				             }
+				          
+				             // draw chart
+				             $('#categoryWiseSaleGraph').highcharts({
+				             chart:
+				             {
+				                 type: "column"
+				             },
+				             title:
+				             {
+				                 text: "TOTAL CATEGORY WISE SALE"
+				             },
+				            
+				            xAxis:
+				             {   	
+				                categories: headingArray,
+				                title:
+					             {
+					            	 text: "CATEGORIES",
+					             }
+				             },
+				           
+				             yAxis:
+				             {
+					             allowDecimals: true,
+					             title:
+					             {
+					            	 text: "SOLD QUANTITY",
+					             }
+				             },
+				             
+				             series:
+				            	 [{
+				            		 name: 'Categories',
+				            		 data: processed_json
+				            	 }]
+				         }); 							
+											
+						});		
+		
+	}).error(function(jqXHR, textStatus, errorThrown) {
+		if (textStatus === "timeout") {
+			$(loaderObj).hide();
+			$(loaderObj).find('#errorDiv').show();
+		}
+	});		
+}

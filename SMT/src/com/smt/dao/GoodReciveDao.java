@@ -2862,6 +2862,64 @@ public class GoodReciveDao {
 
 		}
 		
+		
+		
+		public List<GetCreditCustomerDetails> getmostSell(LocalDate todaydate, HttpServletRequest request) 
+		{
+			HttpSession usersession = request.getSession(true);
+			String userid = (String)usersession.getAttribute("userid");
+			String shopid = (String)usersession.getAttribute("shopid");
+
+			HibernateUtility hbu=null;
+			Session session=null;
+			List<GetCreditCustomerDetails> stockList = null;
+			try
+			{
+				hbu = HibernateUtility.getInstance();
+				session = hbu.getHibernateSession();
+				   
+				//Query query = session.createSQLQuery("SELECT ProductName, CompanyName, weight, quantity, stock_in_kg AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND stock_in_kg !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, Stock_in_ltr AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND Stock_in_ltr !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, total_piece_quantity AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND total_piece_quantity !=0");
+		        Query query = session.createSQLQuery("SELECT ProductName,color,size, sum(Quantity) total,pkProductNameId FROM(SELECT ct.pkProductNameId ,ct.ProductName, ob.fkProductId, ob.Quantity,ct.color,ct.size FROM otherbill ob JOIN product_reg ct on ob.fkProductId=ct.pkProductNameId WHERE ob.Date='"+todaydate+"' UNION ALL SELECT ct.pkProductNameId, ct.ProductName, ccb.fkProductId, ccb.Quantity,ct.color,ct.size FROM creditcustomerbill ccb JOIN product_reg ct on ccb.fkProductId=ct.pkProductNameId WHERE ccb.Date='"+todaydate+"') t  GROUP BY pkProductNameId " );
+		        		
+
+		List<Object[]> list = query.list();
+		System.out.println("list"+list);
+		stockList = new ArrayList<GetCreditCustomerDetails>(0);
+		Double w=0d;
+		int i=0;
+		
+		for (Object[] object : list) {
+			
+			GetCreditCustomerDetails reports = new GetCreditCustomerDetails();
+			
+			String quantity = object[3].toString();
+			Double qty=Double.valueOf(quantity);
+			System.out.println("quantity "+quantity+"qty"+qty);
+			if (qty >=10)
+			{
+				System.out.println("rslt "+Arrays.toString(object));
+	
+				reports.setProductName(object[0].toString());
+				reports.setQuantity(Double.parseDouble(object[3].toString()));
+				reports.setSize(object[2].toString());
+				reports.setColor(object[1].toString());
+				reports.setFkproductid(Long.parseLong(object[4].toString()));
+				
+				stockList.add(reports);
+		}
+			
+		}
+		}
+			catch(Exception e)
+			{
+				e.printStackTrace();	
+			}
+			return stockList;	
+
+		}
+		
+		
+		
 		public List<BillBean> getsaleamt1(LocalDate todaydate1, HttpServletRequest request) 
 		{
 			HttpSession usersession = request.getSession(true);
@@ -2978,12 +3036,11 @@ public class GoodReciveDao {
 				hbu = HibernateUtility.getInstance();
 				session = hbu.getHibernateSession();
 				//Query query = session.createSQLQuery("SELECT ProductName, CompanyName, weight, quantity, stock_in_kg AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND stock_in_kg !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, Stock_in_ltr AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND Stock_in_ltr !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, total_piece_quantity AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND total_piece_quantity !=0");
-		        Query query = session.createSQLQuery("select pk_stock_details_id,ItemName from stock_details where Quantity > 0 AND Quantity < 10");
+		        Query query = session.createSQLQuery("select pk_stock_details_id,ItemName from stock_details where  Quantity < 10 ");
 
 		List<Object[]> list = query.list();
 		stockList = new ArrayList<currentStock>(0);
-		Double w=0d;
-		int i=0;
+		System.out.println("list"+list);
 
 		for (Object[] object : list) {
 			currentStock reports = new currentStock();	

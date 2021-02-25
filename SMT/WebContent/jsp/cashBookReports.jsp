@@ -281,7 +281,7 @@ position: fixed;
 									style="color: blue">Datewise</h4></a></li>
 						<li><a data-toggle="tab" href="#supplierBetweenTwoDate"><h4
 									style="color: blue">Range</h4></a></li>
-
+<li><a data-toggle="tab" href="#supplierBillWise"><h4 style="color: blue;">Bill No Wise</h4></a></li>
 					</ul>
 
 					<div class="tab-content" id="tabname">
@@ -369,21 +369,20 @@ position: fixed;
 						
 						
 						<div id="supplierBillWise" class="tab-pane ">
-							<div class="row">
-								<div class="col-sm-offset-1 col-md-10">
-									<hr style="border-top-color: #c1b1b1;">
-								</div>
-							</div>
-							<form class="form-horizontal" method="post" action="" name="supReportBill">
-								
-									<div class="row">
-										 <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="graphcolumnwidth">
-									
-												<%
-													SupplierDetailDao sdd = new SupplierDetailDao();
-													List sList = sdd.getAllSupplier();
-												%>
-												<input list="sup_drop" id="supplier"
+							<div class="miscellaneous" style="left:">
+									<form class="form-horizontal" method="post" action=""
+										name="supReportBill">
+										<div class="container">
+											<div class="row">
+												<div class="invoice_label_up">
+													<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+														id="graphcolumnwidth">
+
+														<%
+															SupplierDetailDao sdd = new SupplierDetailDao();
+															List sList = sdd.getAllSupplier();
+														%>
+														<input list="sup_drop" id="supplier"
 													onchange="getAllBills1()">
 												<datalist id="sup_drop">
 													<%
@@ -397,28 +396,33 @@ position: fixed;
 														%>
 													
 												</datalist>
-											  <label for="supplier">Supplier Name<sup style="color: red;">*</sup></label>
-										</div>
-										
-										
-										
-									<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="graphcolumnwidth">
-											<select id='billNo' name="billNo"></select>
-											<label for="bill_no">Bill No </label>
-									</div>
-										
-									</div>
-									<div class="row form-group">
-										<div class="col-md-3 col-md-offset-4">
-											<div class="input-group">
-												<input type="button" id="btn" name="save"
-													class="btn btn-lg btn-success btn-md button_hw button_margin_right"
-													onclick="getBillWiseReport()" value="Search" />
+														<label for="supplier">Supplier Name<sup style="color: red;">*</sup></label>
+													</div>
+												</div>
+
+
+
+
+												<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+													id="graphcolumnwidth">
+													<select id='billNo' name="billNo"></select> <label
+														for="bill_no">Bill No <sup style="color: red;">*</sup></label>
+												</div>
+
+
+
+												<div class="col-md-2" id="btnsub">
+
+													<input type="button" id="btn" name="save"
+														class="btn btn-lg btn-success btn-md button_hw button_margin_right"
+														onclick="getBillWiseReport()" value="Search"
+														style="padding-bottom: 28px;" />
+
+												</div>
 											</div>
 										</div>
-									</div>
-								</form>	
-								
+									</form>
+								</div>
 									<div class="table-responsive" id="tables">
 										<table
 											class="table table-bordered table-striped table-condensed cf"
@@ -593,6 +597,7 @@ position: fixed;
 									style="color: blue">Datewise</h4></a></li>
 						<li><a data-toggle="tab" href="#customerBetweenTwoDate"><h4
 									style="color: blue">Range</h4></a></li>
+									<li><a data-toggle="tab" href="#customerBillWise"><h4 style="color: blue;">Bill No Wise</h4></a></li>
 					</ul>
 
 					<div class="tab-content" id="tabname">
@@ -680,29 +685,22 @@ position: fixed;
 						</div>
 
 						<!-- Customer Bill number wise -->
-						<div id="customerBillWise" class="tab-pane">
-							<div class="row">
-								<div class="col-sm-offset-1 col-md-10">
-									<hr style="border-top-color: #c1b1b1;">
-								</div>
-							</div>
-							<form class="form-horizontal" method="post" action=""
-								name="supReportBill">
-								<fieldset>
-									<div class="row form-group">
-										<label class="col-md-2 control-label" for="customerName">Customer
-											Name</label>
-										<div class="col-md-3">
-											<div class="input-group">
-												<span class="input-group-addon"> <i
-													class="glyphicon glyphicon-user"></i>
-												</span>
-												<%
+						<div id="customerBillWise"  class="tab-pane ">
+								<div class="miscellaneous" style="left:">
+									<form class="form-horizontal" method="post" action=""
+										name="supReportBill">
+										<div class="container">
+											<div class="row">
+												<div class="invoice_label_up">
+													<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+														id="graphcolumnwidth">
+
+														<%
 													CustomerDetailsDao cdd = new CustomerDetailsDao();
 													List cList = cdd.getAllCustomer();
 												%>
-												<input list="cust_drop" id="creditCustomer"
-													class="form-control" onchange="getBillByCustomer1()">
+														<input list="cust_drop" id="creditCustomer"
+													onchange="getBillByCustomer1()">
 												<datalist id="cust_drop">
 													<%
 														for (int i = 0; i < cList.size(); i++) {
@@ -715,27 +713,33 @@ position: fixed;
 														}
 													%>
 												</datalist>
+														<label for="supplier">Customer Name<sup style="color: red;">*</sup></label>
+													</div>
+												</div>
+
+
+
+
+												<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+													id="graphcolumnwidth">
+													<select id='billNo1' name="billNo"></select> <label
+														for="bill_no">Bill No <sup style="color: red;">*</sup></label>
+												</div>
+
+
+
+												<div class="col-md-2" id="btnsub">
+
+													<input type="button" id="btn" name="save"
+														class="btn btn-lg btn-success btn-md button_hw button_margin_right"
+														onclick="getBillWiseCreditReport()" value="Search"
+														style="padding-bottom: 28px;" />
+
+												</div>
 											</div>
 										</div>
-									</div>
-									<div class="row form-group">
-										<label class="col-md-2 control-label" for="bill_no">
-											Bill No </label>
-										<div class="col-md-3">
-											<div class="input-group">
-												<span class="input-group-addon"> No </span> <select
-													class="form-control input-md" id='billNo1' name="billNo1">
-												</select>
-											</div>
-										</div>
-										<div class="col-md-3 ">
-											<div class="input-group">
-												<input type="button" id="btn" name="save"
-													class="btn btn-lg btn-success btn-md button_hw button_margin_right"
-													onclick="getBillWiseCreditReport()" value="Search" />
-											</div>
-										</div>
-									</div>
+									</form>
+								</div>
 									<div class="table-responsive" id="tables">
 										<table
 											class="table table-bordered table-striped table-condensed cf"

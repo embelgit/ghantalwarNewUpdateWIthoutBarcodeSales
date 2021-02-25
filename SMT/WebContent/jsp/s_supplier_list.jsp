@@ -263,6 +263,7 @@
 					<thead>
 						<tr>
 							<th>Sr No</th>
+							<th>Supplier Type</th>
 							<th>Supplier Name</th>
 							<th>Address</th>
 							<th>City</th>
@@ -271,6 +272,10 @@
 							<th>Email</th>
 							<th>GSTTIN/UIN No</th>
 							<th>Pin Code</th>
+							<th>Supplier Account<br> Name</th>
+							<th>Account Number</th>
+							<th>Ifsc Code</th>
+							<th>Upi Id</th>
 						</tr>
 					</thead>
 				</table>

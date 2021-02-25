@@ -15,12 +15,15 @@
 <html lang="en">
 
 <script src="/SMT/staticContent/js/dashboardreport.js"></script>
-
+<script src="/SMT/staticContent/js/highcharts.js"></script>
+<script src="/SMT/staticContent/js/allGraphJs.js"></script>
 <head>
 
 
 <script type="text/javascript" >
 jQuery(document).ready( function() {
+	
+	//getyestsale5();
 	getsale();
 	return false;
 	}); 
@@ -332,7 +335,7 @@ jQuery(document).ready( function() {
 
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            <h1 class="h3 mb-0 text-gray-800" >Dashboard</h1>
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
           </div>
 
@@ -396,7 +399,7 @@ jQuery(document).ready( function() {
                       <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Low Stock (Below 10 Pics)</div>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
-                          <select id="lowstock"  style="background: #f0f0f0; border: 2px;font-size:25px;width: 170px;"></select>
+                          <select id="lowstock" input  style="background: #f0f0f0; border: 2px;font-size:25px;width: 170px;"></select>
                         </div>
                         
                       </div>
@@ -495,7 +498,49 @@ jQuery(document).ready( function() {
 
           <!-- Content Row -->
 
-          <div class="row">
+          <!-- <div class="row">
+
+            Area Chart
+            <div class="col-xl-8 col-lg-7">
+              <div class="card shadow mb-4">
+                Card Header - Dropdown
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Sales Graph</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                </div>
+                Card Body
+                
+<div class="col-md-3 col-lg-3" id="graphcolumn">
+													<div id="categoryWiseSaleGraph" class="graphlength">
+														<div class="table-responsive" id="tables">
+															<table
+																class="table table-bordered table-striped table-condensed cf"
+																id="categoryWiseSaleGraphTable" class="display"
+																style="border: 2px solid black; border-collapse: collapse;">
+																<thead>
+																	<tr>
+																		<th>Category</th>
+																		<th>Quantity</th>
+																	</tr>
+																</thead>
+															</table>
+														</div>
+													</div>
+												</div>
+              </div>
+            </div> -->
+<div class="row">
 
             <!-- Area Chart -->
             <div class="col-xl-8 col-lg-7">
@@ -524,7 +569,6 @@ jQuery(document).ready( function() {
                 </div>
               </div>
             </div>
-
             <!-- Pie Chart -->
             <div class="col-xl-4 col-lg-5">
               <div class="card shadow mb-4">

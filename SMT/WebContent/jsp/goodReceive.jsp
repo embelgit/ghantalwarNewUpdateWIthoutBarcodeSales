@@ -773,7 +773,7 @@ position: fixed;
 			
 			<div class="row">
 				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">	
-							 <input type="date" id='purchaseDueDate' name='purchaseDueDate' class="" id="jander" style="background-color: #8B0000;" />
+							 <input type="date" id='purchaseDueDate' name='purchaseDueDate' class="" id="jander" style="background-color: #fab787" />
 						     <label>Payment Due Date:<!-- <sup style="color: red">*</sup> --></label>
 			    </div>	
 			    		     

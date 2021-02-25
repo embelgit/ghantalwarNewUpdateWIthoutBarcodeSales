@@ -22,7 +22,55 @@ public class GetCreditCustomerDetails {
 	private Double totalAmount1;
 	private Double totalAmount2;
 	
+	private String productName;
+	private String color;
+	private String size;
+	private Double quantity;
 	
+	
+	private Long fkproductid;
+	
+	
+	public Long getFkproductid() {
+		return fkproductid;
+	}
+
+	public void setFkproductid(Long fkproductid) {
+		this.fkproductid = fkproductid;
+	}
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
+	}
+
+	public Double getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Double quantity) {
+		this.quantity = quantity;
+	}
+
 	public Double getPurchasetotal() {
 		return purchasetotal;
 	}

@@ -186,6 +186,18 @@ public class Controller
 		System.out.println("$$$$$$$$$$$$$$$$" + returnMap);
 		return toJson(returnMap);
 	}
+	//Current Stock
+	
+	public String getAllStock1(HttpServletRequest request, HttpServletResponse response)
+	{
+		System.out.println("CONTROLLER CALLED ========== ");
+		CustomerOrderHelper helper = new CustomerOrderHelper();
+		List categories = helper.getAllStock1(request, response);
+		Map<String, List> returnMap = new HashMap<String, List>();
+		returnMap.put("list", categories);
+		System.out.println("$$$$$$$$$$$$$$$$" + returnMap);
+		return toJson(returnMap);
+	}
 
 	// get categoryWise Stock
 	public String getCategoryWiseStock(HttpServletRequest request, HttpServletResponse response) {
@@ -2505,6 +2517,18 @@ public class Controller
 		{
 			GoodReceiveHelper helper=new GoodReceiveHelper();
 			List categories=helper.getsaleamount(request, response);
+			Map<String, List> returnMap = new HashMap<String, List>();
+			String xyz = toJson(categories);
+			System.out.println("data: - "+xyz);
+			System.out.println("going out of controller");
+			return xyz;	
+		}
+		
+		
+		public String MostsellProduct (HttpServletRequest request ,HttpServletResponse response)
+		{
+			GoodReceiveHelper helper=new GoodReceiveHelper();
+			List categories=helper.getmostSell(request, response);
 			Map<String, List> returnMap = new HashMap<String, List>();
 			String xyz = toJson(categories);
 			System.out.println("data: - "+xyz);

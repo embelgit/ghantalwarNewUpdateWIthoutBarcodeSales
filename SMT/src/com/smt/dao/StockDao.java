@@ -548,7 +548,7 @@ public class StockDao
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
 			//Query query = session.createSQLQuery("select ItemName,CategoryName,Quantity,UpdateDate from stock_details where quantity < 10");
-			Query query = session.createSQLQuery("select pr.ProductName,ct.category_name, sd.Quantity,gr.Date,gr.size,gr.BarcodeNo,gr.color from stock_details sd JOIN categories ct ON sd.fk_Cat_Id=ct.pk_category_id JOIN product_reg pr ON sd.fk_Product_Id=pr.pkProductNameId JOIN goodreceive gr on gr.fkProductId=pr.pkProductNameId where gr.fkShopId = "+shopId+" AND sd.Quantity > 10 AND sd.Quantity < 20 GROUP BY gr.fkProductId");
+			Query query = session.createSQLQuery("select pr.ProductName,ct.category_name, sd.Quantity,gr.Date,gr.size,gr.BarcodeNo,gr.color from stock_details sd JOIN categories ct ON sd.fk_Cat_Id=ct.pk_category_id JOIN product_reg pr ON sd.fk_Product_Id=pr.pkProductNameId JOIN goodreceive gr on gr.fkProductId=pr.pkProductNameId where gr.fkShopId = "+shopId+" AND sd.Quantity > 10 AND sd.Quantity <= 20 GROUP BY gr.fkProductId");
 			List<Object[]> list = query.list();
 			catList = new ArrayList<Stock>(0);
 			System.out.println("List Size" + list.size());
@@ -593,7 +593,7 @@ public class StockDao
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
 			//Query query = session.createSQLQuery("select ItemName,CategoryName,Quantity,UpdateDate from stock_details where quantity < 10");
-			Query query = session.createSQLQuery("select pr.ProductName,ct.category_name, sd.Quantity,gr.Date,gr.size,gr.BarcodeNo,gr.color from stock_details sd JOIN categories ct ON sd.fk_Cat_Id=ct.pk_category_id JOIN product_reg pr ON sd.fk_Product_Id=pr.pkProductNameId JOIN goodreceive gr on gr.fkProductId=pr.pkProductNameId where gr.fkShopId = "+shopId+" AND sd.Quantity > 0 AND sd.Quantity < 10 GROUP BY gr.fkProductId");
+			Query query = session.createSQLQuery("select pr.ProductName,ct.category_name, sd.Quantity,gr.Date,gr.size,gr.BarcodeNo,gr.color from stock_details sd JOIN categories ct ON sd.fk_Cat_Id=ct.pk_category_id JOIN product_reg pr ON sd.fk_Product_Id=pr.pkProductNameId JOIN goodreceive gr on gr.fkProductId=pr.pkProductNameId where gr.fkShopId = "+shopId+" AND sd.Quantity > 0 AND sd.Quantity <= 10 GROUP BY gr.fkProductId");
 			List<Object[]> list = query.list();
 			catList = new ArrayList<Stock>(0);
 			System.out.println("List Size" + list.size());
@@ -638,7 +638,7 @@ public class StockDao
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
 			//Query query = session.createSQLQuery("select ItemName,CategoryName,Quantity,UpdateDate from stock_details where quantity < 10");
-			Query query = session.createSQLQuery("select pr.ProductName,ct.category_name, sd.Quantity,gr.Date,gr.size,gr.BarcodeNo,gr.color from stock_details sd JOIN categories ct ON sd.fk_Cat_Id=ct.pk_category_id JOIN product_reg pr ON sd.fk_Product_Id=pr.pkProductNameId JOIN goodreceive gr on gr.fkProductId=pr.pkProductNameId where gr.fkShopId = "+shopId+" AND sd.Quantity > 20 AND sd.Quantity < 40 GROUP BY gr.fkProductId");
+			Query query = session.createSQLQuery("select pr.ProductName,ct.category_name, sd.Quantity,gr.Date,gr.size,gr.BarcodeNo,gr.color from stock_details sd JOIN categories ct ON sd.fk_Cat_Id=ct.pk_category_id JOIN product_reg pr ON sd.fk_Product_Id=pr.pkProductNameId JOIN goodreceive gr on gr.fkProductId=pr.pkProductNameId where gr.fkShopId = "+shopId+" AND sd.Quantity > 20 AND sd.Quantity <= 40 GROUP BY gr.fkProductId");
 			List<Object[]> list = query.list();
 			catList = new ArrayList<Stock>(0);
 			System.out.println("List Size" + list.size());
@@ -763,4 +763,50 @@ public class StockDao
 		return catList;
 
 	}
+	
+	
+	public List<GoodReceiveItemBean> getCurrentStock(String shopId)
+	{
+		System.out.println("DAO CALLED ============ ");
+		
+		// TODO Auto-generated method stub
+		HibernateUtility hbu = null;
+		Session session = null;
+		DecimalFormat df = new DecimalFormat("#.###");
+		List<GoodReceiveItemBean> catList = null;
+		try {
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			Query allreportquery = session.createSQLQuery("select sd.ItemName, ct.Category_Name, sd.Quantity,pr.color,pr.size from stock_details sd join categories ct on sd.fk_Cat_Id=ct.pk_category_id  JOIN product_reg pr on sd.fk_Product_Id=pr.pkProductNameId WHERE sd.fkShopId = "+shopId+" AND sd.Quantity > 0");
+
+			List<Object[]> list = allreportquery.list();
+			catList = new ArrayList<GoodReceiveItemBean>(0);
+
+			for (Object[] object : list) {
+
+				GoodReceiveItemBean reports = new GoodReceiveItemBean();
+
+				;
+				reports.setItemName(object[0].toString());
+				reports.setCatName(object[1].toString());
+				reports.setAvQuantity(object[2].toString());
+				if(object[3] == null || object[3].toString().equalsIgnoreCase(""))
+				{
+					reports.setColor("N/A");
+				}
+				else
+				{	
+					reports.setColor(object[3].toString());
+				}
+				reports.setSize(object[4].toString());
+				
+				catList.add(reports);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return catList;
+	}
+	
 }

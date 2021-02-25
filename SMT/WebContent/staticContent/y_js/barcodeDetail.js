@@ -1,3 +1,16 @@
+
+function successAlert(msg)
+{
+	var dialog = bootbox.dialog({
+    message: '<p class="text-center">'+msg.fontcolor("green").fontsize(5)+'</p>',
+    closeButton: false
+   });
+   setTimeout(function()
+   {
+	dialog.modal('hide');
+	location.reload();
+   }, 1500);
+}
 function printbarcode()
 {
 	if(document.barcodeCopy.barcodeId.value == "")
@@ -34,6 +47,7 @@ function printBarcode()
 
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 	{
+		//successAlert("Barcode Printed Successfully");
 		alert(data);
 		location.reload();
 		document.barcodeCopy.btn.disabled = false;

@@ -127,7 +127,7 @@ public class Mailer
 	public static void sendAdvanceBooking(String to)
 	{
 		final String user = "embelmessanger@gmail.com";// change accordingly
-		final String pass = "embel@123";
+		final String pass = "Embel@123";
 
 		// 1st step) Get the session object
 		Properties props = new Properties();

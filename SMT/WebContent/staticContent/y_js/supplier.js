@@ -418,6 +418,7 @@ function getAllMAinSupp(){
 				          orderable: true,
 				          columns: [
 				                    {"data": "serialnumber", "width": "5%", "defaultContent": ""},
+				                    {"data": "SupplierType", "width": "5%", "defaultContent": ""},
 				                    {"data": "supplierName", "width": "5%", "defaultContent": ""},
 				                    {"data": "address", "width": "5%", "defaultContent": ""},
 				                    {"data": "city", "width": "5%", "defaultContent": ""},
@@ -426,6 +427,10 @@ function getAllMAinSupp(){
 				                    {"data": "email", "width": "5%", "defaultContent": ""},
 				                    {"data": "panNo", "width": "5%", "defaultContent": ""},
 				                    {"data": "pin", "width": "5%", "defaultContent": ""},
+				                    {"data": "AccountName", "width": "5%", "defaultContent": ""},
+				                    {"data": "AccNumber", "width": "5%", "defaultContent": ""},
+				                    {"data": "ifsCcode1", "width": "5%", "defaultContent": ""},
+				                    {"data": "upiid", "width": "5%", "defaultContent": ""},
 				                    ],
 			});
 		});		

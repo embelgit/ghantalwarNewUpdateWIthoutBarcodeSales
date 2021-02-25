@@ -1920,6 +1920,26 @@ public class GoodReceiveHelper
 	
 	
 	
+	
+	public List getmostSell(HttpServletRequest request,HttpServletResponse response) 
+	{
+	    LocalDate todaydate = LocalDate.now();
+	    //LocalDate frstday = todaydate.withDayOfMonth(1);
+	    //LocalDate lstday = todaydate.withDayOfMonth(todaydate.lengthOfMonth());
+	   // System.out.println(frstday+" & "+lstday);
+	    
+         Map<Long,GetCreditCustomerDetails> map = new HashMap<Long,GetCreditCustomerDetails>();
+ 		
+         GoodReciveDao dao = new GoodReciveDao();
+ 		List<GetCreditCustomerDetails> stockList = dao.getmostSell(todaydate, request);
+ 		
+ 		return stockList;
+	
+	}
+	
+	
+	
+	
 	public List getsaleamount1(HttpServletRequest request,HttpServletResponse response) 
 	{
 	    LocalDate todaydate1 = LocalDate.now();

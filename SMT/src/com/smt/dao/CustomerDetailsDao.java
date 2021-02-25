@@ -605,6 +605,11 @@ public class CustomerDetailsDao {
 		Double totalAmount = null;
 		Double totalAmt = null;
 		String newBal = "";
+		String newBal1 = "";
+		String cashAmount = "";
+		String cardAmount = "";
+		String upiamount = "";
+		String upicashamount = "";
 		List<GetCreditCustomerDetails> itemlist = null;
 		try {
 			hbu = HibernateUtility.getInstance();
@@ -613,7 +618,7 @@ public class CustomerDetailsDao {
 		//	Query query = session.createSQLQuery("select pending_bill_payment, Date from creditcustomerbill where fkCrediCustId = "+billNo+" LIMIT 1");
 			System.out.println(billNo+"bill no");
 			System.out.println(creditCustomer+"customer id");
-			Query query = session.createSQLQuery("SELECT GrossTotal,SUM(totalperitem) from creditcustomerbill WHERE BillNo=:billNo and fkCrediCustId=:creditCustomer GROUP BY BillNo");
+			Query query = session.createSQLQuery("SELECT GrossTotal,cashCard_cardAmount,cashCard_cashAmount,cashupi_cashAmunt,cashupi_UpiAmount,SUM(pending_bill_payment) from creditcustomerbill WHERE BillNo=:billNo and fkCrediCustId=:creditCustomer GROUP BY BillNo");
 			//query.setParameter("shopId", shopId);
 			query.setParameter("creditCustomer", creditCustomer);
 			query.setParameter("billNo",billNo);
@@ -627,13 +632,33 @@ public class CustomerDetailsDao {
 
 				if(objects[0] == null)
 				{
+					System.out.println("object 0");
 					newBal = "0";
 					totalAmt = Double.valueOf(newBal);
 				}
 				else
 				{
-					newBal = (objects[0].toString());
-					totalAmt = Double.valueOf(newBal);					
+					System.out.println("object 1");
+			
+					 cashAmount = (objects[2].toString());
+					 Double cashAmount1=Double.valueOf(cashAmount);
+					 
+					 cardAmount = (objects[1].toString());
+					 Double cardAmount1=Double.valueOf(cardAmount);
+					 
+					 upiamount = (objects[4].toString());
+					 Double upiamount1=Double.valueOf(upiamount);
+					 
+					 upicashamount = (objects[3].toString());
+					 
+					 Double upicashamount1=Double.valueOf(upicashamount);
+					 
+					 newBal1 = (objects[0].toString());
+					
+					 
+					 totalAmount= Double.valueOf(newBal1);					
+					
+					 totalAmt=totalAmount-upicashamount1-upiamount1-cardAmount1-cashAmount1;
 				}
 
 				itemlist.add(bean);

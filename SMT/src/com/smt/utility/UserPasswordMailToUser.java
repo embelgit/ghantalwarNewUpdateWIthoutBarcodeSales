@@ -23,7 +23,7 @@ public class UserPasswordMailToUser
 	public void sendMailToUser(String emailId, String password, String username)
 	{	
 		final String user = "embelmessanger@gmail.com";// change accordingly
-		final String pass = "embel@123";
+		final String pass = "Embel@123";
 		System.out.println("MAIL TO ===> "+emailId);
 		// 1st step) Get the session object
 		Properties props = new Properties();

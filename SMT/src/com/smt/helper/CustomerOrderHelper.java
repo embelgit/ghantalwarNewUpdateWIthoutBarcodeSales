@@ -304,6 +304,19 @@ public class CustomerOrderHelper {
 
 		return exp1List;
 	}
+	public List getAllStock1(HttpServletRequest request, HttpServletResponse response)
+	{
+		HttpSession session1 = request.getSession();
+		String shopId = (String) session1.getAttribute("shopId");
+		
+		System.out.println("HELPER CALLED ========== ");
+		Map<Long, GoodReceiveItemBean> map = new HashMap<Long, GoodReceiveItemBean>();
+
+		StockDao dao = new StockDao();
+		List<GoodReceiveItemBean> exp1List = dao.getCurrentStock(shopId);
+
+		return exp1List;
+	}
 	
 	// category Wise Stock
 	public List getCategoryWiseStock(HttpServletRequest request, HttpServletResponse response) {

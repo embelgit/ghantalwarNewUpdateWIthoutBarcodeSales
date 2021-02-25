@@ -32,6 +32,18 @@ public class GoodReceiveItemBean
 	private String disPer;
 	private Long fkShopId;
 	
+	private String Modelname;
+	
+	
+	
+	public String getModelname() {
+		return Modelname;
+	}
+
+	public void setModelname(String modelname) {
+		Modelname = modelname;
+	}
+
 	public String getColor() {
 		return color;
 	}

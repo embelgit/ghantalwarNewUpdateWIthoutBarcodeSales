@@ -201,6 +201,12 @@
 	shortcut.add("ctrl+m", function() {
 		window.location.href = "allWayReport.jsp";
 	});
+	
+	//All Way Report Inventory
+	shortcut.add("ctrl+alt+s", function() {
+		window.location.href = "CurrentStock.jsp";
+	});
+	
 
 </script>
 <!-- header start-->
@@ -273,9 +279,9 @@ nav {
 }
 
 li a {
-	font-weight: 600;
+	font-weight: 800;
 	text-decoration: none;
-	padding: 15px 14px;
+	padding: 15px 20px;
 	display: block;
 	color: #fff;
 	transition: all 0.2s ease-in-out 0s;
@@ -780,6 +786,7 @@ a.homer {
 			<li><a href="<%=path%>allWayReport.jsp"><i
 					class="fa fa-bar-chart"></i>Inventory<br>Management</a>
 				<ul class="sub-menu">
+				<li><a href="<%=path%>CurrentStock.jsp">Current Stock (clt+alt+S)</a></li>
 					<li><a href="<%=path%>allWayReport.jsp">All Way Report</a></li>
 					<li><a href="<%=path%>s_current_stock.jsp">Live Inventory</a></li>
 					<li><a href="<%=path%>s_CategoryWiseStock.jsp">Category Based Inventory</a></li>
