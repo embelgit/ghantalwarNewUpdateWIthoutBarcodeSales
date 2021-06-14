@@ -373,6 +373,7 @@ public class ProductDetailHelper
 		String subcatId = request.getParameter("subcatId");
 		String productId = request.getParameter("productId");
 		String forAdvanceBooking = request.getParameter("forAdvanceBooking");
+		
 		Map<Long, GoodReceiveItemBean> map = new HashMap<Long, GoodReceiveItemBean>();
 
 		ProductDetailDao dao = new ProductDetailDao();

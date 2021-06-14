@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,7 @@ import com.smt.hibernate.Category;
 import com.smt.hibernate.GoodReceive;
 import com.smt.hibernate.Stock;
 import com.smt.utility.HibernateUtility;
+//import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class StockDao
 {
@@ -40,6 +42,8 @@ public class StockDao
 			session = hbu.getHibernateSession();
 			Query query = session.createQuery("from Stock");
 			list = query.list();
+			
+			System.out.println("hi ankit inside stock dao"+list.toString());
 		}
 		catch (Exception e)
 		{			
@@ -55,6 +59,67 @@ public class StockDao
 
 		return list;
 	}
+	
+	
+	public List getAllStockEntry115()
+	{
+		com.smt.utility.HibernateUtility hbu = null;
+		Session session = null;
+		List list = null;
+		try
+		{
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			Query query = session.createQuery("from Stock");
+			list = query.list();
+			
+			System.out.println("hi ankit inside stock dao"+list.toString());
+		}
+		catch (Exception e)
+		{			
+			e.printStackTrace();
+		}
+		finally
+		{
+			if (session != null)
+			{
+				hbu.closeSession(session);
+			}
+		}
+
+		return list;
+	}
+	
+	
+	public List getAllStockEntry112()
+	{
+		com.smt.utility.HibernateUtility hbu = null;
+		Session session = null;
+		List list = null;
+		try
+		{
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			Query query = session.createQuery("from Stock");
+			list = query.list();
+			
+			System.out.println("hi ankit inside stock dao"+list.toString());
+		}
+		catch (Exception e)
+		{			
+			e.printStackTrace();
+		}
+		finally
+		{
+			if (session != null)
+			{
+				hbu.closeSession(session);
+			}
+		}
+
+		return list;
+	}
+	
 	
 	public List getTotalQuantityByCatIdAndProductId(String categoryId, String productId, String shopId)
 	{
@@ -535,6 +600,8 @@ public class StockDao
 	}
 	
 	
+	
+	
 	public List getAllProductForNotification1(HttpServletRequest request, HttpServletResponse response)
 	{
 		HttpSession session1 = request.getSession();
@@ -808,5 +875,54 @@ public class StockDao
 		}
 		return catList;
 	}
+
 	
+	public List getAllProductForNotification5(HttpServletRequest request, HttpServletResponse response)
+	{
+		HttpSession session1 = request.getSession();
+		String shopId = (String) session1.getAttribute("shopId");
+		
+		DecimalFormat df = new DecimalFormat("#.##");
+		com.smt.utility.HibernateUtility hbu = null;
+		Session session = null;
+		List<Stock> catList = null;
+		try {
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			//Query query = session.createSQLQuery("select ItemName,CategoryName,Quantity,UpdateDate from stock_details where quantity < 10");
+			Query query = session.createSQLQuery("select sd.pk_stock_details_id,sd.ItemName,sd.CategoryName,ct.color,sd.Quantity from stock_details sd  JOIN product_reg ct on sd.fk_Product_Id=ct.pkProductNameId where  sd.Quantity < 10 ");
+			List<Object[]> list = query.list();
+			catList = new ArrayList<Stock>(0);
+			System.out.println("List Size" + list.size());
+
+			for (Object[] object : list) {
+				Stock reports = new Stock();	
+
+				String aa = object[1].toString();
+				reports.setPkStockId(Long.parseLong(object[0].toString()));
+				reports.setItemName(object[1].toString());
+				reports.setCatName(object[2].toString());
+
+				reports.setColor(object[3].toString());
+				reports.setQuantity(Double.parseDouble(object[4].toString()));
+				
+				
+				//	reports.setGrossTotal(Double.parseDouble(object[1].toString()));
+//				System.out.println("set sale return  -  "+reports.getGrossTotal());	
+				catList.add(reports);
+				
+				//System.out.println(reports.getItemName()+" "+reports.getCatName()+" "+reports.getQty2()+" "+reports.getSize()+" "+reports.getDate());
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				hbu.closeSession(session);
+			}
+		}
+
+		return catList;  
+	}
 }
+
+

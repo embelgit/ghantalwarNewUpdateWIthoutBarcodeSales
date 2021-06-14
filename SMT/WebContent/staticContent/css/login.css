@@ -130,12 +130,20 @@ body {
 	border-radius: 9px;
 	border-color: #21409c;
 	font-size:16px;
+	/* background-color: #f5f6f7 !important; */
 }
 
 .logincontent input[type="password"] {
 	border-radius: 9px;
 	border-color: #21409c;
 	font-size:16px;
+	/* background-color: #f5f6f7 !important; */
+}
+.logincontent input[list="shopname_drop"] {
+    border-radius: 9px;
+    border-color: #21409c;
+    font-size: 16px;
+    background-color: #e8f0ff;
 }
 
 .logincontent input[type="button"] {

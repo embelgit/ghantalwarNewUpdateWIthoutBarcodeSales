@@ -2,6 +2,7 @@ package com.smt.helper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -47,19 +48,30 @@ public class ShopDetailsHelper
 	}
 	
 	
-	public Map getAllShopHelper()
+	public Map getAllShopHelper(HttpServletRequest request,HttpServletResponse response)
 	{
-		Map<String, ShopDetailsBean> map = new HashMap<String, ShopDetailsBean>();
+		int count = 1;
+		
+		String uname = request.getParameter("uname");
+		
+		System.out.println("uname in getshop -  "+uname);
+		//Map<String, ShopDetailsBean> map = new HashMap<String, ShopDetailsBean>();
 
 		ShopDetailsDao dao = new ShopDetailsDao();
-		List catList = dao.getAllShopsDAo();
+		List catList = dao.getAllShopsDAo(uname);
 		Map map1 = new HashMap();
 		for (int i = 0; i < catList.size(); i++) {
+			
 			Object[] o = (Object[]) catList.get(i);
+			System.out.println(Arrays.toString(o));
 			ShopDetailsBean bean = new ShopDetailsBean();
-			bean.setPkShopId(o[0].toString());
-			bean.setShopName((String) o[1]);
-			map1.put(bean.getPkShopId(), bean);
+			bean.setShopId(Long.parseLong(o[0].toString()));
+			bean.setUserId(Long.parseLong(o[1].toString()));
+			bean.setShopName(o[3].toString());
+			bean.setUserName(o[2].toString());
+			map1.put(count, bean);
+			
+			count++;
 		}
 		return map1;
 	}

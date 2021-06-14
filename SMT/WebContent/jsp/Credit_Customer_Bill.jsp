@@ -33,6 +33,12 @@
 <script src="/SMT/staticContent/js/customerDetails.js"></script>
 
 <style type="text/css">
+
+#goodrcvcol {
+    width: 40%;
+    margin-left: -4%;
+}
+
 .control-label {
 	font-size: 20px;
 }
@@ -485,23 +491,14 @@ width: auto;
 
 					<div class="row">
 						<div class="invoice_label_up">
-							<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
-								id="dayreport">
-								<input type="text" id="key"
-									onchange="getEmpName(),getitemData1();" autofocus="key"
-									required /> <label>Barcode no</label>
-							</div>
-						</div>
-						<div class="col-md-1"></div>
-						<div id="crditCustListDiv">
-							<div class="invoice_label_up">
+						
 								<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
 									id="dayreport">
 									<%
 										CustomerDetailsDao cdd = new CustomerDetailsDao();
 										List cList = cdd.getAllCustomerForBilling();
 									%>
-									<input list="cust_drop" id="creditCustomer" required> <span
+									<input list="cust_drop" id="creditCustomer"  autofocus="creditCustomer" required> <span
 										class="godbtn">
 										<button type="button" onclick="CreditCustDetailsDivAction(1);">
 											<span class="glyphicon glyphicon-plus"
@@ -524,6 +521,19 @@ width: auto;
 									</datalist>
 									<label>Customer Name<sup>*</sup></label>
 								</div>
+						
+						
+							
+						</div>
+						<div class="col-md-1"></div>
+						<div id="crditCustListDiv">
+							<div class="invoice_label_up">
+						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+								id="dayreport">
+								<input type="text" id="Tempbillid"
+									onchange="getEmpName(),getitemData1();"
+									required /> <label>Temp. Invoice no</label>
+							</div>
 							</div>
 						</div>
 					</div>
@@ -725,7 +735,7 @@ width: auto;
 
 					<!------------------------------------------------------------ /ADD CREDIT CUSTOMER DETAILS ------------------------------------------------------------->
 					
-					<div class="row">
+					<%-- <div class="row">
 					<div class="invoice_label_up">
 					<div class="good_rcv_label_up">
 						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-9" id="goodrcvcol" >
@@ -760,8 +770,54 @@ width: auto;
 					</div>
 							
 						</div>
-					</div>
+					</div> --%>
 					
+					
+					<div class="row">
+						<div class="invoice_label_up">
+							<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+								id="dayreport">
+								<input type="text" id="key"
+									onchange="getEmpName(),getitemData1();"
+									required /> <label>Barcode no</label>
+							</div>
+						</div>
+						<div class="col-md-1"></div>
+						<div id="crditCustListDiv">
+							<div class="invoice_label_up">
+								<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+									id="dayreport">
+					<%
+								ProductDetailHelper item = new ProductDetailHelper();
+								List itemList = item.getAllItemListWithoutBarcodeForBilling(request, response);
+							%>
+						
+							<input list="itemId_drop" id="itemName" class="" onchange="getEmpName(), getitemData1();" style="background-color: #f0f0f0" required>
+							
+							<datalist id="itemId_drop">
+								<%
+									for (int j = 0; j < itemList.size(); j++) {
+										ProductNameBean itm = (ProductNameBean) itemList.get(j);
+								%>
+								<option data-value="<%=itm.getCaregoryName()%>"
+									value="<%=itm.getItemName()%> :: <%=itm.getCaregoryName()%> :: <%=itm.getSubCat()%>"
+									myvalue="<%=itm.getItemName()%>"
+									myvalue1="<%=itm.getSubCatid()%>"
+									myvalue2="<%=itm.getProductid()%>"
+									myvalue3="<%=itm.getColor()%>" 
+									myvalue4="<%=itm.getSize()%>"
+									myvalue5="<%=itm.getFkCatId()%>"									
+									>										
+									<%
+										}
+									%>
+								
+							</datalist>
+							<label>Item List</label>				
+								</div>
+							</div>
+						</div>
+					</div>
 					
 
 

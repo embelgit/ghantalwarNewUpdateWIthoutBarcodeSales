@@ -10,6 +10,42 @@ public class ShopDetailsBean
 	private String shopRegDate;
 	private String gstNo;
 	
+	
+	
+	private Long userId;
+	private Long shopId;
+	private String userName;
+	private String password;
+	
+	
+	
+	
+	
+	
+	public Long getUserId() {
+		return userId;
+	}
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+	public Long getShopId() {
+		return shopId;
+	}
+	public void setShopId(Long shopId) {
+		this.shopId = shopId;
+	}
+	public String getUserName() {
+		return userName;
+	}
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public String getPkShopId() {
 		return pkShopId;
 	}

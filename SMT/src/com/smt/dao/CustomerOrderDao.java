@@ -1948,6 +1948,466 @@ public class CustomerOrderDao {
 		return itemlist;
 	}
 
+	
+	public List<CustomerBean> getAllItemDetails123(String key, String productId, String shopId, String tempbillNo)
+	{
+		System.out.println("key ====> "+key);
+		System.out.println("productId ====> "+productId);
+		System.out.println("shopId ====> "+shopId);
+		// TODO Auto-generated method stub
+
+		HibernateUtility hbu = null;
+		Session session = null;
+		List<CategoryWisePurchase> categoryBean = null;
+		List<CustomerBean> itemlist = null;
+		double spWTax = 0d;
+		double disPer = 0d;
+		double spAfterDis = 0d;
+		DecimalFormat df = new DecimalFormat("#.##");
+		try
+		{
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			if(tempbillNo != null)
+			{
+				String sqlQuery = "SELECT o.ItemName,gr.PkGoodRecId, o.CategoryName,o.BarcodeNo,o.HsnSacNo,o.Gst,o.Igst,o.size,gr.Quantity,o.SalePrice,gr.RollSize,sb.subcat_name,(RollSize * gr.Quantity),o.SalePWithoutTax,gr.discountPerForBilling,o.fkCatId,o.fkSubCatId,o.fkProductId,o.style,o.fkSuppId,o.fkShopId FROM otherbill o JOIN goodreceive gr on o.fkProductId=gr.fkProductId JOIN sub_categories sb on o.fkSubCatId=sb.pk_subcat_id WHERE gr.Quantity > 0 AND o.BillNo="+tempbillNo+" AND gr.fkShopId = "+shopId+" AND o.BillType='Temporay'";
+
+				Query query = session.createSQLQuery(sqlQuery);
+				List<Object[]> list = query.list();
+
+				itemlist = new ArrayList<CustomerBean>(0);
+				for (Object[] objects : list)
+				{				
+					Double sp = (Double.parseDouble(objects[9].toString()));
+					
+					spWTax = Double.parseDouble(objects[13].toString());
+					disPer = Double.parseDouble(objects[14].toString());
+					
+					System.out.println("Size :"+Arrays.toString(objects));
+					CustomerBean bean = new CustomerBean();
+
+					bean.setItemName(objects[0].toString());
+					bean.setItem_id(Long.parseLong(objects[1].toString()));
+					bean.setCategoryName(objects[2].toString());
+
+					bean.setBarcodeNo(Long.parseLong(objects[3].toString()));
+					bean.setHsnSacNo(objects[4].toString());
+					System.out.println(objects[4].toString());
+					bean.setQuantity(1d);
+					bean.setSalePrice(Double.parseDouble(objects[9].toString()));
+					bean.setFixedSalePrice(Double.parseDouble(objects[9].toString()));
+
+					Double gstPer = Double.parseDouble(objects[5].toString());
+					Double iGstPer = Double.parseDouble(objects[6].toString());
+					
+					bean.setSize1(objects[7].toString());
+					
+					bean.setGoodReceiveQuantity(Double.parseDouble(objects[8].toString()));
+						
+					bean.setRollSize(Double.parseDouble(objects[10].toString()));
+					bean.setSubCategoryName(objects[11].toString());
+					bean.setMtrQuantity(Double.parseDouble(objects[12].toString()));
+					//bean.setsPWithoutTax(Double.parseDouble((objects[13].toString())));
+					//bean.setDisPerForBill(0.0);
+					bean.setDisPerForBill(Double.parseDouble(objects[14].toString()));
+									
+					if(disPer > 0)
+					{								
+						if(spWTax > 0 && spWTax <= 1000)
+						{
+							if(gstPer > 0)
+							{
+								//gstPer = 5.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							else if(iGstPer > 0)
+							{
+								//iGstPer = 5.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+							else
+							{
+								//gstPer = 5.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+						}
+						else if(spWTax > 1000)
+						{
+							System.out.println("(spWTax > 1000) =====> "+spWTax);
+							
+							if(gstPer > 0)
+							{
+								//gstPer = 12.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							else if(iGstPer > 0)
+							{
+								//iGstPer = 12.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+							else
+							{
+								//gstPer = 12.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							bean.setSpAfterDis("0");
+						}					
+						bean.setsPWithoutTax(Double.parseDouble(df.format(spWTax)));
+						double taxAmtAfterDis = 0;					
+						double disAmt = (spWTax*(disPer/100));
+						bean.setDisAmount(Double.parseDouble(df.format(disAmt)));					
+						spAfterDis = spWTax - disAmt;
+
+						if(gstPer > 0)
+						{
+							bean.setVat(gstPer);
+							taxAmtAfterDis = (spAfterDis * (gstPer/100));
+							bean.setTaxAmountAfterDis(Double.parseDouble(df.format(taxAmtAfterDis)));
+							bean.setTotal(Double.parseDouble(df.format((spWTax - disAmt) + taxAmtAfterDis)));
+						}
+						else if(iGstPer > 0)
+						{
+							bean.setVat(iGstPer);
+							taxAmtAfterDis = (spAfterDis * (iGstPer/100));
+							bean.setTaxAmountAfterDis(Double.parseDouble(df.format(taxAmtAfterDis)));
+							bean.setTotal(Double.parseDouble(df.format((spWTax - disAmt) + taxAmtAfterDis)));
+						}
+						else
+						{
+							bean.setTaxAmountAfterDis(0.0);
+							bean.setTotal(Double.parseDouble(df.format(sp - disAmt)));
+						}
+					}
+					else
+					{						
+						if(sp > 0d && sp <= 1000d)
+						{
+							if(gstPer > 0)
+							{
+								//gstPer = 5.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							else if(iGstPer > 0)
+							{
+								//iGstPer = 5.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setVat(iGstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+							else
+							{
+								//gstPer = 5.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+						}
+						else if(sp > 1000d)
+						{
+							if(gstPer > 0)
+							{
+								//gstPer = 12.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							else if(iGstPer > 0)
+							{
+								//iGstPer = 12.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setVat(iGstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+							else 
+							{
+								//gstPer = 12.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+						}									
+						
+						bean.setDisAmount(0.0);
+						bean.setsPWithoutTax(Double.parseDouble(df.format(spWTax)));
+						bean.setTaxAmountAfterDis(0.0);
+						bean.setTotal(sp);
+					}
+					
+					bean.setSpAfterDis(df.format(spAfterDis));
+					double quantity = bean.getQuantity();
+					Double total = quantity * sp;
+					
+					bean.setFkCategoryId(Long.parseLong(objects[15].toString()));
+					bean.setFkSubCatId(Long.parseLong(objects[16].toString()));
+					bean.setFkProductId(Long.parseLong(objects[17].toString()));
+					bean.setStyle(objects[18].toString());
+					bean.setFkSuppId(objects[19].toString());
+					bean.setFkShopId(Long.parseLong(objects[20].toString()));
+					
+					//bean.setTotal(total);
+					itemlist.add(bean);
+				}
+			}
+			else if(key != null)
+			{
+				String sqlQuery = "SELECT pr.ProductName, gr.PkGoodRecId, ct.category_name, gr.BarcodeNo, gr.hsnsacno, gr.vat, gr.igst, gr.size, gr.Quantity, gr.SalePrice, gr.RollSize, sb.subcat_name, (RollSize * gr.Quantity), gr.salePWithoutTax, gr.discountPerForBilling, gr.fkCatId, gr.fkSubCatId, gr.fkProductId, gr.style, gr.FksuppId, gr.fkShopId FROM goodreceive gr JOIN sub_categories sb on gr.fkSubCatId = sb.pk_subcat_id JOIN categories ct on gr.fkCatId=ct.pk_category_id JOIN product_reg pr on gr.fkProductId=pr.pkProductNameId WHERE gr.Quantity > 0 AND BarcodeNo = "+key+" AND gr.fkShopId = "+shopId;
+
+				Query query = session.createSQLQuery(sqlQuery);
+				List<Object[]> list = query.list();
+
+				itemlist = new ArrayList<CustomerBean>(0);
+				for (Object[] objects : list)
+				{				
+					Double sp = (Double.parseDouble(objects[9].toString()));
+					
+					spWTax = Double.parseDouble(objects[13].toString());
+					disPer = Double.parseDouble(objects[14].toString());
+					
+					System.out.println("Size :"+Arrays.toString(objects));
+					CustomerBean bean = new CustomerBean();
+
+					bean.setItemName(objects[0].toString());
+					bean.setItem_id(Long.parseLong(objects[1].toString()));
+					bean.setCategoryName(objects[2].toString());
+
+					bean.setBarcodeNo(Long.parseLong(objects[3].toString()));
+					bean.setHsnSacNo(objects[4].toString());
+					System.out.println(objects[4].toString());
+					bean.setQuantity(1d);
+					bean.setSalePrice(Double.parseDouble(objects[9].toString()));
+					bean.setFixedSalePrice(Double.parseDouble(objects[9].toString()));
+
+					Double gstPer = Double.parseDouble(objects[5].toString());
+					Double iGstPer = Double.parseDouble(objects[6].toString());
+					
+					bean.setSize1(objects[7].toString());
+					
+					bean.setGoodReceiveQuantity(Double.parseDouble(objects[8].toString()));
+						
+					bean.setRollSize(Double.parseDouble(objects[10].toString()));
+					bean.setSubCategoryName(objects[11].toString());
+					bean.setMtrQuantity(Double.parseDouble(objects[12].toString()));
+					//bean.setsPWithoutTax(Double.parseDouble((objects[13].toString())));
+					//bean.setDisPerForBill(0.0);
+					bean.setDisPerForBill(Double.parseDouble(objects[14].toString()));
+									
+					if(disPer > 0)
+					{								
+						if(spWTax > 0 && spWTax <= 1000)
+						{
+							if(gstPer > 0)
+							{
+								//gstPer = 5.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							else if(iGstPer > 0)
+							{
+								//iGstPer = 5.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+							else
+							{
+								//gstPer = 5.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+						}
+						else if(spWTax > 1000)
+						{
+							System.out.println("(spWTax > 1000) =====> "+spWTax);
+							
+							if(gstPer > 0)
+							{
+								//gstPer = 12.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							else if(iGstPer > 0)
+							{
+								//iGstPer = 12.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+							else
+							{
+								//gstPer = 12.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							bean.setSpAfterDis("0");
+						}					
+						bean.setsPWithoutTax(Double.parseDouble(df.format(spWTax)));
+						double taxAmtAfterDis = 0;					
+						double disAmt = (spWTax*(disPer/100));
+						bean.setDisAmount(Double.parseDouble(df.format(disAmt)));					
+						spAfterDis = spWTax - disAmt;
+
+						if(gstPer > 0)
+						{
+							bean.setVat(gstPer);
+							taxAmtAfterDis = (spAfterDis * (gstPer/100));
+							bean.setTaxAmountAfterDis(Double.parseDouble(df.format(taxAmtAfterDis)));
+							bean.setTotal(Double.parseDouble(df.format((spWTax - disAmt) + taxAmtAfterDis)));
+						}
+						else if(iGstPer > 0)
+						{
+							bean.setVat(iGstPer);
+							taxAmtAfterDis = (spAfterDis * (iGstPer/100));
+							bean.setTaxAmountAfterDis(Double.parseDouble(df.format(taxAmtAfterDis)));
+							bean.setTotal(Double.parseDouble(df.format((spWTax - disAmt) + taxAmtAfterDis)));
+						}
+						else
+						{
+							bean.setTaxAmountAfterDis(0.0);
+							bean.setTotal(Double.parseDouble(df.format(sp - disAmt)));
+						}
+					}
+					else
+					{						
+						if(sp > 0d && sp <= 1000d)
+						{
+							if(gstPer > 0)
+							{
+								//gstPer = 5.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							else if(iGstPer > 0)
+							{
+								//iGstPer = 5.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setVat(iGstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+							else
+							{
+								//gstPer = 5.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+						}
+						else if(sp > 1000d)
+						{
+							if(gstPer > 0)
+							{
+								//gstPer = 12.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							else if(iGstPer > 0)
+							{
+								//iGstPer = 12.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setVat(iGstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+							else 
+							{
+								//gstPer = 12.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+						}									
+						
+						bean.setDisAmount(0.0);
+						bean.setsPWithoutTax(Double.parseDouble(df.format(spWTax)));
+						bean.setTaxAmountAfterDis(0.0);
+						bean.setTotal(sp);
+					}
+					
+					bean.setSpAfterDis(df.format(spAfterDis));
+					double quantity = bean.getQuantity();
+					Double total = quantity * sp;
+					
+					bean.setFkCategoryId(Long.parseLong(objects[15].toString()));
+					bean.setFkSubCatId(Long.parseLong(objects[16].toString()));
+					bean.setFkProductId(Long.parseLong(objects[17].toString()));
+					bean.setStyle(objects[18].toString());
+					bean.setFkSuppId(objects[19].toString());
+					bean.setFkShopId(Long.parseLong(objects[20].toString()));
+					
+					//bean.setTotal(total);
+					itemlist.add(bean);
+				}
+			}
+			else
+			{
+				System.out.println("called === PRODUCT BY PRODUCT INFO "+productId);
+				
+				String sqlQuery = "SELECT pr.ProductName, pr.pkProductNameId, ct.category_name, sb.subcat_name, pr.FkCatId, pr.fkSubCategoryId, pr.fkShopId FROM product_reg pr JOIN sub_categories sb on pr.fkSubCategoryId = sb.pk_subcat_id JOIN categories ct on pr.FkCatId = ct.pk_category_id WHERE pr.pkProductNameId = "+productId+" AND pr.fkShopId = "+shopId;
+				
+				Query query = session.createSQLQuery(sqlQuery);
+				List<Object[]> list = query.list();
+
+				itemlist = new ArrayList<CustomerBean>(0);
+				for (Object[] objects : list)
+				{	
+					CustomerBean bean = new CustomerBean();
+
+					bean.setItemName(objects[0].toString());
+					bean.setItem_id(Long.parseLong(objects[1].toString()));
+					bean.setCategoryName(objects[2].toString());
+
+					bean.setBarcodeNo(0l);
+					bean.setHsnSacNo("NA");
+					bean.setQuantity(1d);
+					bean.setSalePrice(0d);
+					bean.setFixedSalePrice(0d);
+					
+					bean.setSize1("NA");
+											
+					bean.setRollSize(0d);
+					bean.setSubCategoryName(objects[3].toString());
+					bean.setMtrQuantity(0d);
+					bean.setDisPerForBill(0d);
+					bean.setTaxAmount(0d);
+					bean.setVat(0d);
+					bean.setsPWithoutTax(0d);
+					bean.setDisAmount(0d);
+					bean.setTaxAmountAfterDis(0d);
+					bean.setTotal(0d);
+					bean.setSpAfterDis("0");
+					bean.setFkCategoryId(Long.parseLong(objects[4].toString()));
+					bean.setFkSubCatId(Long.parseLong(objects[5].toString()));
+					bean.setFkProductId(Long.parseLong(objects[1].toString()));
+					bean.setStyle("NA");
+					bean.setFkSuppId("0");
+					bean.setFkShopId(Long.parseLong(objects[6].toString()));
+					
+					itemlist.add(bean);
+				}	
+			}
+			
+		} catch (RuntimeException e) {
+			Log.error("Error in getAllItemDetails(String key)", e);
+		} finally {
+			if (session != null) {
+				hbu.closeSession(session);
+			}
+		}
+		
+		return itemlist;
+	}
+	
+	
 	// get all bill numbers in sale return form
 	public List getAllBillNumbers() {
 		// TODO Auto-generated method stub
@@ -2796,6 +3256,479 @@ public List<SaleReport> paymentModeWiseReportDao(String adate, String bdate, Str
 			}
 			return catList;
 	}
+	
+	
+	
+	
+	public List<CustomerBean> getAllItemDetails11(String key, String productId, String shopId,String Tempbillid)
+	{
+		System.out.println("key ====> "+key);
+		System.out.println("productId ====> "+productId);
+		System.out.println("shopId ====> "+shopId);
+		System.out.println("Temp bill no ====> "+Tempbillid);
+		// TODO Auto-generated method stub
+
+		HibernateUtility hbu = null;
+		Session session = null;
+		List<CategoryWisePurchase> categoryBean = null;
+		List<CustomerBean> itemlist = null;
+		double spWTax = 0d;
+		double disPer = 0d;
+		double spAfterDis = 0d;
+		DecimalFormat df = new DecimalFormat("#.##");
+		try
+		{
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			
+			
+			if(Tempbillid != null)
+			{
+				System.out.println("inside tempid");
+				
+				String sqlQuery = "SELECT tc.ItemName,tc.fk_goodrecive_id,tc.CategoryName,tc.BarcodeNo,tc.HsnSacNo,tc.Gst,tc.lgst,tc.size,gr.Quantity,tc.SalePrice,tc.rollsize,tc.sub_categoryName,(tc.rollsize * gr.Quantity),tc.salepWithoutTax,tc.Discount,tc.fkCatId,tc.fksubCatId,tc.fkProductId,tc.style,tc.fksuppid,tc.fkshopId,tc.BillNo,tc.pktempBillId FROM tempcredit_invoice tc JOIN goodreceive gr on tc.fk_goodrecive_id=gr.PkGoodRecId WHERE tc.BillNo= "+Tempbillid+" AND gr.fkShopId = "+shopId+" and tc.fk_credit_cust_bill IS NULL";
+				
+				Query query = session.createSQLQuery(sqlQuery);
+				List<Object[]> list = query.list();
+
+				itemlist = new ArrayList<CustomerBean>(0);
+				for (Object[] objects : list)
+				{				
+					Double sp = (Double.parseDouble(objects[9].toString()));
+					
+					spWTax = Double.parseDouble(objects[13].toString());
+					disPer = Double.parseDouble(objects[14].toString());
+					
+					System.out.println("Size :"+Arrays.toString(objects));
+					CustomerBean bean = new CustomerBean();
+
+					bean.setItemName(objects[0].toString());
+					bean.setItem_id(Long.parseLong(objects[1].toString()));
+					bean.setCategoryName(objects[2].toString());
+
+					bean.setBarcodeNo(Long.parseLong(objects[3].toString()));
+					bean.setHsnSacNo(objects[4].toString());
+					System.out.println(objects[4].toString());
+					bean.setQuantity(1d);
+					bean.setSalePrice(Double.parseDouble(objects[9].toString()));
+					bean.setFixedSalePrice(Double.parseDouble(objects[9].toString()));
+
+					Double gstPer = Double.parseDouble(objects[5].toString());
+					Double iGstPer = Double.parseDouble(objects[6].toString());
+					
+					bean.setSize1(objects[7].toString());
+					
+					bean.setGoodReceiveQuantity(Double.parseDouble(objects[8].toString()));
+						
+					bean.setRollSize(Double.parseDouble(objects[10].toString()));
+					bean.setSubCategoryName(objects[11].toString());
+					bean.setMtrQuantity(Double.parseDouble(objects[12].toString()));
+					//bean.setsPWithoutTax(Double.parseDouble((objects[13].toString())));
+					//bean.setDisPerForBill(0.0);
+					bean.setDisPerForBill(Double.parseDouble(objects[14].toString()));
+									
+					if(disPer > 0)
+					{								
+						if(spWTax > 0 && spWTax <= 1000)
+						{
+							if(gstPer > 0)
+							{
+								//gstPer = 5.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							else if(iGstPer > 0)
+							{
+								//iGstPer = 5.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+							else
+							{
+								//gstPer = 5.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+						}
+						else if(spWTax > 1000)
+						{
+							System.out.println("(spWTax > 1000) =====> "+spWTax);
+							
+							if(gstPer > 0)
+							{
+								//gstPer = 12.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							else if(iGstPer > 0)
+							{
+								//iGstPer = 12.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+							else
+							{
+								//gstPer = 12.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							bean.setSpAfterDis("0");
+						}					
+						bean.setsPWithoutTax(Double.parseDouble(df.format(spWTax)));
+						double taxAmtAfterDis = 0;					
+						double disAmt = (spWTax*(disPer/100));
+						bean.setDisAmount(Double.parseDouble(df.format(disAmt)));					
+						spAfterDis = spWTax - disAmt;
+
+						if(gstPer > 0)
+						{
+							bean.setVat(gstPer);
+							taxAmtAfterDis = (spAfterDis * (gstPer/100));
+							bean.setTaxAmountAfterDis(Double.parseDouble(df.format(taxAmtAfterDis)));
+							bean.setTotal(Double.parseDouble(df.format((spWTax - disAmt) + taxAmtAfterDis)));
+						}
+						else if(iGstPer > 0)
+						{
+							bean.setVat(iGstPer);
+							taxAmtAfterDis = (spAfterDis * (iGstPer/100));
+							bean.setTaxAmountAfterDis(Double.parseDouble(df.format(taxAmtAfterDis)));
+							bean.setTotal(Double.parseDouble(df.format((spWTax - disAmt) + taxAmtAfterDis)));
+						}
+						else
+						{
+							bean.setTaxAmountAfterDis(0.0);
+							bean.setTotal(Double.parseDouble(df.format(sp - disAmt)));
+						}
+					}
+					else
+					{						
+						if(sp > 0d && sp <= 1000d)
+						{
+							if(gstPer > 0)
+							{
+								//gstPer = 5.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							else if(iGstPer > 0)
+							{
+								//iGstPer = 5.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setVat(iGstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+							else
+							{
+								//gstPer = 5.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+						}
+						else if(sp > 1000d)
+						{
+							if(gstPer > 0)
+							{
+								//gstPer = 12.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							else if(iGstPer > 0)
+							{
+								//iGstPer = 12.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setVat(iGstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+							else 
+							{
+								//gstPer = 12.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+						}									
+						
+						bean.setDisAmount(0.0);
+						bean.setsPWithoutTax(Double.parseDouble(df.format(spWTax)));
+						bean.setTaxAmountAfterDis(0.0);
+						bean.setTotal(sp);
+					}
+					
+					bean.setSpAfterDis(df.format(spAfterDis));
+					double quantity = bean.getQuantity();
+					Double total = quantity * sp;
+					
+					bean.setFkCategoryId(Long.parseLong(objects[15].toString()));
+					bean.setFkSubCatId(Long.parseLong(objects[16].toString()));
+					bean.setFkProductId(Long.parseLong(objects[17].toString()));
+					bean.setStyle(objects[18].toString());
+					bean.setFkSuppId(objects[19].toString());
+					bean.setFkShopId(Long.parseLong(objects[20].toString()));
+					bean.setBillno(objects[21].toString());
+					bean.setPkTempid(Long.parseLong(objects[22].toString()));
+					//bean.setTotal(total);
+					itemlist.add(bean);
+				} 
+			}
+			else if(key != null)
+			{
+				String sqlQuery = "SELECT pr.ProductName, gr.PkGoodRecId, ct.category_name, gr.BarcodeNo, gr.hsnsacno, gr.vat, gr.igst, gr.size, gr.Quantity, gr.SalePrice, gr.RollSize, sb.subcat_name, (RollSize * gr.Quantity), gr.salePWithoutTax, gr.discountPerForBilling, gr.fkCatId, gr.fkSubCatId, gr.fkProductId, gr.style, gr.FksuppId, gr.fkShopId FROM goodreceive gr JOIN sub_categories sb on gr.fkSubCatId = sb.pk_subcat_id JOIN categories ct on gr.fkCatId=ct.pk_category_id JOIN product_reg pr on gr.fkProductId=pr.pkProductNameId WHERE gr.Quantity > 0 AND BarcodeNo = "+key+" AND gr.fkShopId = "+shopId;
+
+				Query query = session.createSQLQuery(sqlQuery);
+				List<Object[]> list = query.list();
+
+				itemlist = new ArrayList<CustomerBean>(0);
+				for (Object[] objects : list)
+				{				
+					Double sp = (Double.parseDouble(objects[9].toString()));
+					
+					spWTax = Double.parseDouble(objects[13].toString());
+					disPer = Double.parseDouble(objects[14].toString());
+					
+					System.out.println("Size :"+Arrays.toString(objects));
+					CustomerBean bean = new CustomerBean();
+
+					bean.setItemName(objects[0].toString());
+					bean.setItem_id(Long.parseLong(objects[1].toString()));
+					bean.setCategoryName(objects[2].toString());
+
+					bean.setBarcodeNo(Long.parseLong(objects[3].toString()));
+					bean.setHsnSacNo(objects[4].toString());
+					System.out.println(objects[4].toString());
+					bean.setQuantity(1d);
+					bean.setSalePrice(Double.parseDouble(objects[9].toString()));
+					bean.setFixedSalePrice(Double.parseDouble(objects[9].toString()));
+
+					Double gstPer = Double.parseDouble(objects[5].toString());
+					Double iGstPer = Double.parseDouble(objects[6].toString());
+					
+					bean.setSize1(objects[7].toString());
+					
+					bean.setGoodReceiveQuantity(Double.parseDouble(objects[8].toString()));
+						
+					bean.setRollSize(Double.parseDouble(objects[10].toString()));
+					bean.setSubCategoryName(objects[11].toString());
+					bean.setMtrQuantity(Double.parseDouble(objects[12].toString()));
+					//bean.setsPWithoutTax(Double.parseDouble((objects[13].toString())));
+					//bean.setDisPerForBill(0.0);
+					bean.setDisPerForBill(Double.parseDouble(objects[14].toString()));
+									
+					if(disPer > 0)
+					{								
+						if(spWTax > 0 && spWTax <= 1000)
+						{
+							if(gstPer > 0)
+							{
+								//gstPer = 5.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							else if(iGstPer > 0)
+							{
+								//iGstPer = 5.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+							else
+							{
+								//gstPer = 5.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+						}
+						else if(spWTax > 1000)
+						{
+							System.out.println("(spWTax > 1000) =====> "+spWTax);
+							
+							if(gstPer > 0)
+							{
+								//gstPer = 12.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							else if(iGstPer > 0)
+							{
+								//iGstPer = 12.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+							else
+							{
+								//gstPer = 12.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							bean.setSpAfterDis("0");
+						}					
+						bean.setsPWithoutTax(Double.parseDouble(df.format(spWTax)));
+						double taxAmtAfterDis = 0;					
+						double disAmt = (spWTax*(disPer/100));
+						bean.setDisAmount(Double.parseDouble(df.format(disAmt)));					
+						spAfterDis = spWTax - disAmt;
+
+						if(gstPer > 0)
+						{
+							bean.setVat(gstPer);
+							taxAmtAfterDis = (spAfterDis * (gstPer/100));
+							bean.setTaxAmountAfterDis(Double.parseDouble(df.format(taxAmtAfterDis)));
+							bean.setTotal(Double.parseDouble(df.format((spWTax - disAmt) + taxAmtAfterDis)));
+						}
+						else if(iGstPer > 0)
+						{
+							bean.setVat(iGstPer);
+							taxAmtAfterDis = (spAfterDis * (iGstPer/100));
+							bean.setTaxAmountAfterDis(Double.parseDouble(df.format(taxAmtAfterDis)));
+							bean.setTotal(Double.parseDouble(df.format((spWTax - disAmt) + taxAmtAfterDis)));
+						}
+						else
+						{
+							bean.setTaxAmountAfterDis(0.0);
+							bean.setTotal(Double.parseDouble(df.format(sp - disAmt)));
+						}
+					}
+					else
+					{						
+						if(sp > 0d && sp <= 1000d)
+						{
+							if(gstPer > 0)
+							{
+								//gstPer = 5.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							else if(iGstPer > 0)
+							{
+								//iGstPer = 5.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setVat(iGstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+							else
+							{
+								//gstPer = 5.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+						}
+						else if(sp > 1000d)
+						{
+							if(gstPer > 0)
+							{
+								//gstPer = 12.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+							else if(iGstPer > 0)
+							{
+								//iGstPer = 12.0;
+								spWTax = (sp/(1+(iGstPer/100)));
+								bean.setVat(iGstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(iGstPer/100))))));
+							}
+							else 
+							{
+								//gstPer = 12.0;
+								spWTax = (sp/(1+(gstPer/100)));
+								bean.setVat(gstPer);
+								bean.setTaxAmount(Double.parseDouble(df.format(sp-(sp/(1+(gstPer/100))))));
+							}
+						}									
+						
+						bean.setDisAmount(0.0);
+						bean.setsPWithoutTax(Double.parseDouble(df.format(spWTax)));
+						bean.setTaxAmountAfterDis(0.0);
+						bean.setTotal(sp);
+					}
+					
+					bean.setSpAfterDis(df.format(spAfterDis));
+					double quantity = bean.getQuantity();
+					Double total = quantity * sp;
+					
+					bean.setFkCategoryId(Long.parseLong(objects[15].toString()));
+					bean.setFkSubCatId(Long.parseLong(objects[16].toString()));
+					bean.setFkProductId(Long.parseLong(objects[17].toString()));
+					bean.setStyle(objects[18].toString());
+					bean.setFkSuppId(objects[19].toString());
+					bean.setFkShopId(Long.parseLong(objects[20].toString()));
+					
+					
+					bean.setBillno("00");
+					bean.setPkTempid(Long.parseLong("00"));
+					//bean.setTotal(total);
+					itemlist.add(bean);
+				}
+			}
+			else
+			{
+				System.out.println("called === PRODUCT BY PRODUCT INFO "+productId);
+				
+				String sqlQuery = "SELECT pr.ProductName, pr.pkProductNameId, ct.category_name, sb.subcat_name, pr.FkCatId, pr.fkSubCategoryId, pr.fkShopId FROM product_reg pr JOIN sub_categories sb on pr.fkSubCategoryId = sb.pk_subcat_id JOIN categories ct on pr.FkCatId = ct.pk_category_id WHERE pr.pkProductNameId = "+productId+" AND pr.fkShopId = "+shopId;
+				
+				Query query = session.createSQLQuery(sqlQuery);
+				List<Object[]> list = query.list();
+
+				itemlist = new ArrayList<CustomerBean>(0);
+				for (Object[] objects : list)
+				{	
+					CustomerBean bean = new CustomerBean();
+
+					bean.setItemName(objects[0].toString());
+					bean.setItem_id(Long.parseLong(objects[1].toString()));
+					bean.setCategoryName(objects[2].toString());
+
+					bean.setBarcodeNo(0l);
+					bean.setHsnSacNo("NA");
+					bean.setQuantity(1d);
+					bean.setSalePrice(0d);
+					bean.setFixedSalePrice(0d);
+					
+					bean.setSize1("NA");
+											
+					bean.setRollSize(0d);
+					bean.setSubCategoryName(objects[3].toString());
+					bean.setMtrQuantity(0d);
+					bean.setDisPerForBill(0d);
+					bean.setTaxAmount(0d);
+					bean.setVat(0d);
+					bean.setsPWithoutTax(0d);
+					bean.setDisAmount(0d);
+					bean.setTaxAmountAfterDis(0d);
+					bean.setTotal(0d);
+					bean.setSpAfterDis("0");
+					bean.setFkCategoryId(Long.parseLong(objects[4].toString()));
+					bean.setFkSubCatId(Long.parseLong(objects[5].toString()));
+					bean.setFkProductId(Long.parseLong(objects[1].toString()));
+					bean.setStyle("NA");
+					bean.setFkSuppId("0");
+					bean.setFkShopId(Long.parseLong(objects[6].toString()));
+					bean.setBillno("00");
+					bean.setPkTempid(Long.parseLong("00"));
+					itemlist.add(bean);
+				}	
+			}
+			
+		} catch (RuntimeException e) {
+			Log.error("Error in getAllItemDetails(String key)", e);
+		} finally {
+			if (session != null) {
+				hbu.closeSession(session);
+			}
+		}
+		
+		return itemlist;
+	}
+
+	
 	
 	
 }

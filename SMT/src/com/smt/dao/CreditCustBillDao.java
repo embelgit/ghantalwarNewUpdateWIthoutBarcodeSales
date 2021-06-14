@@ -970,4 +970,27 @@ public class CreditCustBillDao
 	
 	
 	
+	public void updateAdvanceBooking(String bookingNoAB, Long billNo)
+	{
+		System.out.println("updateAdvanceBooking bookingNoAB  ===>  "+bookingNoAB);
+		HibernateUtility hbu = null;
+		Session session = null;
+		Transaction tx = null;
+		
+		try
+		{
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			tx = session.beginTransaction();
+			
+			Query updateAdvanceBooking = session.createSQLQuery("update tempcredit_invoice set fk_credit_cust_bill = '"+billNo+"' where BillNo = "+bookingNoAB);
+			updateAdvanceBooking.executeUpdate();
+			tx.commit();
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
 }

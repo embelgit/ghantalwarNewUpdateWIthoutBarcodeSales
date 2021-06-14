@@ -2,6 +2,7 @@
 package com.smt.utility;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,6 +50,7 @@ import com.smt.helper.SubCategoryHelper;
 import com.smt.helper.SupplierAccountDetailsHelper;
 import com.smt.helper.SupplierCashBankHelper;
 import com.smt.helper.SupplierDetailHelper;
+import com.smt.helper.TempCreditCustomerHelper;
 import com.smt.helper.TempItemDetailHelper;
 import com.smt.helper.UserDetailHelper;
 import com.smt.helper.VatHelper;
@@ -587,6 +589,16 @@ public class Controller
 		return toJson(returnMap);
 	}
 	
+	
+	public String fetchCust11(HttpServletRequest request, HttpServletResponse response) {
+		CustomerOrderHelper helper = new CustomerOrderHelper();
+		List customer = helper.getDetailsById11(request, response);
+		Map<String, List> returnMap = new HashMap<String, List>();
+		returnMap.put("offer", customer);
+		System.out.println("$$$$$$$$$$$$$$$$" + returnMap);
+		return toJson(returnMap);
+	}
+	
 	public String getMultipleProductInGrid(HttpServletRequest request, HttpServletResponse response) {
 		String itemName = request.getParameter("itemName");
 		ProductDetailHelper helper = new ProductDetailHelper();
@@ -803,7 +815,16 @@ public class Controller
 		System.out.println("$$$$$$$$$$$$$$$$" + returnMap);
 		return toJson(returnMap);
 	}
+	
 
+	public String fetchCust123(HttpServletRequest request, HttpServletResponse response) {
+		CustomerOrderHelper helper = new CustomerOrderHelper();
+		List customer = helper.getDetailsById123(request, response);
+		Map<String, List> returnMap = new HashMap<String, List>();
+		returnMap.put("offer", customer);
+		System.out.println("$$$$$$$$$$$$$$$$" + returnMap);
+		return toJson(returnMap);
+	}
 	// Register PurchaseReturn
 	public String returngoodsReceipt(HttpServletRequest request, HttpServletResponse response)
 	{
@@ -914,7 +935,13 @@ public class Controller
 		Helper.registerOtherBill(request, response);
 		return toJson("Data Added Successfully");
 	}
-
+// edit otherbill temporay to permanet
+	public String registerOtherBill123(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("IN CONTROLLER");
+		OtherBillHelper Helper = new OtherBillHelper();
+		Helper.registerOtherBill123(request, response);
+		return toJson("Data Added Successfully");
+	}
 	// pdf copy of other bill
 	public String OtherBillCOPY(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("IN CONTROLLER");
@@ -1380,6 +1407,13 @@ public class Controller
 		System.out.println("IN CONTROLLER");
 		CreditCustomerBillHelper Helper = new CreditCustomerBillHelper();
 		Helper.regCreditCustomerBill(request, response);
+		return toJson("Data Added Successfully");
+	}
+	
+	public String tempbill(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("IN CONTROLLER");
+		TempCreditCustomerHelper Helper = new TempCreditCustomerHelper();
+		Helper.regCreditCustomerBill1(request, response);
 		return toJson("Data Added Successfully");
 	}
 
@@ -2215,6 +2249,19 @@ public class Controller
 			return toJson(returnMap);
 		}
 		
+		
+		public String SaleGraphController(HttpServletRequest request, HttpServletResponse response)
+		{
+			System.out.println("=== categoryWiseSaleGraph Controller ===");
+			AllGraphHelper helper = new AllGraphHelper();
+			List categories = helper.SaleGraphHelper(request, response);
+			Map<String, List> returnMap = new HashMap<String, List>();
+			returnMap.put("list", categories);
+			System.out.println("$$$$$$$$$$$$$$$$" + returnMap);
+			return toJson(returnMap);
+		}
+		
+		
 		// get Category Wise sale report FOR GRAPH
 		public String supplierWiseSaleTotalGraphController(HttpServletRequest request, HttpServletResponse response)
 		{
@@ -2467,7 +2514,7 @@ public class Controller
 		public String getAllShopsNameC(HttpServletRequest request, HttpServletResponse response)
 		{
 			ShopDetailsHelper helper = new ShopDetailsHelper();
-			Map leafcat = helper.getAllShopHelper();
+			Map leafcat = helper.getAllShopHelper(request, response);
 			String aa = toJson(leafcat);
 			return aa;
 		}
@@ -2626,4 +2673,22 @@ public class Controller
 			System.out.println("$$$$$$$$$$$$$$$$" + returnMap);
 			return toJson(returnMap);
 		}
+		
+		 public String updateGridData(HttpServletRequest request, HttpServletResponse response)
+			{
+				System.out.println("In controller");
+				TempCreditCustomerHelper stk = new TempCreditCustomerHelper();
+				stk.updateGridData(request, response);
+				return toJson("Data Added Successfully");
+			}
+		
+		 
+		 public String billreturn(HttpServletRequest request,
+					HttpServletResponse response) throws ParseException {
+				System.out.println("IN CONTROLLER");
+				SaleReturnHelper helper = new SaleReturnHelper();
+				helper.billReturnAsPerBillNo(request, response);
+				return toJson("Bill Deleted Successfully");
+			}
+		
 }

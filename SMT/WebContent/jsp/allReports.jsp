@@ -3828,6 +3828,8 @@ width: 110px;
 														<option value="cash">Cash</option>
 														<option value="card">Card</option>
 														<option value="cashAndCard">Cash And Card</option>
+														<option value="Upi">Upi</option>
+														<option value="cashAndupi">Cash And Upi</option>
 													</select> <label for="paymentModeForCC">Payment Mode</label>
 												</div>
 

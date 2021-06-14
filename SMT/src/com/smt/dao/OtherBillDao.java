@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.jfree.util.Log;
 
 import com.smt.bean.BillBean;
 import com.smt.bean.BillCopy;
@@ -83,6 +84,41 @@ public class OtherBillDao {
 		}
 		return saleList;
 	}
+	
+	
+	
+	public void deletebill(String shopid,String billno) {
+		
+		Transaction tx = null;
+			HibernateUtility hbu = null ;
+			 Session session = null;
+			 List list  = null;
+			 System.out.println("``````````` `````````````` in  deleing bill no  -  "+billno+"  , "+shopid);
+			 try {
+				 hbu = HibernateUtility.getInstance();
+				 session = hbu.getHibernateSession();
+				tx = session.beginTransaction();	
+				 Query query = session.createSQLQuery("DELETE from otherbill WHERE BillNo = '"+billno+"' AND fkShopId = '"+shopid+"'");
+					int seletedRecords = query.executeUpdate();
+					
+					System.out.println("Number of credit Cusr deleted == + =   "+seletedRecords);
+					//list = query.list();
+					tx.commit();
+					
+			} catch (Exception e) {
+				e.printStackTrace();
+				// TODO: handle exception
+			}
+				
+			 finally
+			 {
+				 if (session!=null) {
+					hbu.closeSession(session);
+				}
+			 }
+			
+		}	
+	
 
 	// get bill no to get Bill copy
 
@@ -1109,6 +1145,41 @@ public class OtherBillDao {
 		return catList;
 	}
 
-	
+	public List HOldBills()
+	{
+		HibernateUtility hbu = null;
+		Session session =  null;
+		Query query = null;
+		List<OtherBill> stockList = null;
+		try {
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			query = session.createSQLQuery("select BillNo, pkOtherBillId,credit_Customer_Name FROM otherbill WHERE BillType='Temporay' group by BillNo ");
+			List<Object[]> list = query.list();
+			stockList=new ArrayList<OtherBill>(0);
+			
+			for (Object[] object : list) {
+				System.out.println(Arrays.toString(object));
+
+				OtherBill StockBean = new OtherBill();
+
+				StockBean.setBillNo(Long.parseLong(object[0].toString()));
+				StockBean.setPkBillId(Long.parseLong(object[1].toString()));
+				StockBean.setCreditCustomer1(object[2].toString());
+				stockList.add(StockBean);		
+			}
+			
+		} catch (Exception e) {
+			Log.error("Error in getAllProductListWhoseStockLessThanTen", e);
+		}
+
+		finally
+		{
+			if (session!=null) {
+				hbu.closeSession(session);
+			}
+		}
+		return stockList;
+	}
 	
 }

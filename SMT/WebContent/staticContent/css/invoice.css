@@ -14,6 +14,7 @@ body {
 	overflow-x: hidden;
 }
 
+
 .miscellaneous {
 	position: relative;
 	margin-top: 25px;
@@ -98,7 +99,7 @@ body {
 
 .invoice_grid {
 	margin-left: -32%;
-	margin-bottom: 5%;
+	margin-bottom: 3%;
 	margin-top: 0px;
 	width: 141%;
 }
@@ -210,7 +211,8 @@ input:focus ~ .bar:before, input:focus ~ .bar:after {
 	margin-left: 23%;
 }
 .invoice_button{
-	    margin-left: 20.6667%;
+	    margin-left: 3.6667%%;
+	        margin-right: 9%;
 }
 .col-md-5 {
     width: 43.666667%;

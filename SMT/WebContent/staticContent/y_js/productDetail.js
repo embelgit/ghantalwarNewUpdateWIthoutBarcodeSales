@@ -32,6 +32,7 @@ function categoryDetailsDivAction(a)
 		$( "#categoryDialogDiv" ).dialog({
 			height: 240,
 			width: 600,
+			
 			// autoOpen: false,
 			// modal: false,
 			resizable: true,
@@ -44,13 +45,20 @@ function categoryDetailsDivAction(a)
 				// collision: "none",
 			}
 		});
+		
+		document.getElementById("popupblur").style.filter="blur(20px)";
     }
     else
     {
     	$( "#categoryDialogDiv" ).dialog('close');
+    	
+		document.getElementById("popupblur").style.filter="none";
        	// document.getElementById("suppDetailsDiv").style.display="none";
     }
+
+	$('#catListDiv').load(document.URL +  ' #catListDiv');
 }
+
 	
 // SUB-CATEGORY DETAILS DIALOG
 function subCategoryDetailsDivAction(a)
@@ -73,11 +81,15 @@ function subCategoryDetailsDivAction(a)
 				collision: "none",
 			}
 		});
+		
+		document.getElementById("popupblur").style.filter="blur(20px)";
     }
     else
     {
     	$("#subCategoryDialogDiv").dialog('close');
+    	document.getElementById("popupblur").style.filter="none";
     }	
+	
 }
 
 function valProductDetail()
@@ -676,12 +688,14 @@ function getSizeInGrid()
 			          sortorder : 'desc',
 			          loadonce: false,
 			          viewrecords: true,
+			          
+			          width: 700,
 			          /*width: 200,
 			          height: 75,*/
 			          shrinkToFit: true,
 			          hoverrows: true,
 			          rownumbers: true,
-			          rowNum: 10,
+			          rowNum: 20,
 			          
 			          'cellEdit':true,
 			          			          			          

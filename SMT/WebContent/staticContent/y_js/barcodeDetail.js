@@ -59,3 +59,40 @@ function printBarcode()
 		}
 	});
 }
+
+function billcancel() {
+
+	alert("ok");
+	var billNo=$('#billno').val;
+	
+	var billNoo= $('#BillNOOO').val;
+	
+	if(billNo == "" || billNo ==null || billNo==undefined)
+    {
+	params["billno"] = billNoo;
+    }
+    
+    else if(billNoo == "" || billNoo ==null || billNoo==undefined)
+  //  else
+    {
+	params["billno"] = billNo;
+    }
+    
+	
+    params["methodName"] = "billreturn";
+	
+    $.post('/SMT/jsp/utility/controller.jsp',params,function(data)
+    		{
+    			//successAlert("Barcode Printed Successfully");
+    			alert(data);
+    			location.reload();
+    			document.barcodeCopy.btn.disabled = false;
+    		}
+    		).error(function(jqXHR, textStatus, errorThrown){
+    			if(textStatus==="timeout") {
+    				$(loaderObj).hide();
+    				$(loaderObj).find('#errorDiv').show();
+    			}
+    		});
+    	}
+

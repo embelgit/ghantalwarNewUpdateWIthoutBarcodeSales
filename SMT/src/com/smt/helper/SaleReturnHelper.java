@@ -3,6 +3,7 @@ package com.smt.helper;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,7 @@ import com.smt.dao.CustomerPaymentDao;
 import com.smt.dao.OtherBillDao;
 import com.smt.dao.SaleReturnDao;
 import com.smt.dao.StockDao;
+import com.smt.hibernate.OtherBill;
 import com.smt.hibernate.SaleReturn;
 import com.smt.hibernate.Stock;
 import com.smt.hibernate.UserDetail;
@@ -84,7 +86,7 @@ public class SaleReturnHelper {
 		SaleReturn cust = new SaleReturn();
 
 		Integer count = Integer.parseInt(request.getParameter("count"));
-		System.out.println("c111111" + count);
+		System.out.println("c111111=====" + count.toString());
 
 		for (int i = 0; i < count; i++)
 		{				
@@ -233,6 +235,8 @@ public class SaleReturnHelper {
 				cust.setFkCreditCustId(0l);				
 				
 				long productId = Long.parseLong(request.getParameter("productId"+i));
+				
+				System.out.println("product id in helper:--"+productId);
 				cust.setProductId(productId);;
 				
 				long catId = Long.parseLong(request.getParameter("catId"+i));
@@ -266,17 +270,23 @@ public class SaleReturnHelper {
 				StockDao dao1 = new StockDao();
 				List stkList2 = dao1.getAllStockEntry();
 	
+				
 				for (int j = 0; j < stkList2.size(); j++)
 				{
+					//System.out.println(stkList2.toString());
+					System.out.println("inside stock for loop");
 					Stock st = (Stock) stkList2.get(j);
 					String ItemId = st.getItemName();
 					String cat = st.getCatName();
-					Long fkProductId = st.getFkProductId();
-					Long fkCatId = st.getFkCategoryId();
-					Long fkShopId = st.getFkShopId();
+				Long fkProductId = st.getFkProductId();
+					//Long fkCatId = st.getFkCategoryId();
+					//Long fkShopId = st.getFkShopId();
 					
-					if (fkProductId == productId && fkCatId == catId && fkShopId == shopId)
+					/* if (fkProductId == productId || fkCatId == catId || fkShopId == shopId) */
+					
+					if (ItemId.equals(itemName) && cat.equals(categoryName)&& fkProductId.equals(productId))
 					{
+						System.out.println("inside if of stock");
 						Long PkItemId = st.getPkStockId();
 						Double qunty = st.getQuantity();
 						System.out.println("for update stock quantity block");
@@ -649,6 +659,93 @@ public class SaleReturnHelper {
 			return cs;
 		}
 
+		public void billReturnAsPerBillNo(HttpServletRequest request, HttpServletResponse response) throws ParseException
+		{
+			HttpSession session1 = request.getSession();
+			String shopId = (String) session1.getAttribute("shopId");
+			
+			String BillNo = request.getParameter("billno");
 		
+			Map<Long, SaleReturn> map = new HashMap<Long, SaleReturn>();
+
+			SaleReturnDao dao = new SaleReturnDao();
+			List stkList2  = dao.getAllbilling(shopId,BillNo);
+			
+			for(int i=0;i<stkList2.size();i++)
+			{
+				OtherBill bean=(OtherBill) stkList2.get(i);
+				
+				String catname=bean.getCategoryName();
+				String ItemName=bean.getItemName();
+				Double quantity=bean.getQuantity();
+				Long productid=bean.getFkProductId();
+				Double grosstotal=bean.getGrossamt();
+				Double  peritemprice=bean.getTotalperItem();
+				Double cashAmount=bean.getCashCard_cashAmount();
+				Double cardAmount=bean.getCashCard_cardAmount();
+				Double upiCashAmount=bean.getCashupi_cashAmount();
+				Double upiAmount=bean.getCashupi_upiAmount();
+				Long barcode=bean.getBarcodeNo();
+				Long catid=bean.getFkCatId();
+				Long pkBillId= bean.getPkBillId();
+				
+				
+				
+				
+				// update sellbill quantity minus
+				//Long barcodeNo1 = Long.parseLong(request.getParameter("barcodeNo" + i));
+				SaleReturnDao good1 = new SaleReturnDao();
+				if(barcode > 0)
+				{
+					good1.updateBarcodeQuantity11(barcode, quantity);
+				}
+	
+				StockDao dao1 = new StockDao();
+				List stkList3 = dao1.getAllStockEntry();
+	
+				
+				for (int j = 0; j < stkList3.size(); j++)
+				{
+					//System.out.println(stkList2.toString());
+					System.out.println("inside stock for loop");
+					Stock st = (Stock) stkList3.get(j);
+					String ItemId = st.getItemName();
+					String cat = st.getCatName();
+				Long fkProductId = st.getFkProductId();
+					//Long fkCatId = st.getFkCategoryId();
+					//Long fkShopId = st.getFkShopId();
+					
+					/* if (fkProductId == productId || fkCatId == catId || fkShopId == shopId) */
+					
+					if (ItemId.equals(ItemName) && cat.equals(catname)&& fkProductId.equals(productid))
+					{
+						System.out.println("inside if of stock");
+						Long PkItemId = st.getPkStockId();
+						Double qunty = st.getQuantity();
+						System.out.println("for update stock quantity block");
+						Double updatequnty = (Double) (qunty +(quantity));
+	
+						HibernateUtility hbu = HibernateUtility.getInstance();
+						Session session = hbu.getHibernateSession();
+						Transaction transaction = session.beginTransaction();
+	
+						Date date = new Date();
+	
+						Stock updateStock = (Stock) session.get(Stock.class, new Long(PkItemId));
+						updateStock.setUpdateDate(date);
+						updateStock.setQuantity(updatequnty);
+						System.out.println("update stock"+updatequnty);
+						session.saveOrUpdate(updateStock);
+						transaction.commit();
+					}
+				}
+				SaleReturnDao good = new SaleReturnDao();
+				good.updateQuantityforBillCancel(pkBillId, quantity, peritemprice,cashAmount,cardAmount,upiCashAmount,upiAmount,grosstotal);
+				
+			}
+			
+			//return cs;
+		}
+
 		
 }

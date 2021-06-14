@@ -502,7 +502,7 @@ position: fixed;
 }
 #suppDetailsDiv {
     height: 50% !important;
-}*/
+}
 </style>
 <script type="text/javascript">
 	function isNumberForExpense(evt)
@@ -518,7 +518,7 @@ position: fixed;
 </script>
 </head>
 <body class="purchase_form_img vColor">
-	<div class="container-fluid">
+	<div class="container-fluid" id="popupblur" >
 		<div class="row">
 <!-- 			<div class="voucher"> -->
 			<div class="col-sm-2" id="billheading">	

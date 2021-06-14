@@ -44,6 +44,16 @@ public class AllGraphBean
 	private String subCatRangePurchaseCatName;
 	private Double subCatRangePurchaseQty;
 	
+	
+	
+	
+	private String saleDate;
+	private Double grosstotal;
+	
+	
+	
+	
+	
 	public String getSaleCatName()
 	{
 		return saleCatName;

@@ -49,17 +49,21 @@ public class ShopDetailsDao
 		}
 	}
 	
-	public List getAllShopsDAo()
+	public List getAllShopsDAo(String uname)
 	{
 		HibernateUtility hbu = null;
 		Session session = null;
 		List list = null;
+		System.out.println("uname----------->Dao----------> "+uname);
 		try
 		{
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
-			Query query = session.createSQLQuery("SELECT sd.pkShopId, sd.shopName FROM shopdetails sd;");
+			System.out.println("uname === == = "+uname);
+			Query query = session.createSQLQuery("SELECT shop_id,user_id,username,shop_name FROM accesscontrol WHERE username='"+uname+"'");
+			
 			list = query.list();
+			System.out.println("List Size----------->Dao----------> "+list.size());
 		}
 		catch (RuntimeException e)
 		{

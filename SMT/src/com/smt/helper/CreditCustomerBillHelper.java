@@ -19,6 +19,7 @@ import org.hibernate.Transaction;
 import com.smt.bean.BillBean;
 import com.smt.bean.SaleReport;
 import com.smt.bean.SaleReturnBean;
+import com.smt.dao.AdvanceBookingDao;
 import com.smt.dao.CreditCustBillDao;
 import com.smt.dao.CustomerOrderDao;
 import com.smt.dao.CustomerPaymentDao;
@@ -416,6 +417,8 @@ public class CreditCustomerBillHelper
 			{
 				cust.setDiscount(Double.parseDouble(discountPerProduct));
 			}
+		
+			String bookingNoAB = request.getParameter("Billno"+i);
 			
 			String perProductdisPer = request.getParameter("perProductdisPer"+i);
 			if(perProductdisPer == null || perProductdisPer.equalsIgnoreCase("") || perProductdisPer.isEmpty())
@@ -498,7 +501,16 @@ public class CreditCustomerBillHelper
 				String fkSuppId = request.getParameter("fkSuppId" + i);
 				cust.setFkSuppId(Long.parseLong(fkSuppId));	
 				
-			dao.regCreditCustomerBill(cust);
+
+				dao.regCreditCustomerBill(cust);
+				
+			
+			 if(Long.parseLong(bookingNoAB) > 0) {
+			  System.out.println("Long.parseLong(bookingNoAB) > 0 "+bookingNoAB);
+			  CreditCustBillDao advancebooking = new CreditCustBillDao();
+			  advancebooking.updateAdvanceBooking(bookingNoAB, BillNo); }
+			 
+				
 			double totalBillpending1 = 0.0;
 			if(i == (count-1))
 			{
@@ -524,6 +536,8 @@ public class CreditCustomerBillHelper
 					pay.regCreditCustomerPayment(BillNo, grossTotal, paidAmt, fkRootCustId, totalBillpending1, totalAmountOfCust, shopId);
 				}
 			}
+			if(Long.parseLong(bookingNoAB) == 0) {
+				
 			
 			Long item_id = Long.parseLong(request.getParameter("item_id" + i));
 			GoodReciveDao good = new GoodReciveDao();
@@ -589,7 +603,12 @@ public class CreditCustomerBillHelper
 					transaction.commit();
 				}
 			}
+			}
 		}
+		
+		
+		
+		
 		
 		Integer count1 = Integer.parseInt(request.getParameter("count1"));
 		if(count1 > 0)

@@ -36,7 +36,10 @@
 
 		<property name="emailId" type="java.lang.String" column="email_id"
 			not-null="true" length="128" />
-			
+		
+		
+		<property name="EmpIdNo" type="java.lang.String" column="emp_id_no"
+			not-null="true" length="128" />	
 		<property name="resignDate" type="java.util.Date" column="resignDate"/>
 			
 		<property name="fkShopId" type="java.lang.Long" column="fkShopId" />

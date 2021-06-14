@@ -9,7 +9,7 @@
 <%@page import="com.smt.dao.CustomerDetailsDao"%>
 <%@page import="java.util.List"%>
 <%
-	boolean isHome = false;
+	 boolean isHome = false; 
 %>
 <%@include file="y_commons/header1.jsp"%>
 
@@ -63,12 +63,14 @@
 <link rel="stylesheet" href="/SMT/staticContent/y_css/jquery-ui.css">
 <link rel="stylesheet" href="/SMT/staticContent/y_css/ui.jqgrid.css">
 <link rel="stylesheet" href="/SMT/staticContent/css/invoice.css">
+<!-- <link rel="stylesheet" type="text/css" href="/SMT/staticContent/css/popupwindow.css"> -->
 <script src="/SMT/staticContent/y_js/jquery-ui.min.js"></script>
 <script src="/SMT/staticContent/js/jquery-ui.js"></script>
 <script src="/SMT/staticContent/js/jqueryUi.js"></script>
 <script src="/SMT/staticContent/y_js/jquery.jqgrid.min.js"></script>
 <script type="text/javascript" src="/SMT/staticContent/y_js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/SMT/staticContent/y_js/bootbox.min.js"></script>
+<!-- <script type="text/javascript" src="/SMT/staticContent/y_js/jquery.popupwindow.js"></script> -->
 <script src="/SMT/staticContent/js/otherOrder.js"></script>
 <style type="text/css">
 </style>
@@ -177,7 +179,45 @@ function taxAmountCalc()
 		document.getElementById("grossTotal").value = total;		
 	}
 }
-
+function taxAmountCalc1()
+{
+	var total = document.getElementById("totalAmount1").value;           
+	var discount = document.getElementById("discount11").value;
+	var discountt = document.getElementById("discount1").value;
+	var regex = /^[0-9\b]+$/;
+	
+	if(discountt.match(regex))
+	{}
+	else
+	{
+		myAlert("Enter valid Discount");
+		document.getElementById("discount1").value = "";
+		document.getElementById("discount11").value = "";
+		document.getElementById("grossTotal1").value = total;
+		return false;
+	}
+	
+	if(Number(discountt) >= Number(total))
+	{
+		alert("Discount Amount must be less Than Total Amount");
+		document.getElementById("discount11").value = "";
+		document.getElementById("discount1").value = "";
+		return false;
+	}
+	
+	if(discountt != "")
+	{
+		var disPer = ((discountt/total)*100);
+		document.getElementById("discount11").value = disPer.toFixed(2);
+		var gTotal = total - discountt;
+		document.getElementById("grossTotal1").value = gTotal;		
+	}
+	if(discountt == "")
+	{
+		document.getElementById("discount11").value = "";
+		document.getElementById("grossTotal1").value = total;		
+	}
+}
 
 function isNumber(evt)
 {
@@ -205,6 +245,55 @@ function Returncash() {
     	document.getElementById("RetCash").value = Math.round(rate);
 	}
 }
+function Returncash1() {
+	var grossTotal=document.getElementById("grossTotal1").value;
+	var Cashbycust=document.getElementById("Cashbycust1").value; 
+	
+	if(Cashbycust=="" || Cashbycust==null )
+		{
+		//duty= document.getElementById("RetCash").value=0;
+		var rate=(Cashbycust-grossTotal);
+    	document.getElementById("RetCash1").value = Math.round(rate);
+		}
+	else {
+		var rate=(Cashbycust-grossTotal);
+    	document.getElementById("RetCash1").value = Math.round(rate);
+	}
+}
+
+
+
+function upicash() {
+	var grossTotal=document.getElementById("grossTotal").value;
+	var cashAmount=document.getElementById("cashCard_cashAmount1").value; 
+	
+	if(cashAmount=="" || cashAmount==null )
+		{
+		//duty= document.getElementById("RetCash").value=0;
+		var rate=(grossTotal-cashAmount);
+    	document.getElementById("cashCard_upiAmount").value = Math.round(rate);
+		}
+	else {
+		var rate=(grossTotal-cashAmount);
+    	document.getElementById("cashCard_upiAmount").value = Math.round(rate);
+	}
+}
+function upicash1() {
+	var grossTotal=document.getElementById("grossTotal1").value;
+	var cashAmount=document.getElementById("cashCard_cashAmount11").value; 
+	
+	if(cashAmount=="" || cashAmount==null )
+		{
+		//duty= document.getElementById("RetCash").value=0;
+		var rate=(grossTotal-cashAmount);
+    	document.getElementById("cashCard_upiAmount1").value = Math.round(rate);
+		}
+	else {
+		var rate=(grossTotal-cashAmount);
+    	document.getElementById("cashCard_upiAmount1").value = Math.round(rate);
+	}
+}
+
 </script>
 <%
 	Long BillNo = 1l;
@@ -219,6 +308,13 @@ function Returncash() {
 	}
 %>
 <style>
+
+/* .popup {
+    top: 100px !important;
+    
+    
+} */
+
 #logoutButton {
 	height: 35px;
 	width: 80px;
@@ -426,6 +522,100 @@ function Returncash() {
     margin-left: 21px;
 }
 }
+
+#goodrcvcol {
+    width: 40%;
+    margin-left: -4%;
+}
+ #suppDetailsDiv {
+    height: 40% !important;
+  
+} 
+.modal1 {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+ background-color: rgb(255 255 255 / 40%); /* Black w/ opacity */
+  padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content1 {
+  background-color: #f3f3f3;
+  margin: 0% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #4f77e9;
+  width: 96%; /* Could be more or less, depending on screen size */
+  height: auto;
+}
+
+/* The Close Button (x) */
+/* .modal1 .close {
+  position: absolute;
+    right: 5px;
+    top: 0;
+    color: #000;
+    font-size: 1px;
+    font-weight: bold;
+    overflow: hidden;
+    background-color: #000000 !important;
+    width: 99%;
+    padding: 14px 3px;
+    margin-top: 7px;
+    border-radius: 6px;
+}
+.btnclose {
+    margin: 43px 4px;
+} */
+
+
+/* Add Zoom Animation */
+.animate {
+  -webkit-animation: animatezoom 0.6s;
+  animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+  from {-webkit-transform: scale(0)} 
+  to {-webkit-transform: scale(1)}
+}
+  
+/* @keyframes animatezoom {
+  from {transform: scale(0)} 
+  to {transform: scale(1)}
+}
+*/
+/* Change styles for span and cancel button on extra small screens */
+/* @media screen and (max-width: 300px) {
+  span.psw {
+     display: block;
+     float: none;
+  }
+  .cancelbtn {
+     width: 100%;
+  }
+}  */
+.style_heading {
+    color: black;
+    /* text-shadow: 1px 1px 2px black, 0 0 25px blue, 0 0 5px darkblue; */
+    font-weight: bold;
+    margin-left: -157px;
+    /* margin: 0px -14px; */
+}
+
+marquee {
+    font-size: 23px;
+    background: white;
+    color: #e82020;
+    font-weight: 600;
+   
+   
+}
 </style>
 
 </head>
@@ -445,7 +635,7 @@ function Returncash() {
 			</div>
 			<div class="col-md-2 col-md-offset-3 align" align="center"
 				id="saleinvceh2">
-				<span class="form-name style_heading" style="font-size: 30px;">Tax
+				<span class="form-name style_heading" style="font-size: 30px; margin-left: 3px;">Tax
 					Invoice</span>
 			</div>
 			
@@ -464,39 +654,6 @@ function Returncash() {
 
 			<form class="form-horizontal" action="" method="post" name="custord">
 				<div class="container" id="custdetal">
-					<div class="row">
-						<div class="invoice_label_up">
-							<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
-								id="taxcol">
-								<%
-									System.out.println("LOGIN TYPE ===> " + type1);
-									CustomerDetailsDao cdd = new CustomerDetailsDao();
-									List cList = cdd.getAllMiscellaneousCustomer(request, response);
-								%>
-								<input list="cust_drop" id="creditCustomer1" required>
-								<datalist id="cust_drop"> <%
-								 	for (int i = 0; i < cList.size(); i++) {
-								 		OtherBill cust = (OtherBill) cList.get(i);
-								 %>
-								<option data-value="<%=cust.getPkBillId()%>"
-									value="<%=cust.getCreditCustomer1()%>">
-									<%
-										}
-									%>
-								
-								</datalist>
-								<label>Customer Name<sup style="color: red;">*</sup></label>
-							</div>
-						</div>
-				  <div class="col-md-1"></div>
-						<div class="invoice_label_up">
-							<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
-								id="taxcol">
-								<input type="text" id="mobileNo" maxlength="10" required /> <label>Mobile
-									No</label>
-							</div>
-						</div>
-					</div>
 					
 
 					<div class="row">
@@ -583,10 +740,6 @@ function Returncash() {
 							</div>
 						</div>
 					</div>
-
-
-
-
 					<div class="row">
 						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
 							id="taxcol">
@@ -716,7 +869,7 @@ function Returncash() {
 
 
 											<input type="text" name="cashCard_cashAmount1"
-												id="cashCard_cashAmount1" required /> <label>Cash
+												id="cashCard_cashAmount1" required  onkeyup="upicash();" /> <label>Cash
 												Amount</label>
 										</div>
 									</div>
@@ -805,6 +958,42 @@ function Returncash() {
 		</script>
 
 					</div>
+
+<div class="row">
+						<div class="invoice_label_up">
+							<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+								id="taxcol">
+								<%
+									System.out.println("LOGIN TYPE ===> " + type1);
+									CustomerDetailsDao cdd = new CustomerDetailsDao();
+									List cList = cdd.getAllMiscellaneousCustomer(request,response);
+								%>
+								<input list="cust_drop" id="creditCustomer1" required>
+								<datalist id="cust_drop"> <%
+								 	for (int i = 0; i < cList.size(); i++) {
+								 		OtherBill cust = (OtherBill) cList.get(i);
+								 %>
+								<option data-value="<%=cust.getPkBillId()%>"
+									value="<%=cust.getCreditCustomer1()%>">
+									<%
+										}
+									%>
+								
+								</datalist>
+								<label>Customer Name</label>
+							</div>
+						</div>
+				  <div class="col-md-1"></div>
+						<div class="invoice_label_up">
+							<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+								id="taxcol">
+								<input type="text" id="mobileNo" maxlength="10" required /> <label>Mobile
+									No</label>
+							</div>
+						</div>
+					</div>
+					
+
 					<div class="row">
 
 						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-3"
@@ -826,7 +1015,7 @@ function Returncash() {
 
 						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-3"
 							id="taxcol">
-							<input type="text"  id="Cashbycust" onchange="Returncash()" /> <label
+							<input type="text"  id="Cashbycust" onkeyup="Returncash()" /> <label
 								for="Cashbycust">Cash Given By Customer </label>
 						</div>
 						 <div class="col-md-1"></div>
@@ -861,17 +1050,509 @@ function Returncash() {
 									class="btn btn-lg btn-danger btn-md" style="width: 120px;" />
 							</div>
 
+ <div class="col-md-2" style="display: inline-block;">
+								<input type='button'
+									class="btn btn-success btn-lg bottomButtons" id="btnSubmit1"
+									value="Hold Bill" onclick="resotherbill1();"
+									style="width: 120px;">
+							</div>
 
+							<div class="col-md-2" style="display: inline-block;">
+								<input type='button'
+									class="btn btn-primary btn-lg bottomButtons" id="newBill"
+									value="Edit Bill" onclick="document.getElementById('id01').style.display='block'" 
+									style="width: 120px;">
+							</div> 
 						</div>
 					</div>
+
+
 
 				</div>
 			</form>
 		</div>
 	</div>
+	<!-- ==================================================================== TAX INVoice================================================================ -->
+					
+	<!-- <div class="container-fluid" style="border: 3px solid; padding-bottom: 20px; display: none; margin-bottom:35px;" id="suppDetailsDiv"> -->
+     <div id="id01" class="modal1">
+		
+		
+		<form class="modal-content1 animate" action="" name="custord1">
+		<div class="container" style="width: auto;" id="custdetal">
+		<div class="btnclose">
+		 <span onclick="window.location.reload()" class="close" title="Close Modal">&times;</span>
+		</div>
+				
+		<div class="row" style="padding-top: 10px">
+			<div align="center">
+				<h2 class="form-name style_heading">Tax Invoice</h2>
+			</div>
+		</div>
+		 
+		<div class="row">
+			<div class=" col-md-10">
+				<hr style="border-top-color: #000000;">
+			</div>
+		</div>
+		<div class="miscellaneous">
+			<div class="row form-group">
+			<div class="invoice_label_up">
+			
+			
+							<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+								id="taxcol">
+								<%
+											CustomerDetailsDao sdd88 = new CustomerDetailsDao();
+											List sList88 = sdd88.getAllMiscellaneousCustomerBillNo(request, response);
+										%>
+								<input  list="Bill_drop5" id="TempBillNo" onchange="getEmpName(), getitemData111();"
+									style="margin-bottom: 6px;" required /> <label>Bill
+									No</label>
+							</div>
+							<datalist id="Bill_drop5">
+											<%
+												for (int i = 0; i < sList88.size(); i++) {
+													OtherBill sup88 = (OtherBill) sList88.get(i);
+											%>
+											<option data-value="<%=sup88.getPkBillId()%>>"
+												value="<%=sup88.getBillNo()%>"></option>
+											<%
+												}
+											%>
+										</datalist>
+							
+							
+						</div>
+							<div class="col-md-1"></div>
+			
+			</div>
+			<div class="row form-group">
+		
+							<div class="invoice_label_up">
+							<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+								id="taxcol">
+								<input type="text" id="key1" autofocus="key1"
+									onchange="getEmpName111(),getitemData111();"
+									style="margin-bottom: 6px;" required /> <label>Barcode
+									No</label>
+							</div>
+						</div>
+							<div class="col-md-1"></div>
+									
+				<div class="invoice_label_up">
+					<div class="good_rcv_label_up">
+						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-9" id="goodrcvcol" >
+						<!-- <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"> -->
+							<%
+								ProductDetailHelper item1 = new ProductDetailHelper();
+								List itemList1 = item1.getAllItemListWithoutBarcodeForBilling(request, response);
+							%>
+						
+							<input list="itemId_drop1" id="itemName1" class="" onchange="getEmpName(), getitemData111();" style="background-color: #f0f0f0" >
+							
+							<datalist id="itemId_drop1">
+								<%
+									for (int j = 0; j < itemList1.size(); j++) {
+										ProductNameBean itm1 = (ProductNameBean) itemList1.get(j);
+								%>
+								<option data-value="<%=itm1.getCaregoryName()%>"
+									value="<%=itm1.getItemName()%> :: <%=itm1.getCaregoryName()%> :: <%=itm1.getSubCat()%>"
+									myvalue="<%=itm1.getItemName()%>"
+									myvalue1="<%=itm1.getSubCatid()%>"
+									myvalue2="<%=itm1.getProductid()%>"
+									myvalue3="<%=itm1.getColor()%>" 
+									myvalue4="<%=itm1.getSize()%>"
+									myvalue5="<%=itm1.getFkCatId()%>"									
+									>										
+									<%
+										}
+									%>
+								
+							</datalist>
+							<label>Item List</label>
+						</div>	   
+					</div>
+				</div>
+			</div>
+		<div class="invoice_grid">
+			<div class="row" >
+				<div class="table-responsive" style="margin-left: 4%;">
+					<table id="list5"></table>
+						<div id="jqGridPager1"></div>
+						</div>
+					</div>
+		</div>
+				<div class="row">
+						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+							id="taxcol">
+							<input type="text" id="totalQuantity1" readonly="readonly" /> <label
+								for="totalQuantity">Total Quantity</label>
+						</div>
+						 <div class="col-md-1"></div>
+						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+							id="taxcol">
+							<input type="text" id="totalAmount1" readonly="readonly" /> <label>Total
+								Amount: </label>
+						</div>
+				</div>
+				
+				<div class="row">
+						<div class="invoice_label_up">
+							<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+								id="taxcol">
+								<input type="text" id="srTransactionId1"
+									onkeypress="return isNumber(event)"
+									onchange="getSrCreditAmount111()" required /> <label
+									for="srTransactionId">SR Transaction Id </label>
+							</div>
+						</div>
+						 <div class="col-md-1"></div>
+
+						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+							id="taxcol">
+							<input type="text" readonly="readonly" id="discount1"
+								onchange="taxAmountCalc1(); callAfterSave()" /> <label>Discount</label>
+						</div>
+					</div>
+
+					
+						 
+				
+				
+				
+				
+	<div class="row">
+						<div class="sm_grid">
+							<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+								id="taxcol">
+								<div class="table-responsive"
+								style="height: 17vh;margin-bottom: 8%;margin-left: 0%;width: 100%;margin-top: -16px;">
+									<table id="srCreditAmtGrid1"></table>
+									<div id="srJqGridPager1"></div>
+								</div>
+							</div>
+						</div>
+						 <div class="col-md-1"></div>
+
+						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+							id="taxcol">
+
+							<select id="paymentMode1">
+								<option value="cash">Cash</option>
+								<option value="card">Card</option>
+								<option value="cashAndCard">Cash And Card</option>
+								<option value="Upi">Upi</option>
+								<option value="cashAndupi">Cash And Upi</option>
+							</select> <label for="paymentMode">Payment Mode:</label>
+							<div class="row ">
+								<div id="cheque_no1">
+									<div class="col-md-3 col-md-offset-5 first">
+										<input class="form-control" type="text" name="chequeNum"
+											id="chequeNum1" placeholder="Cheque No." />
+									</div>
+									<div class="col-md-3  first">
+										<input class="form-control" type="text" name="nameOnCheck"
+											id="nameOnCheck1" placeholder="Name On Cheque" />
+									</div>
+								</div>
+
+								<div id="card_no1" class="form-group">
+									<div class="col-md-3 col-md-offset-8 first">
+										<input class="form-control" type="text" name="cardNum"
+											id="cardNum1" placeholder="Card No." />
+									</div>
+								</div>
+
+								<div id="neft_acc_no1" class="form-group">
+									<div class="col-md-3 col-md-offset-5 first">
+										<input class="form-control" type="text" name="accNum"
+											id="accNum1" placeholder="Account No." />
+									</div>
+									<div class="col-md-3 first">
+										<input class="form-control" type="text" name="bankName"
+											id="bankName1" placeholder="Name Of Bank" />
+									</div>
+								</div>
+							</div>
+
+							<div id="cash_and_card1">
+								<div class="col-md-4"></div>
+
+								<div class="row">
+									<div class="invoice_label_up">
+										<div
+											class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4 col-lg-offset-1"
+											id="cashcol">
+
+
+											<input type="text" name="cashCard_cashAmount"
+												id="cashCard_cashAmount1" required /> <label>Cash
+												Amount</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-4"></div>
+								<div class="row">
+									<div class="invoice_label_up">
+										<div
+											class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4 col-lg-offset-1"
+											id="cashcol">
+											<input type="text" name="cashCard_cardAmount"
+												id="cashCard_cardAmount1" required /> <label>Card
+												Amount</label>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div id="cash_and_upi1">
+								<div class="col-md-4"></div>
+
+								<div class="row">
+									<div class="invoice_label_up">
+										<div
+											class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4 col-lg-offset-1"
+											id="cashcol">
+
+
+											<input type="text" name="cashCard_cashAmount1"
+												id="cashCard_cashAmount11" required  onkeyup="upicash1();" /> <label>Cash
+												Amount</label>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-md-4"></div>
+								<div class="row">
+									<div class="invoice_label_up">
+										<div
+											class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4 col-lg-offset-1"
+											id="cashcol">
+											<input type="text" name="cashCard_upiAmount"
+												id="cashCard_upiAmount1" required /> <label>Upi
+												Amount</label>
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</div>
+
+							
+
+						<script>
+		$(document).ready(function(){
+	  		 $("#paymentMode1").change(function(){
+	       	$(this).find("option:selected").each(function(){
+	           	if($(this).attr("value")=="cheque")
+		        {
+		           	$("#cheque_no1").show(); 
+		           	$("#neft_acc_no1").hide(); 
+		           	$("#card_no1").hide();
+		           	$("#cash_and_card1").hide();
+		           	$("#cash_and_upi1").hide();
+	           	}
+	          	 else if($(this).attr("value")=="card")
+		        {
+	          		$("#card_no1").hide(); 	
+	          		$("#neft_acc_no1").hide(); 
+	        		$("#cheque_no1").hide();
+		           	$("#cash_and_card1").hide();
+		           	$("#cash_and_upi1").hide();
+	            }
+	          	else if($(this).attr("value")=="neft")
+		        {
+	           		$("#neft_acc_no1").show(); 	
+	           		$("#card_no1").hide(); 
+	        		$("#cheque_no1").hide();
+		           	$("#cash_and_card1").hide();
+		           	$("#cash_and_upi1").hide();
+	            }
+	          	else if($(this).attr("value")=="cash")
+		        {
+            		$("#neft_acc_no1").hide(); 
+            		$("#cheque_no1").hide();
+            		$("#card_no1").hide();
+		           	$("#cash_and_card1").hide();
+		           	$("#cash_and_upi1").hide();
+	            }
+	          	else if($(this).attr("value")=="cashAndCard")
+		        {
+	          		$("#cash_and_card1").show();
+            		$("#neft_acc_no1").hide(); 
+            		$("#cheque_no1").hide();
+            		$("#card_no1").hide(); 
+            		$("#cash_and_upi1").hide();
+	             }
+	          	else if($(this).attr("value")=="cashAndupi")
+		        {
+	         		$("#cash_and_card1").hide();
+	          		$("#cash_and_upi1").show();
+            		$("#neft_acc_no1").hide(); 
+            		$("#cheque_no1").hide();
+            		$("#card_no1").hide(); 
+	             }
+	         	else if($(this).attr("value")=="Upi"){
+	          		$("#cash_and_card1").hide();
+	          		$("#cash_and_upi1").hide();
+	          		$("#card_no1").hide(); 	
+	          		$("#neft_acc_no1").hide(); 
+	        		$("#cheque_no1").hide();
+	           }
+	       });
+	   }).change();
+		});	
+		</script>
+	</div>		
+<div class="row">
+						<div class="invoice_label_up">
+							<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+								id="taxcol">
+								<%
+									System.out.println("LOGIN TYPE ===> " + type1);
+									CustomerDetailsDao cdd1 = new CustomerDetailsDao();
+									List cList1 = cdd1.getAllMiscellaneousCustomer(request,response);
+								%>
+								<input list="cust_drop1" id="creditCustomer11" required>
+								<datalist id="cust_drop1"> <%
+								 	for (int i = 0; i < cList1.size(); i++) {
+								 		OtherBill cust1 = (OtherBill) cList1.get(i);
+								 %>
+								<option data-value="<%=cust1.getPkBillId()%>"
+									value="<%=cust1.getCreditCustomer1()%>">
+									<%
+										}
+									%>
+								
+								</datalist>
+								<label>Customer Name</label>
+							</div>
+						</div>
+				  <div class="col-md-1"></div>
+						<div class="invoice_label_up">
+							<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+								id="taxcol">
+								<input type="text" id="mobileNo1" maxlength="10" required /> <label>Mobile
+									No</label>
+							</div>
+						</div>
+					</div>
+					
+
+					<div class="row">
+
+						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-3"
+							id="taxcol">
+							<input type="text" readonly="readonly" id="totalCreditAmt1" /> <label
+								for="totalCreditAmt">Total Credit Amount</label>
+						</div>
+						 <div class="col-md-1"></div>
+						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+							id="taxcol">
+
+							<input type="text" id="grossTotal1" readonly="readonly"
+								style="background-color: #fab787;" /> <label> Gross
+								Total</label>
+						</div>
+					</div>
+
+<div class="row">
+
+						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-3"
+							id="taxcol">
+							<input type="text"  id="Cashbycust1" onkeyup="Returncash1()" /> <label
+								for="Cashbycust">Cash Given By Customer </label>
+						</div>
+						 <div class="col-md-1"></div>
+						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+							id="taxcol">
+
+							<input type="text" id="RetCash1" readonly="readonly"
+								style="background-color: red;"/> <label> Return Cash
+								</label>
+						</div>
+</div>						
+
+
+					<div class="invoice_button col-md-offset-1">
+						<div class="row">
+							<div class="col-md-2" style="display: inline-block;">
+								<input type='button'
+									class="btn btn-success btn-lg bottomButtons" id="btnSubmit1"
+									value="Print Bill" onclick="ok();"
+									style="width: 120px;margin-left: 100px;">
+							</div>
+
+							<!-- <div class="col-md-2" style="display: inline-block;">
+								<input type='button'
+									class="btn btn-primary btn-lg bottomButtons" id="newBill"
+									value="New Bill" onclick="window.open('newBillTaxInvoice.jsp')"
+									style="width: 120px;">
+							</div> -->
+
+							<div class="col-md-2" style="display: inline-block;">
+								<input type="reset" value="Cancel"
+									onclick="window.location.reload()"
+									class="btn btn-lg btn-danger btn-md" style="width: 120px; margin-left: 150px;" />
+							</div>
+
+ 
+				</div>
+			
+				
+</div>	
+</div>
+</div>
+</form>
+
+</div>	
+			
+					
+		<!-- ============================================================== /TAXINVOICE ===================================================-->
 
 
 </body>
+<script>
+// Get the modal
+var modal1 = document.getElementById('id01');
+
+// When the user clicks anywhere outside of the modal, close it
+/* window.onclick = function(event) {
+    if (event.target == modal1) {
+        modal1.style.display = "none";
+    } */
+//}
+</script>
+ <%
+								OtherBillDao stockProductDao=new OtherBillDao();
+								List ProductList=stockProductDao.HOldBills(); 
+								
+				    		%>
+<div class="marquee">
+	 <marquee scrollamount="15">
+	 
+	 <%
+	 	 	if(ProductList.size()!=0)
+	 	 	{
+	 	 		for (int i = 0; i < ProductList.size(); i++) {
+
+	 	 			OtherBill bean = (OtherBill) ProductList.get(i);
+	 	 			out.println("Customer Name :=> " + bean.getCreditCustomer1() + " | ");
+	 	 			out.println("HOLD BILL NO :=> " + bean.getBillNo() + " , ");
+	 	 			
+
+	 	 		}
+	 	 	}
+	 	 	else
+	 	 	{
+	 	 		out.println("No Bill Are In Hold");
+	 	 	}
+	 	 %>
+	 
+	    </marquee> 
+	</div>
 <div class="row footer_margin_top" align="center">
 	<%@include file="y_commons/footer.jsp"%>
 </div>

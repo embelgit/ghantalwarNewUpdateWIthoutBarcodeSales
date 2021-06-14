@@ -78,7 +78,7 @@ function validateSupplierDetails()
 	var supplierName= $('#supplierName').val();
 	var city= $('#city').val();
 	var mobileno= $('#mobileno').val();
-	var SupplierNamePattern = /^[a-zA-Z ]{2,50}$/;
+	var SupplierNamePattern = /^[a-zA-Z]\[0-9]\@\ \ ,\ \ @\/{2,50}$/;
 	var checkNames = /^[a-zA-Z ]*$/;
 	var pin=$('#pin').val();
 	var email=$('#email').val();
@@ -95,7 +95,7 @@ function validateSupplierDetails()
 	if(supplierName != null && supplierName != "" && supplierName != " ")
 	
 	{
-		if(SupplierNamePatternRes){
+		/*if(SupplierNamePatternRes){*/
 			if(city != null && city != "" && city != " ")
 			{
 				if(pin == "" || pin == null || pin == " ")
@@ -159,12 +159,12 @@ function validateSupplierDetails()
 				myAlert("Please Enter City Name !");
 				return false;
 			}
-		}
+		/*}
 		else{
 
 			myAlert("Enter only Name without Special Symbols and digit ! name must be in between 2 - 50 character");
 			return false;
-		}
+		}*/
 	}
 	else{
 		myAlert("Please Enter Supplier Name !");

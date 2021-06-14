@@ -320,4 +320,55 @@ public class EmployeeDetailsDao {
 			}
 			return listTid;
 		}	
+		
+		public List getEmployeeList1()
+		{
+			HibernateUtility hbu = null;
+			Session session = null;
+			List<GetEmployeeDetails> empList = null;
+			try {
+
+				hbu = HibernateUtility.getInstance();
+				session = hbu.getHibernateSession();
+
+				Query query = session.createSQLQuery("SELECT first_name, middle_name, last_name, joining_date, email_id, salary, contact_no, address, pin_code, resignDate,pk_empoyee_id FROM employee_details;");
+				List<Object[]> list = query.list();
+
+				empList = new ArrayList<GetEmployeeDetails>(0);
+
+				for (Object[] object : list) {
+					GetEmployeeDetails reports = new GetEmployeeDetails();
+
+					reports.setFirstName(object[0].toString());
+					reports.setMiddleName(object[1].toString());
+					reports.setLastName(object[2].toString());
+					reports.setJoiningDate((Date) object[3]);
+					reports.setEmail(object[4].toString());
+					reports.setSalary(Double.parseDouble(object[5].toString()));
+					reports.setContactNo((BigInteger) object[6]);
+					reports.setAddresst(object[7].toString());
+					reports.setZipCode((BigInteger) object[8]);
+					if(object[9] == null)
+					{
+						reports.setResignDateString("N/A");
+					}
+					else
+					{
+						reports.setResignDateString(object[9].toString());
+					}
+					reports.setEmpPkId(Long.parseLong(object[10].toString()));
+					
+					empList.add(reports);
+
+				}
+			} catch (RuntimeException e) {
+
+			} finally {
+
+				hbu.closeSession(session);
+			}
+			return empList;
+		}
+		
+		
 }

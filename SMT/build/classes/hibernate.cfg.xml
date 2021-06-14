@@ -49,6 +49,7 @@
 		<mapping resource="com/smt/hibernate/shopDetails.hbm.xml" />
 		<mapping resource="com/smt/hibernate/expenditureType.hbm.xml" />
 		<mapping resource="com/smt/hibernate/accessControl.hbm.xml" />
+		<mapping resource="com/smt/hibernate/TempCreditCustomerInvoice.hbm.xml" />
 
 	</session-factory>
 

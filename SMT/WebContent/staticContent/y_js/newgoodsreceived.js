@@ -18,10 +18,12 @@ function suppDetailsDivAction(a)
 				collision: "none",
 			}
 		});
+		document.getElementById("popupblur").style.filter="blur(20px)";
     }
     else
     {
     	$( "#suppDetailsDiv" ).dialog('close');
+    	document.getElementById("popupblur").style.filter="none";
     }
 	
 	$('#suppListDiv').load(document.URL +  ' #suppListDiv');
@@ -48,10 +50,12 @@ function categoryDetailsDivAction(a)
 				// collision: "none",
 			}
 		});
+		document.getElementById("popupblur").style.filter="blur(20px)";
     }
     else
     {
     	$( "#categoryDialogDiv" ).dialog('close');
+    	document.getElementById("popupblur").style.filter="none";
     }
 }
 	
@@ -75,10 +79,13 @@ function subCategoryDetailsDivAction(a)
 				collision: "none",
 			}
 		});
+		
+		document.getElementById("popupblur").style.filter="blur(20px)";
     }
     else
     {
     	$("#subCategoryDialogDiv").dialog('close');
+    	document.getElementById("popupblur").style.filter="none";
     }	
 }
 	
@@ -102,10 +109,13 @@ function productDetailsDivAction(a)
 				collision: "none",
 			}
 		});
+		
+		document.getElementById("popupblur").style.filter="blur(20px)";
     }
     else
     {
     	$("#productDetailsDialogDiv").dialog('close');
+    	document.getElementById("popupblur").style.filter="none";
     }	
 }
 
@@ -555,7 +565,7 @@ function regGoodReceive()
 	params["methodName"] = "regGoodReceive";
 
 	$.post('/SMT/jsp/utility/controller.jsp', params, function(data) {
-	successAlert("Data Received Successfully");
+	successAlert("Ready-Made Purchase Successfully");
 	}).error(function(jqXHR, textStatus, errorThrown) {
 		if (textStatus === "timeout") {
 			$(loaderObj).hide();
@@ -2489,8 +2499,8 @@ function getProductList1()
 								break;
 							}
 						}
-						/*
-						 * var prodName, com, gridBookingNoAB;
+						
+						 /* var prodName, com, gridBookingNoAB;
 						 * for (var j = 0; j < count; j++) {
 						 * prodName = rowdata[j].itemName; com =
 						 * rowdata[j].catName;

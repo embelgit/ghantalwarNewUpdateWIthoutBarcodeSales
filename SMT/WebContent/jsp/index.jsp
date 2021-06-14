@@ -15,8 +15,14 @@
 <html lang="en">
 
 <script src="/SMT/staticContent/js/dashboardreport.js"></script>
-<script src="/SMT/staticContent/js/highcharts.js"></script>
-<script src="/SMT/staticContent/js/allGraphJs.js"></script>
+
+<link href="/SMT/staticContent/y_css/jquery.dataTables.min.css"
+	rel="stylesheet" type="text/css" media="all" />
+<link href="/SMT/staticContent/y_css/buttons.dataTables.min.css"
+	rel="stylesheet" type="text/css" media="all">
+
+
+
 <head>
 
 
@@ -24,12 +30,14 @@
 jQuery(document).ready( function() {
 	
 	//getyestsale5();
+	//categoryWiseSaleGraph();
 	getsale();
 	return false;
 	}); 
 	
 
 </script>
+
 
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -47,7 +55,7 @@ jQuery(document).ready( function() {
 
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="notifyMe()">
 
 
 
@@ -338,7 +346,22 @@ jQuery(document).ready( function() {
             <h1 class="h3 mb-0 text-gray-800" >Dashboard</h1>
             <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
           </div>
+<script> 
 
+    function myFunction() {
+    	  // Get the checkbox
+    	  var checkBox = document.getElementById("mycheck");
+    	  // Get the output text
+    	  var text = document.getElementById("saleAmount");
+
+    	  // If the checkbox is checked, display the output text
+    	  if (checkBox.checked == true){
+    	    text.style.display = "block";
+    	  } else {
+    	    text.style.display = "none";
+    	  }
+    	}
+</script>
           <!-- Content Row -->
           <div class="row">
 
@@ -349,25 +372,57 @@ jQuery(document).ready( function() {
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Sales(Daily)(Credit)</div>
-                      <input type="text" id="saleAmount" readonly="readonly" style="background: #f0f0f0; border: 2px;font-size:25px;width: 150px;">
+                      <input type="text" id="saleAmount" readonly="readonly" style= " background: #f0f0f0; border: 2px;font-size:25px;width: 150px;display:none" >
+                    </div>
+                    <div class="
+                    ">
+                     <!--  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Sales(Daily)(Credit)</div> -->
+                    <i class="fas fa-dollar-sign fa-2x text-gray-300" style="margin-bottom: 45px;margin-right: -13px;"></i>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <!-- <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
+                        <input type="checkbox" id="mycheck"style="margin-top: 27px;" onclick="myFunction()" >
                     </div>
                   </div>
                 </div>
               </div>
             </div>
+            <script> 
+
+    function myFunction1() {
+    	  // Get the checkbox
+    	  var checkBox = document.getElementById("mycheck1");
+    	  // Get the output text
+    	  var text = document.getElementById("saleAmountReg");
+
+    	  // If the checkbox is checked, display the output text
+    	  if (checkBox.checked == true){
+    	    text.style.display = "block";
+    	  } else {
+    	    text.style.display = "none";
+    	  }
+    	}
+</script>
 <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Sales(Daily)(Regular)</div>
-                      <input type="text" id="saleAmountReg" readonly="readonly" style="background: #f0f0f0; border: 2px;font-size:25px;width: 150px;">
+                      
+                      <input type="text" id="saleAmountReg" readonly="readonly" style= " background: #f0f0f0; border: 2px;font-size:25px;width: 150px;display:none" >
+                    </div>
+                    <!-- <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div> -->
+                    <div class="
+                    ">
+                     <!--  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Sales(Daily)(Credit)</div> -->
+                    <i class="fas fa-dollar-sign fa-2x text-gray-300" style="margin-bottom: 45px;margin-right: -13px;"></i>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <!-- <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
+                        <input type="checkbox" id="mycheck1"style="margin-top: 27px;" onclick="myFunction1()" >
                     </div>
                   </div>
                 </div>
@@ -411,40 +466,92 @@ jQuery(document).ready( function() {
                 </div>
               </div>
             </div>
+  <script> 
 
+    function myFunction2() {
+    	  // Get the checkbox
+    	  var checkBox = document.getElementById("mycheck2");
+    	  // Get the output text
+    	  var text = document.getElementById("yestid");
+
+    	  // If the checkbox is checked, display the output text
+    	  if (checkBox.checked == true){
+    	    text.style.display = "block";
+    	  } else {
+    	    text.style.display = "none";
+    	  }
+    	}
+</script>
             <!-- Pending Requests Card Example -->
             <div class="col-xl-3 col-md-6 mb-4">
-              <div class="card border-left-warning shadow h-100 py-2">
+              <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Sales(Yesterday)(Credit)</div>
                      <div class="row no-gutters align-items-center">
                         <div class="col-auto">
-                          <input type="text" id="yestid" readonly="readonly"  style="background: #f0f0f0; border: 2px;font-size:25px;width: 150px;">
+                          
+                       <input type="text" id="yestid" readonly="readonly" style= " background: #f0f0f0; border: 2px;font-size:25px;width: 150px;display:none" >
                         </div>
                         
-                      </div>
+                        
+                     </div>
                     </div>
+                     <!-- 
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div> -->
+                    <div class="
+                    ">
+                     <!--  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Sales(Daily)(Credit)</div> -->
+                    <i class="fas fa-dollar-sign fa-2x text-gray-300" style="margin-bottom: 45px;margin-right: -13px;"></i>
+                    </div>
+                    <div class="col-auto">
+                      <!-- <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
+                        <input type="checkbox" id="mycheck2"style="margin-top: 27px;" onclick="myFunction2()" >
                     </div>
                   </div>
                 </div>
               </div>
             </div>
             
-            
+         <script> 
+
+    function myFunction3() {
+    	  // Get the checkbox
+    	  var checkBox = document.getElementById("mycheck3");
+    	  // Get the output text
+    	  var text = document.getElementById("saleAmountReg1");
+
+    	  // If the checkbox is checked, display the output text
+    	  if (checkBox.checked == true){
+    	    text.style.display = "block";
+    	  } else {
+    	    text.style.display = "none";
+    	  }
+    	}
+</script>   
             <div class="col-xl-3 col-md-6 mb-4">
               <div class="card border-left-primary shadow h-100 py-2">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                       <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Sales(Yesterday)(Regular)</div>
-                      <input type="text" id="saleAmountReg1" readonly="readonly" style="background: #f0f0f0; border: 2px;font-size:25px;width: 150px;">
+                      
+                    <input type="text" id="saleAmountReg1" readonly="readonly" style= " background: #f0f0f0; border: 2px;font-size:25px;width: 150px;display:none" >
+                    </div>
+                    <!-- <div class="col-auto">
+                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                    </div> -->
+                     <div class="
+                    ">
+                     <!--  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Sales(Daily)(Credit)</div> -->
+                    <i class="fas fa-dollar-sign fa-2x text-gray-300" style="margin-bottom: 45px;margin-right: -13px;"></i>
                     </div>
                     <div class="col-auto">
-                      <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                      <!-- <i class="fas fa-calendar fa-2x text-gray-300"></i> -->
+                        <input type="checkbox" id="mycheck3"style="margin-top: 27px;" onclick="myFunction3()" >
                     </div>
                   </div>
                 </div>
@@ -540,7 +647,97 @@ jQuery(document).ready( function() {
 												</div>
               </div>
             </div> -->
-<div class="row">
+<!-- <div class="row">
+
+            Area Chart
+            <div class="col-xl-8 col-lg-7">
+              <div class="card shadow mb-4">
+                Card Header - Dropdown
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Sales Graph</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                </div>
+                Card Body
+                <div class="card-body">
+                  <div class="chart-area">
+                    <canvas id="myAreaChart"></canvas>
+                  </div>
+                </div>
+                <div class="col-md-3 col-lg-3" id="graphcolumn">
+													<div id="categoryWiseSaleGraph" class="graphlength">
+														<div class="table-responsive" id="tables">
+															<table
+																class="table table-bordered table-striped table-condensed cf"
+																id="categoryWiseSaleGraphTable" class="display"
+																style="border: 2px solid black; border-collapse: collapse;">
+																<thead>
+																	<tr>
+																		<th>Category</th>
+																		<th>Quantity</th>
+																	</tr>
+																</thead>
+															</table>
+														</div>
+													</div>
+												</div>
+              </div>
+            </div>
+              
+           
+            Pie Chart
+            <div class="col-xl-4 col-lg-5">
+              <div class="card shadow mb-4">
+                Card Header - Dropdown
+                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                  <h6 class="m-0 font-weight-bold text-primary">Purchase Chart</h6>
+                  <div class="dropdown no-arrow">
+                    <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+                      <div class="dropdown-header">Dropdown Header:</div>
+                      <a class="dropdown-item" href="#">Action</a>
+                      <a class="dropdown-item" href="#">Another action</a>
+                      <div class="dropdown-divider"></div>
+                      <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                  </div>
+                </div>
+                Card Body
+                <div class="card-body">
+                  <div class="chart-pie pt-4 pb-2">
+                    <canvas id="myPieChart"></canvas>
+                  </div>
+                  <div class="mt-4 text-center small">
+                    <span class="mr-2">
+                      <i class="fas fa-circle text-primary"></i> Direct
+                    </span>
+                    <span class="mr-2">
+                      <i class="fas fa-circle text-success"></i> Social
+                    </span>
+                    <span class="mr-2">
+                      <i class="fas fa-circle text-info"></i> Referral
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+ -->
+ 
+ 
+ <div class="row">
 
             <!-- Area Chart -->
             <div class="col-xl-8 col-lg-7">
@@ -569,6 +766,7 @@ jQuery(document).ready( function() {
                 </div>
               </div>
             </div>
+
             <!-- Pie Chart -->
             <div class="col-xl-4 col-lg-5">
               <div class="card shadow mb-4">
@@ -608,7 +806,8 @@ jQuery(document).ready( function() {
               </div>
             </div>
           </div>
-
+ 
+ 
           <!-- Content Row -->
           <div class="row">
 
@@ -791,7 +990,7 @@ jQuery(document).ready( function() {
   </div> -->
 
   <!-- Bootstrap core JavaScript-->
-  <script src="/SMT/staticContent/vendor/jquery/jquery.min.js"></script>
+  <!-- <script src="/SMT/staticContent/vendor/jquery/jquery.min.js"></script> -->
   <script src="/SMT/staticContent/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
   <!-- Core plugin JavaScript-->
@@ -801,12 +1000,69 @@ jQuery(document).ready( function() {
   <script src="/SMT/staticContent/js/sb-admin-2.min.js"></script>
 
   <!-- Page level plugins -->
-  <script src="/SMT/staticContent/vendor/chart.js/Chart.min.js"></script>
+   <script src="/SMT/staticContent/vendor/chart.js/Chart.min.js"></script>
 
   <!-- Page level custom scripts -->
   <script src="/SMT/staticContent/js/demo/chart-area-demo.js"></script>
   <script src="/SMT/staticContent/js/demo/chart-pie-demo.js"></script>
 
+<!-- <script type="text/javascript"
+	src="/SMT/staticContent/y_js/jquery-ui.min.js"></script>
+ -->
+<script src="/SMT/staticContent/js/highcharts.js"></script>
+
+<!-- <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> -->
+
+<script src="/SMT/staticContent/shree/jquery.dataTables.min.js"
+	type="text/javascript"></script>
+<!-- <script src="/SMT/staticContent/js/allGraphJs.js"></script> -->
+<script src="/SMT/staticContent/shree/dataTables.buttons.min.js"
+	type="text/javascript"></script>
+<script src="/SMT/staticContent/shree/buttons.flash.min.js"
+	type="text/javascript"></script>
+<script src="/SMT/staticContent/shree/jszip.min.js"
+	type="text/javascript"></script>
+<script src="/SMT/staticContent/shree/pdfmake.min.js"
+	type="text/javascript"></script>
+<script src="/SMT/staticContent/shree/vfs_fonts.js"
+	type="text/javascript"></script>
+<script src="/SMT/staticContent/shree/buttons.html5.min.js"
+	type="text/javascript"></script>
+<script src="/SMT/staticContent/shree/buttons.print.min.js"
+	type="text/javascript"></script>
+
+<script data-main="scripts/main" src="/SMT/staticContent/js/r.js"></script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  if (!Notification) {
+    alert('Desktop notifications not available in your browser. Try Chromium.'); 
+    return;
+  }
+
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+});
+
+function notifyMe() {
+  if (Notification.permission !== "granted")
+    Notification.requestPermission();
+  else {
+    var notification = new Notification('Low Stock', {
+      icon: '/SMT/staticContent/images/notification1.png', 
+      body: "Some Product Running on Low Stock!",
+    });
+
+    notification.onclick = function () {
+      window.open("/SMT/jsp/LowStockNotification.jsp");      
+    };
+
+  }
+
+}
+
+</script>
 </body>
 
 

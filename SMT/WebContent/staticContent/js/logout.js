@@ -22,10 +22,16 @@ function userLogin()
 {
 	var uname = $("#uname").val();
 	var pass = $("#pass").val();
-	var e = document.getElementById("allShopList");
-	var shopName = e.options[e.selectedIndex].text;
-	var allShopListName = document.getElementById('allShopList');
-	var allShopListId = allShopListName.value;
+	var shopname = $("#allShopList").val();
+	//var e = document.getElementById("allShopList");
+//	var shopName = e.options[e.selectedIndex].text;
+	//var allShopListName = document.getElementById('allShopList');
+	//var allShopListId = allShopListName.value;
+
+	
+	$("#allShopList option:selected").each(function() {
+		selectedVal = $(this).text();
+	});
 	
 	if(uname == "" || uname == null || uname == undefined || uname == " ")
 	{
@@ -38,22 +44,43 @@ function userLogin()
 		return false;
 	}
 	
-	if(allShopListId == "select")
+	/*if(allShopListId == "select")
 	{
 		alert("Please Select Shop Name");
 		return false;
+	}*/
+	if (shopname == "") 
+	{
+		alert("Please Enter Shop Name");
+		return false;
 	}
+	
+	/*var userid=shopname.split(",")[0];
+	var shopId=shopname.split(",")[1];
+	var shopName=shopname.split(",")[2];*/
+	//alert("userid"+"shopid"+"shopname")
+	
+	var splitText = selectedVal.split(",");
+	var userid = splitText[0];
+	var shopId = splitText[1];
+	var shopName = splitText[2];
+	//var usertype = splitText[3];
 	
 	var params = {};
 
 	params["uname"] = uname;
 	params["pass"] = pass;
+	/*params["shopName"] = shopName;
+	params["allShopListId"] = allShopListId;*/
+	params["userid"] = userid;
+	params["shopId"] = shopId;
 	params["shopName"] = shopName;
-	params["allShopListId"] = allShopListId;
+	
+	
 	params["methodName"] = "login";
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 	{   
-		window.location.replace("/SMT/jsp/index.jsp");
+		window.location.replace("/SMT/jsp/Miscellaneous.jsp");
 	}
 	).error(function(jqXHR, textStatus, errorThrown)
 	{
@@ -116,22 +143,58 @@ function allowPopup()
 
 function getAllShopName()
 {
-	$("#expenseTypeId").empty();
 	
+	var uname=$('#uname').val();
+	//alert(uname);
+	//$("#expenseTypeId").empty();
+	$("#allShopList").empty();
+	$("#allShopList").append($("<option></option>").attr("value","").text("Select Shop Name"));
 	var params = {};
+	
+	params["uname"]=uname;
 	params["methodName"] = "getAllShopsNameC";
 	
-	$("#allShopList").append($("<option></option>").attr("value","select").text("Select Shop Name"));
+	//$("#allShopList").append($("<option></option>").attr("value","select").text("Select Shop Name"));
 	
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
-	{
+	/*{var count = 1;
+		
 		var jsonData = $.parseJSON(data);
+		//alert(JSON.stringify(jsonData));
 		$.each(jsonData,function(i,v)
 		{
-			$("#allShopList").append($("<option></option>").attr("value",v.pkShopId).text(v.shopName));
+			//$("#allShopList").append($("<option></option>").attr("value",( v.userId+ ","+v.shopId+","+v.shopName))); 
+			//$("#shopname_drop").append($("<option></option>").attr("value",count).text( v.userId+ ","+v.shopId+","+v.shopName))); 
+			//$("#allShopList").append($("<option></option>").attr("value",v.pkShopId).text(v.userId+ ","+v.shopId+","+v.shopName));
+		$("#hotelname_id").append($("<option></option>").attr("value", count).text(v.userid+","+v.hotelid+ "," +v.hotelname+ "," +v.usertype));
+			count++;
 		});
 	}).error(function(jqXHR, textStatus, errorThrown){
 		if(textStatus==="timeout") {
 		}
 	});
+}*/
+			
+			
+
+			{  
+			var count = 1;
+
+			var jsonData = $.parseJSON(data);
+			// var jsonData = jsonData.list;
+			$.each(jsonData, function(i, v) 
+		{
+		$("#allShopList").append($("<option></option>").attr("value", count).text(v.userId+ ","+v.shopId+","+v.shopName));
+				count++;
+			});		
+		}).error(function(jqXHR, textStatus, errorThrown){
+	    		if(textStatus==="timeout") {
+	    			$(loaderObj).hide();
+	    			$(loaderObj).find('#errorDiv').show();
+	    		}
+	    	});
+	
 }
+
+			
+			

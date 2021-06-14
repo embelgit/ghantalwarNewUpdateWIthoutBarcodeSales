@@ -583,13 +583,15 @@
 		margin-left: 80px;
 	}
 }
-
+#suppDetailsDiv {
+    height: 50% !important;
+}
 </style>
 
 </head>
 <body class="purchase_form_img vColor">
-	<!-- 	<div class="container-fluid"> -->
-	<div class="row">
+		<div class="container-fluid" id="popupblur"> 
+	<div class="row" >
 		<div class="col-md-2 align" id="billheading">
 			<span align="left" style="color: red; font-size: 25px">Booking
 				No :: <%
@@ -706,6 +708,24 @@
 					<div class="miscellaneous">
 						<div class="container" style="width: auto;" id="custdetal">
 
+					
+			<div class="row form-group">
+		<div class="col-md-1"></div>
+		<div class="col-md-1"></div>
+		<div class="col-md-1"></div>
+			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport" >
+			<select class="" id="type" name="type" name="Select Type">
+			<option value="selectoption" >Select Supplier Type </option>
+			<option value="registered">Registered</option>
+			<option value="unregistered">Unregistered</option>
+			<option value="registeredcomposite">Registered Composite</option>
+			</select> 
+			
+			
+			
+			 
+			</div>
+			</div>
 							<div class="row">
 								<div class="form-group1">
 									<div class="invoice_label_up">
@@ -1362,6 +1382,6 @@
 	<div class="row footer_margin_top" align="center">
 		<%@include file="y_commons/footer.jsp"%>
 	</div>
-	<!-- 	</div> -->
+		</div>
 </body>
 </html>

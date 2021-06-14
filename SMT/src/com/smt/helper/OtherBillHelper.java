@@ -97,6 +97,383 @@ public class OtherBillHelper
 		Integer count = Integer.parseInt(request.getParameter("count"));
 		System.out.println("c111111" + count);
 
+		String BillType=request.getParameter("billtype");
+		System.out.println(BillType);
+		
+		if(BillType.equals("Temporay"))
+		{
+			for (int i = 0; i < count; i++)
+			{
+				/*BillNo = Long.parseLong(request.getParameter("billNo"));
+				System.out.println("CURRENT Bill No ======> st.getBillNumber ::::::::::::::::::::: "+BillNo);*/
+				
+				String itemName = request.getParameter("itemName" + i);
+				cust.setItemName(itemName);
+
+				String categoryName = request.getParameter("categoryName" + i);
+				cust.setCategoryName(categoryName);
+
+				String quantity = request.getParameter("quantity" + i);
+				System.out.println("SAGAR ====> quantity" + quantity);
+				cust.setQuantity(Double.parseDouble(quantity));			
+
+				String salePrice = request.getParameter("salePrice" + i);
+				System.out.println("Sale Price is" + salePrice);
+
+				String barcodeNo = request.getParameter("barcodeNo" + i);
+				System.out.println("unitinMl" + barcodeNo);
+				cust.setBarcodeNo(Long.parseLong(barcodeNo));
+
+				String hsnSacNo = request.getParameter("hsnSacNo" + i);
+				cust.setHsnSacNo(hsnSacNo);
+
+				String vat = request.getParameter("vat" + i);
+				String igst = request.getParameter("igst" + i);
+				
+				String size1 = request.getParameter("size1"+i);
+				cust.setSize(size1);
+				
+				String sPWithoutTax = request.getParameter("sPWithoutTax" + i);
+				System.out.println("SALE PRICE WITHOUT WITHOUT TAX ======> "+sPWithoutTax);
+				cust.setSpWithoutTaxAmount(Double.parseDouble(sPWithoutTax));
+
+				System.out.println("VAT ================> "+vat);
+				double gstAmt = 0.0;
+				if (vat.equalsIgnoreCase("0"))
+				{
+					cust.setVat(Double.parseDouble(vat));
+				} else {
+					cust.setVat(Double.parseDouble(vat));
+					gstAmt = (Double.parseDouble(salePrice)-Double.parseDouble(sPWithoutTax));
+					System.out.println("gstAmt =========> "+gstAmt);
+				}
+				
+				cust.setIgst(0d);
+				cust.setTaxAmount(Double.parseDouble(quantity) * gstAmt);
+				//cust.setTaxAmount(Double.parseDouble(taxAmount));
+				
+				String saleEmpName = request.getParameter("saleEmpName"+i);
+				System.out.println("hi this is Sagar in other bill helper"+saleEmpName);			
+				if (saleEmpName.equalsIgnoreCase("") || saleEmpName == null || saleEmpName.equalsIgnoreCase("undefined") || saleEmpName.equalsIgnoreCase(" "))
+				{				
+					cust.setEmployeeName("NA");				
+				}
+				else
+				{
+					cust.setEmployeeName(saleEmpName);
+				}
+				
+				String saleEmpId = request.getParameter("saleEmpId"+i);
+				System.out.println("hi this is Sagar in other bill helper"+saleEmpId);
+				if(saleEmpId == null || saleEmpId.isEmpty() || saleEmpId.equalsIgnoreCase("") || saleEmpId.equalsIgnoreCase(" "))
+				{
+					cust.setFkSaleEmployeeId(0l);				
+				}
+				else
+				{
+					cust.setFkSaleEmployeeId(Long.parseLong(saleEmpId));
+				}
+
+				String rollSize = request.getParameter("rollSize"+i);
+				System.out.println("roll size in other bill helper@@@###$$$    ----"+rollSize);
+				
+				String sQTY = request.getParameter("goodReceiveQuantity"+i);
+				System.out.println("there is stock Quantity #### %%% &&&"+sQTY);
+				
+				String totalAmount = request.getParameter("totalAmount");
+				cust.setTotalAmt(Double.parseDouble(totalAmount));
+
+				String perProductdisPer = request.getParameter("perProductdisPer"+i);
+				System.out.println("perProductdisPer =============> "+perProductdisPer);
+				if(perProductdisPer == null || perProductdisPer.equalsIgnoreCase("") || perProductdisPer.isEmpty())
+				{
+					cust.setPerProductdisPer(0.0);
+				}
+				else
+				{
+					cust.setPerProductdisPer(Double.parseDouble(perProductdisPer));
+				}
+				
+				String discountPerProduct = request.getParameter("perProductdisAmount"+i);
+				System.out.println("discountPerProduct =============> "+discountPerProduct);
+				if(discountPerProduct == null || discountPerProduct.equalsIgnoreCase("") || discountPerProduct.isEmpty())
+				{
+					cust.setDiscount(0.0);				
+				}
+				else
+				{
+					cust.setDiscount(Double.parseDouble(discountPerProduct));
+				}
+				
+				String taxAmountAfterDis = request.getParameter("taxAmountAfterDis" + i);
+				System.out.println("taxAmountAfterDis =============> "+taxAmountAfterDis);
+				if(taxAmountAfterDis == null || taxAmountAfterDis.isEmpty() || taxAmountAfterDis.equalsIgnoreCase(""))
+				{
+					cust.setTaxAmtAfterDiscount(0.0);
+				}
+				else
+				{
+					cust.setTaxAmtAfterDiscount(Double.parseDouble(quantity) * Double.parseDouble(taxAmountAfterDis));
+				}
+				
+				String BillType1=request.getParameter("billtype");
+				
+				cust.setBilltype(BillType1);
+				System.out.println(BillType1);
+				String creditCustomer1 = request.getParameter("creditCustomer1");
+				String mobileNo = request.getParameter("mobileNo");
+
+				String paymentMode = request.getParameter("paymentMode");
+
+				String chequeNum = request.getParameter("chequeNum");
+
+				String cardNum = request.getParameter("cardNum");
+
+				String accNum = request.getParameter("accNum");
+
+				String nameOnCheck = request.getParameter("nameOnCheck");
+
+				String bankName = request.getParameter("bankName");
+				
+				String grossTotal = request.getParameter("grossTotal");
+				
+				cust.setGrossamt(Double.parseDouble(grossTotal));
+				
+				String cashCard_cashAmount = request.getParameter("cashCard_cashAmount");
+
+				String cashCard_cardAmount = request.getParameter("cashCard_cardAmount");
+				
+				
+				String cashupi_cashAmount = request.getParameter("cashCard_cashAmount1");
+
+				String cashupi_upiAmount = request.getParameter("cashCard_upiAmount");
+				
+				
+				System.out.println("upi cash amount :-"+cashupi_cashAmount);
+				System.out.println("upi amount :-"+cashupi_upiAmount);
+				
+				String totalCreditAmt = request.getParameter("totalCreditAmt");
+				if(totalCreditAmt == null || totalCreditAmt.isEmpty())
+				{
+					totalCreditAmt = "0";
+					cust.setTotalSaleReturnCreditAmt(Double.parseDouble(totalCreditAmt));
+				}
+				else
+				{
+					cust.setTotalSaleReturnCreditAmt(Double.parseDouble(totalCreditAmt));
+				}
+
+				cust.setCarNo("NA");
+				cust.setContactNo(000l);
+				cust.setOwnerName("NA");
+				cust.setCreditCustomer1(creditCustomer1);
+				cust.setSalePrice(Double.parseDouble(salePrice));
+
+				if (!"".equals(mobileNo)) {
+
+					cust.setMobileNo(Long.parseLong(mobileNo));
+				} else {
+
+					cust.setMobileNo(Long.parseLong("00"));
+				}
+
+				// payment details
+				if (paymentMode == null) {
+					cust.setPaymentMode("N/A");
+				} else {
+					cust.setPaymentMode(paymentMode);
+				}		
+			
+				if (paymentMode.equals("cheque")) {
+
+					if (chequeNum == null) {
+						cust.setChequeNum("N/A");
+					} else {
+						cust.setChequeNum(chequeNum);
+					}
+
+					if (nameOnCheck == null) {
+						cust.setNameOnCheck("N/A");
+					} else {
+						cust.setNameOnCheck(nameOnCheck);
+					}
+				} else if (paymentMode.equals("card"))
+				{
+					if(Double.parseDouble(totalCreditAmt) > 0)
+					{
+						String cardAmount = request.getParameter("cardAmount");
+						cust.setCashCard_cardAmount(Double.parseDouble(cardAmount));
+					}
+					else
+					{
+						cust.setCashCard_cardAmount(Double.parseDouble(grossTotal));
+					}
+					cust.setCashCard_cashAmount(0.0);
+					
+					cust.setCashupi_cashAmount(0.0);
+					cust.setCashupi_upiAmount(0.0);
+					int cardNumLength = cardNum.length();
+					if (cardNumLength > 0) {
+
+						cust.setCardNum(Long.parseLong(cardNum));
+					} else {
+						cust.setCardNum(null);
+					}
+				}
+				else if (paymentMode.equals("neft")) {
+					if (bankName == null) {
+						cust.setBankName("N/A");
+					} else {
+						cust.setBankName(bankName);
+					}
+
+					int accNumLength = accNum.length();
+					if (accNumLength > 0) {
+						cust.setAccNum(Long.parseLong(accNum));
+
+					} else {
+						cust.setAccNum(null);
+					}
+				}
+				else if (paymentMode.equals("cash"))
+				{				
+					if(Double.parseDouble(totalCreditAmt) > 0)
+					{
+						String cashAmount = request.getParameter("cashAmount");
+						cust.setCashCard_cashAmount(Double.parseDouble(cashAmount));
+					}
+					else
+					{
+						cust.setCashCard_cashAmount(Double.parseDouble(grossTotal));
+					}
+					cust.setCashCard_cardAmount(0.0);
+					cust.setCashupi_cashAmount(0.0);
+					cust.setCashupi_upiAmount(0.0);
+				}
+				
+				else if (paymentMode.equals("Upi"))
+				{				
+					if(Double.parseDouble(totalCreditAmt) > 0)
+					{
+						String upiAmount = request.getParameter("UpiAmount");
+						cust.setCashupi_cashAmount(Double.parseDouble(upiAmount));
+					}
+					else
+					{
+						cust.setCashupi_cashAmount(Double.parseDouble(grossTotal));
+					}
+					cust.setCashupi_upiAmount(0.0);
+					cust.setCashCard_cardAmount(0.0);
+					cust.setCashCard_cashAmount(0.0);
+					
+				}	
+				
+				if (paymentMode.equals("cashAndupi"))
+				{
+					if(cashupi_cashAmount.equals("") || cashupi_cashAmount.isEmpty() || cashupi_cashAmount == null)
+					{
+						
+						System.out.println("inside if of upi cash 0");
+						cust.setCashupi_cashAmount(0.0);
+					}
+					else
+					{
+						System.out.println("inside else of upi cash "+cashupi_cashAmount);
+						cust.setCashupi_cashAmount(Double.parseDouble(cashupi_cashAmount));
+					}
+					
+					if(cashupi_upiAmount.equals("") || cashupi_upiAmount.isEmpty() || cashupi_upiAmount == null)
+					{
+						System.out.println("inside if of upi  0 ");
+						cust.setCashupi_upiAmount(0.0);
+					}
+					else
+					{
+						System.out.println("inside if of upi amount "+cashupi_upiAmount);
+						cust.setCashupi_upiAmount(Double.parseDouble(cashupi_upiAmount));
+					}
+					
+					cust.setCashCard_cardAmount(0.0);
+					cust.setCashCard_cashAmount(0.0);
+				}
+				
+				
+				if (paymentMode.equals("cashAndCard"))
+				{
+					if(cashCard_cashAmount.equals("") || cashCard_cashAmount.isEmpty() || cashCard_cashAmount == null)
+					{
+						cust.setCashCard_cashAmount(0.0);
+					}
+					else
+					{
+						cust.setCashCard_cashAmount(Double.parseDouble(cashCard_cashAmount));
+					}
+					
+					if(cashCard_cardAmount.equals("") || cashCard_cardAmount.isEmpty() || cashCard_cardAmount == null)
+					{
+						cust.setCashCard_cardAmount(0.0);
+					}
+					else
+					{
+						cust.setCashCard_cardAmount(Double.parseDouble(cashCard_cardAmount));
+					}
+					cust.setCashupi_cashAmount(0.0);
+					cust.setCashupi_upiAmount(0.0);
+				}
+				String total = request.getParameter("total" + i);
+				cust.setTotalperItem(Double.parseDouble(total));
+				
+				//this two value save user id and userType
+				cust.setEmpType(type2);
+				System.out.println("type2 ====> "+type2);
+				cust.setEmpIdFK(uid);
+				System.out.println("uid ====>  "+uid);
+
+				DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+				Date dateobj = new Date();
+				System.out.println(df.format(dateobj));
+				String newDate = df.format(dateobj);
+				cust.setCurrent_date(dateobj);
+				
+				//get bill no auto increment
+				session3.setAttribute("BillNo", BillNo);
+				session3.setAttribute("customerName", creditCustomer1);
+				if (BillNo == null) {
+					cust.setBillNo(1l);
+				} else {
+					System.out.println("CURRENT Bill No ======> st.getBillNumber ::::::::::::::::::::: "+BillNo);
+					cust.setBillNo(BillNo);
+				}
+				
+				String fkProductId = request.getParameter("fkProductId" + i);
+				cust.setFkProductId(Long.parseLong(fkProductId));
+				
+				String fkSubCatId = request.getParameter("fkSubCatId" + i);
+				cust.setFkSubCatId(Long.parseLong(fkSubCatId));
+				
+				String fkCatId = request.getParameter("fkCategoryId" + i);
+				cust.setFkCatId(Long.parseLong(fkCatId));
+
+				Date now = new Date();
+				cust.setBillTime(now);
+				
+				String style = request.getParameter("style"+i);
+				cust.setStyle(style);
+				
+				String fkSuppId = request.getParameter("fkSuppId"+i);
+				cust.setFkSuppId(Long.parseLong(fkSuppId));
+				
+				cust.setFkShopId(Long.parseLong(shopId));
+				
+				OtherBillDao dao = new OtherBillDao();
+				dao.registerBill(cust);
+		}
+		}
+	
+		
+else if(BillType.equals("Permanent"))
+	
+ {
 		for (int i = 0; i < count; i++)
 		{
 			/*BillNo = Long.parseLong(request.getParameter("billNo"));
@@ -211,6 +588,10 @@ public class OtherBillHelper
 				cust.setTaxAmtAfterDiscount(Double.parseDouble(quantity) * Double.parseDouble(taxAmountAfterDis));
 			}
 			
+			String BillType1=request.getParameter("billtype");
+			
+			cust.setBilltype(BillType1);
+			System.out.println(BillType1);
 			String creditCustomer1 = request.getParameter("creditCustomer1");
 			String mobileNo = request.getParameter("mobileNo");
 
@@ -410,7 +791,6 @@ public class OtherBillHelper
 				}
 				cust.setCashupi_cashAmount(0.0);
 				cust.setCashupi_upiAmount(0.0);
-				
 			}
 			String total = request.getParameter("total" + i);
 			cust.setTotalperItem(Double.parseDouble(total));
@@ -460,16 +840,6 @@ public class OtherBillHelper
 			OtherBillDao dao = new OtherBillDao();
 			dao.registerBill(cust);
 			
-			
-
-			
-			
-			
-			
-			
-			
-			
-			
 			Long item_id = Long.parseLong(request.getParameter("item_id" + i));
 			System.out.println("item_id" + item_id);
 			GoodReciveDao good = new GoodReciveDao();
@@ -478,7 +848,8 @@ public class OtherBillHelper
 			StockDao dao1 = new StockDao();
 			List stkList2 = dao1.getAllStockEntry();
 
-			Double updatequnty = 0.0;		
+			Double updatequnty = 0.0;
+			System.out.println("====================================");
 			
 			for (int j = 0; j < stkList2.size(); j++)
 			{
@@ -530,6 +901,7 @@ public class OtherBillHelper
 				}
 			}
 		}
+	
 
 		int gCount1 = 0;
 		String count1 = request.getParameter("count1");
@@ -570,7 +942,7 @@ public class OtherBillHelper
 		else
 		{}
 	}
-
+	}
 	// pdf copy of other bill
 	public void OtherBillCOPY(HttpServletRequest request, HttpServletResponse response) {
 		// TODO Auto-generated method stub
@@ -1005,6 +1377,538 @@ public class OtherBillHelper
 		OtherBillDao dao = new OtherBillDao();
 		List<SaleReport> exp1List = dao.Taxinvoicewisesalereport(TaxvoiceId,userTypeRole,userName, BillFirstDate, BillEndDate);
 		return exp1List;
+	}
+	
+public void registerOtherBill123(HttpServletRequest request, HttpServletResponse response)
+	{
+		// TODO Auto-generated method stub
+		HttpSession session3 = request.getSession();
+		
+		/*this session is handel for get user type and id*/
+		HttpSession sessionv = request.getSession(true);
+		 String type2 = "";
+         String name2 = "";
+         Long uid = null ;
+         if (sessionv != null)
+         {
+	         if (sessionv.getAttribute("user") != null)
+	         {
+	        	 name2 = (String) sessionv.getAttribute("user");
+	          	 HibernateUtility hbu1=HibernateUtility.getInstance();
+	        	 Session session2=hbu1.getHibernateSession();
+	        	 org.hibernate.Query query1 = session2.createQuery("from UserDetail where userName =:name2");
+	        	 query1.setParameter("name2", name2);
+	        	 UserDetail userDetail1 = (UserDetail) query1.uniqueResult();
+	        	 type2 = userDetail1.getTypeId();
+	        	 uid = userDetail1.getPkUserId();
+			 }
+	         else
+	         {
+	        	type2 = request.getParameter("userType");
+	        	name2 = request.getParameter("userName");
+	        	
+	        	HibernateUtility hbu1=HibernateUtility.getInstance();
+	        	 Session session2=hbu1.getHibernateSession();
+	        	 org.hibernate.Query query1 = session2.createQuery("from UserDetail where userName =:name2");
+	        	 query1.setParameter("name2", name2);
+	        	 UserDetail userDetail1 = (UserDetail) query1.uniqueResult();
+	        	 type2 = userDetail1.getTypeId();
+	        	 uid = userDetail1.getPkUserId();
+	         }
+         }         
+         
+         String shopId = (String)sessionv.getAttribute("shopId");
+         String BillNo=request.getParameter("TempBillNo");
+		System.out.println("before delete"+BillNo);
+         OtherBillDao data = new OtherBillDao();
+		data.deletebill(shopId, BillNo);
+		
+		/*
+		 * List stkList = data.getLastBillNo();
+		 * 
+		 * for (int i = 0; i < stkList.size(); i++) { BillBean st = (BillBean)
+		 * stkList.get(i); BillNo = st.getBillNo();
+		 * 
+		 * BillNo++; }
+		 */
+
+		OtherBill cust = new OtherBill();
+		Integer count = Integer.parseInt(request.getParameter("count"));
+		System.out.println("c111111" + count);
+
+		String BillType=request.getParameter("billtype");
+		System.out.println(BillType);
+		
+		String BillNo1=request.getParameter("TempBillNo");
+		System.out.println("before delete"+BillNo1);
+		
+		for (int i = 0; i < count; i++)
+		{
+			//BillNo2 = Long.parseLong(request.getParameter("TempBillNo"));
+			System.out.println("CURRENT Bill No ======> st.getBillNumber ::::::::::::::::::::: "+BillNo);
+			
+			String itemName = request.getParameter("itemName" + i);
+			cust.setItemName(itemName);
+
+			String categoryName = request.getParameter("categoryName" + i);
+			cust.setCategoryName(categoryName);
+
+			String quantity = request.getParameter("quantity" + i);
+			System.out.println("SAGAR ====> quantity" + quantity);
+			cust.setQuantity(Double.parseDouble(quantity));			
+
+			String salePrice = request.getParameter("salePrice" + i);
+			System.out.println("Sale Price is" + salePrice);
+
+			String barcodeNo = request.getParameter("barcodeNo" + i);
+			System.out.println("unitinMl" + barcodeNo);
+			cust.setBarcodeNo(Long.parseLong(barcodeNo));
+
+			String hsnSacNo = request.getParameter("hsnSacNo" + i);
+			cust.setHsnSacNo(hsnSacNo);
+
+			String vat = request.getParameter("vat" + i);
+			String igst = request.getParameter("igst" + i);
+			
+			String size1 = request.getParameter("size1"+i);
+			cust.setSize(size1);
+			
+			String sPWithoutTax = request.getParameter("sPWithoutTax" + i);
+			System.out.println("SALE PRICE WITHOUT WITHOUT TAX ======> "+sPWithoutTax);
+			cust.setSpWithoutTaxAmount(Double.parseDouble(sPWithoutTax));
+
+			System.out.println("VAT ================> "+vat);
+			double gstAmt = 0.0;
+			if (vat.equalsIgnoreCase("0"))
+			{
+				cust.setVat(Double.parseDouble(vat));
+			} else {
+				cust.setVat(Double.parseDouble(vat));
+				gstAmt = (Double.parseDouble(salePrice)-Double.parseDouble(sPWithoutTax));
+				System.out.println("gstAmt =========> "+gstAmt);
+			}
+			
+			cust.setIgst(0d);
+			cust.setTaxAmount(Double.parseDouble(quantity) * gstAmt);
+			//cust.setTaxAmount(Double.parseDouble(taxAmount));
+			
+			String saleEmpName = request.getParameter("saleEmpName"+i);
+			System.out.println("hi this is Sagar in other bill helper"+saleEmpName);			
+			if (saleEmpName.equalsIgnoreCase("") || saleEmpName == null || saleEmpName.equalsIgnoreCase("undefined") || saleEmpName.equalsIgnoreCase(" "))
+			{				
+				cust.setEmployeeName("NA");				
+			}
+			else
+			{
+				cust.setEmployeeName(saleEmpName);
+			}
+			
+			String saleEmpId = request.getParameter("saleEmpId"+i);
+			System.out.println("hi this is Sagar in other bill helper"+saleEmpId);
+			if(saleEmpId == null || saleEmpId.isEmpty() || saleEmpId.equalsIgnoreCase("") || saleEmpId.equalsIgnoreCase(" "))
+			{
+				cust.setFkSaleEmployeeId(0l);				
+			}
+			else
+			{
+				cust.setFkSaleEmployeeId(Long.parseLong(saleEmpId));
+			}
+
+			String rollSize = request.getParameter("rollSize"+i);
+			System.out.println("roll size in other bill helper@@@###$$$    ----"+rollSize);
+			
+			String sQTY = request.getParameter("goodReceiveQuantity"+i);
+			System.out.println("there is stock Quantity #### %%% &&&"+sQTY);
+			
+			String totalAmount = request.getParameter("totalAmount1");
+			cust.setTotalAmt(Double.parseDouble(totalAmount));
+
+			String perProductdisPer = request.getParameter("perProductdisPer"+i);
+			System.out.println("perProductdisPer =============> "+perProductdisPer);
+			if(perProductdisPer == null || perProductdisPer.equalsIgnoreCase("") || perProductdisPer.isEmpty())
+			{
+				cust.setPerProductdisPer(0.0);
+			}
+			else
+			{
+				cust.setPerProductdisPer(Double.parseDouble(perProductdisPer));
+			}
+			
+			String discountPerProduct = request.getParameter("perProductdisAmount"+i);
+			System.out.println("discountPerProduct =============> "+discountPerProduct);
+			if(discountPerProduct == null || discountPerProduct.equalsIgnoreCase("") || discountPerProduct.isEmpty())
+			{
+				cust.setDiscount(0.0);				
+			}
+			else
+			{
+				cust.setDiscount(Double.parseDouble(discountPerProduct));
+			}
+			
+			String taxAmountAfterDis = request.getParameter("taxAmountAfterDis" + i);
+			System.out.println("taxAmountAfterDis =============> "+taxAmountAfterDis);
+			if(taxAmountAfterDis == null || taxAmountAfterDis.isEmpty() || taxAmountAfterDis.equalsIgnoreCase(""))
+			{
+				cust.setTaxAmtAfterDiscount(0.0);
+			}
+			else
+			{
+				cust.setTaxAmtAfterDiscount(Double.parseDouble(quantity) * Double.parseDouble(taxAmountAfterDis));
+			}
+			
+			String BillType1=request.getParameter("billtype");
+			
+			cust.setBilltype(BillType1);
+			System.out.println(BillType1);
+			String creditCustomer1 = request.getParameter("creditCustomer11");
+			String mobileNo = request.getParameter("mobileNo1");
+
+			String paymentMode = request.getParameter("paymentMode1");
+
+			String chequeNum = request.getParameter("chequeNum1");
+
+			String cardNum = request.getParameter("cardNum1");
+
+			String accNum = request.getParameter("accNum1");
+
+			String nameOnCheck = request.getParameter("nameOnCheck1");
+
+			String bankName = request.getParameter("bankName1");
+			
+			String grossTotal = request.getParameter("grossTotal1");
+			
+			cust.setGrossamt(Double.parseDouble(grossTotal));
+			
+			String cashCard_cashAmount = request.getParameter("cashCard_cashAmount1");
+
+			String cashCard_cardAmount = request.getParameter("cashCard_cardAmount1");
+			
+			
+			String cashupi_cashAmount = request.getParameter("cashCard_cashAmount11");
+
+			String cashupi_upiAmount = request.getParameter("cashCard_upiAmount1");
+			
+			
+			System.out.println("upi cash amount :-"+cashupi_cashAmount);
+			System.out.println("upi amount :-"+cashupi_upiAmount);
+			
+			String totalCreditAmt = request.getParameter("totalCreditAmt1");
+			if(totalCreditAmt == null || totalCreditAmt.isEmpty())
+			{
+				totalCreditAmt = "0";
+				cust.setTotalSaleReturnCreditAmt(Double.parseDouble(totalCreditAmt));
+			}
+			else
+			{
+				cust.setTotalSaleReturnCreditAmt(Double.parseDouble(totalCreditAmt));
+			}
+
+			cust.setCarNo("NA");
+			cust.setContactNo(000l);
+			cust.setOwnerName("NA");
+			cust.setCreditCustomer1(creditCustomer1);
+			cust.setSalePrice(Double.parseDouble(salePrice));
+
+			if (!"".equals(mobileNo)) {
+
+				cust.setMobileNo(Long.parseLong(mobileNo));
+			} else {
+
+				cust.setMobileNo(Long.parseLong("00"));
+			}
+
+			// payment details
+			if (paymentMode == null) {
+				cust.setPaymentMode("N/A");
+			} else {
+				cust.setPaymentMode(paymentMode);
+			}		
+		
+			if (paymentMode.equals("cheque")) {
+
+				if (chequeNum == null) {
+					cust.setChequeNum("N/A");
+				} else {
+					cust.setChequeNum(chequeNum);
+				}
+
+				if (nameOnCheck == null) {
+					cust.setNameOnCheck("N/A");
+				} else {
+					cust.setNameOnCheck(nameOnCheck);
+				}
+			} else if (paymentMode.equals("card"))
+			{
+				if(Double.parseDouble(totalCreditAmt) > 0)
+				{
+					String cardAmount = request.getParameter("cardAmount1");
+					cust.setCashCard_cardAmount(Double.parseDouble(cardAmount));
+				}
+				else
+				{
+					cust.setCashCard_cardAmount(Double.parseDouble(grossTotal));
+				}
+				cust.setCashCard_cashAmount(0.0);
+				
+				cust.setCashupi_cashAmount(0.0);
+				cust.setCashupi_upiAmount(0.0);
+				int cardNumLength = cardNum.length();
+				if (cardNumLength > 0) {
+
+					cust.setCardNum(Long.parseLong(cardNum));
+				} else {
+					cust.setCardNum(null);
+				}
+			}
+			else if (paymentMode.equals("neft")) {
+				if (bankName == null) {
+					cust.setBankName("N/A");
+				} else {
+					cust.setBankName(bankName);
+				}
+
+				int accNumLength = accNum.length();
+				if (accNumLength > 0) {
+					cust.setAccNum(Long.parseLong(accNum));
+
+				} else {
+					cust.setAccNum(null);
+				}
+			}
+			else if (paymentMode.equals("cash"))
+			{				
+				if(Double.parseDouble(totalCreditAmt) > 0)
+				{
+					String cashAmount = request.getParameter("cashAmount1");
+					cust.setCashCard_cashAmount(Double.parseDouble(cashAmount));
+				}
+				else
+				{
+					cust.setCashCard_cashAmount(Double.parseDouble(grossTotal));
+				}
+				cust.setCashCard_cardAmount(0.0);
+				cust.setCashupi_cashAmount(0.0);
+				cust.setCashupi_upiAmount(0.0);
+			}
+			
+			else if (paymentMode.equals("Upi"))
+			{				
+				if(Double.parseDouble(totalCreditAmt) > 0)
+				{
+					String upiAmount = request.getParameter("UpiAmount1");
+					cust.setCashupi_cashAmount(Double.parseDouble(upiAmount));
+				}
+				else
+				{
+					cust.setCashupi_cashAmount(Double.parseDouble(grossTotal));
+				}
+				cust.setCashupi_upiAmount(0.0);
+				cust.setCashCard_cardAmount(0.0);
+				cust.setCashCard_cashAmount(0.0);
+				
+			}	
+			
+			if (paymentMode.equals("cashAndupi"))
+			{
+				if(cashupi_cashAmount.equals("") || cashupi_cashAmount.isEmpty() || cashupi_cashAmount == null)
+				{
+					
+					System.out.println("inside if of upi cash 0");
+					cust.setCashupi_cashAmount(0.0);
+				}
+				else
+				{
+					System.out.println("inside else of upi cash "+cashupi_cashAmount);
+					cust.setCashupi_cashAmount(Double.parseDouble(cashupi_cashAmount));
+				}
+				
+				if(cashupi_upiAmount.equals("") || cashupi_upiAmount.isEmpty() || cashupi_upiAmount == null)
+				{
+					System.out.println("inside if of upi  0 ");
+					cust.setCashupi_upiAmount(0.0);
+				}
+				else
+				{
+					System.out.println("inside if of upi amount "+cashupi_upiAmount);
+					cust.setCashupi_upiAmount(Double.parseDouble(cashupi_upiAmount));
+				}
+				
+				cust.setCashCard_cardAmount(0.0);
+				cust.setCashCard_cashAmount(0.0);
+			}
+			
+			
+			if (paymentMode.equals("cashAndCard"))
+			{
+				if(cashCard_cashAmount.equals("") || cashCard_cashAmount.isEmpty() || cashCard_cashAmount == null)
+				{
+					cust.setCashCard_cashAmount(0.0);
+				}
+				else
+				{
+					cust.setCashCard_cashAmount(Double.parseDouble(cashCard_cashAmount));
+				}
+				
+				if(cashCard_cardAmount.equals("") || cashCard_cardAmount.isEmpty() || cashCard_cardAmount == null)
+				{
+					cust.setCashCard_cardAmount(0.0);
+				}
+				else
+				{
+					cust.setCashCard_cardAmount(Double.parseDouble(cashCard_cardAmount));
+				}
+				cust.setCashupi_cashAmount(0.0);
+				cust.setCashupi_upiAmount(0.0);
+			}
+			String total = request.getParameter("total" + i);
+			cust.setTotalperItem(Double.parseDouble(total));
+			
+			//this two value save user id and userType
+			cust.setEmpType(type2);
+			System.out.println("type2 ====> "+type2);
+			cust.setEmpIdFK(uid);
+			System.out.println("uid ====>  "+uid);
+
+			DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+			Date dateobj = new Date();
+			System.out.println(df.format(dateobj));
+			String newDate = df.format(dateobj);
+			cust.setCurrent_date(dateobj);
+			long BillNo2 = (Long.parseLong(BillNo1));
+			//get bill no auto increment
+			session3.setAttribute("BillNo", BillNo2);
+			session3.setAttribute("customerName", creditCustomer1);
+			if (BillNo == null) {
+				cust.setBillNo(1l);
+			} else {
+				System.out.println("CURRENT Bill No ======> st.getBillNumber ::::::::::::::::::::: "+BillNo);
+				cust.setBillNo(Long.parseLong(BillNo1));
+			}
+			
+			String fkProductId = request.getParameter("fkProductId" + i);
+			cust.setFkProductId(Long.parseLong(fkProductId));
+			
+			String fkSubCatId = request.getParameter("fkSubCatId" + i);
+			cust.setFkSubCatId(Long.parseLong(fkSubCatId));
+			
+			String fkCatId = request.getParameter("fkCategoryId" + i);
+			cust.setFkCatId(Long.parseLong(fkCatId));
+
+			Date now = new Date();
+			cust.setBillTime(now);
+			
+			String style = request.getParameter("style"+i);
+			cust.setStyle(style);
+			
+			String fkSuppId = request.getParameter("fkSuppId"+i);
+			cust.setFkSuppId(Long.parseLong(fkSuppId));
+			
+			cust.setFkShopId(Long.parseLong(shopId));
+			
+			OtherBillDao dao = new OtherBillDao();
+			dao.registerBill(cust);
+			
+			Long item_id = Long.parseLong(request.getParameter("item_id" + i));
+			System.out.println("item_id" + item_id);
+			GoodReciveDao good = new GoodReciveDao();
+			good.updateQuantity(item_id, quantity, rollSize, sQTY, size1);
+
+			StockDao dao1 = new StockDao();
+			List stkList2 = dao1.getAllStockEntry();
+
+			Double updatequnty = 0.0;
+			System.out.println("====================================");
+			
+			for (int j = 0; j < stkList2.size(); j++)
+			{
+				Stock st = (Stock) stkList2.get(j);
+				String ItemId = st.getItemName();
+				String cat = st.getCatName();
+				Long productId = st.getFkProductId();
+				Long categoryId = st.getFkCategoryId();
+				Long fkShopId = st.getFkShopId();
+
+				/* If ItemName Is Already Exists In Stock Table */
+				//if (ItemId.equals(itemName) && cat.equals(categoryName))
+				if (productId == Long.parseLong(fkProductId) && categoryId == Long.parseLong(fkCatId) && fkShopId == Long.parseLong(shopId))
+				{
+					Long PkItemId = st.getPkStockId();
+					Double qunty = st.getQuantity();
+					
+					double QTY = 0.0;
+					if(!rollSize.equals("0"))
+					{	
+						List<Double> list = null;
+						Double totalQty = 0.0;
+						HibernateUtility hbuSu = HibernateUtility.getInstance();
+						Session sessionSu = hbuSu.getHibernateSession();
+						Transaction transactionSu = sessionSu.beginTransaction();
+						org.hibernate.Query querySu = sessionSu.createSQLQuery("select SUM(gr.Quantity) from goodreceive gr where gr.fkProductId = :fkProductId AND gr.fkCatId = :fkCatId AND gr.fkShopId = :fkShopId");
+						querySu.setParameter("fkProductId", fkProductId);
+						querySu.setParameter("fkCatId", fkCatId);
+						querySu.setParameter("fkShopId", fkShopId);
+						list = querySu.list();
+						updatequnty = list.get(0).doubleValue();
+					}
+					else
+					{
+						updatequnty = (Double) (qunty - Double.parseDouble(quantity));
+					}
+
+					HibernateUtility hbu = HibernateUtility.getInstance();
+					Session session = hbu.getHibernateSession();
+					Transaction transaction = session.beginTransaction();
+
+					Date date = new Date();
+
+					Stock updateStock = (Stock) session.get(Stock.class, new Long(PkItemId));
+					updateStock.setQuantity(updatequnty);
+					updateStock.setUpdateDate(date);
+					session.saveOrUpdate(updateStock);
+					transaction.commit();
+				}
+			}
+		}
+	
+
+		int gCount1 = 0;
+		String count1 = request.getParameter("count1");
+		if(count1 == null || count1.isEmpty() || count1 == "" || count1 == " ")
+		{
+			gCount1 = 0;
+		}
+		else
+		{
+			gCount1 = Integer.parseInt(count1);
+		}
+		System.out.println("GRID COUNT ====> "+count1);
+		if(gCount1 > 0)
+		{
+			System.out.println("c22222 ====> " + count1);
+			HibernateUtility hbu2 = null;
+			Session session2 = null;
+			Transaction transaction2 = null;
+	
+			try
+			{
+				hbu2 = HibernateUtility.getInstance();
+				session2 = hbu2.getHibernateSession();
+				transaction2 = session2.beginTransaction();		
+				for(int j=0; j<gCount1; j++)
+				{				
+					String transactionId = request.getParameter("transactionId"+j);
+					Query query = session2.createSQLQuery("UPDATE salereturn set redeemedForBillNo = "+BillNo+" WHERE transactionId = "+transactionId);
+					query.executeUpdate();
+					transaction2.commit();
+				}
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+		}
+		else
+		{}
 	}
 	
 	

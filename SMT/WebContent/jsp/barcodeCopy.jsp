@@ -249,7 +249,7 @@
 												GoodReceive category = (GoodReceive) mainCategoryList.get(i);
 										%>
 										<option data-value="<%=category.getBarcodeNo()%>"
-											value="<%=category.getBarcodeNo()%>">
+											value="<%=category.getBarcodeNo()%>::>><%=category.getCatName()%>:><%=category.getItemName()%>::>><%=category.getColor()%>::>><%=category.getSize()%>::>><%=category.getQuantity()%>">
 											<%
 												}
 											%>

@@ -395,7 +395,7 @@ width:auto;
 
 </head>
 <body class="vColor">
-	<div class="container-fluid">
+	<div class="container-fluid" id="popupblur">
 		<div class="row">
 			<div align="center" id="categorylisth2">
 				<h2 class="form-name style_heading">Product Detail</h2>
@@ -661,7 +661,7 @@ width:auto;
 					</div>
 
 					<div class="row prdt_grid">
-						<div class="col-lg-5 col-lg-offset-3">
+						<div class="col-lg-5 ">
 							<table id="jqGridPD"></table>
 							<div id="jqGridPagerPD"></div>
 						</div>

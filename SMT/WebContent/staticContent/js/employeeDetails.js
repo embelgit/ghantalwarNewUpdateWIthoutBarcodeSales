@@ -157,6 +157,8 @@ function employeedetails()
 		document.empd.btn.disabled = false;
 		return false;
 	}
+	
+	
 }	
 
 function empDetails(){
@@ -172,7 +174,8 @@ function empDetails(){
 	var contactNo  = $('#contactNo').val();
 	var emailId = $('#emailId').val();
 	var zipCode = $('#zipCode').val();
-
+	var EmpidNo = $('#EmpidNo').val();
+	//alert(EmpidNo);
 	var params = {};
 
 	params ["shopId"] = shopId;
@@ -185,7 +188,7 @@ function empDetails(){
 	params["contactNo"] =contactNo;
 	params["emailId"] = emailId;
 	params["zipCode"] = zipCode;
-
+	params["EmpidNo"] = EmpidNo;
 	params["methodName"] = "regDetails";
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 	{
@@ -412,3 +415,46 @@ function updateEmployeeDetails(){
 		}
 	});
 }	
+
+
+function ok(data) {
+	
+	var params={};
+	var  abc = data.id;
+	
+var aa=$("#name").text();
+	alert(aa);
+	var fields = abc.split(',');
+
+	var id = fields[0];
+	var type = fields[1];
+	
+	params["attendences"] = type;
+	params["attendencesid"] = id;
+	
+	if(type=="present")
+		{
+		alert("inside present==="+id+"====="+type);
+		params["attendences"] = type;
+		params["attendencesid"] = id;
+		
+		}
+	else if (type=="absent") {
+		
+		alert("inside absent==="+id+"====="+type);
+	}
+	else if (type=="halfday") {
+		alert("inside halfDay==="+id+"====="+type);
+	}
+
+	
+	//alert("text==="+id+"====="+type);
+	
+	
+	
+	
+	
+	
+	
+	
+}

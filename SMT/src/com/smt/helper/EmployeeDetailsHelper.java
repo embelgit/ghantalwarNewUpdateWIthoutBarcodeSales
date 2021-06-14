@@ -45,6 +45,8 @@ public class EmployeeDetailsHelper {
 		String salary = request.getParameter("salary");
 
 		String zipCode = request.getParameter("zipCode");
+		String EmpidNo = request.getParameter("EmpidNo");
+		System.out.println("Employee id no"+EmpidNo);
 		
 		EmployeeDetailsBean edb = new EmployeeDetailsBean();
 
@@ -96,6 +98,12 @@ public class EmployeeDetailsHelper {
 			edb.setSalary(Double.parseDouble(salary));
 		} else {
 			edb.setSalary(Double.parseDouble("00"));
+		}
+		
+		if (!"".equals(EmpidNo)) {
+			edb.setEmpIdNo(EmpidNo);
+		} else {
+			edb.setEmpIdNo("00");
 		}
 
 		edb.setFirstName(firstName.trim());

@@ -26,6 +26,21 @@ public class AllGraphHelper
 		return exp1List;
 	}
 	
+	
+	public List SaleGraphHelper(HttpServletRequest request, HttpServletResponse response)
+	{
+		// TODO Auto-generated method stub
+		
+		System.out.println("=== categoryWiseSaleGraph HELPER ===");
+		
+		String userTypeRole = request.getParameter("userTypeRole");
+		String userName = request.getParameter("userName");
+		Map<Long, SaleReport> map = new HashMap<Long, SaleReport>();
+		AllGraphDao dao = new AllGraphDao();
+		List<AllGraphBean> exp1List = dao.SaleGraphDao(userTypeRole, userName);
+		return exp1List;
+	}
+	
 	public List supplierWiseTotalSaleGraphHelper(HttpServletRequest request, HttpServletResponse response)
 	{
 		// TODO Auto-generated method stub

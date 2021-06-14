@@ -22,6 +22,7 @@
 		<property name="type" type="java.lang.String" column="type" />
 
 		<property name="shopId" type="java.lang.Long" column="shop_id" />
-
+		
+<property name="shopName" type="java.lang.String" column="shop_name" />
 	</class>
 </hibernate-mapping>

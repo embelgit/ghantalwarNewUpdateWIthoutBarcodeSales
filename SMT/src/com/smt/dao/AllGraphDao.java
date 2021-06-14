@@ -62,6 +62,59 @@ public class AllGraphDao
 		return catList;
 	}	
 	
+	
+	public List<AllGraphBean> SaleGraphDao(String userTypeRole, String userName)
+	{
+		System.out.println("=== categoryWiseSaleGraph DAO ===");
+		
+		System.out.println("userTypeRole ====> "+userTypeRole);
+		System.out.println("userName ====> "+userName);
+		// TODO Auto-generated method stub
+		HibernateUtility hbu = null;
+		Session session = null;
+		Query query2 = null;
+		List<AllGraphBean> catList = null;
+		try
+		{
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			
+			query2 = session.createSQLQuery("SELECT category_name, sum(Quantity) total FROM(SELECT ct.category_name, ob.fkCatId, ob.Quantity FROM otherbill ob JOIN categories ct on ob.fkCatId=ct.pk_category_id UNION ALL SELECT ct.category_name, ccb.fkCatId, ccb.Quantity FROM creditcustomerbill ccb JOIN categories ct on ccb.fkCatId=ct.pk_category_id ) t GROUP BY fkCatId");
+				
+			List<Object[]> list = query2.list();
+			catList = new ArrayList<AllGraphBean>(0);
+
+			for (Object[] object : list)
+			{
+				AllGraphBean reports = new AllGraphBean();
+				
+				String quantity = object[1].toString();
+				if (quantity.equals("0"))
+				{
+					continue;
+				}
+				else
+				{
+					reports.setSaleCatName(object[0].toString());
+					reports.setSaleQty(Double.parseDouble(object[1].toString()));
+				}
+				catList.add(reports);
+			}
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return catList;
+	}	
+	
+	
+	
+
+	
+	
+	
+	
 	public List<AllGraphBean> supplierWiseTotalSaleGraphDao(String userTypeRole, String userName)
 	{
 		System.out.println("=== categoryWiseSaleGraph DAO ===");

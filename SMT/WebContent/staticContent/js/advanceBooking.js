@@ -44,11 +44,13 @@ function suppDetailsDivAction(a)
 				collision: "none",
 			}
 		});
+		document.getElementById("popupblur").style.filter="blur(20px)";
     }
     else
     {
     	$( "#suppDetailsDiv" ).dialog('close');
        	//document.getElementById("suppDetailsDiv").style.display="none";
+    	document.getElementById("popupblur").style.filter="none";
     }
 	
 	$('#suppListDiv').load(document.URL +  ' #suppListDiv');

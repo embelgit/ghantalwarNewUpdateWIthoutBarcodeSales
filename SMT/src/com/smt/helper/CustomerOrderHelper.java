@@ -999,6 +999,56 @@ public class CustomerOrderHelper {
 		}
 		return cs;
 	}
+	
+	
+	
+	public List getDetailsById123(HttpServletRequest request, HttpServletResponse response)
+	{
+		// TODO Auto-generated method stub
+		HttpSession session1 = request.getSession();
+		String shopId = (String)session1.getAttribute("shopId");
+		
+		String key = request.getParameter("key1");
+		String productId = request.getParameter("productId");
+		String tempbillNo = request.getParameter("tempbillNo");
+		System.out.println(key+" barcode");
+		System.out.println(productId+" productId");
+		System.out.println(tempbillNo+" ====Temp bill no");
+		Map<Long, CustomerBean> map = new HashMap<Long, CustomerBean>();
+
+		CustomerOrderDao dao = new CustomerOrderDao();
+		List<CustomerBean> catList = dao.getAllItemDetails123(key, productId, shopId,tempbillNo);
+		return catList;
+
+		/*
+		 * CustomerBean cs = null; if (catList != null && catList.size() > 0) { cs =
+		 * (CustomerBean) catList.get(0); } return cs;
+		 */
+	}
+	
+	public List getDetailsById11(HttpServletRequest request, HttpServletResponse response)
+	{
+		// TODO Auto-generated method stub
+		HttpSession session1 = request.getSession();
+		String shopId = (String)session1.getAttribute("shopId");
+		
+		String key = request.getParameter("key");
+		String productId = request.getParameter("productId");
+		String Tempbillid = request.getParameter("Tempbillid");
+		System.out.println(key+" barcode");
+		System.out.println(productId+" productId");
+		
+		Map<Long, CustomerBean> map = new HashMap<Long, CustomerBean>();
+
+		CustomerOrderDao dao = new CustomerOrderDao();
+		List<CustomerBean> itemlist = dao.getAllItemDetails11(key, productId, shopId,Tempbillid);
+
+		/*
+		 * CustomerBean cs = null; if (catList != null && catList.size() > 0) { cs =
+		 * (CustomerBean) catList.get(0); }
+		 */
+		return itemlist;
+	}
 
 	public List getAllBillNumbers() {
 		CustomerOrderDao dao = new CustomerOrderDao();

@@ -44,12 +44,14 @@ function ValAccessControlDetails(){
 		return false;
 	}
 	
-	/*if(document.acescont.shopName.value == "")
+	if(document.acescont.shopName1.value == "")
 	{
 		alert("Please Select Shop Name.");
 		return false;
-	}*/	
+	}
 	
+	var shopname  = $('#shopName1').val();
+	//alert(shopname);
 	AddAccessControlDetails();
 }
 
@@ -65,9 +67,10 @@ function AddAccessControlDetails(){
 	var password = $('#password').val();
 	var type = $('#typeId').val();
 	
-	/*var shopname  = $('#shopName').val();
+	var shopname  = $('#shopName1').val();
+	alert
 	var shopid= shopname.split(",")[0];
-	var shop= shopname.split(",")[1];*/
+	var shop= shopname.split(",")[1];
 
 	var params = {};
 	
@@ -76,8 +79,8 @@ function AddAccessControlDetails(){
 	params["userName"] =userName;
 	params["password"] =password;
 	params["type"] = type;
-	//params["shopid"] =shopid;
-	
+	params["shopid"] =shopid;
+	params["shop"] =shop;
 	params["methodName"] = "AddAccessControl";
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 	{

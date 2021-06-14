@@ -17,11 +17,18 @@ public class currentStock {
 	private double stockinmeter;
 	private String subCatName;
 	private Double returnquantity;;
+	private String Color;
 	
 	private Long pkStockid;
 	
 	
 	
+	public String getColor() {
+		return Color;
+	}
+	public void setColor(String color) {
+		Color = color;
+	}
 	public Long getPkStockid() {
 		return pkStockid;
 	}

@@ -1292,6 +1292,7 @@ public class GoodReciveDao {
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
 			Query query = session.createQuery("from GoodReceive");
+			//Query query = session.createQuery("from GoodReceive where quantity>0");
 			list = query.list();
 		} catch (RuntimeException e) {
 			Log.error("Error in getAllMainBarcodeNo()", e);
@@ -3036,7 +3037,7 @@ public class GoodReciveDao {
 				hbu = HibernateUtility.getInstance();
 				session = hbu.getHibernateSession();
 				//Query query = session.createSQLQuery("SELECT ProductName, CompanyName, weight, quantity, stock_in_kg AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND stock_in_kg !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, Stock_in_ltr AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND Stock_in_ltr !=0 UNION ALL SELECT ProductName, CompanyName, weight, quantity, total_piece_quantity AS demo, unit FROM stock_detail WHERE CompanyName ='" + companyName +"'"+"AND total_piece_quantity !=0");
-		        Query query = session.createSQLQuery("select pk_stock_details_id,ItemName from stock_details where  Quantity < 10 ");
+		        Query query = session.createSQLQuery("select sd.pk_stock_details_id,sd.ItemName,sd.CategoryName,ct.color,sd.Quantity from stock_details sd  JOIN product_reg ct on sd.fk_Product_Id=ct.pkProductNameId where  sd.Quantity < 10 ");
 
 		List<Object[]> list = query.list();
 		stockList = new ArrayList<currentStock>(0);
@@ -3048,6 +3049,12 @@ public class GoodReciveDao {
 			String aa = object[1].toString();
 			reports.setPkStockid(Long.parseLong(object[0].toString()));
 			reports.setItemName(object[1].toString());
+			reports.setCatName(object[2].toString());
+
+			reports.setColor(object[3].toString());
+			reports.setQuantity(Double.parseDouble(object[4].toString()));
+			
+			
 			//	reports.setGrossTotal(Double.parseDouble(object[1].toString()));
 //			System.out.println("set sale return  -  "+reports.getGrossTotal());	
 			stockList.add(reports);
@@ -3217,6 +3224,75 @@ public class GoodReciveDao {
 			}
 			return stockList;	
 
+		}
+		
+		
+		public void updateQuantity1(Long item_id, String quantity, String rollSize, String sQTY, String size1)
+		{
+			// TODO Auto-generated method stub
+
+			HibernateUtility hbu = null;
+			Session session = null;
+			Transaction transaction = null;
+
+			try {
+				hbu = HibernateUtility.getInstance();
+				session = hbu.getHibernateSession();
+				transaction = session.beginTransaction();
+
+				org.hibernate.Query query = session.createQuery("from GoodReceive where PkGoodRecId = :item_id");
+				query.setParameter("item_id", item_id);
+
+				GoodReceive uniqueResult = (GoodReceive) query.uniqueResult();
+				Double quant = uniqueResult.getQuantity();
+				Double soldQuant = uniqueResult.getSoldQuantity();			
+				System.out.println("QUANT FROM GOOD RECEIVE ======= >"+quant);
+				Double updatequnty = 0.0;	
+				Double updateSoldQuanty = 0.0;
+				
+				System.out.println("SAGAR size1 =============> "+size1);
+				
+				if (size1.equalsIgnoreCase("meter")	|| size1.equalsIgnoreCase("mtr")) 
+				{
+					System.out.println("IN METER IF CONDITION");
+					// fabric calculation
+					
+					double r = Double.parseDouble(rollSize);
+					System.out.println("1 rollSize ======= >"+r);
+					double sq = Double.parseDouble(sQTY);
+					System.out.println("2 SQTY ======= >"+quant);
+					double mQty = Double.parseDouble(quantity);
+					System.out.println("3 mQty ==========> "+mQty);
+					double asd = r * quant;
+					//double mm = (asd - mQty)/r;
+					//double cha = quant - mm;
+					//updatequnty = (Double) (quant - cha);
+					double quntyInMtr = (Double) (asd - mQty);
+					updatequnty = quntyInMtr/r;
+					updateSoldQuanty = (Double)(soldQuant + Double.parseDouble(quantity));
+				}
+				else
+				{
+					updatequnty = (Double)(quant - Double.parseDouble(quantity));
+					updateSoldQuanty = (Double)(soldQuant + Double.parseDouble(quantity));
+					System.out.println("sagar change size in dao !@#$%^&*(!@#$%^&*(@#$%^&*(@!#$%^&!@#$%^&@#$%^&-------------   "+updatequnty);
+				}
+				
+				GoodReceive updateStock = (GoodReceive) session.get(GoodReceive.class, new Long(item_id));
+
+				updateStock.setQuantity(updatequnty);
+				updateStock.setSoldQuantity(updateSoldQuanty);
+				
+				session.saveOrUpdate(updateStock);
+				transaction.commit();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				if (session != null) {
+					session.close();
+				}
+			}
 		}
 		
 		

@@ -50,7 +50,7 @@ public class SupplierDetailHelper
 		String taxName = request.getParameter("vatName");
 		
 		String supplierType = request.getParameter("type");
-		
+System.out.println("Supplier type"+supplierType);		
 		String accountName = request.getParameter("accountname");
 		System.out.println(accountName+"account name");
 		String accountnumber = request.getParameter("account");
@@ -64,19 +64,23 @@ public class SupplierDetailHelper
 		
 		detail.setSupplierType(supplierType);
 		
-		if (!"".equals(address)) {
-
-			detail.setAddress(address);
+		
+			if(address == null || address.isEmpty() || address == "" || address == " ")
+		{
+				detail.setAddress("N/A");
+			
 		} else {
-			detail.setAddress("N/A");
+			
+			detail.setAddress(address);
 		}
 
-		if (!"".equals(city)) {
-
-			detail.setCity(city);
-		} else {
+			if(city == null || city.isEmpty() || city == "" || city == " ")
+			{
 
 			detail.setCity("N/A");
+		} else {
+
+			detail.setCity(city);
 		}
 
 		if(contactPerson == null || contactPerson.isEmpty() || contactPerson == "" || contactPerson == " ")
@@ -88,74 +92,84 @@ public class SupplierDetailHelper
 			detail.setContactPerson(contactPerson);
 		}
 
-		if (!"".equals(email)) {
+		if(email == null || email.isEmpty() || email == "" || email == " ")
+		{
 
-			detail.setEmail(email);
-		} else {
 			detail.setEmail("N/A");
-		}
-
-		if (!"".equals(pin)) {
-
-			detail.setPin(Long.parseLong(pin));
 		} else {
-			detail.setPin(Long.parseLong("00"));
+			detail.setEmail(email);
 		}
 
-		if (!"".equals(panNo)) {
+		if(pin == null || pin.isEmpty() || pin == "" || pin == " ")
+		{
+
+			detail.setPin(Long.parseLong("00"));
+		} else {
+			detail.setPin(Long.parseLong(pin));
+		}
+
+		if(pin == null || pin.isEmpty() || pin == "" || pin == " ")
+		{
+
+			detail.setPanNo("N/A");
+		} else {
 
 			detail.setPanNo(panNo);
-		} else {
-
-			detail.setPanNo("NA");
 		}
 		detail.setSupplierName(supplierName);
 
-		if (!"".equals(mobileno)) {
-
-			detail.setMobileno(Long.parseLong(mobileno));
-		} else {
+		if(mobileno == null || mobileno.isEmpty() || mobileno == "" || mobileno == " ")
+		{
 
 			detail.setMobileno(Long.parseLong("00"));
+		} else {
+
+			detail.setMobileno(Long.parseLong(mobileno));
 		}
 		
 		
-		if (!"".equals(accountName)) {
+		if(accountName == null || accountName.isEmpty() || accountName == "" || accountName == " ")
+		{
 
-			detail.setAccountName(accountName);
-		} else {
 			detail.setAccountName("N/A");
+		} else {
+			detail.setAccountName(accountName);
 		}
 		
 		
-		if (!"".equals(upiid)) {
+		if(upiid == null || upiid.isEmpty() || upiid == "" || upiid == " ")
+		{
 
-			detail.setUpiid(upiid);
-		} else {
 			detail.setUpiid("N/A");
+		} else {
+			detail.setUpiid(upiid);
 		}
 		
-		if (!"".equals(accountnumber)) {
+		if(accountnumber == null || accountnumber.isEmpty() || accountnumber == "" || accountnumber == " ")
+		{
+			detail.setAccNumber(Long.parseLong("00"));
+			
+		} else {
+			
 			detail.setAccNumber(Long.parseLong(accountnumber));
-			
-		} else {
-			
-			detail.setAccNumber(Long.parseLong("0"));
 		}
 		
-		if (!"".equals(ifsc)) {
+		if(ifsc == null || ifsc.isEmpty() || ifsc == "" || ifsc == " ")
+		{
 
-			detail.setIfsCcode1(ifsc);
-		} else {
 			detail.setIfsCcode1("N/A");
+		} else {
+			detail.setIfsCcode1(ifsc);
 		}
+		
+		
 		
 		
 		detail.setSuppCode(supcode);
 		detail.setTaxType(taxName);
 		detail.setActiveYn("Y");
 		detail.setFkShopId(Long.parseLong(shopId));
-
+System.out.println("data come in helper going to dao");
 		SupplierDetailDao dao = new SupplierDetailDao();
 		dao.valSupplierDetail(detail);
 	}

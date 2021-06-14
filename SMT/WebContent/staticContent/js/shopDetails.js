@@ -113,3 +113,42 @@ function addShop()
 		}
 	});
 }
+
+
+function billcancel() {
+
+	//alert("ok");
+	var params= {};
+	
+	var billno = $("#billno").val();
+	
+	var BillNOOO = $("#BillNOOO").val();
+	//var billNo=$('#billno').val;
+	
+	//var billNoo= $('#BillNOOO').val;
+	
+	if(billno == "" || billno ==null || billno==undefined)
+    {
+	params["billno"] = BillNOOO;
+    }
+    
+    else if(BillNOOO == "" || BillNOOO ==null || BillNOOO==undefined)
+  //  else
+    {
+	params["billno"] = billno;
+    }
+    
+	
+    params["methodName"] = "billreturn";
+    $.post('/SMT/jsp/utility/controller.jsp',params,function(data)
+    		{	
+    			successAlert(data);
+    		}
+    		).error(function(jqXHR, textStatus, errorThrown){
+    			if(textStatus==="timeout") {
+    				$(loaderObj).hide();
+    				$(loaderObj).find('#errorDiv').show();
+    			}
+    		});
+    	}
+

@@ -25,7 +25,7 @@
 <script src="/SMT/staticContent/js/logout.js"></script>
 
 <script type="text/javascript">
-function checkUser()
+<%-- function checkUser()
 {
 	var loginFlag = 0;
 	<%
@@ -68,7 +68,7 @@ function checkUser()
 		return false;
 	}
 }
-
+ --%>
 function getForgotPassword()
 {
 	window.location = "passwordToMail.jsp";
@@ -77,7 +77,7 @@ function getForgotPassword()
 
 </head>
 
-<body background="/SMT/staticContent/images/68773232-clothes-wallpapers.jpg" onload="getAllShopName()">
+<body background="/SMT/staticContent/images/68773232-clothes-wallpapers.jpg" >
 	<div class="container">
 	<div class="logincontent">
 					<h2>Please Sign In</h2>
@@ -86,7 +86,7 @@ function getForgotPassword()
 						<form action="login" method="post">
 						<div align="center">
 								<div>
-								    <input name="uname"id="uname" type="text" class="mui-textfield mui-textfield--float-label" required>
+								    <input name="uname"id="uname" type="text" class="mui-textfield mui-textfield--float-label" required onchange="getAllShopName()">
 								    <label>User Name</label>
 								</div>
 								
@@ -95,22 +95,31 @@ function getForgotPassword()
 								    <label>Password</label>
 								</div>
 								
+							<!-- 	<div>
+								
+								
+									<input id="allShopList" list="shopname_drop"class="mui-textfield mui-textfield--float-label" >
+								<datalist id="shopname_drop"></datalist>
+									<label >Shop Name<sup>*</sup></label>
+								</div> -->
+								
 								<div>
-									<select id="allShopList" class="mui-textfield mui-textfield--float-label" readonly="readonly" required></select>
+									<select id="allShopList" class="mui-textfield mui-textfield--float-label" required></select>
 									<label for="allShopList" id="shoplabel">Shop Name<sup>*</sup></label>
 								</div>
+								
 						</div>
 								<!-- Change this to a button or input when using this as a form -->
 								
 								<div class="row" align="center">
 						            <div class="col-md-4 col-sm-4 col-xs-4 col-lg-4 col-md-offset-2">
-										<button type="button" onclick="checkUser()" class="btn btn-md btn-lg btn-success" style="width:124px;">Login</button>
+										<button type="button" onclick="userLogin();" class="btn btn-md btn-lg btn-success" style="width:124px;">Login</button>
 									</div>
 									
 									
-									<div class="col-md-4 col-sm-4 col-xs-4 col-lg-4 col-md-offset-2"  id="forgotpassword">
+									<div class="col-md-4 col-sm-4 col-xs-4 col-lg-4 col-md-offset-2"  id="forgotpassword" align="right" >
 								<a onclick="location.href='/SMT/jsp/passwordToMail.jsp';">
-									Forgot Password ?
+									    		Forgot Password ?
 								</a>
 							</div>
 									

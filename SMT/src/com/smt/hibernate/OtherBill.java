@@ -54,75 +54,109 @@ public class OtherBill {
 	private Double cashupi_cashAmount;
 	private Double cashupi_upiAmount;
 	
-	
-	
+	private String Billtype;
+	private String BillCancel;
 	public OtherBill() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 	
-	public OtherBill(Long pkBillId, String itemName, double quantity, Double salePrice, Double grossamt,
-			Date current_date, Double totalAmt, Long billNo, String categoryName, Long pkItemId, Long barcodeNo,
-			Double discount, Double totalperItem, String ownerName, String carNo, Long contactNo, String hsnSacNo,
-			Double vat, Double igst, Double taxAmount, String creditCustomer1, Long mobileNo, String employeeName,
-			String chequeNum, Long cardNum, Long accNum, Long regNumber, String paymentMode, String nameOnCheck,
-			String bankName, String empType, Long empIdFK, String size, Double taxAmtAfterDiscount,
-			Double perProductdisPer, Double spWithoutTaxAmount, Long fkSaleEmployeeId, Long fkProductId,
-			Long fkSubCatId, Long fkCatId, Date billTime, String style, Double cashCard_cashAmount,
-			Double cashCard_cardAmount, Double totalSaleReturnCreditAmt, Long fkSuppId, Long fkShopId,
-			Double cashupi_cashAmount, Double cashupi_upiAmount) {
-		super();
-		this.pkBillId = pkBillId;
-		this.itemName = itemName;
-		this.quantity = quantity;
-		this.salePrice = salePrice;
-		this.grossamt = grossamt;
-		this.current_date = current_date;
-		this.totalAmt = totalAmt;
-		this.billNo = billNo;
-		this.categoryName = categoryName;
-		this.pkItemId = pkItemId;
-		this.barcodeNo = barcodeNo;
-		this.discount = discount;
-		this.totalperItem = totalperItem;
-		this.ownerName = ownerName;
-		this.carNo = carNo;
-		this.contactNo = contactNo;
-		this.hsnSacNo = hsnSacNo;
-		this.vat = vat;
-		this.igst = igst;
-		this.taxAmount = taxAmount;
-		this.creditCustomer1 = creditCustomer1;
-		this.mobileNo = mobileNo;
-		this.employeeName = employeeName;
-		this.chequeNum = chequeNum;
-		this.cardNum = cardNum;
-		this.accNum = accNum;
-		this.regNumber = regNumber;
-		this.paymentMode = paymentMode;
-		this.nameOnCheck = nameOnCheck;
-		this.bankName = bankName;
-		this.empType = empType;
-		this.empIdFK = empIdFK;
-		this.size = size;
-		this.taxAmtAfterDiscount = taxAmtAfterDiscount;
-		this.perProductdisPer = perProductdisPer;
-		this.spWithoutTaxAmount = spWithoutTaxAmount;
-		this.fkSaleEmployeeId = fkSaleEmployeeId;
-		this.fkProductId = fkProductId;
-		this.fkSubCatId = fkSubCatId;
-		this.fkCatId = fkCatId;
-		this.billTime = billTime;
-		this.style = style;
-		this.cashCard_cashAmount = cashCard_cashAmount;
-		this.cashCard_cardAmount = cashCard_cardAmount;
-		this.totalSaleReturnCreditAmt = totalSaleReturnCreditAmt;
-		this.fkSuppId = fkSuppId;
-		this.fkShopId = fkShopId;
-		this.cashupi_cashAmount = cashupi_cashAmount;
-		this.cashupi_upiAmount = cashupi_upiAmount;
+	
+
+	
+
+
+
+	public String getBillCancel() {
+		return BillCancel;
 	}
+
+
+
+	public void setBillCancel(String billCancel) {
+		BillCancel = billCancel;
+	}
+
+public String getBilltype() {
+		return Billtype;
+	}
+
+	public OtherBill(Long pkBillId, String itemName, double quantity, Double salePrice, Double grossamt, Date current_date,
+		Double totalAmt, Long billNo, String categoryName, Long pkItemId, Long barcodeNo, Double discount,
+		Double totalperItem, String ownerName, String carNo, Long contactNo, String hsnSacNo, Double vat, Double igst,
+		Double taxAmount, String creditCustomer1, Long mobileNo, String employeeName, String chequeNum, Long cardNum,
+		Long accNum, Long regNumber, String paymentMode, String nameOnCheck, String bankName, String empType,
+		Long empIdFK, String size, Double taxAmtAfterDiscount, Double perProductdisPer, Double spWithoutTaxAmount,
+		Long fkSaleEmployeeId, Long fkProductId, Long fkSubCatId, Long fkCatId, Date billTime, String style,
+		Double cashCard_cashAmount, Double cashCard_cardAmount, Double totalSaleReturnCreditAmt, Long fkSuppId,
+		Long fkShopId, Double cashupi_cashAmount, Double cashupi_upiAmount, String billtype, String billCancel) {
+	super();
+	this.pkBillId = pkBillId;
+	this.itemName = itemName;
+	this.quantity = quantity;
+	this.salePrice = salePrice;
+	this.grossamt = grossamt;
+	this.current_date = current_date;
+	this.totalAmt = totalAmt;
+	this.billNo = billNo;
+	this.categoryName = categoryName;
+	this.pkItemId = pkItemId;
+	this.barcodeNo = barcodeNo;
+	this.discount = discount;
+	this.totalperItem = totalperItem;
+	this.ownerName = ownerName;
+	this.carNo = carNo;
+	this.contactNo = contactNo;
+	this.hsnSacNo = hsnSacNo;
+	this.vat = vat;
+	this.igst = igst;
+	this.taxAmount = taxAmount;
+	this.creditCustomer1 = creditCustomer1;
+	this.mobileNo = mobileNo;
+	this.employeeName = employeeName;
+	this.chequeNum = chequeNum;
+	this.cardNum = cardNum;
+	this.accNum = accNum;
+	this.regNumber = regNumber;
+	this.paymentMode = paymentMode;
+	this.nameOnCheck = nameOnCheck;
+	this.bankName = bankName;
+	this.empType = empType;
+	this.empIdFK = empIdFK;
+	this.size = size;
+	this.taxAmtAfterDiscount = taxAmtAfterDiscount;
+	this.perProductdisPer = perProductdisPer;
+	this.spWithoutTaxAmount = spWithoutTaxAmount;
+	this.fkSaleEmployeeId = fkSaleEmployeeId;
+	this.fkProductId = fkProductId;
+	this.fkSubCatId = fkSubCatId;
+	this.fkCatId = fkCatId;
+	this.billTime = billTime;
+	this.style = style;
+	this.cashCard_cashAmount = cashCard_cashAmount;
+	this.cashCard_cardAmount = cashCard_cardAmount;
+	this.totalSaleReturnCreditAmt = totalSaleReturnCreditAmt;
+	this.fkSuppId = fkSuppId;
+	this.fkShopId = fkShopId;
+	this.cashupi_cashAmount = cashupi_cashAmount;
+	this.cashupi_upiAmount = cashupi_upiAmount;
+	Billtype = billtype;
+	BillCancel = billCancel;
+}
+
+
+
+
+
+
+
+
+	public void setBilltype(String billtype) {
+		Billtype = billtype;
+	}
+
+
 
 
 	public Double getCashupi_cashAmount() {

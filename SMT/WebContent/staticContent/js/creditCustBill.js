@@ -56,9 +56,11 @@ function CreditCustDetailsDivAction(a)
 				collision: "none",
 			}
 		});
+		document.getElementById("popupblur").style.filter="blur(20px)";
     }
     else
     {
+    	document.getElementById("popupblur").style.filter="none";
     	$( "#creditCustomerDetailsDiv" ).dialog('close');
     }
 	
@@ -93,6 +95,786 @@ function getEmpName()
 
 }
 
+
+
+
+function getSrCreditAmountForCredit()
+{ 
+	 var grossTot= document.getElementById("grossTotal").value;
+	 if(grossTot == null || grossTot == "" || grossTot == undefined || grossTot == " " || grossTot === 0)
+	 {
+		 myAlert("Please Enter Barcode Number");
+		 document.getElementById("key").focus();
+		 document.getElementById("srTransactionId").value = "";
+		 return false;
+	 }
+	 
+	 var creditCustomer = $("#creditCustomer").val();
+	 if(creditCustomer == null || creditCustomer == undefined || creditCustomer == "" || creditCustomer == " ")
+	 {
+		 myAlert("Please Select Customer Name");
+		 document.getElementById("srTransactionId").value = "";
+		 document.getElementById("creditCustomer").focus();
+		 return false;
+	 }
+	 else
+	 {	 
+		var input = document.getElementById('creditCustomer'), 
+		list = document.getElementById('cust_drop'), 
+		i,fkRootCustId;
+		for (i = 0; i < list.options.length; ++i)
+		{
+			if (list.options[i].value === input.value)
+			{
+				fkRootCustId = list.options[i].getAttribute('data-value');
+			}
+		}
+	 }
+	 
+	 if(fkRootCustId == null || fkRootCustId == "" || fkRootCustId == undefined || fkRootCustId == " ")
+	 {
+		 myAlert("Please Select Registered Customer");
+		 document.getElementById("srTransactionId").value = "";
+		 document.getElementById("creditCustomer").focus();
+		 return false;
+	 }
+	
+	var srTransactionId = document.getElementById("srTransactionId").value;
+	var params= {};
+
+	params["srTransactionId"]=srTransactionId;
+	params["fkRootCustId"] = fkRootCustId;
+	params["methodName"] ="getSrCreditAmountController";
+	document.getElementById("srTransactionId").value = "";
+
+	var count=0;
+	var newrow = false;
+	var rowId;
+	var vatAmt = 0;
+	var totAmt = 0;
+	var totalWithTax = 0;
+	var tot = 0;
+	var afterDelete;
+	
+	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
+	{	
+		var jsonData = $.parseJSON(data);
+		var result = data.length;
+		if(result <= "20")
+		{
+			myAlert("Invalid Transaction ID "+srTransactionId+" !!!");
+			document.getElementById("srTransactionId").focus();
+			return true;
+		}		
+		
+		$.each(jsonData,function(i,v)
+		{
+			count = jQuery("#srCreditAmtGrid").jqGrid('getGridParam', 'records'); 
+			var rowdata =$("#srCreditAmtGrid").jqGrid('getGridParam','data');
+			var ids = jQuery("#srCreditAmtGrid").jqGrid('getDataIDs');
+			
+			/*
+			 * if(count > 0) {
+			 * $("#srCreditAmtGrid").addRowData(count,jsonData.offer); }
+			 */
+			for (var j = 0; j < count; j++) 
+			{
+				var tId = rowdata[j].transactionId;
+				if(srTransactionId == tId)
+				{
+					 myAlert("Duplicate Transaction ID");
+					 return false;
+				}
+				else
+				{
+					newrow = true;
+				}
+			}
+			if(newrow == true)
+			{
+				$("#srCreditAmtGrid").addRowData(count,jsonData.offer);
+			}
+			
+			$("#srCreditAmtGrid").jqGrid({
+				
+				datatype: "local",
+
+				colNames:[	'pkId',
+							'Transaction ID',
+							'Amount',
+							],
+				colModel:[ 
+				          {
+				        	  name:'pkBillId',
+				        	  width:25,
+				        	  hidden:true,
+				          },    
+				          {
+				        	  name:'transactionId',
+				        	  width:50,
+				        	  // hidden:true,
+				          },
+				          {
+				        	  name:'returnTotal',
+				        	  width:100,
+				        	  sortable: false,				        	  
+				          },
+				          ],
+
+				          sortorder : 'desc',
+				          loadonce: false,
+				          viewrecords: true,
+				          width: 280,
+				          /*height: 100,*/
+				          shrinkToFit: true,
+				          hoverrows: true,
+				          rownumbers: true,
+				          rowNum: 10,
+				          
+				          'cellEdit':true,
+				          			          			          
+				          afterSaveCell: function ()
+				          {  
+				        	  document.getElementById("discount").value = "";
+				        	  /*
+								 * document.getElementById("discount1").value =
+								 * "";
+								 */
+				        	  
+				        	  var rowId =$("#srCreditAmtGrid").jqGrid('getGridParam','selrow');  
+				        	  var rowData = jQuery("#srCreditAmtGrid").getRowData(rowId);
+				        	  var pkBillId = rowData['pkBillId'];
+				        	  var transactionId = rowData['transactionId'];
+				        	  var returnTotal = rowData['returnTotal'];				        	  
+				        	},				        	
+				        	
+				        	gridComplete: function()
+				            {
+				        		var parseTotal=  $(this).jqGrid('getCol', 'returnTotal', false, 'sum');				            	 
+				            	document.getElementById("totalCreditAmt").value = parseTotal.toFixed(2);
+					        	var totalAmount = document.getElementById("totalAmount").value;
+					         	var gtUpdate = +totalAmount - +parseTotal;
+					         	
+					         	if(gtUpdate > 0)
+					        	{
+					        		document.getElementById("grossTotal").value = gtUpdate.toFixed(2);
+					        	}
+					        	else
+					        	{	
+					        		myAlert("Total Amount Is Less Than Total Credit Amount");
+					        		document.getElementById("grossTotal").value = gtUpdate.toFixed(2);
+					        	}				            	 
+				             },
+				        	
+				          pager: "#srJqGridPager",
+			});
+			if(count==0 || count==null)
+			{
+				$("#srCreditAmtGrid").addRowData(0,jsonData.offer);
+			}
+			$('#srCreditAmtGrid').navGrid('#srJqGridPager',
+
+				{ del: true, edit: false, add: false,  search: false, refresh: false, view: false, position: "left", cloneToTop: false },
+					{
+						editCaption: "The Edit Dialog",
+						afterSubmit: function()
+						{
+							$('#srCreditAmtGrid').trigger('reloadGrid');
+						},
+						closeAfterdel:true,
+						recreateForm: true,
+						checkOnUpdate : true,
+						checkOnSubmit : true,
+						closeAfterEdit: true,
+						errorTextFormat: function (data)
+						{
+							return 'Error: ' + data.responseText
+						}
+					},
+					{
+						afterSubmit: function()
+						{
+							$('#srCreditAmtGrid').trigger('reloadGrid');
+						},
+						closeAfterAdd: true,
+						recreateForm: true,
+						errorTextFormat: function (data)
+						{
+							return 'Error: ' + data.responseText
+						}
+					},
+					{
+						afterComplete: function()
+						{	
+							$('#srCreditAmtGrid').trigger('reloadGrid');
+							
+							totalCalC();
+				        	  
+				        	function totalCalC()
+					        {	
+				        	  var Total = 0;
+				        	  var totAmtWithTax = 0;
+				        	  var totaAmount = document.getElementById("totalAmount").value;
+				        	  var discount = document.getElementById("discount").value;
+				        	  var totalCreditAmt = document.getElementById("totalCreditAmt").value;
+				        	  
+				        	  document.getElementById("totalCreditAmt").value = Total.toFixed(2);
+				        	  if(totalCreditAmt == "")
+				        	  {
+				        		  totalCreditAmt = 0;
+				        	  }
+				        	  
+				        	  var totCAmt = 0;
+				        	  var count = jQuery("#srCreditAmtGrid").jqGrid('getGridParam', 'records');
+				        	  var allRowsInGrid1 = $('#srCreditAmtGrid').getGridParam('data');
+				        	  var AllRows=JSON.stringify(allRowsInGrid1);
+				        	  for (var l = 0; l < count; l++)
+				        	  {
+				        		  creditAmt = allRowsInGrid1[l].returnTotal;
+				        		  totCAmt = (+totCAmt + +creditAmt);				        		  
+				        	  }
+				        	  
+				        	  document.getElementById("totalCreditAmt").value = totCAmt;
+				        	  var updateGt = (+totaAmount - +totCAmt).toFixed(2);
+				        	  if(updateGt < 0)
+				        	  {
+				        		  myAlert("Total Amount Is Less Than Total Credit Amount");
+				        		  document.getElementById("grossTotal").value = gtUpdate;
+				        	 }
+				        	 else
+				        	 {
+				        		 document.getElementById("grossTotal").value = updateGt;
+				        	 }
+					        }
+						},
+						closeAfterdel:true,
+						checkOnUpdate : true,
+						checkOnSubmit : true,
+						recreateForm: true,
+						reloadAftersubmit:true,	
+						errorTextFormat: function (data)
+						{
+							return 'Error: ' + data.responseText
+						}
+					});
+				});
+			})
+}
+
+function getCustomers()
+{
+	$("#creditCustomer").append($("<option></option>").attr("value","").text("Select Customer"));
+	var params= {};
+	params["methodName"] = "getAllCustomers";
+
+	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
+	{
+		var jsonData = $.parseJSON(data);
+		$.each(jsonData,function(i,v)
+		{
+			$("#creditCustomer").append($("<option></option>").attr("value",i).text(v.firstName)); 
+		});
+	})
+}
+
+function regcreditcustomerbill()
+{
+	cashupi_cashAmount = $('#cashupi_cashAmount1').val();
+	
+	cashupi_cardAmount = $('#cashCard_upiAmount').val();
+	//alert(cashupi_cashAmount+"upi amount"+cashupi_cardAmount)
+	
+	if(document.custord.creditCustomer.value == "")
+	{
+		myAlert("Select Customer Name.");
+		return false;
+	}	
+	regCreditCustomerBill123();
+}
+
+function regCreditCustomerBill123()
+{
+	document.custord.btnSubmit.disabled = true;
+	
+	var input = document.getElementById('creditCustomer'),
+	list = document.getElementById('cust_drop'),
+	i,fkRootCustId,gstTinNo;
+	for (i = 0; i < list.options.length; ++i) {
+		if (list.options[i].value === input.value) {
+			fkRootCustId = list.options[i].getAttribute('data-value');
+			gstTinNo = list.options[i].getAttribute('myvalue');
+		}
+	}
+	
+	if(fkRootCustId == null || fkRootCustId == "" || fkRootCustId == " " || fkRootCustId == "undefined" || fkRootCustId == undefined)
+	{
+		myAlert("Customer Is Not Registered");
+		document.custord.btnSubmit.disabled=false;
+		return false;
+	}
+	
+	var params= {};
+	var count = jQuery("#list4").jqGrid('getGridParam', 'records');
+	if(Number(count) < 1)
+	{
+		myAlert("Please Enter Barcode");
+		document.custord.btnSubmit.disabled=false;
+		return false;
+	}
+	
+	var allRowsInGrid1 = $('#list4').getGridParam('data');
+	var AllRows=JSON.stringify(allRowsInGrid1);
+	//alert(JSON.stringify(AllRows));
+	for (var i = 0; i < count; i++)
+	{
+		
+		var pkTempid = allRowsInGrid1[i].pkTempid;
+		params["pkTempid"+i] = pkTempid;
+		//alert(pk_temp_id);
+		var item_id = allRowsInGrid1[i].item_id;
+		params["item_id"+i] = item_id;
+
+		var itemName = allRowsInGrid1[i].itemName;
+		params["itemName"+i] = itemName;
+		
+		var style = allRowsInGrid1[i].style;
+		params["style"+i] = style;
+
+		var quantity = allRowsInGrid1[i].quantity;
+		params["quantity"+i] = quantity;
+
+		var barcodeNo = allRowsInGrid1[i].barcodeNo;
+		params["barcodeNo"+i] = barcodeNo;
+
+		var categoryName = allRowsInGrid1[i].categoryName;
+		params["categoryName"+i] = categoryName;
+
+		var salePrice = allRowsInGrid1[i].salePrice;
+		if(+salePrice > 0)
+  	  	{
+			params["salePrice"+i] = salePrice;
+  	  	}
+		else
+		{
+			myAlert("Please Enter Sale Price For ="+(i+1)+" "+itemName);
+  		  	document.custord.btnSubmit.disabled = false;
+  		  	return false;
+		}
+
+		var total = allRowsInGrid1[i].total;
+		params["total"+i] = total;
+
+		var hsnSacNo = allRowsInGrid1[i].hsnSacNo;
+		params["hsnSacNo"+i] = hsnSacNo;
+
+		var vat = allRowsInGrid1[i].vat;
+		params["vat"+i] = vat;
+
+		var igst = allRowsInGrid1[i].igst;
+		params["igst"+i] = igst;
+
+		var taxAmount = allRowsInGrid1[i].taxAmount;
+		params["taxAmount"+i] = taxAmount;
+		
+		var Billno = allRowsInGrid1[i].Billno;
+		params["Billno"+i] = Billno;
+		
+		var EmpName = allRowsInGrid1[i].EmpName;
+		if( EmpName == null || EmpName == undefined || EmpName == "" || EmpName == " ")
+		{
+			var saleEmpId = 0;
+			var saleEmpName = null
+			params["saleEmpId"+i] = saleEmpId;
+			params["saleEmpName"+i] = saleEmpName;
+		}
+		else
+		{
+			var res = EmpName.split(" ");
+			
+			var saleEmpId = res[0];
+			params["saleEmpId"+i] = saleEmpId;
+			
+			var saleEmpName = res[1]+" "+res[2];
+			params["saleEmpName"+i] = saleEmpName;
+		}
+		
+		var size1 = allRowsInGrid1[i].size1;
+		params["size1"+i] = size1;
+		
+		//rollSize
+		var rollSize = allRowsInGrid1[i].rollSize;
+		params["rollSize"+i] = rollSize;
+		
+		var goodReceiveQuantity = allRowsInGrid1[i].goodReceiveQuantity
+		params["goodReceiveQuantity"+i] = goodReceiveQuantity;
+		
+  	    var perProductdisPer = allRowsInGrid1[i].disPerForBill;
+		params["perProductdisPer"+i] = perProductdisPer;
+		
+		var perProductdisAmount = allRowsInGrid1[i].disAmount;
+		params["perProductdisAmount"+i] = perProductdisAmount;
+		
+		var taxAmountAfterDis = allRowsInGrid1[i].taxAmountAfterDis;
+		params["taxAmountAfterDis"+i] = taxAmountAfterDis;	
+		
+		var sPWithoutTax = allRowsInGrid1[i].sPWithoutTax;
+		params["sPWithoutTax" + i] = sPWithoutTax;	
+		
+		var fkProductId = allRowsInGrid1[i].fkProductId;
+		params["fkProductId" + i] = fkProductId;	
+		
+		var fkSubCatId = allRowsInGrid1[i].fkSubCatId;
+		params["fkSubCatId" + i] = fkSubCatId;	
+		
+		var fkCategoryId = allRowsInGrid1[i].fkCategoryId;
+		params["fkCategoryId" + i] = fkCategoryId;
+		
+		var fkCategoryId = allRowsInGrid1[i].fkCategoryId;
+		params["fkCategoryId" + i] = fkCategoryId;
+		
+		var fkCategoryId = allRowsInGrid1[i].fkCategoryId;
+		params["fkCategoryId" + i] = fkCategoryId;
+		
+		var fkSuppId = allRowsInGrid1[i].fkSuppId;
+		params["fkSuppId" + i] = fkSuppId;
+		
+		var shopId = allRowsInGrid1[i].fkShopId;
+		params["shopId" + i] = shopId;
+	}	
+	
+	var count1 = jQuery("#srCreditAmtGrid").jqGrid('getGridParam', 'records');
+	if(count1 == "0" || count1 == null || count1 == undefined || count1 == "")
+	{
+		count1 = 0;
+	}
+	else
+	{		
+		var allRowsInGrid = $('#srCreditAmtGrid').getGridParam('data');
+		var AllRows=JSON.stringify(allRowsInGrid);
+		for (var j = 0; j < count1; j++)
+		{
+			var pkBillId = allRowsInGrid[j].pkBillId;
+			params["pkBillId"+j] = pkBillId;
+			
+			var transactionId = allRowsInGrid[j].transactionId;
+			params["transactionId"+j] = transactionId;
+			
+			var returnTotal = allRowsInGrid[j].returnTotal;
+			params["returnTotal"+j] = returnTotal;
+		}
+	}	
+	
+	var billNo=$('#billNo').val();
+	
+	var input1 = document.getElementById('creditCustomer').value;
+	var totalAmount=$('#totalAmount').val();
+	var discount=$('#discount').val();
+	
+	if(discount == "")
+	{
+		discount = 0;
+	}
+
+	var grossTotal=$('#grossTotal').val();
+	var paidAmt=$('#paidAmt').val();
+	if(paidAmt == "" || paidAmt == "0" || paidAmt == null || paidAmt == undefined)
+	{
+		paidAmt = 0;
+	}
+	else
+	{
+		var matchPaidAmt = /^[0-9]+\.?[0-9]*$/;
+		if(paidAmt.match(matchPaidAmt))
+		{
+			if(Number(paidAmt) > Number(grossTotal))
+			{
+				myAlert("Net Paid Amount must be Less Than Gross Total");
+				document.custord.btnSubmit.disabled=false;
+				return false;
+			}
+		}
+		else
+		{
+			myAlert("Please Enter Valid net Paid Amount");
+			document.custord.btnSubmit.disabled=false;
+			return false;
+		}
+	}
+	
+	var paymentMode = $('#creditPaymentMode').val();
+	var chequeNum = $('#chequeNum').val();
+	var nameOnCheck = $('#nameOnCheck').val();
+	var bankName = $('#bankName').val();
+	var cardNum = $('#cardNum').val();
+	var accNum = $('#accNum').val();
+	
+	var totalCreditAmt = $('#totalCreditAmt').val();
+	if(totalCreditAmt == "" || totalCreditAmt == null || totalCreditAmt == " " || totalCreditAmt == undefined)
+	{
+		totalCreditAmt = 0;
+	}else{}
+	
+	cashCard_cashAmount = $('#cashCard_cashAmount').val();
+	if(cashCard_cashAmount == "" || cashCard_cashAmount == null || cashCard_cashAmount == " " || cashCard_cashAmount == undefined)
+	{
+		cashCard_cashAmount = 0;
+	}else{}
+	
+	cashCard_cardAmount = $('#cashCard_cardAmount').val();
+	if(cashCard_cardAmount == "" || cashCard_cardAmount == null || cashCard_cardAmount == " " || cashCard_cardAmount == undefined)
+	{
+		cashCard_cardAmount = 0;
+	}else{}
+	
+	var cashAmount = "";	
+	var cardAmount = "";
+	var UpiAmount = "";
+	if(paymentMode == "cashAndCard")
+	{
+		if(cashCard_cashAmount == undefined || cashCard_cashAmount == null || cashCard_cashAmount == "" || cashCard_cashAmount == " ")
+		{
+			myAlert("Please Enter Cash Amount");
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+		else
+		{
+			var checkCashAmt = /^[0-9]+\.?[0-9]*$/;
+			if(cashCard_cashAmount.match(checkCashAmt))
+			{
+				params["cashCard_cashAmount"] = cashCard_cashAmount;
+			}
+			else
+			{
+				myAlert("Please Enter Valid Cash Amount");
+				document.custord.btnSubmit.disabled = false;
+				return false;
+			}
+		}
+		if(cashCard_cardAmount == undefined || cashCard_cardAmount == null || cashCard_cardAmount == "" || cashCard_cardAmount == " ")
+		{
+			myAlert("Please Enter Card Amount");
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+		else
+		{
+			var checkCardAmt = /^[0-9]+\.?[0-9]*$/;
+			if(cashCard_cardAmount.match(checkCardAmt))
+			{
+				params["cashCard_cardAmount"] = cashCard_cardAmount;
+			}
+			else
+			{
+				myAlert("Please Enter Valid Cash Amount");
+				document.custord.btnSubmit.disabled = false;
+				return false;
+			}
+		}
+		
+		if((+cashCard_cashAmount + +cashCard_cardAmount) != +paidAmt)
+		{
+			myAlert("Cash Amount + Card Amount Must be Equals to Net Paid Amount");
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+		else{}
+		/*
+			if((+cashCard_cashAmount + +cashCard_cardAmount) < +grossTotal)
+			{
+				myAlert("Cash Amount + Card Amount is Less Than Total Amount");
+				document.custord.btnSubmit.disabled = false;
+				return false;
+			}
+		*/
+	}
+	else if(paymentMode == "cash")
+	{	
+		cashAmount = +paidAmt		 
+	}
+	else if(paymentMode == "card")
+	{
+		cardAmount = +paidAmt;		 
+	}
+	else if(paymentMode == "Upi")
+	{
+		UpiAmount = +paidAmt;
+		
+		//alert(UpiAmount);
+		
+		
+	}
+	
+	var userType = $('#userType').val();
+	var userName = $('#userName').val();
+	
+	if(+totalCreditAmt > 0)
+	{
+		if((+totalAmount - +totalCreditAmt) == +grossTotal)
+		{}
+		else if((+totalAmount - +totalCreditAmt) > +grossTotal)
+		{
+			myAlert("Please Check Total Credit Amount");
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+	}
+			
+	if((+totalCreditAmt + (+cashCard_cashAmount + +cashCard_cardAmount)) > +totalAmount)
+	{	
+		myAlert("Plase Check All Payment Amounts\nIt Is Greater Than Total Amount");
+		document.custord.btnSubmit.disabled = false;
+		return false;
+	}
+	else{}
+	
+	
+	cashupi_cashAmount = $('#cashupi_cashAmount1').val();
+	if(cashupi_cashAmount == "" || cashupi_cashAmount == null || cashupi_cashAmount == " " || cashupi_cashAmount == undefined)
+	{
+		cashupi_cashAmount = 0;
+	}else{}
+	
+	cashupi_cardAmount = $('#cashCard_upiAmount').val();
+	if(cashupi_cardAmount == "" || cashupi_cardAmount == null || cashupi_cardAmount == " " || cashupi_cardAmount == undefined)
+	{
+		cashupi_cardAmount = 0;
+	}else{}
+	
+	
+	
+	
+		
+	
+
+	if(paymentMode == "cashAndupi")
+	{
+		if(cashupi_cashAmount == undefined || cashupi_cashAmount == null || cashupi_cashAmount == "" || cashupi_cashAmount == " ")
+		{
+			myAlert("Please Enter Cash Amount");
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+		else
+		{
+			var checkCashAmt = /^[0-9]+\.?[0-9]*$/;
+			if(cashupi_cashAmount.match(checkCashAmt))
+			{
+				params["cashupi_cashAmount"] = cashupi_cashAmount;
+				
+				
+				//alert(cashupi_cashAmount);
+			}
+			else
+			{
+				myAlert("Please Enter Valid Cash Amount");
+				document.custord.btnSubmit.disabled = false;
+				return false;
+			}
+		}
+		if(cashupi_cardAmount == undefined || cashupi_cardAmount == null || cashupi_cardAmount == "" || cashupi_cardAmount == " ")
+		{
+			myAlert("Please Enter Upi Cash Amount");
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+		else
+		{
+			var checkCardAmt = /^[0-9]+\.?[0-9]*$/;
+			if(cashupi_cardAmount.match(checkCardAmt))
+			{
+				params["cashupi_cardAmount"] = cashupi_cardAmount;
+				
+				//alert(cashupi_cardAmount);
+				
+			}
+			else
+			{
+				myAlert("Please Enter Valid Upi Cash Amount");
+				document.custord.btnSubmit.disabled = false;
+				return false;
+			}
+		}
+		
+		if((+cashupi_cashAmount + +cashupi_cardAmount) != +paidAmt)
+		{
+			myAlert("Cash Amount + Upi Amount Must be Equals to Net Paid Amount");
+			document.custord.btnSubmit.disabled = false;
+			return false;
+		}
+		else{}
+		/*
+			if((+cashCard_cashAmount + +cashCard_cardAmount) < +grossTotal)
+			{
+				myAlert("Cash Amount + Card Amount is Less Than Total Amount");
+				document.custord.btnSubmit.disabled = false;
+				return false;
+			}
+		*/
+	}
+	
+	
+	
+	
+	
+	if((+totalCreditAmt + (+cashupi_cashAmount + +cashupi_cardAmount)) > +totalAmount)
+	{	
+		myAlert("Plase Check All Payment Amounts\nIt Is Greater Than Total Amount");
+		document.custord.btnSubmit.disabled = false;
+		return false;
+	}
+	else{}
+	
+	var cPaymentDueDate = $("#cPaymentDueDate").val();
+	
+	params["billNo"] = billNo;
+	params["input1"] = input1;
+	params["fkRootCustId"] = fkRootCustId;
+	params["gstTinNo"] = gstTinNo;
+	params["count"] = count;
+	params["totalAmount"] = totalAmount;
+	params["discount"] = discount;
+	params["grossTotal"] = grossTotal;
+	params["paidAmt"] = paidAmt;	
+	params ["paymentMode"] = paymentMode;
+	params ["chequeNum"] = chequeNum;
+	params ["nameOnCheck"] = nameOnCheck;
+	params ["bankName"] = bankName;
+	params ["cardNum"] = cardNum;
+	params ["accNum"] = accNum;
+	params["userType"] = userType;
+	params["userName"] = userName;
+	params["count1"] = count1;	
+	params["totalCreditAmt"] = totalCreditAmt;
+	params["cashAmount"] = cashAmount;
+	params["cardAmount"] = cardAmount;
+	
+	//params["CashAmount"] = CashAmount;
+	params["UpiAmount"] = UpiAmount;
+	
+	params["cPaymentDueDate"] = cPaymentDueDate;
+	
+	params["methodName"] = "regCreditCustomerBill";
+
+	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
+	{
+		successAlert(data);
+		window.open("ghantalwarMensWearCreditCustBillingPDF.jsp");
+		//window.open("creditCustBillingPDF.jsp");
+		//window.open("CreditCustomerBillPDF_SM.jsp");
+		location.reload(true);
+	}
+	).error(function(jqXHR, textStatus, errorThrown)
+	{
+		if(textStatus==="timeout")
+		{
+			$(loaderObj).hide();
+			$(loaderObj).find('#errorDiv').show();
+		}
+	});
+}
+
+
 function getitemData1()
 {
 	var rowDelete = 0;
@@ -101,12 +883,15 @@ function getitemData1()
 /*	document.getElementById("discount1").value = "";*/
 	
 	var value = document.getElementById("key").value;
+	var Tempbillid = document.getElementById("Tempbillid").value;
 	var carNo = $('#carNo').val();
 
 	getEmpName();
 	var empValues = first;
 	
 	var params= {};	
+	if(Tempbillid == null || Tempbillid == "" || Tempbillid == " " || Tempbillid == undefined)
+	{
 	if(value == null || value == "" || value == " " || value == undefined)
 	{
 		var input = document.getElementById('itemName'), list = document
@@ -130,9 +915,15 @@ function getitemData1()
 	{
 		params["key"]=value;
 	}
+	}
+	else
+	{
+		params["Tempbillid"]=Tempbillid;
+	}
 	
-	params["methodName"] ="fetchCust1";
+	params["methodName"] ="fetchCust11";
 	document.getElementById('key').value = null;
+	document.getElementById('Tempbillid').value = null;
 	document.getElementById('itemName').value = null;
 	var count=0;
 	var newrow;
@@ -145,15 +936,35 @@ function getitemData1()
 
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 	{
+		
+		
 		getEmpName();
 		var empValues = first;
-		
 		var jsonData = $.parseJSON(data);
-		var result = data.length;
-		if(result <= "20")
+		
+		
+		//alert(JSON.stringify(jsonData));
+		/*if(jsonData.offer == null || jsonData.offer  == "" || jsonData.offer  == " " || jsonData.offer  == undefined)
 		{
-			myAlertFocusToKey("STOCK NOT AVAILABLE FOR "+value+" !!!");
-			return true;
+			myAlert("Invalid Temp Bill No.");
+			return false;
+		}
+		else
+		{}*/
+		
+		var result = data.length;
+		if(result <= "22")
+		{
+			if(value == null || value == "" || value == " " || value == undefined){
+				myAlertFocusToKey(" Invalid Tempory credit bill no "+Tempbillid+" !!!  ");
+				
+				return true;
+			}
+			else{
+				myAlertFocusToKey("STOCK NOT AVAILABLE FOR "+value+" !!!  ");
+				return true;
+			}
+			
 		}
 		$.each(jsonData,function(i,v)
 		{
@@ -162,6 +973,29 @@ function getitemData1()
 			var rowdata =$("#list4").jqGrid('getGridParam','data');
 			var ids = jQuery("#list4").jqGrid('getDataIDs');
 
+			
+			for (var j = 0; j < count; j++)
+			{
+				var gridBookingNoAB = rowdata[j].Billno;
+				
+				if(gridBookingNoAB == Tempbillid)
+				{
+					
+					myAlert("Tempoary Bill Number Already Inserted !!!");
+					newrow=false;
+					return false;
+					//var grid = jQuery("#list4");
+					//grid.trigger("reloadGrid");
+					//newrow = false;
+					//break;
+				}
+				/*else
+				{	
+					newrow = true;
+				}	*/
+			}
+			
+			
 			function sumFmatter(cellvalue, options, rowObject)
 			{		
 				
@@ -239,6 +1073,7 @@ function getitemData1()
 				bar = rowdata[j].barcodeNo;
 				subCat = rowdata[j].subCategoryName;
 				availQty = rowdata[j].goodReceiveQuantity;
+				
 				size = rowdata[j].size1;
 				rollSize = rowdata[j].rollSize;
 				var rowId = ids[j];
@@ -280,7 +1115,14 @@ function getitemData1()
 				{
 					newrow = true;
 				}
+				
+				
+				
+				
+				
 			}
+		
+			
 			
 			if(newrow == true)
 			{
@@ -291,11 +1133,12 @@ function getitemData1()
 				datatype: "local",
 				colNames:['pk_temp_id', 'item_id', 'Barcode<br>NO', 'Category','Category<br>Id','Sub<br>Category', 'Sub<br>Category<br>ID', 'Product', 'Product<br>Id', 
 						  'Style','HSN/SAC', 'ROll<br>Size', 'Quantity', 'Size', 'Good Receive Quantity', 'S.P./Unit', 'fixedSalePrice', 'S.P.<br>W/O<br>Tax', 'Dis<br>%', 'Dis<br>Amt', 
-						  'S.P.<br>After<br>Dis', 'GST<br>%', 'Tax<br>Amt', 'Tax Amt<br>After<br>Discnt', 'IGST%', 'Total<br>Amt', 'Employee<br>Name', 'forTotal', 'fkSuppId', 'fkShopId'],
+						  'S.P.<br>After<br>Dis', 'GST<br>%', 'Tax<br>Amt', 'Tax Amt<br>After<br>Discnt', 'IGST%', 'Total<br>Amt', 'Employee<br>Name', 'forTotal', 'fkSuppId', 'fkShopId','BillNo'],
 				colModel:[ 
 				          {
-				        	  name:'pk_temp_id',
-				        	  hidden:true,
+				        	  name:'pkTempid',
+				        	 // hidden:true,
+				        	  width:80,
 				          },				          
 				          {
 				        	  name:'item_id',
@@ -354,6 +1197,8 @@ function getitemData1()
 				        	   width:70,
 				        	   hidden:true,
 				          },
+				         
+				          
 				          {	
 				        	  name:'quantity',
 				        	  width:70,
@@ -382,7 +1227,7 @@ function getitemData1()
 				          },				          
 				          {
 				        	  name:'goodReceiveQuantity',
-				        	  hidden:true,
+				        	 // hidden:true,
 				          },				          
 				          {	
 				        	  name:'salePrice',
@@ -505,7 +1350,12 @@ function getitemData1()
 				        	  hidden:true,
 				          },
 				          
-				          
+				          {	
+				        	  name:"Billno",
+				        	  width:170,
+				        	  sortable: false,
+				        	 // hidden:true,
+				          },
 				          ],
 				          sortorder : 'desc',
 				          loadonce: false,
@@ -516,6 +1366,21 @@ function getitemData1()
 				          rownumbers: true,
 				          rowNum: 10,
 				          'cellEdit':true,
+				          
+				          beforeSelectRow: function ()
+			               {		            	   
+			            	    var rowId =$("#list4").jqGrid('getGridParam','selrow');  
+			            	    
+		                        var rowData = jQuery("#list4").getRowData(rowId);		                       
+		           				var count = jQuery("#list4").jqGrid('getGridParam', 'records');
+		           				var allRowsInGrid1 = $('#list4').getGridParam('data');
+			            	    var deletedPkTempId = rowData['pkTempid'];
+								//alert(rowData['pkTempId']);
+								updateItemId=rowData['item_id'];
+				            	alert("temp id-----"+deletedPkTempId+"item id-----"+updateItemId);
+			               },		
+				          
+				          
 				          afterSaveCell: function ()
 				          {
 				        	  document.getElementById("discount").value = "";
@@ -959,6 +1824,29 @@ function getitemData1()
 							return 'Error: ' + data.responseText
 						}
 					},
+
+					{
+						closeAfterdel:true,
+	                	checkOnUpdate : true,
+						checkOnSubmit : true,
+						afterSubmit : function()
+						{
+							var rowId = $("#list4").jqGrid('getGridParam','selrow');
+							var ids = jQuery("#list4").jqGrid('getDataIDs');
+							var rowData = jQuery("#list4").getRowData(rowId);
+							var pkTempId =rowData['pkTempid'];
+							
+							//var tableNo = rowData['tableNo'];
+							var itemId = rowData['item_id'];
+							if(pkTempId>0)
+								{
+								updateNewDataDelete(itemId);
+								}
+							
+							
+						},
+					},
+					
 					
 					{
 						afterComplete: function()
@@ -1046,773 +1934,62 @@ function getitemData1()
 }
 
 
-function getSrCreditAmountForCredit()
-{ 
-	 var grossTot= document.getElementById("grossTotal").value;
-	 if(grossTot == null || grossTot == "" || grossTot == undefined || grossTot == " " || grossTot === 0)
-	 {
-		 myAlert("Please Enter Barcode Number");
-		 document.getElementById("key").focus();
-		 document.getElementById("srTransactionId").value = "";
-		 return false;
-	 }
-	 
-	 var creditCustomer = $("#creditCustomer").val();
-	 if(creditCustomer == null || creditCustomer == undefined || creditCustomer == "" || creditCustomer == " ")
-	 {
-		 myAlert("Please Select Customer Name");
-		 document.getElementById("srTransactionId").value = "";
-		 document.getElementById("creditCustomer").focus();
-		 return false;
-	 }
-	 else
-	 {	 
-		var input = document.getElementById('creditCustomer'), 
-		list = document.getElementById('cust_drop'), 
-		i,fkRootCustId;
-		for (i = 0; i < list.options.length; ++i)
-		{
-			if (list.options[i].value === input.value)
-			{
-				fkRootCustId = list.options[i].getAttribute('data-value');
-			}
-		}
-	 }
-	 
-	 if(fkRootCustId == null || fkRootCustId == "" || fkRootCustId == undefined || fkRootCustId == " ")
-	 {
-		 myAlert("Please Select Registered Customer");
-		 document.getElementById("srTransactionId").value = "";
-		 document.getElementById("creditCustomer").focus();
-		 return false;
-	 }
-	
-	var srTransactionId = document.getElementById("srTransactionId").value;
-	var params= {};
-
-	params["srTransactionId"]=srTransactionId;
-	params["fkRootCustId"] = fkRootCustId;
-	params["methodName"] ="getSrCreditAmountController";
-	document.getElementById("srTransactionId").value = "";
-
-	var count=0;
-	var newrow = false;
-	var rowId;
-	var vatAmt = 0;
-	var totAmt = 0;
-	var totalWithTax = 0;
-	var tot = 0;
-	var afterDelete;
-	
-	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
-	{	
-		var jsonData = $.parseJSON(data);
-		var result = data.length;
-		if(result <= "20")
-		{
-			myAlert("Invalid Transaction ID "+srTransactionId+" !!!");
-			document.getElementById("srTransactionId").focus();
-			return true;
-		}		
-		
-		$.each(jsonData,function(i,v)
-		{
-			count = jQuery("#srCreditAmtGrid").jqGrid('getGridParam', 'records'); 
-			var rowdata =$("#srCreditAmtGrid").jqGrid('getGridParam','data');
-			var ids = jQuery("#srCreditAmtGrid").jqGrid('getDataIDs');
-			
-			/*
-			 * if(count > 0) {
-			 * $("#srCreditAmtGrid").addRowData(count,jsonData.offer); }
-			 */
-			for (var j = 0; j < count; j++) 
-			{
-				var tId = rowdata[j].transactionId;
-				if(srTransactionId == tId)
-				{
-					 myAlert("Duplicate Transaction ID");
-					 return false;
-				}
-				else
-				{
-					newrow = true;
-				}
-			}
-			if(newrow == true)
-			{
-				$("#srCreditAmtGrid").addRowData(count,jsonData.offer);
-			}
-			
-			$("#srCreditAmtGrid").jqGrid({
-				
-				datatype: "local",
-
-				colNames:[	'pkId',
-							'Transaction ID',
-							'Amount',
-							],
-				colModel:[ 
-				          {
-				        	  name:'pkBillId',
-				        	  width:25,
-				        	  hidden:true,
-				          },    
-				          {
-				        	  name:'transactionId',
-				        	  width:50,
-				        	  // hidden:true,
-				          },
-				          {
-				        	  name:'returnTotal',
-				        	  width:100,
-				        	  sortable: false,				        	  
-				          },
-				          ],
-
-				          sortorder : 'desc',
-				          loadonce: false,
-				          viewrecords: true,
-				          width: 280,
-				          /*height: 100,*/
-				          shrinkToFit: true,
-				          hoverrows: true,
-				          rownumbers: true,
-				          rowNum: 10,
-				          
-				          'cellEdit':true,
-				          			          			          
-				          afterSaveCell: function ()
-				          {  
-				        	  document.getElementById("discount").value = "";
-				        	  /*
-								 * document.getElementById("discount1").value =
-								 * "";
-								 */
-				        	  
-				        	  var rowId =$("#srCreditAmtGrid").jqGrid('getGridParam','selrow');  
-				        	  var rowData = jQuery("#srCreditAmtGrid").getRowData(rowId);
-				        	  var pkBillId = rowData['pkBillId'];
-				        	  var transactionId = rowData['transactionId'];
-				        	  var returnTotal = rowData['returnTotal'];				        	  
-				        	},				        	
-				        	
-				        	gridComplete: function()
-				            {
-				        		var parseTotal=  $(this).jqGrid('getCol', 'returnTotal', false, 'sum');				            	 
-				            	document.getElementById("totalCreditAmt").value = parseTotal.toFixed(2);
-					        	var totalAmount = document.getElementById("totalAmount").value;
-					         	var gtUpdate = +totalAmount - +parseTotal;
-					         	
-					         	if(gtUpdate > 0)
-					        	{
-					        		document.getElementById("grossTotal").value = gtUpdate.toFixed(2);
-					        	}
-					        	else
-					        	{	
-					        		myAlert("Total Amount Is Less Than Total Credit Amount");
-					        		document.getElementById("grossTotal").value = gtUpdate.toFixed(2);
-					        	}				            	 
-				             },
-				        	
-				          pager: "#srJqGridPager",
-			});
-			if(count==0 || count==null)
-			{
-				$("#srCreditAmtGrid").addRowData(0,jsonData.offer);
-			}
-			$('#srCreditAmtGrid').navGrid('#srJqGridPager',
-
-				{ del: true, edit: false, add: false,  search: false, refresh: false, view: false, position: "left", cloneToTop: false },
-					{
-						editCaption: "The Edit Dialog",
-						afterSubmit: function()
-						{
-							$('#srCreditAmtGrid').trigger('reloadGrid');
-						},
-						closeAfterdel:true,
-						recreateForm: true,
-						checkOnUpdate : true,
-						checkOnSubmit : true,
-						closeAfterEdit: true,
-						errorTextFormat: function (data)
-						{
-							return 'Error: ' + data.responseText
-						}
-					},
-					{
-						afterSubmit: function()
-						{
-							$('#srCreditAmtGrid').trigger('reloadGrid');
-						},
-						closeAfterAdd: true,
-						recreateForm: true,
-						errorTextFormat: function (data)
-						{
-							return 'Error: ' + data.responseText
-						}
-					},
-					{
-						afterComplete: function()
-						{	
-							$('#srCreditAmtGrid').trigger('reloadGrid');
-							
-							totalCalC();
-				        	  
-				        	function totalCalC()
-					        {	
-				        	  var Total = 0;
-				        	  var totAmtWithTax = 0;
-				        	  var totaAmount = document.getElementById("totalAmount").value;
-				        	  var discount = document.getElementById("discount").value;
-				        	  var totalCreditAmt = document.getElementById("totalCreditAmt").value;
-				        	  
-				        	  document.getElementById("totalCreditAmt").value = Total.toFixed(2);
-				        	  if(totalCreditAmt == "")
-				        	  {
-				        		  totalCreditAmt = 0;
-				        	  }
-				        	  
-				        	  var totCAmt = 0;
-				        	  var count = jQuery("#srCreditAmtGrid").jqGrid('getGridParam', 'records');
-				        	  var allRowsInGrid1 = $('#srCreditAmtGrid').getGridParam('data');
-				        	  var AllRows=JSON.stringify(allRowsInGrid1);
-				        	  for (var l = 0; l < count; l++)
-				        	  {
-				        		  creditAmt = allRowsInGrid1[l].returnTotal;
-				        		  totCAmt = (+totCAmt + +creditAmt);				        		  
-				        	  }
-				        	  
-				        	  document.getElementById("totalCreditAmt").value = totCAmt;
-				        	  var updateGt = (+totaAmount - +totCAmt).toFixed(2);
-				        	  if(updateGt < 0)
-				        	  {
-				        		  myAlert("Total Amount Is Less Than Total Credit Amount");
-				        		  document.getElementById("grossTotal").value = gtUpdate;
-				        	 }
-				        	 else
-				        	 {
-				        		 document.getElementById("grossTotal").value = updateGt;
-				        	 }
-					        }
-						},
-						closeAfterdel:true,
-						checkOnUpdate : true,
-						checkOnSubmit : true,
-						recreateForm: true,
-						reloadAftersubmit:true,	
-						errorTextFormat: function (data)
-						{
-							return 'Error: ' + data.responseText
-						}
-					});
-				});
-			})
-}
-
-function getCustomers()
+function updateNewDataDelete(itemId)
 {
-	$("#creditCustomer").append($("<option></option>").attr("value","").text("Select Customer"));
-	var params= {};
-	params["methodName"] = "getAllCustomers";
+alert("inside updateNewDataDelete");
 
-	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
-	{
-		var jsonData = $.parseJSON(data);
-		$.each(jsonData,function(i,v)
-		{
-			$("#creditCustomer").append($("<option></option>").attr("value",i).text(v.firstName)); 
-		});
-	})
+var tota = 0;
+var params= {};
+var count = jQuery("#list4").jqGrid('getGridParam', 'records');
+var rowId = $("#list4").jqGrid('getGridParam','selrow');
+var ids = jQuery("#list4").jqGrid('getDataIDs');
+var allRowsInGrid1 = $('#list4').getGridParam('data');
+var AllRows=JSON.stringify(allRowsInGrid1);
+alert(AllRows);
+var rowData = jQuery("#list4").getRowData(rowId);
+//var pkTempId =rowData['pkTempId'];
+
+for (var i = 0; i<count; i++) {
+	
+	
+	var pkTempid = allRowsInGrid1[i].pkTempid;
+	params["pkTempid"+i] = pkTempid;
+	//alert(pk_temp_id);
+	var item_id = allRowsInGrid1[i].item_id;
+	params["item_id"+i] = item_id;
+
+	var itemName = allRowsInGrid1[i].itemName;
+	params["itemName"+i] = itemName;
+	
+	
+
+	var quantity = allRowsInGrid1[i].quantity;
+	params["quantity"+i] = quantity;
+
+	var barcodeNo = allRowsInGrid1[i].barcodeNo;
+	params["barcodeNo"+i] = barcodeNo;
+
+	var categoryName = allRowsInGrid1[i].categoryName;
+	params["categoryName"+i] = categoryName;
+	
+	var fkProductId = allRowsInGrid1[i].fkProductId;
+	params["fkProductId" + i] = fkProductId;
+	
+	
 }
+params["count"] =count;
+params["methodName"] = "updateGridData";
 
-function regcreditcustomerbill()
+$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 {
-	cashupi_cashAmount = $('#cashupi_cashAmount1').val();
-	
-	cashupi_cardAmount = $('#cashCard_upiAmount').val();
-	//alert(cashupi_cashAmount+"upi amount"+cashupi_cardAmount)
-	
-	if(document.custord.creditCustomer.value == "")
-	{
-		myAlert("Select Customer Name.");
-		return false;
-	}	
-	regCreditCustomerBill123();
+	return true;
 }
-
-function regCreditCustomerBill123()
+).error(function(jqXHR, textStatus, errorThrown)
 {
-	document.custord.btnSubmit.disabled = true;
-	
-	var input = document.getElementById('creditCustomer'),
-	list = document.getElementById('cust_drop'),
-	i,fkRootCustId,gstTinNo;
-	for (i = 0; i < list.options.length; ++i) {
-		if (list.options[i].value === input.value) {
-			fkRootCustId = list.options[i].getAttribute('data-value');
-			gstTinNo = list.options[i].getAttribute('myvalue');
-		}
+	if(textStatus==="timeout")
+	{
+		$(loaderObj).hide();
+		$(loaderObj).find('#errorDiv').show();
 	}
-	
-	if(fkRootCustId == null || fkRootCustId == "" || fkRootCustId == " " || fkRootCustId == "undefined" || fkRootCustId == undefined)
-	{
-		myAlert("Customer Is Not Registered");
-		document.custord.btnSubmit.disabled=false;
-		return false;
-	}
-	
-	var params= {};
-	var count = jQuery("#list4").jqGrid('getGridParam', 'records');
-	if(Number(count) < 1)
-	{
-		myAlert("Please Enter Barcode");
-		document.custord.btnSubmit.disabled=false;
-		return false;
-	}
-	
-	var allRowsInGrid1 = $('#list4').getGridParam('data');
-	var AllRows=JSON.stringify(allRowsInGrid1);
-	for (var i = 0; i < count; i++)
-	{
-		var pk_temp_id = allRowsInGrid1[i].pk_temp_id;
-		params["pk_temp_id"+i] = pk_temp_id;
-
-		var item_id = allRowsInGrid1[i].item_id;
-		params["item_id"+i] = item_id;
-
-		var itemName = allRowsInGrid1[i].itemName;
-		params["itemName"+i] = itemName;
-		
-		var style = allRowsInGrid1[i].style;
-		params["style"+i] = style;
-
-		var quantity = allRowsInGrid1[i].quantity;
-		params["quantity"+i] = quantity;
-
-		var barcodeNo = allRowsInGrid1[i].barcodeNo;
-		params["barcodeNo"+i] = barcodeNo;
-
-		var categoryName = allRowsInGrid1[i].categoryName;
-		params["categoryName"+i] = categoryName;
-
-		var salePrice = allRowsInGrid1[i].salePrice;
-		if(+salePrice > 0)
-  	  	{
-			params["salePrice"+i] = salePrice;
-  	  	}
-		else
-		{
-			myAlert("Please Enter Sale Price For ="+(i+1)+" "+itemName);
-  		  	document.custord.btnSubmit.disabled = false;
-  		  	return false;
-		}
-
-		var total = allRowsInGrid1[i].total;
-		params["total"+i] = total;
-
-		var hsnSacNo = allRowsInGrid1[i].hsnSacNo;
-		params["hsnSacNo"+i] = hsnSacNo;
-
-		var vat = allRowsInGrid1[i].vat;
-		params["vat"+i] = vat;
-
-		var igst = allRowsInGrid1[i].igst;
-		params["igst"+i] = igst;
-
-		var taxAmount = allRowsInGrid1[i].taxAmount;
-		params["taxAmount"+i] = taxAmount;
-		
-		var EmpName = allRowsInGrid1[i].EmpName;
-		if( EmpName == null || EmpName == undefined || EmpName == "" || EmpName == " ")
-		{
-			var saleEmpId = 0;
-			var saleEmpName = null
-			params["saleEmpId"+i] = saleEmpId;
-			params["saleEmpName"+i] = saleEmpName;
-		}
-		else
-		{
-			var res = EmpName.split(" ");
-			
-			var saleEmpId = res[0];
-			params["saleEmpId"+i] = saleEmpId;
-			
-			var saleEmpName = res[1]+" "+res[2];
-			params["saleEmpName"+i] = saleEmpName;
-		}
-		
-		var size1 = allRowsInGrid1[i].size1;
-		params["size1"+i] = size1;
-		
-		//rollSize
-		var rollSize = allRowsInGrid1[i].rollSize;
-		params["rollSize"+i] = rollSize;
-		
-		var goodReceiveQuantity = allRowsInGrid1[i].goodReceiveQuantity
-		params["goodReceiveQuantity"+i] = goodReceiveQuantity;
-		
-  	    var perProductdisPer = allRowsInGrid1[i].disPerForBill;
-		params["perProductdisPer"+i] = perProductdisPer;
-		
-		var perProductdisAmount = allRowsInGrid1[i].disAmount;
-		params["perProductdisAmount"+i] = perProductdisAmount;
-		
-		var taxAmountAfterDis = allRowsInGrid1[i].taxAmountAfterDis;
-		params["taxAmountAfterDis"+i] = taxAmountAfterDis;	
-		
-		var sPWithoutTax = allRowsInGrid1[i].sPWithoutTax;
-		params["sPWithoutTax" + i] = sPWithoutTax;	
-		
-		var fkProductId = allRowsInGrid1[i].fkProductId;
-		params["fkProductId" + i] = fkProductId;	
-		
-		var fkSubCatId = allRowsInGrid1[i].fkSubCatId;
-		params["fkSubCatId" + i] = fkSubCatId;	
-		
-		var fkCategoryId = allRowsInGrid1[i].fkCategoryId;
-		params["fkCategoryId" + i] = fkCategoryId;
-		
-		var fkCategoryId = allRowsInGrid1[i].fkCategoryId;
-		params["fkCategoryId" + i] = fkCategoryId;
-		
-		var fkCategoryId = allRowsInGrid1[i].fkCategoryId;
-		params["fkCategoryId" + i] = fkCategoryId;
-		
-		var fkSuppId = allRowsInGrid1[i].fkSuppId;
-		params["fkSuppId" + i] = fkSuppId;
-		
-		var shopId = allRowsInGrid1[i].fkShopId;
-		params["shopId" + i] = shopId;
-	}	
-	
-	var count1 = jQuery("#srCreditAmtGrid").jqGrid('getGridParam', 'records');
-	if(count1 == "0" || count1 == null || count1 == undefined || count1 == "")
-	{
-		count1 = 0;
-	}
-	else
-	{		
-		var allRowsInGrid = $('#srCreditAmtGrid').getGridParam('data');
-		var AllRows=JSON.stringify(allRowsInGrid);
-		for (var j = 0; j < count1; j++)
-		{
-			var pkBillId = allRowsInGrid[j].pkBillId;
-			params["pkBillId"+j] = pkBillId;
-			
-			var transactionId = allRowsInGrid[j].transactionId;
-			params["transactionId"+j] = transactionId;
-			
-			var returnTotal = allRowsInGrid[j].returnTotal;
-			params["returnTotal"+j] = returnTotal;
-		}
-	}	
-	
-	var billNo=$('#billNo').val();
-	
-	var input1 = document.getElementById('creditCustomer').value;
-	var totalAmount=$('#totalAmount').val();
-	var discount=$('#discount').val();
-	
-	if(discount == "")
-	{
-		discount = 0;
-	}
-
-	var grossTotal=$('#grossTotal').val();
-	var paidAmt=$('#paidAmt').val();
-	if(paidAmt == "" || paidAmt == "0" || paidAmt == null || paidAmt == undefined)
-	{
-		paidAmt = 0;
-	}
-	else
-	{
-		var matchPaidAmt = /^[0-9]+\.?[0-9]*$/;
-		if(paidAmt.match(matchPaidAmt))
-		{
-			if(Number(paidAmt) > Number(grossTotal))
-			{
-				myAlert("Net Paid Amount must be Less Than Gross Total");
-				document.custord.btnSubmit.disabled=false;
-				return false;
-			}
-		}
-		else
-		{
-			myAlert("Please Enter Valid net Paid Amount");
-			document.custord.btnSubmit.disabled=false;
-			return false;
-		}
-	}
-	
-	var paymentMode = $('#creditPaymentMode').val();
-	var chequeNum = $('#chequeNum').val();
-	var nameOnCheck = $('#nameOnCheck').val();
-	var bankName = $('#bankName').val();
-	var cardNum = $('#cardNum').val();
-	var accNum = $('#accNum').val();
-	
-	var totalCreditAmt = $('#totalCreditAmt').val();
-	if(totalCreditAmt == "" || totalCreditAmt == null || totalCreditAmt == " " || totalCreditAmt == undefined)
-	{
-		totalCreditAmt = 0;
-	}else{}
-	
-	cashCard_cashAmount = $('#cashCard_cashAmount').val();
-	if(cashCard_cashAmount == "" || cashCard_cashAmount == null || cashCard_cashAmount == " " || cashCard_cashAmount == undefined)
-	{
-		cashCard_cashAmount = 0;
-	}else{}
-	
-	cashCard_cardAmount = $('#cashCard_cardAmount').val();
-	if(cashCard_cardAmount == "" || cashCard_cardAmount == null || cashCard_cardAmount == " " || cashCard_cardAmount == undefined)
-	{
-		cashCard_cardAmount = 0;
-	}else{}
-	
-	var cashAmount = "";	
-	var cardAmount = "";
-	var UpiAmount = "";
-	if(paymentMode == "cashAndCard")
-	{
-		if(cashCard_cashAmount == undefined || cashCard_cashAmount == null || cashCard_cashAmount == "" || cashCard_cashAmount == " ")
-		{
-			myAlert("Please Enter Cash Amount");
-			document.custord.btnSubmit.disabled = false;
-			return false;
-		}
-		else
-		{
-			var checkCashAmt = /^[0-9]+\.?[0-9]*$/;
-			if(cashCard_cashAmount.match(checkCashAmt))
-			{
-				params["cashCard_cashAmount"] = cashCard_cashAmount;
-			}
-			else
-			{
-				myAlert("Please Enter Valid Cash Amount");
-				document.custord.btnSubmit.disabled = false;
-				return false;
-			}
-		}
-		if(cashCard_cardAmount == undefined || cashCard_cardAmount == null || cashCard_cardAmount == "" || cashCard_cardAmount == " ")
-		{
-			myAlert("Please Enter Card Amount");
-			document.custord.btnSubmit.disabled = false;
-			return false;
-		}
-		else
-		{
-			var checkCardAmt = /^[0-9]+\.?[0-9]*$/;
-			if(cashCard_cardAmount.match(checkCardAmt))
-			{
-				params["cashCard_cardAmount"] = cashCard_cardAmount;
-			}
-			else
-			{
-				myAlert("Please Enter Valid Cash Amount");
-				document.custord.btnSubmit.disabled = false;
-				return false;
-			}
-		}
-		
-		if((+cashCard_cashAmount + +cashCard_cardAmount) != +paidAmt)
-		{
-			myAlert("Cash Amount + Card Amount Must be Equals to Net Paid Amount");
-			document.custord.btnSubmit.disabled = false;
-			return false;
-		}
-		else{}
-		/*
-			if((+cashCard_cashAmount + +cashCard_cardAmount) < +grossTotal)
-			{
-				myAlert("Cash Amount + Card Amount is Less Than Total Amount");
-				document.custord.btnSubmit.disabled = false;
-				return false;
-			}
-		*/
-	}
-	else if(paymentMode == "cash")
-	{	
-		cashAmount = +paidAmt		 
-	}
-	else if(paymentMode == "card")
-	{
-		cardAmount = +paidAmt;		 
-	}
-	else if(paymentMode == "Upi")
-	{
-		UpiAmount = +paidAmt;
-		
-		//alert(UpiAmount);
-		
-		
-	}
-	
-	var userType = $('#userType').val();
-	var userName = $('#userName').val();
-	
-	if(+totalCreditAmt > 0)
-	{
-		if((+totalAmount - +totalCreditAmt) == +grossTotal)
-		{}
-		else if((+totalAmount - +totalCreditAmt) > +grossTotal)
-		{
-			myAlert("Please Check Total Credit Amount");
-			document.custord.btnSubmit.disabled = false;
-			return false;
-		}
-	}
-			
-	if((+totalCreditAmt + (+cashCard_cashAmount + +cashCard_cardAmount)) > +totalAmount)
-	{	
-		myAlert("Plase Check All Payment Amounts\nIt Is Greater Than Total Amount");
-		document.custord.btnSubmit.disabled = false;
-		return false;
-	}
-	else{}
-	
-	
-	cashupi_cashAmount = $('#cashupi_cashAmount1').val();
-	if(cashupi_cashAmount == "" || cashupi_cashAmount == null || cashupi_cashAmount == " " || cashupi_cashAmount == undefined)
-	{
-		cashupi_cashAmount = 0;
-	}else{}
-	
-	cashupi_cardAmount = $('#cashCard_upiAmount').val();
-	if(cashupi_cardAmount == "" || cashupi_cardAmount == null || cashupi_cardAmount == " " || cashupi_cardAmount == undefined)
-	{
-		cashupi_cardAmount = 0;
-	}else{}
-	
-	
-	
-	
-		
-	
-
-	if(paymentMode == "cashAndupi")
-	{
-		if(cashupi_cashAmount == undefined || cashupi_cashAmount == null || cashupi_cashAmount == "" || cashupi_cashAmount == " ")
-		{
-			myAlert("Please Enter Cash Amount");
-			document.custord.btnSubmit.disabled = false;
-			return false;
-		}
-		else
-		{
-			var checkCashAmt = /^[0-9]+\.?[0-9]*$/;
-			if(cashupi_cashAmount.match(checkCashAmt))
-			{
-				params["cashupi_cashAmount"] = cashupi_cashAmount;
-				
-				
-				//alert(cashupi_cashAmount);
-			}
-			else
-			{
-				myAlert("Please Enter Valid Cash Amount");
-				document.custord.btnSubmit.disabled = false;
-				return false;
-			}
-		}
-		if(cashupi_cardAmount == undefined || cashupi_cardAmount == null || cashupi_cardAmount == "" || cashupi_cardAmount == " ")
-		{
-			myAlert("Please Enter Upi Cash Amount");
-			document.custord.btnSubmit.disabled = false;
-			return false;
-		}
-		else
-		{
-			var checkCardAmt = /^[0-9]+\.?[0-9]*$/;
-			if(cashupi_cardAmount.match(checkCardAmt))
-			{
-				params["cashupi_cardAmount"] = cashupi_cardAmount;
-				
-				//alert(cashupi_cardAmount);
-				
-			}
-			else
-			{
-				myAlert("Please Enter Valid Upi Cash Amount");
-				document.custord.btnSubmit.disabled = false;
-				return false;
-			}
-		}
-		
-		if((+cashupi_cashAmount + +cashupi_cardAmount) != +paidAmt)
-		{
-			myAlert("Cash Amount + Upi Amount Must be Equals to Net Paid Amount");
-			document.custord.btnSubmit.disabled = false;
-			return false;
-		}
-		else{}
-		/*
-			if((+cashCard_cashAmount + +cashCard_cardAmount) < +grossTotal)
-			{
-				myAlert("Cash Amount + Card Amount is Less Than Total Amount");
-				document.custord.btnSubmit.disabled = false;
-				return false;
-			}
-		*/
-	}
-	
-	
-	
-	
-	
-	if((+totalCreditAmt + (+cashupi_cashAmount + +cashupi_cardAmount)) > +totalAmount)
-	{	
-		myAlert("Plase Check All Payment Amounts\nIt Is Greater Than Total Amount");
-		document.custord.btnSubmit.disabled = false;
-		return false;
-	}
-	else{}
-	
-	var cPaymentDueDate = $("#cPaymentDueDate").val();
-	
-	params["billNo"] = billNo;
-	params["input1"] = input1;
-	params["fkRootCustId"] = fkRootCustId;
-	params["gstTinNo"] = gstTinNo;
-	params["count"] = count;
-	params["totalAmount"] = totalAmount;
-	params["discount"] = discount;
-	params["grossTotal"] = grossTotal;
-	params["paidAmt"] = paidAmt;	
-	params ["paymentMode"] = paymentMode;
-	params ["chequeNum"] = chequeNum;
-	params ["nameOnCheck"] = nameOnCheck;
-	params ["bankName"] = bankName;
-	params ["cardNum"] = cardNum;
-	params ["accNum"] = accNum;
-	params["userType"] = userType;
-	params["userName"] = userName;
-	params["count1"] = count1;	
-	params["totalCreditAmt"] = totalCreditAmt;
-	params["cashAmount"] = cashAmount;
-	params["cardAmount"] = cardAmount;
-	
-	//params["CashAmount"] = CashAmount;
-	params["UpiAmount"] = UpiAmount;
-	
-	params["cPaymentDueDate"] = cPaymentDueDate;
-	
-	params["methodName"] = "regCreditCustomerBill";
-
-	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
-	{
-		successAlert(data);
-		window.open("ghantalwarMensWearCreditCustBillingPDF.jsp");
-		//window.open("creditCustBillingPDF.jsp");
-		//window.open("CreditCustomerBillPDF_SM.jsp");
-		location.reload(true);
-	}
-	).error(function(jqXHR, textStatus, errorThrown)
-	{
-		if(textStatus==="timeout")
-		{
-			$(loaderObj).hide();
-			$(loaderObj).find('#errorDiv').show();
-		}
-	});
+});
 }

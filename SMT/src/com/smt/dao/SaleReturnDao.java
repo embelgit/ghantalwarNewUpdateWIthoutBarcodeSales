@@ -87,6 +87,7 @@ public class SaleReturnDao {
 
 			OtherBill uniqueResult = (OtherBill) query.uniqueResult();
 			Double quant =  uniqueResult.getQuantity();
+			Double grossAmount=uniqueResult.getGrossamt();
 
 			Double updatequnty = (quant - Double.parseDouble(editQuantity));
 			
@@ -449,4 +450,177 @@ public class SaleReturnDao {
 		}
 		return list;
 	}
+	
+	
+	
+	public void updateBarcodeQuantity1(Long barcodeNo, String editQuantity)
+	{
+		// TODO Auto-generated method stub
+		HibernateUtility hbu = null;
+		Session session = null;
+		Transaction transaction = null;
+
+		try
+		{
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			transaction = session.beginTransaction();
+
+			org.hibernate.Query query = session.createQuery("from GoodReceive where barcodeNo=:barcodeNo");
+			query.setParameter("barcodeNo", barcodeNo);
+
+			GoodReceive uniqueResult = (GoodReceive) query.uniqueResult();
+			Double quant = uniqueResult.getQuantity();
+			Double soldQuantity = uniqueResult.getSoldQuantity();
+			Long pkGoodReceiveId = uniqueResult.getPkGoodRecId();
+			Double updatequnty = (Double) (quant + Double.parseDouble(editQuantity));
+			Double updateSoldQuantity = soldQuantity - Double.parseDouble(editQuantity);
+			GoodReceive updateStock = (GoodReceive) session.get(GoodReceive.class, new Long(pkGoodReceiveId));
+
+			updateStock.setQuantity(updatequnty);
+			updateStock.setSoldQuantity(updateSoldQuantity);
+			session.saveOrUpdate(updateStock);
+			transaction.commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null)
+			{
+				session.close();
+			}
+		}
+	}
+	
+	public List getAllbilling(String shopId,String BillNo)
+	{
+		System.out.println("fkshopIdTx - "+shopId+" , "+BillNo);
+		HibernateUtility hbu=null;
+		Session session=null;
+		List list=null;
+		try{
+		 hbu = HibernateUtility.getInstance();
+		 session = hbu.getHibernateSession();
+		 Query query = session.createQuery("from OtherBill where fkShopId ='"+shopId+"' AND billNo = '"+BillNo+"'");
+		 list = query.list();
+		 System.out.println("fertilier query list size -  "+query.list().size());
+		}
+			catch(Exception e){	
+				e.printStackTrace();
+		}
+			finally
+			{
+					if(session!=null){
+					hbu.closeSession(session);
+				}
+			}
+		
+	return list;
+	}
+	
+	
+	
+	public void updateQuantityforBillCancel(Long pkBillId, Double quantity, Double peritemprice, Double cashAmount, Double cardAmount, Double upiCashAmount, Double upiAmount, Double grosstotal) {
+		// TODO Auto-generated method stub
+
+		
+		
+		HibernateUtility hbu = null;
+		Session session = null;
+		Transaction transaction = null;
+
+		try {
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			transaction = session.beginTransaction();
+				String Billcancel="y";
+			org.hibernate.Query query = session.createQuery("from OtherBill where pkBillId = :pkBillId ");
+			query.setParameter("pkBillId", pkBillId);
+
+			OtherBill uniqueResult = (OtherBill) query.uniqueResult();
+			Double quant =  uniqueResult.getQuantity();
+			Double grossAmount=uniqueResult.getGrossamt();
+			Double totalperitem=uniqueResult.getTotalperItem();
+			Double cashAm=uniqueResult.getCashCard_cashAmount();
+			Double cardAm=uniqueResult.getCashCard_cardAmount();
+			Double upicash=uniqueResult.getCashupi_cashAmount();
+			Double upi=uniqueResult.getCashupi_upiAmount();
+			
+			Double updatequnty = (quant - (quantity));
+			
+			Double updategross = (grossAmount - (grosstotal));
+			Double updateperitem = (totalperitem - (peritemprice));
+			Double updatecash = (cashAm - (cashAmount));
+			Double updatecard = (cardAm - (cardAmount));
+			Double updateupicash = (upicash - (upiCashAmount));
+			Double updateupi = (upi - (upiAmount));
+			
+			
+				System.out.println("update Quantity in sale retiurn dao"+updatequnty);
+
+			OtherBill updateStock = (OtherBill) session.get(OtherBill.class, new Long(pkBillId));
+
+			updateStock.setQuantity(updatequnty);
+			updateStock.setTotalperItem(updateperitem);
+			updateStock.setGrossamt(updategross);
+			updateStock.setCashCard_cardAmount(updatecard);
+			updateStock.setCashCard_cashAmount(updatecash);
+			updateStock.setCashupi_cashAmount(updateupicash);
+			updateStock.setCashupi_upiAmount(updateupi);
+			
+			updateStock.setBillCancel(Billcancel);
+			
+			session.saveOrUpdate(updateStock);
+			transaction.commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null) {
+				session.close();
+			}
+		}
+
+	}
+	
+	public void updateBarcodeQuantity11(Long barcodeNo, Double quantity)
+	{
+		// TODO Auto-generated method stub
+		HibernateUtility hbu = null;
+		Session session = null;
+		Transaction transaction = null;
+
+		try
+		{
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			transaction = session.beginTransaction();
+
+			org.hibernate.Query query = session.createQuery("from GoodReceive where barcodeNo=:barcodeNo");
+			query.setParameter("barcodeNo", barcodeNo);
+
+			GoodReceive uniqueResult = (GoodReceive) query.uniqueResult();
+			Double quant = uniqueResult.getQuantity();
+			Double soldQuantity = uniqueResult.getSoldQuantity();
+			Long pkGoodReceiveId = uniqueResult.getPkGoodRecId();
+			Double updatequnty = (Double) (quant + (quantity));
+			Double updateSoldQuantity = soldQuantity - (quantity);
+			GoodReceive updateStock = (GoodReceive) session.get(GoodReceive.class, new Long(pkGoodReceiveId));
+
+			updateStock.setQuantity(updatequnty);
+			updateStock.setSoldQuantity(updateSoldQuantity);
+			session.saveOrUpdate(updateStock);
+			transaction.commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			if (session != null)
+			{
+				session.close();
+			}
+		}
+	}	
+	
+	
 }

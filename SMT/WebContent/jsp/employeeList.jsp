@@ -26,6 +26,8 @@
 	rel="stylesheet" type="text/css" media="all" />
 <link href="/SMT/staticContent/y_css/buttons.dataTables.min.css"
 	rel="stylesheet" type="text/css" media="all">
+	
+
 <html>
 <head>
 <title>Credit Customer List</title>
@@ -57,6 +59,7 @@
 								'#list_wrapper');
 					});
 </script>
+
 <style>
 #logoutButton {
 	height: 35px;
@@ -295,6 +298,7 @@
 					<th>Address</th>
 					<th>Pin Code</th>
 					<th>Resign Date</th>
+					
 				</tr>
 			</thead>
 			<tbody>
@@ -303,7 +307,7 @@
 						GetEmployeeDetails sr = (GetEmployeeDetails) list12.get(i);
 				%>
 				<tr>
-					<td class="align"><%=sr.getFirstName()%></td>
+					<td class="align" ><%=sr.getFirstName()%></td>
 					<td class="align"><%=sr.getMiddleName()%></td>
 					<td class="align"><%=sr.getLastName()%></td>
 					<td class="align"><%=sr.getJoiningDate()%></td>
@@ -313,6 +317,7 @@
 					<td class="align"><%=sr.getAddresst()%></td>
 					<td class="align"><%=sr.getZipCode()%></td>
 					<td class="align"><%=sr.getResignDateString()%></td>
+					
 				</tr>
 				<%
 					}

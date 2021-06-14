@@ -1,3 +1,125 @@
+/*function categoryWiseSaleGraph()
+{	
+	var userTypeRole = $("#userType").val();
+	var userName = $("#userName").val();
+	
+	var params = {};
+	
+	params["userTypeRole"] = userTypeRole;
+	params["userName"] = userName;
+	
+	params["methodName"] = "SaleGraphController";
+	
+	$.post('/SMT/jsp/utility/controller.jsp',params,
+	function(data)
+	{		
+		//alert(data);
+		$('#categoryWiseSaleGraphTable').dataTable().fnClearTable();
+		var jsonData = $.parseJSON(data);
+		var catmap = jsonData.list;
+		
+		//console.log("----->",catmap);
+		$(document)
+				.ready(
+						function()
+						{							
+							var processed_json = [];   
+							var headingArray = new Array();   
+				             // Populate series
+							catmap.map((obj)=>{
+								processed_json.push(obj.saleQty)
+								
+							})
+							
+							//alert(JSON.stringify(processed_json));
+							
+				          
+				             // draw chart
+				             $('#categoryWiseSaleGraph').highcharts({
+				             chart:
+				             {
+				                 type: "spline"
+				             },
+				             title:
+				             {
+				                 text: "TOTAL CATEGORY WISE SALE"
+				             },
+				            
+				            xAxis:
+				             {   	
+				            	 categories: [
+				            	      'Monday',
+				            	      'Tuesday',
+				            	      'Wednesday',
+				            	      'Thursday',
+				            	      'Friday',
+				            	      'Saturday',
+				            	      'Sunday'
+				            	    ],
+				             },
+				           
+				             yAxis:
+				             {
+					             allowDecimals: true,
+					             title:
+					             {
+					            	 text: "SOLD QUANTITY",
+					             }
+				             },
+				             
+				             series:
+				            	 [{
+				            		    data:processed_json,
+				            		    pointStart: 0
+				            		  }]
+				         }); 							
+											
+						});	
+		
+		
+	}).error(function(jqXHR, textStatus, errorThrown) {
+		if (textStatus === "timeout") {
+			$(loaderObj).hide();
+			$(loaderObj).find('#errorDiv').show();
+		}
+	});		
+}
+
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function getsale(){
 	//alert("ok");
 	
@@ -138,11 +260,11 @@ function getlowstock(){
 			
 	
 //			document.getElementById("lowstock").value = v.productName;
-			$("#lowstock").append($("<option></option>").attr("value",v.pkStockid).text(v.itemName));
+			$("#lowstock").append($("<option></option>").attr("value",v.pkStockid).text(v.itemName+","+v.catName+","+v.Color+","+v.quantity));
 				
 			//$("#Mostsell").append($("<option></option>").attr("value",v.fkproductid).text(v.productName+","+v.color+","+v.size+","+v.quantity));	
 			//getyestsale5();
-			categoryWiseSaleGraph();
+			//categoryWiseSaleGraph();
 				});
 
 		
@@ -300,80 +422,3 @@ var jsonData = $.parseJSON(data);
 		}
 	});
 } 
-function categoryWiseSaleGraph()
-{	
-	var userTypeRole = $("#userType").val();
-	var userName = $("#userName").val();
-	
-	var params = {};
-	
-	params["userTypeRole"] = userTypeRole;
-	params["userName"] = userName;
-	
-	params["methodName"] = "categoryWiseSaleGraphController";
-	
-	$.post('/SMT/jsp/utility/controller.jsp',params,
-	function(data)
-	{		
-		alert(data);
-		$('#categoryWiseSaleGraphTable').dataTable().fnClearTable();
-		var jsonData = $.parseJSON(data);
-		var catmap = jsonData.list;
-		$(document)
-				.ready(
-						function()
-						{							
-							var processed_json = new Array();   
-							var headingArray = new Array();   
-				             // Populate series
-				             for (i = 0; i < catmap.length; i++)
-				             {   
-				            	 processed_json.push(catmap[i].saleQty);
-				            	 headingArray.push(catmap[i].saleCatName);
-				             }
-				          
-				             // draw chart
-				             $('#categoryWiseSaleGraph').highcharts({
-				             chart:
-				             {
-				                 type: "column"
-				             },
-				             title:
-				             {
-				                 text: "TOTAL CATEGORY WISE SALE"
-				             },
-				            
-				            xAxis:
-				             {   	
-				                categories: headingArray,
-				                title:
-					             {
-					            	 text: "CATEGORIES",
-					             }
-				             },
-				           
-				             yAxis:
-				             {
-					             allowDecimals: true,
-					             title:
-					             {
-					            	 text: "SOLD QUANTITY",
-					             }
-				             },
-				             
-				             series:
-				            	 [{
-				            		 name: 'Categories',
-				            		 data: processed_json
-				            	 }]
-				         }); 							
-											
-						});		
-		
-	}).error(function(jqXHR, textStatus, errorThrown) {
-		if (textStatus === "timeout") {
-			$(loaderObj).hide();
-			$(loaderObj).find('#errorDiv').show();
-		}
-	});		
-}

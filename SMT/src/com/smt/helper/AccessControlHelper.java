@@ -47,15 +47,16 @@ public class AccessControlHelper {
 			String userName = request.getParameter("userName");
 			String password = request.getParameter("password");
 			String type = request.getParameter("type");
-			//String shopid = request.getParameter("shopid");
-						
+			String shopid = request.getParameter("shopid");
+			String shop = request.getParameter("shop");			
 			AccessControlBean bean=new AccessControlBean();
 			bean.setUserId(Long.parseLong(userid));
 			bean.setEmpName(EmpName);
 			bean.setUserName(userName);
 			bean.setPassword(password);
 			bean.setType(type);
-			//bean.setShopId(Long.parseLong(shopid));
+			bean.setShopId(Long.parseLong(shopid));
+			bean.setShopName(shop);
 			
 			AccessControlDao dao=new AccessControlDao();
 			dao.saveAccessControlDetails(bean);

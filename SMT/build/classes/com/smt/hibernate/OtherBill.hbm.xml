@@ -100,6 +100,9 @@
 		<property name="cashupi_cashAmount" type="java.lang.Double" column="cashupi_cashAmount" />
 		
 		<property name="cashupi_upiAmount" type="java.lang.Double" column="cashupi_upiAmount" />	
-				
+			
+			<property name="Billtype" type="java.lang.String" column="BillType" length="255" />	
+			
+			<property name="BillCancel" type="java.lang.String" column="Bill_Cancel" length="255" />	
 	</class>
 </hibernate-mapping> 

@@ -34,11 +34,12 @@
 <%
 	String contextPath = request.getContextPath();
 %>
-<%
+ <%
 	String path = "";
 	if (isHome)
 		path = "jsp\\";
-%>
+%> 
+<%-- <% String path=""; /*  boolean isHome = false; */ if(isHome)path="jsp\\"; %> --%>
 <html>
 <head>
 <link rel="stylesheet" href="/SMT/staticContent/css/bootstrap.min.css">

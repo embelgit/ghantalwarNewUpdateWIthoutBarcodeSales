@@ -1,3 +1,4 @@
+<%@page import="com.smt.hibernate.AccessControlBean"%>
 <%@page import="com.itextpdf.text.log.SysoLogger"%>
 <%@page import="com.smt.hibernate.UserDetail"%>
 <%@page import="org.hibernate.Session"%>
@@ -8,6 +9,7 @@
 <script src="/SMT/staticContent/js/logout.js"></script>
 <%
 	String user = (String) session.getAttribute("user");
+	
 	String type1 = "";
 	String name1 = "";
 	String shopName = "";
@@ -18,14 +20,14 @@
 		if (session.getAttribute("user") != null)
 		{
 			name1 = (String) session.getAttribute("user");
-			System.out.println("Login " + name1);
+			System.out.println("Login  name====" + name1);
 			HibernateUtility hbu1 = HibernateUtility.getInstance();
 			Session session2 = hbu1.getHibernateSession();
 
-			org.hibernate.Query query1 = session2.createQuery("from UserDetail where userName =:usr");
+			org.hibernate.Query query1 = session2.createQuery("from AccessControlBean where userName =:usr");
 			query1.setParameter("usr", name1);
-			UserDetail userDetail1 = (UserDetail) query1.uniqueResult();
-			type1 = userDetail1.getTypeId();
+			AccessControlBean userDetail1 = (AccessControlBean) query1.uniqueResult();
+			type1 = userDetail1.getType();
 			//isHome = true;
 			shopId = (String) session.getAttribute("shopId");
 			shopName = (String) session.getAttribute("shopName");
@@ -45,6 +47,7 @@
 %>
 <%
 	String path = "";
+/* boolean isHome = false;  */
 	if (isHome)
 		path = "jsp\\";
 %>
@@ -660,7 +663,7 @@ a.homer {
 			class="fa fa-reorder"></i> Menu</a>
 		<ul class="menu">
 			<li><a class="homer" href="<%=path%>index.jsp"><i
-					class="fa fa-home"></i>HOME</a></li>
+					class="fa fa-home"></i>Dashboard</a></li>
 			<%
 				if (type1.equals("admin")) {
 			%>
@@ -763,6 +766,7 @@ a.homer {
 				<ul class="sub-menu">
 					<li><a href="<%=path%>Miscellaneous.jsp">Invoice(alt+I)</a></li>
 					<li><a href="<%=path%>Credit_Customer_Bill.jsp">Credit Customer Invoice(clt+C)</a></li>
+				 <li><a href="<%=path%>Temp_CreditCustomerinvoce.jsp">Temporary Credit Customer Invoice</a></li> 
 					<li><a href="<%=path%>setOfferDiscount.jsp">Set Offer Discount</a></li>
 					<li><a href="<%=path%>editBill.jsp">Edit Bill(clt+E)</a></li>
 					<%-- <li><a href="<%=path%>y_sale_return.jsp">Sale Return Invoice</a></li> --%>
@@ -849,6 +853,7 @@ a.homer {
 				<ul class="sub-menu">
 					<li><a href="<%=path%>Miscellaneous.jsp">Invoice</a></li>
 					<li><a href="<%=path%>Credit_Customer_Bill.jsp">Credit Customer Invoice</a></li>
+					<li><a href="<%=path%>Temp_CreditCustomerinvoce.jsp">Temporary Credit Customer Invoice</a></li>
 					<%-- <li><a href="<%=path%>setOfferDiscount.jsp">Set Offer Discount</a></li> --%>
 					<li><a href="<%=path%>y_sale_return.jsp">Sale Return Invoice</a></li>
 				</ul></li>

@@ -432,7 +432,13 @@ width: 110px;
 				<label for="zipCode">Pin code<sup>*</sup></label>
 				</div>
 				</div>
-				
+				<div class="col-md-1"></div>
+				<div class="invoice_label_up">
+				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
+			    <input id="EmpidNo" name="EmpidNo"  type="text" required>
+			    <label  for="Ephoto">Employee Id No</label>
+			    </div>
+			    </div>
 			</div>
 
 			<div class="row">

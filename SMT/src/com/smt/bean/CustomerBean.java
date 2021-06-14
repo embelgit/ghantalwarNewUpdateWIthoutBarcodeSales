@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 
 public class CustomerBean
 {
+	private String Billno;
 	private String color;
 	private Long size;
 	private String itemName;
@@ -45,6 +46,26 @@ public class CustomerBean
 	private String fkSuppId;
 	private Long fkShopId;
 	
+	private Long pkTempid;
+	
+	
+	
+	public Long getPkTempid() {
+		return pkTempid;
+	}
+
+	public void setPkTempid(Long pkTempid) {
+		this.pkTempid = pkTempid;
+	}
+
+	public String getBillno() {
+		return Billno;
+	}
+
+	public void setBillno(String billno) {
+		Billno = billno;
+	}
+
 	public Double getTotal() {
 		return total;
 	}

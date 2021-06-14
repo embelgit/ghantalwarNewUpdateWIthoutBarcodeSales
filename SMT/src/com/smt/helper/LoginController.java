@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import org.hibernate.Query;
 import org.hibernate.Session;
+
+import com.smt.hibernate.AccessControlBean;
 import com.smt.hibernate.UserDetail;
 import com.smt.utility.CheckInternetConn;
 import com.smt.utility.HibernateUtility;
@@ -29,79 +31,121 @@ public class LoginController extends HttpServlet
 	public void loginUser(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		// TODO Auto-generated method stub
-		UserDetail uniqueResult = null;
+		//UserDetail uniqueResult = null;
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		PrintWriter abc = response.getWriter();
 		String un = request.getParameter("uname");
 		String pwd = request.getParameter("pass");
+		String userid = request.getParameter("userid");
+		String shopId = request.getParameter("shopId");
 		String shopName = request.getParameter("shopName");
-		String shopId = request.getParameter("allShopListId");
+		System.out.println("in login contrl     un -  "+un+"  passs -  "+pwd+"  ,  shopName   "+shopName);
+		
+		/*
+		 * String shopName = request.getParameter("shopName"); String shopId =
+		 * request.getParameter("allShopListId");
+		 */
 		HibernateUtility hbu = HibernateUtility.getInstance();
 		Session session1 = hbu.getHibernateSession();
-		Query query = session1.createQuery("from UserDetail where userName=:username AND password=:pwd");
+		Query query = session1.createQuery("from AccessControlBean where userName=:username AND password=:pwd");
 		query.setParameter("username", un);
 		query.setParameter("pwd", pwd);
-		System.out.println("QUERY LIST SIZE ====> "+(query.list()).size());
-		Integer queryListSize = query.list().size();
-		if(queryListSize == 0)
+		
+		
+		AccessControlBean uniqueResult =(AccessControlBean) query.uniqueResult();
+		
+		
+		
+		if(uniqueResult!=null)
 		{
-			//System.out.println("QUERY LIST SIZE() ===> "+queryListSize);
-			out.println("Either user name or password is wrong.");
-			abc.println("Either user name or password is wrong.");
-			response.sendRedirect("/SMT/jsp/login.jsp");
+			String userName = uniqueResult.getUserName();
+			String password = uniqueResult.getPassword();
+			String dbshopid = Long.toString(uniqueResult.getShopId());
+			String usertype = uniqueResult.getType();
+		
+if(un.equals(userName) && pwd.equals(password) && shopId.equals(dbshopid))
+{
+			
+			ScheduledBackup.backupOnTime();
+			out.print("Welcome, " + un);
+			HttpSession session = request.getSession(true); // reuse existing
+															// session if exist
+		//	response.sendRedirect("/SMT/jsp/Miscellaneous.jsp");												// or create one
+	//		SupplierAccountDetailsHelper help = new SupplierAccountDetailsHelper();
+		//	help.creditDebitAmount();
+		
+			session.setAttribute("user", un);                                                           // 30 seconds
+			session.setAttribute("userid", userid);
+			session.setAttribute("shopId", shopId);
+			session.setAttribute("shopName", shopName);
+			session.setAttribute("usertype", usertype);			
+			response.setContentType("text/html");  
+ 			//response.setStatus(HttpServletResponse.SC_OK,"Login Successfully...!...!");
+ 			out.println("<script type=\"text/javascript\">");  
+ 			out.println("alert('Login Successfully...!');");  
+ 			out.println("window.location.assign('/SMT/jsp/Miscellaneous.jsp');");  
+ 			out.println("</script>");
+
 		}
-		else
-		{
-			uniqueResult = (UserDetail) query.uniqueResult();
-			System.out.println("uniqueResult=-=-=-==-=-=-= "+uniqueResult);
-			if(uniqueResult == null)
-			{
-				out.println("Either user name or password is wrong.");
-				abc.println("Either user name or password is wrong.");
-				response.sendRedirect("/SMT/jsp/login.jsp");
-				//out.println("<font color=red>Either user name or password is wrong.</font>");
-				//out.println("Either user name or password is wrong.");
-			}
-			else
-			{
-				String userName = uniqueResult.getUserName();
-				String password = uniqueResult.getPassword();
+} 
+		else {
 		
-				System.out.println(userName);
-				System.out.println(password);
+			
+			response.setContentType("text/html");  
+			//response.setStatus(HttpServletResponse.SC_UNAUTHORIZED,"User or password incorrect...!");
+			out.println("<script type=\"text/javascript\">");  
+			out.println("alert('User or password incorrect');");  
+			out.println("window.location.assign('/SMT/jsp/login.jsp');");  
+			out.println("</script>");
+			
+			/*response.sendRedirect("/SMT/jsp/login.jsp");
+			//RequestDispatcher rd = request.getRequestDispatcher("/SMT/jsp/login.jsp");
+			out.println("<font color=red>Either user name or password is wrong.</font>");*/
 		
-				if (un.equals(userName) && pwd.equals(password))
-				{
-					ScheduledBackup.backupOnTime();
-					HttpSession session = request.getSession(true); //reuse existing session if exist or create one
-					
-					if(session!=null)
-					{
-					System.out.println("in side session if loop");
-					response.sendRedirect("/SMT/jsp/index.jsp");
-					session.setAttribute("user", un);
-					System.out.println("shopId loginCntrl    ===>  "+shopId);
-					session.setAttribute("shopId", shopId);
-					session.setAttribute("shopName", shopName);
-					}
-					else
-					{
-						response.sendRedirect("/SMT/jsp/login.jsp");
-					}
-					// 30 seconds	
-				}
-				else
-				{
-					response.sendRedirect("/SMT/jsp/login.jsp");
-					out.println("<font color=red>Either user name or password is wrong.</font>");
-				}
-			}
-		}
+	      
+	}
 		
+		
+		/*
+		 * System.out.println("QUERY LIST SIZE ====> "+(query.list()).size()); Integer
+		 * queryListSize = query.list().size(); if(queryListSize == 0) {
+		 * //System.out.println("QUERY LIST SIZE() ===> "+queryListSize);
+		 * out.println("Either user name or password is wrong.");
+		 * abc.println("Either user name or password is wrong.");
+		 * response.sendRedirect("/SMT/jsp/login.jsp"); } else { uniqueResult =
+		 * (UserDetail) query.uniqueResult();
+		 * System.out.println("uniqueResult=-=-=-==-=-=-= "+uniqueResult);
+		 * if(uniqueResult == null) {
+		 * out.println("Either user name or password is wrong.");
+		 * abc.println("Either user name or password is wrong.");
+		 * response.sendRedirect("/SMT/jsp/login.jsp");
+		 * //out.println("<font color=red>Either user name or password is wrong.</font>"
+		 * ); //out.println("Either user name or password is wrong."); } else { String
+		 * userName = uniqueResult.getUserName(); String password =
+		 * uniqueResult.getPassword();
+		 * 
+		 * System.out.println(userName); System.out.println(password);
+		 * 
+		 * if (un.equals(userName) && pwd.equals(password)) {
+		 * ScheduledBackup.backupOnTime(); HttpSession session =
+		 * request.getSession(true); //reuse existing session if exist or create one
+		 * 
+		 * if(session!=null) { System.out.println("in side session if loop");
+		 * response.sendRedirect("/SMT/jsp/Miscellaneous.jsp");
+		 * session.setAttribute("user", un);
+		 * System.out.println("shopId loginCntrl    ===>  "+shopId);
+		 * session.setAttribute("shopId", shopId); session.setAttribute("shopName",
+		 * shopName); } else { response.sendRedirect("/SMT/jsp/login.jsp"); } // 30
+		 * seconds } else { response.sendRedirect("/SMT/jsp/login.jsp");
+		 * out.println("<font color=red>Either user name or password is wrong.</font>");
+		 * } } }
+		 */
 		/*out.println("Either user name or password is wrong.");
 		abc.println("Either user name or password is wrong.");
 		response.sendRedirect("/SMT/jsp/login.jsp");*/
+		
+		out.close();
 	}
 		
 	public String loginUserMailHelper(HttpServletRequest request, HttpServletResponse response) throws IOException

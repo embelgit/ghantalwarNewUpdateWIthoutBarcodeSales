@@ -17,6 +17,15 @@ public class EmployeeDetailsBean implements Serializable {
 	private long zipCode;
 	private Date resignDate;
 	private Long fkShopId;
+	private String EmpIdNo;
+	
+	public String getEmpIdNo() {
+		return EmpIdNo;
+	}
+
+	public void setEmpIdNo(String empIdNo) {
+		EmpIdNo = empIdNo;
+	}
 
 	public long getZipCode() {
 		return zipCode;
@@ -124,9 +133,11 @@ public class EmployeeDetailsBean implements Serializable {
 		this.fkShopId = fkShopId;
 	}
 
+
+
 	public EmployeeDetailsBean(long empId, String firstName, String middleName, String lastName, String address,
 			Date joiningDate, long contactNo, String emailId, Double salary, long zipCode, Date resignDate,
-			Long fkShopId, long zipcode2) {
+			Long fkShopId, String empIdNo) {
 		super();
 		this.empId = empId;
 		this.firstName = firstName;
@@ -140,7 +151,8 @@ public class EmployeeDetailsBean implements Serializable {
 		this.zipCode = zipCode;
 		this.resignDate = resignDate;
 		this.fkShopId = fkShopId;
-		zipcode = zipcode2;
+		this.EmpIdNo = empIdNo;
+		
 	}
 
 	public EmployeeDetailsBean() {

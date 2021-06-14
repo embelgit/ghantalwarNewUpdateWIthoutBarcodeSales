@@ -371,9 +371,9 @@ public class CustomerDetailsDao {
 
 	public List<OtherBill> getAllMiscellaneousCustomer(HttpServletRequest request, HttpServletResponse response)
 	{
-		HttpSession session1 = request.getSession();
-		String shopId = (String)session1.getAttribute("shopId");
-		Long fkShopId = Long.parseLong(shopId);
+		//HttpSession session1 = request.getSession();
+		//String shopId = (String)session1.getAttribute("shopId");
+		//Long fkShopId = Long.parseLong(shopId);
 		
 		HibernateUtility hbu = null;
 		Session session = null;
@@ -383,8 +383,8 @@ public class CustomerDetailsDao {
 		{
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
-			query = session.createQuery("from OtherBill WHERE fkShopId=:fkShopId group by creditCustomer1");
-			query.setParameter("fkShopId", fkShopId);
+			query = session.createQuery("from OtherBill  group by creditCustomer1");
+		//	query.setParameter("fkShopId", fkShopId);
 			list = query.list();
 		} catch (Exception e) {
 			Log.error("Error in getAllCustomer", e);
@@ -400,6 +400,38 @@ public class CustomerDetailsDao {
 
 	}
 
+	
+	public List<OtherBill> getAllMiscellaneousCustomerBillNo(HttpServletRequest request, HttpServletResponse response)
+	{
+		//HttpSession session1 = request.getSession();
+		//String shopId = (String)session1.getAttribute("shopId");
+		//Long fkShopId = Long.parseLong(shopId);
+		
+		HibernateUtility hbu = null;
+		Session session = null;
+		Query query = null;
+		List<OtherBill> list = null;
+		try
+		{
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			query = session.createQuery("from OtherBill  where Billtype='Temporay' group by billNo");
+		//	query.setParameter("fkShopId", fkShopId);
+			list = query.list();
+		} catch (Exception e) {
+			Log.error("Error in getAllCustomer", e);
+		}
+
+		finally {
+			if (session != null) {
+				hbu.closeSession(session);
+			}
+		}
+
+		return list;
+
+	}
+	
 	public List<SaleReturn> getAllCustomer1() {
 		HibernateUtility hbu = null;
 		Session session = null;

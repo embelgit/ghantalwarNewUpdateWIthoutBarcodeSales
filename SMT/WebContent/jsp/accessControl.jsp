@@ -431,14 +431,14 @@ width: 85%;
 								<option value="">--Select Type--</option>
 								<option value="admin">Admin</option>
 								<option value="deo">DEO</option>
-								<option value="finance">Accountant</option>
+								<option value="cashier">Accountant</option>
 								<option value="salesman">Salesman</option>
 							</select> <label>Type<sup>*</sup></label>
 
 						</div>
 						
 						<div class="col-md-1"></div>
-						<%-- <div class="invoice_label_up">
+						 <div class="invoice_label_up">
 							<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"	id="dayreport">
 								<!-- <input type="text" id="userName123" required> <label>Shop Name<sup>*</sup></label> -->
 								<%
@@ -446,7 +446,7 @@ width: 85%;
 								List usList1 = dao6.getAllMainShop(request, response);
 			        		%>
 			        									
-							<input list="shopName_drop" id="shopName">
+							<input list="shopName_drop" id="shopName1">
 							<datalist id="shopName_drop">
 								<%
 			            		    for(int i=0;i<usList1.size();i++){
@@ -460,7 +460,7 @@ width: 85%;
 							</datalist>
 						<label>Shop Name<sup style="color: red">*</sup></label>
 							</div>
-						</div> --%>
+						</div> 
 					</div>
 					<div class="row" style="margin-top: 3%;margin-left: 129px;">
 						<div class="col-lg-2" style="display: inline-block;">
