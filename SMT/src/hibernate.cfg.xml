@@ -50,7 +50,7 @@
 		<mapping resource="com/smt/hibernate/expenditureType.hbm.xml" />
 		<mapping resource="com/smt/hibernate/accessControl.hbm.xml" />
 		<mapping resource="com/smt/hibernate/TempCreditCustomerInvoice.hbm.xml" />
-
+		<mapping resource="com/smt/hibernate/EmpAttendence.hbm.xml" />
 	</session-factory>
 
 </hibernate-configuration>

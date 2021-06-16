@@ -35,6 +35,9 @@
 	function Back() {
 		window.location = "employee_detail.jsp";
 	}
+	function update() {
+		window.location = "EditEmpAttendance.jsp";
+	}
 </script>
 </head>
 <script type="text/javascript">
@@ -271,7 +274,7 @@
 
 
 		<div align="center" id="employeelisth2">
-			<h2 class="form-name style_heading">Employee List</h2>
+			<h2 class="form-name style_heading">Employee Attendance List</h2>
 		</div>
 		<div class="row">
 			<div class="col-sm-offset-1 col-md-10">
@@ -291,7 +294,7 @@
 					<th>First Name</th>
 					<th>Middle Name</th>
 					<th>Last Name</th>
-					<th>present</th>
+					<th>Present</th>
 					<th>Absent</th>
 					<th>HalfDay</th>
 				</tr>
@@ -305,9 +308,9 @@
 					<td class="align" id="name"><%=sr.getFirstName()%></td>
 					<td class="align"><%=sr.getMiddleName()%></td>
 					<td class="align"><%=sr.getLastName()%></td>
-					<td class="align"><input type="button" value="Present" id="<%=sr.getEmpPkId()%>,present" onclick="ok(this)" style="color: blue" ></td>
-					<td class="align"><input type="button" value="Apsent"id="<%=sr.getEmpPkId()%>,absent"onclick="ok(this)" style="color: blue"></td>
-					<td class="align"><input type="button" value="HalfDay"id="<%=sr.getEmpPkId()%>,halfday" onclick="ok(this)"style="color: blue"></td>
+					<td class="align"><input type="button" value="Present" id="<%=sr.getEmpPkId()%>,present" onclick="ok(this)" style="color: blue;margin-left: 50px; font-size: 21px;" ></td>
+					<td class="align"><input type="button" value="Apsent"id="<%=sr.getEmpPkId()%>,absent"onclick="ok(this)" style="color: blue;margin-left: 50px; font-size: 21px;"></td>
+					<td class="align"><input type="button" value="HalfDay"id="<%=sr.getEmpPkId()%>,halfday" onclick="ok(this)"style="color: blue;margin-left: 50px; font-size: 21px;"></td>
 				</tr>
 				<%
 					}
@@ -315,12 +318,36 @@
 			</tbody>
 		</table>
 
-		<div class="wrapper" align="center" style="margin-top: 5%;">
+		<!-- <div class="wrapper" align="center" style="margin-top: 5%;">
+		
+		<input type="button" id="save" name="btn"
+							class="btn btn-primary"
+				style="border-radius: 10px; padding: 10px; margin-bottom: 4%;"
+							onclick="update()" value="Update">
 			<input type="button" value="Back" id="listBtn"
 				class="btn btn-primary"
 				style="border-radius: 10px; padding: 10px; margin-bottom: 4%;"
 				onclick="Back()" />
-		</div>
+		</div> -->
+		
+		
+		<div class="row editcustmerdetails" align="center" style="margin-top: 5%;">
+
+					<div class="col-md-2"  style="display:inline-block;">
+						<input type="button" id="save" name="btn"
+						style="border-radius: 10px; padding: 10px; margin-bottom: 4%;margin-left: 250%;"
+							class="btn btn-large btn-success btn-md button_hw button_margin_right"
+							onclick="update()" value="Update">
+					</div>
+					<div class="col-md-2"  style="display:inline-block;">
+							<input type="button" value="Back"
+							style="border-radius: 10px; padding: 10px; margin-bottom: 4%;margin-left: 200%;"
+							id="listBtn" class="btn btn-large btn-primary btn-md button_hw button_margin_right" onclick="Back()" />
+					</div>
+					
+
+
+				</div>
 	</div>
 
 </body>

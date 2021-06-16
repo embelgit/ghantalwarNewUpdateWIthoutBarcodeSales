@@ -720,6 +720,7 @@ a.homer {
 							<li><a href="<%=path%>employee_detail.jsp">Employee Details</a></li>
 							<li><a href="<%=path%>employeeList.jsp">Employee List</a></li>
 							<li><a href="<%=path%>editEmployeeDetails.jsp">Edit Employee</a></li>
+							<li><a href="<%=path%>EmpAttendence.jsp">Employee Attendance</a></li>
 						</ul>
 					</li>
 					<li><a href="<%=path%>expenditureType.jsp">Expenditure Management(alt+E)</a>
@@ -771,7 +772,7 @@ a.homer {
 					<li><a href="<%=path%>editBill.jsp">Edit Bill(clt+E)</a></li>
 					<%-- <li><a href="<%=path%>y_sale_return.jsp">Sale Return Invoice</a></li> --%>
 					<li><a href="<%=path%>testSaleReturn.jsp">Sale Return Invoice(clt+alt+R)</a></li>
-					<%-- <li><a href="<%=path%>sdefect_module.jsp">Defect Module</a></li> --%>
+					 <li><a href="<%=path%>BillCancel.jsp">Bill Cancel</a></li> 
 				</ul></li>
 			<%
 				}

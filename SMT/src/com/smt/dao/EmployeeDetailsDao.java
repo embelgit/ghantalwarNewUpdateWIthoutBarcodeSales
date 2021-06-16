@@ -19,6 +19,7 @@ import com.smt.bean.CategoryDetails;
 import com.smt.bean.GetEmployeeDetails;
 import com.smt.bean.allTransactionId;
 import com.smt.bean.userDetaile;
+import com.smt.hibernate.EmpAttendenceBean;
 import com.smt.hibernate.EmployeeDetailsBean;
 import com.smt.hibernate.UserDetail;
 import com.smt.utility.HibernateUtility;
@@ -56,6 +57,40 @@ public class EmployeeDetailsDao {
 		}
 	}
 
+	
+	
+	public void EmpAttendence(EmpAttendenceBean eb) 
+	{
+		System.out.println("In DAO");
+
+		HibernateUtility hbu = null;
+		Session session = null;
+		Transaction transaction = null;
+		try {
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			System.out.println("got session ");
+			transaction = session.beginTransaction();
+
+			System.out.println("Tx started");
+
+			session.save(eb);
+			transaction.commit();
+			System.out.println("Successful");
+		}
+
+		catch (RuntimeException e) {
+			try {
+				transaction.rollback();
+			} catch (RuntimeException rbe) {
+				Log.error("Couldn't roll back tranaction", rbe);
+			}
+		} finally {
+			hbu.closeSession(session);
+		}
+	}
+	
+	
 	public List getAllMainEmployeeShopWise(HttpServletRequest request, HttpServletResponse response)
 	{
 		HttpSession session1 = request.getSession();
@@ -77,6 +112,7 @@ public class EmployeeDetailsDao {
 				EmployeeDetailsBean empDetails = new EmployeeDetailsBean();
 				empDetails.setEmpId(Long.parseLong(object[0].toString()));
 				empDetails.setFirstName(object[1].toString());
+				
 				empDetails.setLastName(object[3].toString());
 				System.out.println(empDetails.getEmpId()+" "+empDetails.getFirstName()+" "+empDetails.getMiddleName()+" "+empDetails.getLastName());
 				empList.add(empDetails);
@@ -366,6 +402,94 @@ public class EmployeeDetailsDao {
 			} finally {
 
 				hbu.closeSession(session);
+			}
+			return empList;
+		}
+		
+		public List getEmpAttend(String shopId,String Empid)
+		{
+			System.out.println("fkshopIdTx - "+shopId+" , "+Empid);
+			HibernateUtility hbu=null;
+			Session session=null;
+			List list=null;
+			try{
+			 hbu = HibernateUtility.getInstance();
+			 session = hbu.getHibernateSession();
+			 Query query = session.createQuery("from EmployeeDetailsBean where fkShopId ='"+shopId+"' AND empId = '"+Empid+"'");
+			 list = query.list();
+			 System.out.println("fertilier query list size -  "+query.list().size());
+			}
+				catch(Exception e){	
+					e.printStackTrace();
+			}
+				finally
+				{
+						if(session!=null){
+						hbu.closeSession(session);
+					}
+				}
+			
+		return list;
+		}
+		
+		public List getEmpAttend1(String shopId,String Empid,String date)
+		{
+			System.out.println("fkshopIdTx - "+shopId+" , "+Empid);
+			HibernateUtility hbu=null;
+			Session session=null;
+			List list=null;
+			try{
+			 hbu = HibernateUtility.getInstance();
+			 session = hbu.getHibernateSession();
+			 Query query = session.createQuery("from EmpAttendenceBean where fkShopId ='"+shopId+"' AND empId = '"+Empid+"' and date='"+date+"' ");
+			 list = query.list();
+			 System.out.println("fertilier query list size -  "+query.list().size());
+			}
+				catch(Exception e){	
+					e.printStackTrace();
+			}
+				finally
+				{
+						if(session!=null){
+						hbu.closeSession(session);
+					}
+				}
+			
+		return list;
+		}
+		
+		public List getAllMainEmployeeShopWise1(HttpServletRequest request, HttpServletResponse response)
+		{
+			HttpSession session1 = request.getSession();
+			String shopId = (String) session1.getAttribute("shopId");
+			
+			HibernateUtility hbu = null;
+			Session session = null;		
+			List<EmployeeDetailsBean> empList = null;
+			try
+			{
+				hbu = HibernateUtility.getInstance();
+				session = hbu.getHibernateSession();
+				//Query query = session.createQuery("from EmployeeDetailsBean");
+				Query query = session.createSQLQuery("SELECT pk_empoyee_id, first_name, middle_name, last_name FROM employee_details WHERE fkShopId = "+shopId+" AND ISNULL(resignDate);");
+				List<Object[]> list = query.list();
+				empList = new ArrayList<EmployeeDetailsBean>();
+				for(Object[] object : list)
+				{
+					EmployeeDetailsBean empDetails = new EmployeeDetailsBean();
+					empDetails.setEmpId(Long.parseLong(object[0].toString()));
+					empDetails.setFirstName(object[1].toString());
+					empDetails.setMiddleName(object[2].toString());
+					empDetails.setLastName(object[3].toString());
+					System.out.println(empDetails.getEmpId()+" "+empDetails.getFirstName()+" "+empDetails.getMiddleName()+" "+empDetails.getLastName());
+					empList.add(empDetails);
+				}
+			} catch (Exception e) {
+				Log.error("Error in getAllMainEmployee", e);
+			} finally {
+				if (session != null) {
+					hbu.closeSession(session);
+				}
 			}
 			return empList;
 		}

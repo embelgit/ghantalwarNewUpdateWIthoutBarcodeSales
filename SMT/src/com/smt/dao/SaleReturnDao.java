@@ -533,7 +533,7 @@ public class SaleReturnDao {
 			hbu = HibernateUtility.getInstance();
 			session = hbu.getHibernateSession();
 			transaction = session.beginTransaction();
-				String Billcancel="y";
+				String Billcancel="Bill_cancel";
 			org.hibernate.Query query = session.createQuery("from OtherBill where pkBillId = :pkBillId ");
 			query.setParameter("pkBillId", pkBillId);
 

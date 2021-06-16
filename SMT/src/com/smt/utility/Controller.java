@@ -2690,5 +2690,20 @@ public class Controller
 				helper.billReturnAsPerBillNo(request, response);
 				return toJson("Bill Deleted Successfully");
 			}
+		 
+		 public String EmpAttend(HttpServletRequest request,
+					HttpServletResponse response) throws ParseException {
+				System.out.println("IN CONTROLLER");
+				EmployeeDetailsHelper helper = new EmployeeDetailsHelper();
+				helper.EmpAttendence(request, response);
+				return toJson("Attendence Registered Successfully");
+			}
+		 public String updateEmployeeAttendenceDetails(HttpServletRequest request,
+					HttpServletResponse response) throws ParseException {
+				System.out.println("IN CONTROLLER");
+				EmployeeDetailsHelper helper = new EmployeeDetailsHelper();
+				helper.updateEmpAttendence(request, response);
+				return toJson("Attendence  Updated/Registered Successfully");
+			}
 		
 }

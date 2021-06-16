@@ -6,7 +6,6 @@
 %>
 <%@include file="y_commons/header1.jsp"%>
 <head>
-
 <script type="text/javascript" src="/SMT/staticContent/y_js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/SMT/staticContent/y_js/bootbox.min.js"></script>
 <script type="text/javascript" src="/SMT/staticContent/y_js/bootbox.min.js"></script>
@@ -17,7 +16,7 @@
 <script type="text/javascript">
 	function Back()
 	{
-		window.location = "employee_detail.jsp";
+		window.location = "EmpAttendence.jsp";
 	}
 </script>
 <style>
@@ -216,7 +215,7 @@
 <body class="vColor">
 	<div class="row">
 		<div align="center" id="categorydetailsh2">
-			<h2 class="form-name style_heading">Edit Employee Details</h2>
+			<h2 class="form-name style_heading">Edit Employee Attendance</h2>
 		</div>
 	</div>
 	<div class="row">
@@ -237,17 +236,21 @@
 
 							<%
 								EmployeeDetailsDao eedd = new EmployeeDetailsDao();
-								List mList = eedd.getAllMainEmployeeShopWise(request, response);
+								List mList = eedd.getAllMainEmployeeShopWise1(request, response);
 							%>
 							<input list="emp_drop" id="employee"
-								onchange="getEmployeeDetails()" required>
+								 required>
 							<datalist id="emp_drop">
 								<%
 									for (int i = 0; i < mList.size(); i++) {
 										EmployeeDetailsBean detailsBean = (EmployeeDetailsBean) mList.get(i);
 								%>
-								<option data-value="<%=detailsBean.getEmpId()%>"><%=detailsBean.getFirstName()%>
-									<%=detailsBean.getLastName()%></option>
+								<option data-value="<%=detailsBean.getEmpId()%>" value="<%=detailsBean.getFirstName()%> <%=detailsBean.getLastName()%>"
+									myvalue="<%=detailsBean.getFirstName()%>"
+									myvalue1="<%=detailsBean.getMiddleName()%>"
+									myvalue2="<%=detailsBean.getLastName()%>"
+								>
+								
 								<%
 									}
 								%>
@@ -257,130 +260,13 @@
 					</div>
 
 				</div>
-				<div class="row">
-
-					<div class="invoice_label_up">
-						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
-							id="dayreport">
-							<input id="firstName" name="firstName" type="text" required>
-							<label for="firstName">First Name<sup>*</sup></label>
-						</div>
-					</div>
-
-					<div class="col-md-1"></div>
-
-					<div class="invoice_label_up">
-						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
-							id="dayreport">
-
-							<input id="middleName" name="middleName" type="text" required>
-							<label for="middleName">Middle Name<sup>*</sup></label>
-						</div>
-					</div>
-
-
-				</div>
-
-				<div class="row">
-
-					<div class="invoice_label_up">
-						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
-							id="dayreport">
-							<input id="lastName" name="lastName" type="text" required>
-							<label for="lastName">Last Name<sup>*</sup></label>
-						</div>
-					</div>
-
-
-
-					<div class="col-md-1"></div>
-
-					<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
-						id="dayreport">
-						<input id="joiningDate" readonly="readonly" name="joiningDate"
-							type="text"> <label for="joiningDate">Joining
-							Date<sup>*</sup>
-						</label>
-					</div>
-
-
-
-				</div>
-
-				<div class="row">
-
-
-					<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
-						id="dayreport">
-						<input id="emailId" name="emailId " type="email"
-							onkeyup="employeedetails(this)"> <label for="emailId">
-							Email ID</label>
-					</div>
-
-					<div class="col-md-1"></div>
-
-
-
-					<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
-						id="dayreport">
-						<input id="newJoiningDate" name="joiningDate" type="date">
-						<label for="joiningDate">New Joining Date</label>
-					</div>
-
-
-
-				</div>
-
-				<div class="row">
-
-
-					<div class="invoice_label_up">
-						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
-							id="dayreport">
-							<input id="contactNo" name="contactNo" type="text" required>
-							<label for="contactNo">Contact No.<sup>*</sup></label>
-						</div>
-					</div>
-
-					<div class="col-md-1"></div>
-
-
-
-					<div class="invoice_label_up">
-						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
-							id="dayreport">
-							<input id="salary" name="salary" type="text" required> <label
-								for="salary">Salary<sup>*</sup></label>
-						</div>
-					</div>
-
-
-				</div>
 				
-				<div class="row">
-			<div class="">
-				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
-				<input id="" name=""   type="file" required>
-				<label for="idproof">ID Proof<sup>*</sup></label>
-				</div>
-				</div>
-				<div class="col-md-1"></div>
-				<div class="">
-				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
-			    <input id="" name=" "  type="file" required>
-			    <label  for="Ephoto">Employee Image<sup>*</sup></label>
-			    </div>
-			    </div>
-			</div>
-			
-				<div class="row">
+		<div class="row">
 
-					<div class="invoice_label_up">
-						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
-							id="dayreport">
-							<input id="zipCode" name="zipCode" type="text" required>
-							<label for="zipCode">Pin code<sup>*</sup></label>
-						</div>
+					<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
+						id="dayreport">
+						<input id="date" name="joiningDate" type="date">
+						<label for="Date">Select Date</label>
 					</div>
 
 					<div class="col-md-1"></div>
@@ -388,27 +274,18 @@
 					<div class="invoice_label_up">
 						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
 							id="dayreport">
-							<input id="address" name="address " type="text" required>
-							<label for="address">Address<sup>*</sup></label>
+
+							<select class="" id="type" name="type" name="Select Type" style="padding: 14px;">
+				<option value="selectoption" >Select Attendance Type </option>
+				<option value="present">Present</option>
+				<option value="absent">Absent</option>
+				<option value="halfday">Half-Day</option>
+			</select>
 						</div>
 					</div>
 
 
-				</div>
-
-
-				<div class="row">
-
-
-					<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
-						id="dayreport">
-						<input id="resignDate" name="resignDate" type="date"> <label
-							for="joiningDate">Resign Date</label>
-					</div>
-
-
-
-				</div>
+		</div>
 
 				<div class="row editcustmerdetails">
 
@@ -416,7 +293,7 @@
 						<input type="button" id="save" name="btn"
 							style="font-size: 17px; padding-top: 7px; width: 124;"
 							class="btn btn-large btn-success btn-md button_hw button_margin_right"
-							onclick="editEmployee()" value="Update">
+							onclick="ok1()" value="Update">
 					</div>
 					<div class="col-md-2"  style="display:inline-block;">
 						<input id="save" name="btn"

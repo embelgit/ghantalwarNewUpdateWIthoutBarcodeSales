@@ -1,7 +1,10 @@
 package com.smt.helper;
 import java.math.BigInteger;
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -9,14 +12,24 @@ import java.util.List;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.omg.PortableInterceptor.LOCATION_FORWARD;
+
 import com.smt.bean.GetEmployeeDetails;
 import com.smt.bean.userDetaile;
 import com.smt.dao.CategoryDao;
 import com.smt.dao.EmployeeDetailsDao;
+import com.smt.dao.SaleReturnDao;
+import com.smt.dao.StockDao;
 import com.smt.dao.SupplierDetailDao;
+import com.smt.hibernate.EmpAttendenceBean;
 import com.smt.hibernate.EmployeeDetailsBean;
+import com.smt.hibernate.OtherBill;
+import com.smt.hibernate.Stock;
 import com.smt.utility.HibernateUtility;
 
 public class EmployeeDetailsHelper {
@@ -277,4 +290,170 @@ public class EmployeeDetailsHelper {
 			}
 			return map;
 		}
-}
+		
+		
+		public boolean EmpAttendence(HttpServletRequest request, HttpServletResponse response) throws ParseException
+		{
+			HttpSession session1 = request.getSession();
+			String shopId = (String) session1.getAttribute("shopId");
+			
+			String Empid = request.getParameter("attendencesid");
+			String EmpAttend = request.getParameter("attendences");
+		    
+			
+			
+		/*
+		 * LocalDate date = LocalDate.now(); Date date1 =
+		 * Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+		 * System.out.println("Current date: "+date);
+		 */
+		
+			Date date=new Date();
+			Map<Long, EmployeeDetailsBean> map = new HashMap<Long, EmployeeDetailsBean>();
+
+			EmployeeDetailsDao dao = new EmployeeDetailsDao();
+			List stkList2  = dao.getEmpAttend(shopId,Empid);
+			
+			EmpAttendenceBean eb= new EmpAttendenceBean();
+			for(int i=0;i<stkList2.size();i++)
+			{
+				EmployeeDetailsBean bean=(EmployeeDetailsBean) stkList2.get(i);
+				
+				String firstName=bean.getFirstName();
+				String MiddleName=bean.getMiddleName();
+				String lastName=bean.getLastName();
+			
+				eb.setEmpId(Long.parseLong(Empid));
+				
+				eb.setFirstName(firstName);
+				eb.setMiddleName(MiddleName);
+				eb.setLastName(lastName);
+				eb.setEmpAttendence(EmpAttend);
+				eb.setFkShopId(Long.parseLong(shopId));
+				eb.setDate(date);
+				System.out.println("Empolyeeid--"+Empid+"--first--"+firstName+"--middle--"+MiddleName+"--last--"+lastName+"--date--"+date+"--attendencetype--"+EmpAttend+"--fkshpid--"+shopId);
+				
+				EmployeeDetailsDao edo = new EmployeeDetailsDao();
+				edo.EmpAttendence(eb);
+
+				
+			}
+				
+				
+			
+		
+			return true;
+		
+		}
+		
+		
+		public void updateEmpAttendence(HttpServletRequest request, HttpServletResponse response) throws ParseException
+		{
+			HttpSession session1 = request.getSession();
+			String shopId = (String) session1.getAttribute("shopId");
+			Long shopId1=Long.parseLong(shopId);
+			String Empid = request.getParameter("EmployeeId");
+			System.out.println("empid======="+Empid);
+			String first = request.getParameter("firstname");
+			String middle = request.getParameter("middlename");
+			String last = request.getParameter("lastname");
+			
+			Long Empid1=Long.parseLong(Empid);
+			String EmpAttend = request.getParameter("type");
+		   
+			String date = request.getParameter("date");
+			
+			Date date1 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+					System.out.println("date is"+date1);
+					
+					
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+					
+					String adate = null;
+					try {
+						
+						Date date12 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+					    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+					     adate = formatter.format(date1);  
+					    System.out.println("Date Format with MM/dd/yyyy : "+adate);  
+						
+						
+						
+						System.out.println("Date for other bill Sale report "+adate);
+					} catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				
+					SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
+					
+					Date date21=formatter2.parse(adate); 
+					String strDate = formatter2.format(date21);
+					
+					System.out.println("========================"+date21);
+					
+			Map<Long, EmployeeDetailsBean> map = new HashMap<Long, EmployeeDetailsBean>();
+
+			EmpAttendenceBean eb= new EmpAttendenceBean();		
+				EmployeeDetailsDao dao1 = new EmployeeDetailsDao();
+				List stkList21  = dao1.getEmpAttend1(shopId,Empid,date);
+				
+				if(stkList21.size()==0) {
+					eb.setEmpId(Long.parseLong(Empid));	
+					eb.setFirstName(first);
+					eb.setMiddleName(middle);
+					eb.setLastName(last);
+					eb.setEmpAttendence(EmpAttend);
+					eb.setFkShopId(Long.parseLong(shopId));
+					eb.setDate(date1);
+					System.out.println("Empolyeeid--"+Empid+"--first--"+first+"--middle--"+middle+"--last--"+last+"--date--"+newDate+"--attendencetype--"+EmpAttend+"--fkshpid--"+shopId);
+					
+					EmployeeDetailsDao edo = new EmployeeDetailsDao();
+					edo.EmpAttendence(eb);
+					
+				}
+				
+				else {
+					
+				
+				for(int i=0;i<stkList21.size();i++)
+				{
+					EmpAttendenceBean bean1=(EmpAttendenceBean) stkList21.get(i);
+					Date date11=bean1.getDate();
+					Long fkempid=bean1.getEmpId();
+					Long fkshop=bean1.getFkShopId();	
+				
+					String pattern = "yyyy-MM-dd";
+					DateFormat df = new SimpleDateFormat(pattern);
+					String todayAsString = df.format(date11);
+					System.out.println("database date"+todayAsString);
+					System.out.println("Sting date"+adate);
+				if(todayAsString.equals(adate) && fkempid.equals(Empid1) && fkshop.equals(shopId1) )
+				{
+					System.out.println("inside if of for loop");
+					HibernateUtility hbu = null;
+					Session session = null;
+					Transaction transaction = null;
+
+					hbu = HibernateUtility.getInstance();
+					session = hbu.getHibernateSession();
+					transaction = session.beginTransaction();
+					long EmployeeID = Long.parseLong(Empid);
+					
+
+					
+					Query query = session.createSQLQuery("UPDATE employee_attendence SET Attendence = '"+EmpAttend+"' WHERE date='"+adate+"' AND fkempid="+Empid+" and fkShopId="+shopId);
+					query.executeUpdate();
+					transaction.commit();
+
+					System.out.println("Record updated successfully.");
+					break;
+				}
+			
+				}
+				}
+		
+			}
+	
+		}
+

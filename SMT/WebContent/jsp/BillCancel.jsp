@@ -244,19 +244,15 @@
 		<div class="miscellaneous">
 			<form action="pro" method="post" name="prod" class="form-horizontal">
 				<div class="container" id="categoryListOfProductDetails">
-					<div class="row">
+					<div class="row"  >
 						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
-							id="dayreport">
-							<input type="text" input-sm" id='billno' name='billno'>
+							id="dayreport" style ="margin-left: 145px;" >
+							<input type="text"  id='billno' name='billno'>
 							<label>Bill No<sup style="color: red;">*</sup></label>
 						</div>
 
-						<div class="col-md-1"></div>
-						<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
-							id="subCategoryListOfProductDetails">
-							<input type="text"  id='BillNOOO' name='BillNOOO'>
-							<label>Today bill Number<sup style="color: red;">*</sup></label>
-						</div>
+						
+						
 					</div>
 
 					

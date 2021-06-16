@@ -1,4 +1,4 @@
-function myAlert(msg)
+/*function myAlert(msg)
 {
 	var dialog = bootbox.dialog({
     message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'</p>',
@@ -8,8 +8,24 @@ function myAlert(msg)
    setTimeout(function() {
 	dialog.modal('hide');
    }, 1500);
-}
+}*/
 
+
+
+function myAlert(msg)
+{
+	var dialog = bootbox.dialog({
+		//title: "Embel Technologies Says :",
+	   /* message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'<img src="/Shop/staticContent/images/s1.jpg" height="50" width="50"/></p>',*/
+	    message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'</p>',
+	    closeButton: false
+	   });
+	
+	   setTimeout(function()
+	  {
+		dialog.modal('hide');
+	   }, 1500);
+}
 function successAlert(msg)
 {
 	var dialog = bootbox.dialog({
@@ -261,6 +277,7 @@ function getEmployeeDetails(){
 /*============= Update employee detail ========*/
 function editEmployee()
 {
+	//myAlert("ok");
 	if(document.empd1.firstName.value == "")
 	{
 		myAlert("Enter Employee First Name.");
@@ -423,7 +440,7 @@ function ok(data) {
 	var  abc = data.id;
 	
 var aa=$("#name").text();
-	alert(aa);
+	//alert(aa);
 	var fields = abc.split(',');
 
 	var id = fields[0];
@@ -432,29 +449,88 @@ var aa=$("#name").text();
 	params["attendences"] = type;
 	params["attendencesid"] = id;
 	
-	if(type=="present")
-		{
-		alert("inside present==="+id+"====="+type);
-		params["attendences"] = type;
-		params["attendencesid"] = id;
-		
-		}
-	else if (type=="absent") {
-		
-		alert("inside absent==="+id+"====="+type);
-	}
-	else if (type=="halfday") {
-		alert("inside halfDay==="+id+"====="+type);
-	}
+	//alert("text==="+id+"====="+type);	
+	params["methodName"] = "EmpAttend";
 
+	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
+	{
+		alert(data);
+		//successAlert(data);
+		location.reload();
+	}
+	).error(function(jqXHR, textStatus, errorThrown){
+
+		if(textStatus==="timeout") {
+			$(loaderObj).hide();
+			$(loaderObj).find('#errorDiv').show();
+		}
+	});
+}	
+function ok1(){
+
+	var type = $('#type').val();
 	
-	//alert("text==="+id+"====="+type);
+	
+	if(document.empd1.employee.value == "")
+	{
+		myAlert("Please Select Employee Name.");
+		return false;
+	}
+	
+	if(document.empd1.date.value == "")
+	{
+		myAlert("Please Select date");
+		return false;
+	}
+	
+	if(type=="selectoption"){
+		
+		myAlert("Please Select Attendance type")
+		return false;
+	}
+	
+	document.empd1.btn.disabled = true;
+
+	var input = document.getElementById('employee'),
+	list = document.getElementById('emp_drop'),
+	i,fkRootEmpId,firstname,middlename,lastname;
+	for (i = 0; i < list.options.length; ++i) {
+		if (list.options[i].value === input.value) {
+			fkRootEmpId = list.options[i].getAttribute('data-value');
+			firstname = list.options[i].getAttribute('myvalue');
+			middlename = list.options[i].getAttribute('myvalue1');
+			lastname = list.options[i].getAttribute('myvalue2');
+		}
+	}
+		//alert(fkRootEmpId+firstname+middlename+lastname)			
+	var date = $('#date').val();
 	
 	
 	
+	//alert("date===="+date+"type==="+type+"id==="+fkRootEmpId)
 	
-	
-	
-	
-	
-}
+	var params = {};
+
+	params["EmployeeId"] = fkRootEmpId;
+	params["firstname"] = firstname;
+	params["middlename"] = middlename;
+	params["lastname"] = lastname;
+	params["date"] = date;
+	params["type"] = type;
+
+	params["methodName"] = "updateEmployeeAttendenceDetails";
+
+	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
+	{
+		alert(data);
+		//successAlert(data);
+		location.reload();
+	}
+	).error(function(jqXHR, textStatus, errorThrown){
+
+		if(textStatus==="timeout") {
+			$(loaderObj).hide();
+			$(loaderObj).find('#errorDiv').show();
+		}
+	});
+}	
