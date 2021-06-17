@@ -28,7 +28,7 @@ function addExpenseDetails()
 {
 	if(document.expenseDetails.expenseName.value == "")
 	{
-		myAlert("Please Enter Expense Name");
+		myAlert("Please Select Expense Type");
 		return false;
 	}	
 	var letterNumber = /^[a-zA-Z0-9, ]+$/;

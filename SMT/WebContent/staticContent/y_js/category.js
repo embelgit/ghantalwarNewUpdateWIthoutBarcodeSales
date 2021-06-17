@@ -337,6 +337,12 @@ function reNamecategory()
 
 function deleteCategory()
 {
+	
+	var categoeryname=$('#categoryName').val();
+	if(categoeryname == null || categoeryname == "" || categoeryname == " "){
+		myAlert("Please Select Category.");
+		return false;
+	}
 	document.getElementById("deleteCatBtn").disabled = true;
 	var input = document.getElementById('categoryName'),
 	list = document.getElementById('catId_drop'),

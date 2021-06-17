@@ -111,7 +111,7 @@
 							
 						</datalist>
 						<!-- <span>Expenditure Type</span> -->
-						<label>Expenditure Type <sup style="color: red">*</sup></label>
+						<span>Expenditure Type <sup style="color: red">*</sup></span>
 						</div>
 			</div>
 			

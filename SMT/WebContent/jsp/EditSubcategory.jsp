@@ -346,7 +346,7 @@ position: fixed;
 									<div align="center">
 										<div class="col-lg-2" style="display: inline-block;">
 											<input type="button" name="btn" id="btn"
-												onclick="reNameSubcategory();" value="Update" style="width: 124;"
+												onclick="isEmplty();" value="Update" style="width: 124;"
 												class="btn btn-success btn-md button_hw" />
 										</div>
 										<div class="col-lg-2" style="display: inline-block;">

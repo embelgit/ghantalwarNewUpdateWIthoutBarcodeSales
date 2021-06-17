@@ -39,6 +39,8 @@ function successAlert(msg)
    }, 1500);
 }
 
+
+
 function employeedetails()
 {
 	if(document.empd.firstName.value == "")
@@ -208,9 +210,9 @@ function empDetails(){
 	params["methodName"] = "regDetails";
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 	{
-		alert(data);
-		//successAlert(data);
-		location.reload();
+		//alert(data);
+		successAlert("Employee Added Successfully");
+		//location.reload();
 	}
 	).error(function(jqXHR, textStatus, errorThrown){
 		if(textStatus==="timeout") {
@@ -420,9 +422,10 @@ function updateEmployeeDetails(){
 
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 	{
-		alert(data);
+		//alert(data);
 		//successAlert(data);
-		location.reload();
+		successAlert("Employee Updated Successfully");
+		//location.reload();
 	}
 	).error(function(jqXHR, textStatus, errorThrown){
 
@@ -454,9 +457,11 @@ var aa=$("#name").text();
 
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 	{
-		alert(data);
+		
+		successAlert("Employee Attendance Registered Successfully");
+		//alert(data);
 		//successAlert(data);
-		location.reload();
+		//location.reload();
 	}
 	).error(function(jqXHR, textStatus, errorThrown){
 
@@ -522,9 +527,10 @@ function ok1(){
 
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 	{
-		alert(data);
+		//alert(data);
 		//successAlert(data);
-		location.reload();
+		successAlert("Employee Attendance Registered Successfully");
+		//location.reload();
 	}
 	).error(function(jqXHR, textStatus, errorThrown){
 

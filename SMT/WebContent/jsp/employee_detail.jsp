@@ -412,14 +412,14 @@ width: 110px;
 			<div class="">
 				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
 				<input id="" name=""   type="file" required>
-				<label for="idproof">ID Proof<sup>*</sup></label>
+				<label for="idproof">ID Proof</label>
 				</div>
 				</div>
 				<div class="col-md-1"></div>
 				<div class="">
 				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
 			    <input id="" name=" "  type="file" required>
-			    <label  for="Ephoto">Employee Image<sup>*</sup></label>
+			    <label  for="Ephoto">Employee Image</label>
 			    </div>
 			    </div>
 			</div>

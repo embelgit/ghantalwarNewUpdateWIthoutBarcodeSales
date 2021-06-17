@@ -16,6 +16,17 @@ body {
 	overflow-x: hidden;
 }
 
+.box span {
+    position: absolute;
+    top: 3px;
+    left: 25px;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #0f0e0e;
+    pointer-events: none;
+    transition: .5s;
+    font-weight: bold;
+}
 .expenditure {
 	position: absolute;
 	top: 5%;
@@ -52,7 +63,8 @@ label {
 	top: 15px;
 	left: 20px;
 	padding: 0;
-	transition: 0.3s;
+	transition: 0.3s;}
+	
 .expenditure span {
 	position: absolute;
 	top: 3px;

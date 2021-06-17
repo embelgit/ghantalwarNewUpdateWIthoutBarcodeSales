@@ -13,6 +13,19 @@
 <link rel="stylesheet" type="text/css" href="/SMT/staticContent/css/expenditure.css">	
 	
 <script type="text/javascript">	
+function myAlert(msg)
+{
+	var dialog = bootbox.dialog({
+    message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'</p>',
+    closeButton: false
+   });
+
+   setTimeout(function() {
+	dialog.modal('hide');
+   }, 1500);
+}
+		
+		
 		function cheakForExpenditure()
 		{
 			<%
@@ -35,8 +48,8 @@
 					duplicate = "found";
 			}
 			if(subcatName == subCat){
-				alert("Expenditure already exist...Duplicate Not allowed");
-				location.reload();
+				myAlert("Expenditure already exist...Duplicate Not allowed");
+				//location.reload();
 				return false;
 			}
 			<%
@@ -44,8 +57,8 @@
 			%>
 			if(duplicate == "found"){
     			document.expenseDetails.btn.disabled = true;	
-				alert("Expenditure Name Already Exist..!!!");
-				location.reload();
+    			myAlert("Expenditure Name Already Exist..!!!");
+				//location.reload();
 				document.expenseDetails.btn.disabled = false;
     			return false;
     		}

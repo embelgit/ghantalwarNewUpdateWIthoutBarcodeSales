@@ -165,7 +165,7 @@ function reNameSubcategory()
 	document.getElementById("btn").disabled = true;
 	var selectedSubCatId = $('#subcatId').val();
 	
-	var subcatId = selectedSubCatId.value;
+	//var subcatId = selectedSubCatId.value;
 	var reNameCat= $('#reNameCat').val();
 	var params= {};
 	params ["reNameCat"] = reNameCat;
