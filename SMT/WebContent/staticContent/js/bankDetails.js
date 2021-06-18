@@ -51,10 +51,31 @@ function addBank()
 		{}
 		else
 		{
-			alert("Please Enter valid Account Number");
+			myAlert("Please Enter valid Account Number");
 			return false;
 		}
 	}
+	
+/*	if(bankIfscCode == null || bankIfscCode == "" || bankIfscCode == " " || bankIfscCode == undefined)
+	{
+		myAlert("Please Enter Ifsc Code");
+		return false;
+	}
+	if(bankBranchName == null || bankBranchName == "" || bankBranchName == " " || bankBranchName == undefined)
+	{
+		myAlert("Please Enter Branch Name");
+		return false;
+	}
+	if(bankAccountHname == null || bankAccountHname == "" || bankAccountHname == " " || bankAccountHname == undefined)
+	{
+		myAlert("Please Enter Account Holder Name");
+		return false;
+	}
+	if(contactNo == null || contactNo == "" || contactNo == " " || contactNo == undefined)
+	{
+		myAlert("Please Enter Contact Number");
+		return false;
+	}*/
 	
 	if(bankIfscCode == null || bankIfscCode == "" || bankIfscCode == " " || bankIfscCode == undefined)
 	{

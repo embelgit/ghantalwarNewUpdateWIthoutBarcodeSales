@@ -5,7 +5,17 @@ var shopGstNoSD = "shop GST no";
 var shopEmailSD = "Shop Email Id";
 
 
+function myAlertCB(msg)
+{
+	var dialog = bootbox.dialog({
+    message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'</p>',
+    closeButton: false
+   });
 
+   setTimeout(function() {
+	dialog.modal('hide');
+   }, 1500);
+}
 function CurrentStock()
 {
 	var params = {};
@@ -20035,8 +20045,18 @@ function AgewisebetweenrangeWise()
 	var params = {};
 	var aBFisDate = $("#aBFisDate").val();
 	var aBEndDate = $("#aBEndDate").val();
-	alert(aBFisDate+aBEndDate);
-
+	//alert(aBFisDate+aBEndDate);
+	if(aBFisDate == null || aBFisDate == "" || aBFisDate == " " || aBFisDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+	
+	if(aBEndDate == null || aBEndDate == "" || aBEndDate == " " || aBEndDate == undefined)
+	{
+		myAlertCB("Please Select End Date");
+		return false;
+	}
 	params["aBFisDate"] = aBFisDate;
 	params["aBEndDate"] = aBEndDate;
 
@@ -20221,19 +20241,19 @@ function agewiseSupplierAndRangeWise()
 	
 	if(supplierAB == null || supplierAB == undefined || supplierAB == "" || supplierAB == " ")
 	{
-		alert("Please Select Supplier");
+		myAlertCB("Please Select Supplier");
 		return false;
 	}
 	
 	if(aBFisDateSuppWise == null || aBFisDateSuppWise == undefined || aBFisDateSuppWise == "" || aBFisDateSuppWise == " ")
 	{
-		alert("Please Select Start Date");
+		myAlertCB("Please Select Start Date");
 		return false;
 	}
 	
 	if(aBEndDateSuppWise == null || aBEndDateSuppWise == undefined || aBEndDateSuppWise == "" || aBEndDateSuppWise == " ")
 	{
-		alert("Please Select End Date");
+		myAlertCB("Please Select End Date");
 		return false;
 	}
 

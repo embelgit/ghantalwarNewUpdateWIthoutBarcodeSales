@@ -451,7 +451,7 @@ width:auto;
 									%>
 								
 							</datalist>
-							<label>Category</label> <span class="godbtn">
+							<label>Category<sup style="color: red;">*</sup></label> <span class="godbtn">
 								<button type="button" onclick="categoryDetailsDivAction(1);">
 									<i class="glyphicon glyphicon-plus" style="color: #0078ae;"></i>
 								</button>
@@ -465,7 +465,7 @@ width:auto;
 							id="subCategoryListOfProductDetails">
 
 							<select id='fkSubCatId' name="fkSubCatId"></select> <span
-								class="sub">Sub Category Name</span> <span class="godbtn">
+								class="sub">Sub Category Name<sup style="color: red;">*</sup></span> <span class="godbtn">
 								<button type="button" onclick="subCategoryDetailsDivAction(1);">
 									<i class="glyphicon glyphicon-plus" style="color: #0078ae;"></i>
 								</button>

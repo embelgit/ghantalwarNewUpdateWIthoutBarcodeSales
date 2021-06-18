@@ -111,7 +111,7 @@ function subcate()
 		}
 		else
 		{
-			successAlert(data);
+			successAlert("Sub Category Added Successfully");
 		}
 	}).error(function(jqXHR, textStatus, errorThrown)
 	{
@@ -187,8 +187,30 @@ function reNameSubcategory()
 
 function deleteSubCatagory()
 {	
+	
+	
+	
+	var addcatgry = $("#catId").val();
+	var subcatId = $("#subcatId").val();
+	if(addcatgry == null || addcatgry == "" || addcatgry == " " || addcatgry == undefined)
+	{
+		myAlert("Please Select Category");
+		return false;
+	}
+	
 	var subcatId = document.getElementById('subcatId');
 	var pk_SubCat_id = subcatId.value;
+	if(pk_SubCat_id == null || pk_SubCat_id == "" || pk_SubCat_id == " " || pk_SubCat_id == undefined)
+	{
+		myAlert("Please Select Sub-Category");
+		return false;
+	}
+	var subcatId = document.getElementById('subcatId');
+	var pk_SubCat_id = subcatId.value;
+	//var pk_Cat_id = addcatgry.value;
+	
+	
+	
 	
 	var params= {};
 
@@ -197,8 +219,8 @@ function deleteSubCatagory()
 
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 	{   
-		alert(data);
-		//successAlert(data);
+		//alert(data);
+		successAlert(data);
 	
 	}
 	).error(function(jqXHR, textStatus, errorThrown){

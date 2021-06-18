@@ -303,7 +303,7 @@
 			
 			
 		<div class="invoice_button">
-			<div class="row">
+			<div class="row" style="margin-left: 482px;">
 				<div class="col-lg-2" style="display: inline-block;">
 						
 						<input type="button" id="save" name="btn" style="padding-bottom: 10px;width: 124;"

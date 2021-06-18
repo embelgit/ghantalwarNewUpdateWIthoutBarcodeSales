@@ -1,4 +1,17 @@
-
+function myAlert(msg)
+{
+	var dialog = bootbox.dialog({
+		//title: "Embel Technologies Says :",
+	   /* message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'<img src="/Shop/staticContent/images/s1.jpg" height="50" width="50"/></p>',*/
+	    message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'</p>',
+	    closeButton: false
+	   });
+	
+	   setTimeout(function()
+	  {
+		dialog.modal('hide');
+	   }, 1500);
+}
 
 function successAlert(msg)
 {
@@ -33,14 +46,14 @@ function editBill1()
 	}
 	else if(+(mobileNo.length) < 10)
 	{
-		alert("Please Enter Correct Mobile Number");
+		myAlert("Please Enter Correct Mobile Number");
 		return false;
 	}
 	
 	var billNo = $('#billNoBW').val();
 	if(billNo == null || billNo == undefined || billNo == "" || billNo == " ")
 	{
-		alert("Please Enter Bill Number");
+		myAlert("Please Enter Bill Number");
 		return false;
 	}	
 	
@@ -267,12 +280,12 @@ function editCreditCustBillValidate()
 	
 	if(creditcustCustomer == "" || creditcustCustomer == null || creditcustCustomer == " " || creditcustCustomer == undefined)
 	{
-		alert("Select Customer Name");
+		myAlert("Select Customer Name");
 		return false;
 	}	
 	if(creditCustBillNo == "" || creditCustBillNo == null || creditCustBillNo == " " || creditCustBillNo == undefined)
 	{
-		alert("Select Bill No.");
+		myAlert("Select Bill No.");
 		return false;
 	}	
 	editCreditCustBill();
@@ -522,12 +535,12 @@ function billEdit2()
 {
 	if(document.supd1.creditCustomer.value == "")
 	{
-		alert("Select Customer Name.");
+		myAlert("Select Customer Name.");
 		return false;
 	}	
 	if(document.supd1.billNo2.value == "")
 	{
-		alert("Select Bill No.");
+		myAlert("Select Bill No.");
 		return false;
 	}	
 	billeditCreditCust();
@@ -633,20 +646,7 @@ function getEmpName()
 		}
 	});
 }
-function myAlert(msg)
-{
-	var dialog = bootbox.dialog({
-		//title: "Embel Technologies Says :",
-	   /* message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'<img src="/Shop/staticContent/images/s1.jpg" height="50" width="50"/></p>',*/
-	    message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'</p>',
-	    closeButton: false
-	   });
-	
-	   setTimeout(function()
-	  {
-		dialog.modal('hide');
-	   }, 1500);
-}
+
 
 function getSaleItems2()
 {	

@@ -1,3 +1,15 @@
+function myAlertCB(msg)
+{
+	var dialog = bootbox.dialog({
+    message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'</p>',
+    closeButton: false
+   });
+
+   setTimeout(function() {
+	dialog.modal('hide');
+   }, 1500);
+}
+
 var	sum = 0 ;
 var sum2 = 0;
 var sum3=0;
@@ -624,19 +636,19 @@ function valSupplierWiseStockBetweenTwoDate()
 					getSupplierWiseStockBetweenTwoDate();
 				}
 				else{
-					alert("Please select End Date !");
+					myAlertCB("Please select End Date !");
 				}
 			}
 			else{
-				alert("Please select Start Date !");
+				myAlertCB("Please select Start Date !");
 			}
 		}
 		else{
-			alert("Invalid Supplier Name ! Please select Supplier Name from avaliable list");
+			myAlertCB("Invalid Supplier Name ! Please select Supplier Name from avaliable list");
 		}
 	}
 	else{
-		alert("Please select supplier name first !");
+		myAlertCB("Please select supplier name first !");
 	}
 }
 
@@ -898,19 +910,19 @@ function valSupplierWiseStockBetweenTwoDateForEmp()
 					getSupplierWiseStockBetweenTwoDateForEmp();
 				}
 				else{
-					alert("Please select End Date !");
+					myAlertCB("Please select End Date !");
 				}
 			}
 			else{
-				alert("Please select Start Date !");
+				myAlertCB("Please select Start Date !");
 			}
 		}
 		else{
-			alert("Invalid Supplier Name ! Please select Supplier Name from avaliable list");
+			myAlertCB("Invalid Supplier Name ! Please select Supplier Name from avaliable list");
 		}
 	}
 	else{
-		alert("Please select supplier name first !");
+		myAlertCB("Please select supplier name first !");
 	}
 }
 

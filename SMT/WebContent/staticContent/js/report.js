@@ -1,3 +1,15 @@
+function myAlert(msg)
+{
+	var dialog = bootbox.dialog({
+    message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'</p>',
+    closeButton: false
+   });
+
+   setTimeout(function() {
+	dialog.modal('hide');
+   }, 1500);
+}
+
 function singleDatePurchase()
 {
 	var params= {};
@@ -1149,8 +1161,27 @@ function employeeNameWiseAndBetweenTwoDates()
 	}
 	var fkSupplierId = supplier1;
 	var empId = supplier;
+	var supplier = $("#supplier7").val();
 	var fisDate = $("#firstDate").val();
 	var endDate = $("#secondDate").val();
+
+	if(supplier == "" || supplier == undefined || supplier == " " || supplier == null)
+	{
+		myAlert("Please Select Employee");
+		return false;
+	}
+	
+	if(fisDate == "" || fisDate == undefined || fisDate == " " || fisDate == null)
+	{
+		myAlert("Please Select Start Date");
+		return false;
+	}
+	
+	if(endDate == "" || endDate == undefined || endDate == " " || endDate == null)
+	{
+		myAlert("Please Select End Date");
+		return false;
+	}
 	var params= {};
 	params["fkSupplierId"]= fkSupplierId;
 	params["empId"]= empId;

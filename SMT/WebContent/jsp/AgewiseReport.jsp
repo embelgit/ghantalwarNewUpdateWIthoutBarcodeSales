@@ -25,6 +25,9 @@
 <%@include file="y_commons/header1.jsp"%>
 <script type="text/javascript" src="/SMT/staticContent/js/jquery.min.js"></script>
 <script src="/SMT/staticContent/js/highcharts.js"></script>
+<script type="text/javascript" src="/SMT/staticContent/y_js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/SMT/staticContent/y_js/bootbox.min.js"></script>
+
 <!-- <script src="http://code.highcharts.com/highcharts.js"></script> -->
 <script type="text/javascript"
 	src="/SMT/staticContent/y_js/jquery-ui.min.js"></script>

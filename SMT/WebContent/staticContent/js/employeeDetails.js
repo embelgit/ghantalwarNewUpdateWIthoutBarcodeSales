@@ -437,7 +437,7 @@ function updateEmployeeDetails(){
 }	
 
 
-function ok(data) {
+function EmpAttendance(data) {
 	
 	var params={};
 	var  abc = data.id;
@@ -471,7 +471,7 @@ var aa=$("#name").text();
 		}
 	});
 }	
-function ok1(){
+function EditEmpAttendance(){
 
 	var type = $('#type').val();
 	
@@ -529,7 +529,7 @@ function ok1(){
 	{
 		//alert(data);
 		//successAlert(data);
-		successAlert("Employee Attendance Registered Successfully");
+		successAlert("Employee Attendance Registered/Updated Successfully");
 		//location.reload();
 	}
 	).error(function(jqXHR, textStatus, errorThrown){

@@ -108,6 +108,19 @@
 
 <script type="text/javascript">
 
+function myAlertCB(msg)
+{
+	var dialog = bootbox.dialog({
+    message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'</p>',
+    closeButton: false
+   });
+
+   setTimeout(function() {
+	dialog.modal('hide');
+   }, 1500);
+}
+
+
 function cheakForAvailableExpd()
 {
     <%ExpenditureDetailsDao expdDao = new ExpenditureDetailsDao();
@@ -134,7 +147,7 @@ function cheakForAvailableExpd()
 	else
 	{
 		document.exp.save.disabled = true;
-		alert("Please Register Expenditure Name");
+		myAlertCB("Please Register Expenditure Name");
 		document.exp.reset();
 		document.exp.save.disabled = false;
 		return false;
@@ -149,7 +162,7 @@ function cheakForValidTransactionId()
 	var sRTransactionId = $('#sRTransactionId').val();
 	if(sRTransactionId == null || sRTransactionId == "" || sRTransactionId == undefined || sRTransactionId == " ")
 	{
-		alert("Please Enter Transaction Id");
+		myAlertCB("Please Enter Transaction Id");
 		return false;		
 	}
 	else
@@ -173,7 +186,7 @@ function cheakForValidTransactionId()
 		else
 		{
 			document.creditNote.save.disabled = true;
-			alert("Invalid Transaction Id");
+			myAlertCB("Invalid Transaction Id");
 			document.creditNote.reset();
 			document.creditNote.save.disabled = false;
 			return false;

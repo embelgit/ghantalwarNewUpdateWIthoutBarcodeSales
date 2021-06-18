@@ -6,6 +6,9 @@
 %>
 <%@include file="y_commons/header1.jsp"%>
 <script src="/SMT/staticContent/js/jquery-1.12.3.min.js" type="text/javascript"></script>
+<script type="text/javascript" src="/SMT/staticContent/y_js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/SMT/staticContent/y_js/bootbox.min.js"></script>
+<script type="text/javascript" src="/SMT/staticContent/y_js/bootbox.min.js"></script>
 <link rel="stylesheet" href="/SMT/staticContent/css/jquery-ui.min.css">
 <link rel="stylesheet" href="/SMT/staticContent/css/ui.jqgrid.min.css">
 <link rel="stylesheet" href="/SMT/staticContent/css/ui.jqgrid.css">

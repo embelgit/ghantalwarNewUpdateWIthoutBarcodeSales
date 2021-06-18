@@ -285,24 +285,24 @@
 			<div class="row">
 				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
 							<input type="text" input-sm" id='bankIfscCode' name='bankIfscCode' >
-							<label>IFSC Code<sup style="color: red;">*</sup></label>
+							<label>IFSC Code</label>
 				</div>
 				<div class="col-md-1"></div>
 					<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
 						 <input type="text" id='bankBranchName' name='bankBranchName'>
-						 <label>Branch Name<sup style="color: red;">*</sup></label>
+						 <label>Branch Name</label>
 				    </div>
 			</div>
-			
+			<!-- <sup style="color: red;">*</sup> -->
 			<div class="row">
 				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
 							<input type="text" input-sm" id='bankAccountHname' name='bankAccountHname'>
-							<label>Account Holder Name<sup style="color: red;">*</sup></label>
+							<label>Account Holder Name</label>
 				</div>
 				<div class="col-md-1"></div>
 					<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
 						 <input type="text" id='contactNo' name='contactNo' maxlength="10">
-						 <label>Contact No<sup style="color: red;">*</sup></label>
+						 <label>Contact No</label>
 				    </div>
 			</div>
 			

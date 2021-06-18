@@ -43,7 +43,12 @@ function supplierPayment()
 		myAlertCB("Please Select Supplier Name");
 		return false;
 	}	
-
+	
+	if(document.spmt.billNo.value == "")
+	{
+		myAlertCB("Please Select Bill No.");
+		return false;
+	}
 	if(suppPaymentType == "selected7" )
 	{
 		myAlertCB("Please Select Payment Type");
@@ -174,8 +179,8 @@ function customerPaymentValidation()
 	var personname1 = $("#personname1").val();
 	
 	if (creditCustomer != null && creditCustomer != "") {
-		/*if (creditCustBillNo != null && creditCustBillNo != "")
-		 * {*/
+		if (creditCustBillNo != null && creditCustBillNo != "")
+		  {
 			var creditAmtRegExp = /^[0-9]+([.][0-9]+)?$/;
 			if (creditCustCreditAmt != null && creditCustCreditAmt != ""
 				&& creditCustCreditAmt != " ") {
@@ -209,10 +214,10 @@ function customerPaymentValidation()
 				myAlertCB("Please Enter Credit Amount");
 			}
 
-		} /* else {
+		}  else {
 			myAlertCB("please Select Bill Number");
 		}
-	}*/ else {
+	} else {
 		myAlertCB("please Select Customer Name");
 	}
 }

@@ -6,6 +6,9 @@
 %>
 <%@include file="y_commons/header1.jsp"%>
 <script src="/SMT/staticContent/js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="/SMT/staticContent/y_js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/SMT/staticContent/y_js/bootbox.min.js"></script>
+<script type="text/javascript" src="/SMT/staticContent/y_js/bootbox.min.js"></script>
 <script src="/SMT/staticContent/shree/jquery.dataTables.min.js"
 	type="text/javascript"></script>
 <script src="/SMT/staticContent/shree/dataTables.buttons.min.js"
@@ -308,9 +311,9 @@
 					<td class="align" id="name"><%=sr.getFirstName()%></td>
 					<td class="align"><%=sr.getMiddleName()%></td>
 					<td class="align"><%=sr.getLastName()%></td>
-					<td class="align"><input type="button" value="Present" id="<%=sr.getEmpPkId()%>,present" onclick="ok(this)" style="color: blue;margin-left: 50px; font-size: 21px;" ></td>
-					<td class="align"><input type="button" value="Apsent"id="<%=sr.getEmpPkId()%>,absent"onclick="ok(this)" style="color: blue;margin-left: 50px; font-size: 21px;"></td>
-					<td class="align"><input type="button" value="HalfDay"id="<%=sr.getEmpPkId()%>,halfday" onclick="ok(this)"style="color: blue;margin-left: 50px; font-size: 21px;"></td>
+					<td class="align"><input type="button" value="Present" id="<%=sr.getEmpPkId()%>,present" onclick="EmpAttendance(this)" style="color: blue;margin-left: 50px; font-size: 21px;" ></td>
+					<td class="align"><input type="button" value="Apsent"id="<%=sr.getEmpPkId()%>,absent"onclick="EmpAttendance(this)" style="color: blue;margin-left: 50px; font-size: 21px;"></td>
+					<td class="align"><input type="button" value="HalfDay"id="<%=sr.getEmpPkId()%>,halfday" onclick="EmpAttendance(this)"style="color: blue;margin-left: 50px; font-size: 21px;"></td>
 				</tr>
 				<%
 					}

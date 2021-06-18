@@ -1,3 +1,42 @@
+function myAlertFocusToKey(msg)
+{
+	var dialog = bootbox.dialog({
+	    message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'</p>',
+	    closeButton: false
+	   });
+
+	   setTimeout(function() {
+		dialog.modal('hide');
+		document.getElementById("key").focus();		
+	   }, 1500);
+}
+function myAlert(msg)
+{
+	var dialog = bootbox.dialog({
+		//title: "Embel Technologies Says :",
+	   /* message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'<img src="/Shop/staticContent/images/s1.jpg" height="50" width="50"/></p>',*/
+	    message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'</p>',
+	    closeButton: false
+	   });
+	   setTimeout(function()
+	  {
+		dialog.modal('hide');
+	   }, 1500);
+}
+
+function successAlert(msg)
+{
+	var dialog = bootbox.dialog({
+    message: '<p class="text-center">'+msg.fontcolor("green").fontsize(5)+'</p>',
+    closeButton: false
+   });
+   setTimeout(function()
+   {
+	dialog.modal('hide');
+	location.reload();
+   }, 1500);
+}
+
 function validateGenerateBillCOPY(){
 	var BillNo = $('#BillNo').val(); 
 	var input = document.getElementById('BillNo'), list = document
@@ -16,11 +55,11 @@ function validateGenerateBillCOPY(){
 		}
 		else
 		{
-			alert("Invalid Bill Number ! Please select correct Bill number form avaliable list");
+			myAlert("Invalid Bill Number ! Please select correct Bill number form avaliable list");
 		}
 	}
 	else{
-		alert("Please select Bill Number first !");
+		myAlert("Please select Bill Number first !");
 	}
 }
 
@@ -63,11 +102,11 @@ function validateGenerateBillCOPYForOtherBill(){
 			generateBillCOPY1();
 		}
 		else{
-			alert("Invalid Bill Number ! Please select correct Bill number form avaliable list");
+			myAlert("Invalid Bill Number ! Please select correct Bill number form avaliable list");
 		}
 	}
 	else{
-		alert("Please select Bill Number first !");
+		myAlert("Please select Bill Number first !");
 	}
 }
 
@@ -122,11 +161,11 @@ function validateGenerateBillCOPYForCreditBill()
 		}
 		else
 		{
-			alert("Invalid Bill Number ! Please select correct Bill number form avaliable list");
+			myAlert("Invalid Bill Number ! Please select correct Bill number form avaliable list");
 		}
 	}
 	else{
-		alert("Please select Bill Number first !");
+		myAlert("Please select Bill Number first !");
 	}
 }
 

@@ -1,7 +1,29 @@
+function myAlert(msg)
+{
+	var dialog = bootbox.dialog({
+    message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'</p>',
+    closeButton: false
+   });
+
+   setTimeout(function() {
+	dialog.modal('hide');
+   }, 1500);
+}
+
 function singleDatePurchase()
 {
 	var params= {};
 	var fDate = $("#fDate").val();
+	
+	
+	if(fDate == "" || fDate == undefined || fDate == " " || fDate == null)
+	{
+		myAlert("Please Select  Date");
+		return false;
+	}
+	
+	
+	
 	params["fDate"]= fDate;
 	params["methodName"] = "singleDatePurchase";
 
@@ -277,6 +299,21 @@ function purchaseReportBetweenTwoDates()
 	var params= {};
 	var fisDate = $("#fisDate").val();
 	var endDate = $("#endDate").val();
+	
+	
+	
+	
+	if(fisDate == "" || fisDate == undefined || fisDate == " " || fisDate == null)
+	{
+		myAlert("Please Select Start Date");
+		return false;
+	}
+	
+	if(endDate == "" || endDate == undefined || endDate == " " || endDate == null)
+	{
+		myAlert("Please Select End Date");
+		return false;
+	}
 
 	params["fisDate"]= fisDate;
 	params["endDate"]= endDate;
@@ -557,19 +594,19 @@ function suppGstReportBetweenTwoDates()
 
 	if(supplier == "" || supplier == undefined || supplier == " " || supplier == null)
 	{
-		alert("Please Select Supplier");
+		myAlert("Please Select Supplier");
 		return false;
 	}
 	
 	if(fisDate == "" || fisDate == undefined || fisDate == " " || fisDate == null)
 	{
-		alert("Please Select Start Date");
+		myAlert("Please Select Start Date");
 		return false;
 	}
 	
 	if(endDate == "" || endDate == undefined || endDate == " " || endDate == null)
 	{
-		alert("Please Select End Date");
+		myAlert("Please Select End Date");
 		return false;
 	}
 	
@@ -1236,14 +1273,14 @@ function twoDateSaleReportForGSTReport()
 	
 	if(fisDateB2CGST == "" || fisDateB2CGST == null || fisDateB2CGST == " " || fisDateB2CGST == "undefined")
 	{
-		alert("Please Select Start Date");
+		myAlert("Please Select Start Date");
 		return false;
 	}
 	else
 	{}
 	if(endDateB2CGST == "" || endDateB2CGST == null || endDateB2CGST == " " || endDateB2CGST == "undefined")
 	{
-		alert("Please Select End Date");
+		myAlert("Please Select End Date");
 		return false;		
 	}
 	else
@@ -1707,14 +1744,14 @@ function twoDateExportToGstB2CSaleReport()
 	
 	if(fisDateB2CGST == "" || fisDateB2CGST == null || fisDateB2CGST == " " || fisDateB2CGST == "undefined")
 	{
-		alert("Please Select Start Date");
+		myAlert("Please Select Start Date");
 		return false;
 	}
 	else
 	{}
 	if(endDateB2CGST == "" || endDateB2CGST == null || endDateB2CGST == " " || endDateB2CGST == "undefined")
 	{
-		alert("Please Select End Date");
+		myAlert("Please Select End Date");
 		return false;		
 	}
 	else
@@ -1723,7 +1760,7 @@ function twoDateExportToGstB2CSaleReport()
 	var table = $('#saleB2CGSTReport').DataTable();
 	if( ! table.data().any() )
 	{
-	    alert('SALE GST B2C Data Table Is Empty');
+		myAlert('SALE GST B2C Data Table Is Empty');
 	    return false;
 	}
 	else
@@ -1932,14 +1969,14 @@ function twoDateExportToGstB2BPurchaseReport()
 	
 	if(fisDateB2bP == "" || fisDateB2bP == null || fisDateB2bP == " " || fisDateB2bP == "undefined")
 	{
-		alert("Please Select Start Date");
+		myAlert("Please Select Start Date");
 		return false;
 	}
 	else
 	{}
 	if(endDateB2bP == "" || endDateB2bP == null || endDateB2bP == " " || endDateB2bP == "undefined")
 	{
-		alert("Please Select End Date");
+		myAlert("Please Select End Date");
 		return false;		
 	}
 	else
@@ -1948,7 +1985,7 @@ function twoDateExportToGstB2BPurchaseReport()
 	var table = $('#purchaseB2BGSTReport').DataTable();
 	if( ! table.data().any() )
 	{
-	    alert('PURCHASE GST B2B Report Data Table Is Empty');
+		myAlert('PURCHASE GST B2B Report Data Table Is Empty');
 	    return false;
 	}
 	else

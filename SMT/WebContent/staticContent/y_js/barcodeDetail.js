@@ -47,9 +47,9 @@ function printBarcode()
 
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 	{
-		//successAlert("Barcode Printed Successfully");
-		alert(data);
-		location.reload();
+		successAlert("Barcode Printed Successfully");
+		//alert(data);
+		//location.reload();
 		document.barcodeCopy.btn.disabled = false;
 	}
 	).error(function(jqXHR, textStatus, errorThrown){

@@ -315,7 +315,7 @@ width: 110px;
 				<div class="invoice_label_up ">
 				<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
 			                <input type="text" id="billNoBW" autofocus="autofocus" onchange="getEmpName(), getEmpName(), getSaleItems2();" required/>
-					        <label class="control-label">Bill No</label>
+					        <label class="control-label">Bill No<sup style="color: red;">*</sup></label>
 				</div>	  
 				</div>
 					     
@@ -654,7 +654,7 @@ width: 110px;
 				      			}
 				    		%>
 						</datalist>
-						<label for="customerName">Customer Name<sup>*</sup></label>
+						<label for="customerName">Customer Name<sup style="color: red;">*</sup></label>
 				</div>
 				</div>
 				
@@ -665,7 +665,7 @@ width: 110px;
                   <div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">
 				
 					<select id='creditCustBillNo' name="creditCustBillNo" onchange="getEmpName(); getEmpName(); getEmpName(); getCreditCustEditBill();"></select>
-					<label>Bill No</label>
+					<label>Bill No<sup style="color: red;">*</sup></label>
 			     </div>
 			</div>
 			

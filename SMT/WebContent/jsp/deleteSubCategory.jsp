@@ -6,19 +6,20 @@
 	boolean isHome = false;
 %>
 <%@include file="y_commons/header1.jsp"%>
-<script src="/SMT/staticContent/y_js/jquery-1.12.3.min.js"></script>
+<script src="/SMT/staticContent/js/jquery.min.js"></script>
 <script type="text/javascript" src="/SMT/staticContent/y_js/bootstrap.min.js"></script>
-<script type="text/javascript" src="/SMT/staticContent/y_js/bootbox.min.js"></script>
-<link href="/SMT/staticContent/y_js/bootstrap-select.min.css" />
-<script src="/SMT/staticContent/y_css/1.11.4-jquery-ui.min.css">
-<script src="/SMT/staticContent/y_js/jquery-1.12.3.min.js"></script>
-<script src="/SMT/staticContent/y_js/1.12.4-jquery.min.js"></script>
-<script src="/SMT/staticContent/y_js/jquery.jqgrid.min.js"></script>
-<link href="/SMT/staticContent/y_css/adi.css" rel="stylesheet" />
-<link href="/SMT/staticContent/y_css/4.13.3-ui.jqgrid.min.css" />
+<!-- <script src="/SMT/staticContent/y_js/jquery-1.12.3.min.js"></script> -->
+<link rel="stylesheet" href="/SMT/staticContent/css/jquery-ui.min.css">
+<link rel="stylesheet" href="/SMT/staticContent/css/ui.jqgrid.min.css">
+<link rel="stylesheet" href="/SMT/staticContent/css/ui.jqgrid.css">
+<link rel="stylesheet" type="text/css" href="/SMT/staticContent/css/addCategory.css">
+<!-- <script src="/SMT/staticContent/js/jquery.min.js"></script> -->
+<script src="/SMT/staticContent/js/jquery.jqgrid.min.js"></script>
 <script src="/SMT/staticContent/y_js/uppercase.js"></script>
-<script src="/SMT/staticContent/y_js/subcategory.js"></script>
+<script type="text/javascript" src="/SMT/staticContent/y_js/bootbox.min.js"></script>
 <link rel="stylesheet" type="text/css" href="/SMT/staticContent/css/subcategory.css">
+<script src="/SMT/staticContent/y_js/subcategory.js"></script>
+
 <script type="text/javascript">
 	function Back()
 	{
