@@ -292,57 +292,125 @@ public class EmployeeDetailsHelper {
 		}
 		
 		
-		public boolean EmpAttendence(HttpServletRequest request, HttpServletResponse response) throws ParseException
+		public void EmpAttendence(HttpServletRequest request, HttpServletResponse response) throws ParseException
 		{
 			HttpSession session1 = request.getSession();
 			String shopId = (String) session1.getAttribute("shopId");
-			
+			Long shopid=Long.parseLong(shopId);
 			String Empid = request.getParameter("attendencesid");
+			Long Empid1=Long.parseLong(Empid);
 			String EmpAttend = request.getParameter("attendences");
-		    
+			String first = request.getParameter("first");
+			String second = request.getParameter("second");
 			
-			
-		/*
-		 * LocalDate date = LocalDate.now(); Date date1 =
-		 * Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
-		 * System.out.println("Current date: "+date);
-		 */
-		
+			String thrid = request.getParameter("third");
 			Date date=new Date();
+		
 			Map<Long, EmployeeDetailsBean> map = new HashMap<Long, EmployeeDetailsBean>();
 
-			EmployeeDetailsDao dao = new EmployeeDetailsDao();
-			List stkList2  = dao.getEmpAttend(shopId,Empid);
+			EmpAttendenceBean eb= new EmpAttendenceBean();		
 			
-			EmpAttendenceBean eb= new EmpAttendenceBean();
-			for(int i=0;i<stkList2.size();i++)
-			{
-				EmployeeDetailsBean bean=(EmployeeDetailsBean) stkList2.get(i);
-				
-				String firstName=bean.getFirstName();
-				String MiddleName=bean.getMiddleName();
-				String lastName=bean.getLastName();
+		//	Map<Long, EmployeeDetailsBean> map = new HashMap<Long, EmployeeDetailsBean>();
+		/*
+		 * EmployeeDetailsDao dao = new EmployeeDetailsDao(); List stkList2 =
+		 * dao.getEmpAttend(shopId,Empid);
+		 * 
+		 * EmpAttendenceBean eb= new EmpAttendenceBean(); for(int
+		 * i=0;i<stkList2.size();i++) { EmployeeDetailsBean bean=(EmployeeDetailsBean)
+		 * stkList2.get(i); String firstName=bean.getFirstName(); String
+		 * MiddleName=bean.getMiddleName(); String lastName=bean.getLastName();
+		 * eb.setEmpId(Long.parseLong(Empid)); eb.setFirstName(firstName);
+		 * eb.setMiddleName(MiddleName); eb.setLastName(lastName);
+		 * eb.setEmpAttendence(EmpAttend); eb.setFkShopId(Long.parseLong(shopId));
+		 * eb.setDate(date);
+		 * System.out.println("Empolyeeid--"+Empid+"--first--"+firstName+"--middle--"+
+		 * MiddleName+"--last--"+lastName+"--date--"+date+"--attendencetype--"+EmpAttend
+		 * +"--fkshpid--"+shopId); EmployeeDetailsDao edo = new EmployeeDetailsDao();
+		 * edo.EmpAttendence(eb); } return true;
+		 */
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			
-				eb.setEmpId(Long.parseLong(Empid));
+			String adate = null;
+			try {
 				
-				eb.setFirstName(firstName);
-				eb.setMiddleName(MiddleName);
-				eb.setLastName(lastName);
-				eb.setEmpAttendence(EmpAttend);
-				eb.setFkShopId(Long.parseLong(shopId));
-				eb.setDate(date);
-				System.out.println("Empolyeeid--"+Empid+"--first--"+firstName+"--middle--"+MiddleName+"--last--"+lastName+"--date--"+date+"--attendencetype--"+EmpAttend+"--fkshpid--"+shopId);
+				//Date date12 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
+			    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+			     adate = formatter.format(date);  
+			    System.out.println("Date Format with MM/dd/yyyy : "+adate);  
 				
-				EmployeeDetailsDao edo = new EmployeeDetailsDao();
-				edo.EmpAttendence(eb);
-
 				
+				
+				System.out.println("Date for other bill Sale report "+adate);
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
 			}
-				
-				
+		
+			SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
+			
+			Date date21=formatter2.parse(adate); 
+			String strDate = formatter2.format(date21);
+			
+			System.out.println("========================"+date21);
 			
 		
-			return true;
+		EmployeeDetailsDao dao1 = new EmployeeDetailsDao();
+		List stkList21  = dao1.getEmpAttend1(shopId,Empid,adate);
+		
+		if(stkList21.size()==0) {
+			eb.setEmpId(Long.parseLong(Empid));	
+			eb.setFirstName(first);
+			eb.setMiddleName(second);
+			eb.setLastName(thrid);
+			eb.setEmpAttendence(EmpAttend);
+			eb.setFkShopId(Long.parseLong(shopId));
+			eb.setDate(date);
+			System.out.println("Empolyeeid--"+Empid+"--first--"+first+"--middle--"+second+"--last--"+thrid+"--date--"+newDate+"--attendencetype--"+EmpAttend+"--fkshpid--"+shopId);
+			
+			EmployeeDetailsDao edo = new EmployeeDetailsDao();
+			edo.EmpAttendence(eb);
+			
+		}
+		
+		else {
+			
+		
+		for(int i=0;i<stkList21.size();i++)
+		{
+			EmpAttendenceBean bean1=(EmpAttendenceBean) stkList21.get(i);
+			Date date11=bean1.getDate();
+			Long fkempid=bean1.getEmpId();
+			Long fkshop=bean1.getFkShopId();	
+		
+			String pattern = "yyyy-MM-dd";
+			DateFormat df = new SimpleDateFormat(pattern);
+			String todayAsString = df.format(date11);
+			System.out.println("database date"+todayAsString);
+			System.out.println("Sting date"+adate);
+		if(todayAsString.equals(adate) && fkempid.equals(Empid1) && fkshop.equals(shopid) )
+		{
+			System.out.println("inside if of for loop");
+			HibernateUtility hbu = null;
+			Session session = null;
+			Transaction transaction = null;
+
+			hbu = HibernateUtility.getInstance();
+			session = hbu.getHibernateSession();
+			transaction = session.beginTransaction();
+			long EmployeeID = Long.parseLong(Empid);
+			
+
+			
+			Query query = session.createSQLQuery("UPDATE employee_attendence SET Attendence = '"+EmpAttend+"' WHERE date='"+adate+"' AND fkempid="+Empid+" and fkShopId="+shopId);
+			query.executeUpdate();
+			transaction.commit();
+
+			System.out.println("Record updated successfully.");
+			break;
+		}
+	
+		}
+		}
 		
 		}
 		

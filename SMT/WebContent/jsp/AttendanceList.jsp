@@ -1,3 +1,4 @@
+<%@page import="com.smt.hibernate.EmpAttendenceBean"%>
 <%@page import="java.util.List"%>
 <%@page import="com.smt.bean.GetEmployeeDetails"%>
 <%@page import="com.smt.dao.EmployeeDetailsDao"%>
@@ -36,14 +37,9 @@
 <title>Credit Customer List</title>
 <script type="text/javascript">
 	function Back() {
-		window.location = "employee_detail.jsp";
+		window.location = "EmpAttendence.jsp";
 	}
-	function update() {
-		window.location = "EditEmpAttendance.jsp";
-	}
-	function List() {
-		window.location = "AttendanceList.jsp";
-	}
+	
 </script>
 </head>
 <script type="text/javascript">
@@ -290,7 +286,7 @@
 	</div>
 	<%
 		EmployeeDetailsDao dao = new EmployeeDetailsDao();
-		List list12 = dao.getEmployeeList1();
+		List list12 = dao.gettodayemplist(request);
 	%>
 
 	<div id="demo_jui">
@@ -300,23 +296,21 @@
 					<th>First Name</th>
 					<th>Middle Name</th>
 					<th>Last Name</th>
-					<th>Present</th>
-					<th>Absent</th>
-					<th>HalfDay</th>
+					<th>Date</th>
+					<th>Attendance</th>					
 				</tr>
 			</thead>
 			<tbody>
 				<%
 					for (int i = 0; i < list12.size(); i++) {
-						GetEmployeeDetails sr = (GetEmployeeDetails) list12.get(i);
+						EmpAttendenceBean sr = (EmpAttendenceBean) list12.get(i);
 				%>
 				<tr>
 					<td class="align" id="name"><%=sr.getFirstName()%></td>
 					<td class="align"><%=sr.getMiddleName()%></td>
 					<td class="align"><%=sr.getLastName()%></td>
-					<td class="align"><input type="button" value="Present" id="<%=sr.getEmpPkId()%>,<%=sr.getFirstName()%>,<%=sr.getMiddleName()%>,<%=sr.getLastName()%>,present" onclick="EmpAttendance(this)" style="color: blue;margin-left: 50px; font-size: 21px;" ></td>
-					<td class="align"><input type="button" value="Apsent"id="<%=sr.getEmpPkId()%>,<%=sr.getFirstName()%>,<%=sr.getMiddleName()%>,<%=sr.getLastName()%>,absent"onclick="EmpAttendance(this)" style="color: blue;margin-left: 50px; font-size: 21px;"></td>
-					<td class="align"><input type="button" value="HalfDay"id="<%=sr.getEmpPkId()%>,<%=sr.getFirstName()%>,<%=sr.getMiddleName()%>,<%=sr.getLastName()%>,halfday" onclick="EmpAttendance(this)"style="color: blue;margin-left: 50px; font-size: 21px;"></td>
+					<td class="align"><%=sr.getDate()%></td>
+					<td class="align"><%=sr.getEmpAttendence()%></td>
 				</tr>
 				<%
 					}
@@ -326,23 +320,14 @@
 
 		<div class="row editcustmerdetails" align="center" style="margin-top: 5%;">
 
-					<div class="col-md-2"  style="display:inline-block;">
-						<input type="button" id="save" name="btn"
-						style="border-radius: 10px; padding: 10px; margin-bottom: 4%;margin-left: 250%;"
-							class="btn btn-large btn-success btn-md button_hw button_margin_right"
-							onclick="update()" value="Update">
-					</div>
+					
 					<div class="col-md-2"  style="display:inline-block;">
 							<input type="button" value="Back"
-							style="border-radius: 10px; padding: 10px; margin-bottom: 4%;margin-left: 200%;"
+							style="border-radius: 10px; padding: 10px; margin-bottom: 4%;margin-left: 300%;"
 							id="listBtn" class="btn btn-large btn-primary btn-md button_hw button_margin_right" onclick="Back()" />
 					</div>
 					
-<div class="col-md-2"  style="display:inline-block;">
-							<input type="button" value="List"
-							style="border-radius: 10px; padding: 10px; margin-bottom: 4%;margin-left: 151%;"
-							id="listBtn" class="btn btn-large btn-primary btn-md button_hw button_margin_right" onclick="List()" />
-					</div>
+
 
 				</div>
 	</div>

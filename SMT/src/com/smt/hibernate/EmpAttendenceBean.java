@@ -17,11 +17,6 @@ public class EmpAttendenceBean implements Serializable {
 	
 	
 
-
-	
-
-
-
 	public EmpAttendenceBean(long empId, String firstName, String middleName, String lastName, Long fkShopId,
 			String empAttendence, long pkempId, Date date) {
 		super();

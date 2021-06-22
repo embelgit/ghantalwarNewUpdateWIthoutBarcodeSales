@@ -2,6 +2,8 @@ package com.smt.dao;
 
 import java.math.BigInteger;
 import java.sql.Date;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,7 +16,6 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.jfree.util.Log;
-
 import com.smt.bean.CategoryDetails;
 import com.smt.bean.GetEmployeeDetails;
 import com.smt.bean.allTransactionId;
@@ -217,52 +218,38 @@ public class EmployeeDetailsDao {
 
 	}
 
-	public List getEmployeeList()
-	{
-		HibernateUtility hbu = null;
-		Session session = null;
-		List<GetEmployeeDetails> empList = null;
-		try {
-
-			hbu = HibernateUtility.getInstance();
-			session = hbu.getHibernateSession();
-
-			Query query = session.createSQLQuery("SELECT first_name, middle_name, last_name, joining_date, email_id, salary, contact_no, address, pin_code, resignDate FROM employee_details;");
-			List<Object[]> list = query.list();
-
-			empList = new ArrayList<GetEmployeeDetails>(0);
-
-			for (Object[] object : list) {
-				GetEmployeeDetails reports = new GetEmployeeDetails();
-
-				reports.setFirstName(object[0].toString());
-				reports.setMiddleName(object[1].toString());
-				reports.setLastName(object[2].toString());
-				reports.setJoiningDate((Date) object[3]);
-				reports.setEmail(object[4].toString());
-				reports.setSalary(Double.parseDouble(object[5].toString()));
-				reports.setContactNo((BigInteger) object[6]);
-				reports.setAddresst(object[7].toString());
-				reports.setZipCode((BigInteger) object[8]);
-				if(object[9] == null)
-				{
-					reports.setResignDateString("N/A");
-				}
-				else
-				{
-					reports.setResignDateString(object[9].toString());
-				}
-				empList.add(reports);
-
-			}
-		} catch (RuntimeException e) {
-
-		} finally {
-
-			hbu.closeSession(session);
-		}
-		return empList;
-	}
+	/*
+	 * public List getEmployeeList() { HibernateUtility hbu = null; Session session
+	 * = null; List<GetEmployeeDetails> empList = null; try {
+	 * 
+	 * hbu = HibernateUtility.getInstance(); session = hbu.getHibernateSession();
+	 * 
+	 * Query query = session.
+	 * createSQLQuery("SELECT first_name, middle_name, last_name, joining_date, email_id, salary, contact_no, address, pin_code, resignDate FROM employee_details;"
+	 * ); List<Object[]> list = query.list();
+	 * 
+	 * empList = new ArrayList<GetEmployeeDetails>(0);
+	 * 
+	 * for (Object[] object : list) { GetEmployeeDetails reports = new
+	 * GetEmployeeDetails();
+	 * 
+	 * reports.setFirstName(object[0].toString());
+	 * reports.setMiddleName(object[1].toString());
+	 * reports.setLastName(object[2].toString()); reports.setJoiningDate((Date)
+	 * object[3]); reports.setEmail(object[4].toString());
+	 * reports.setSalary(Double.parseDouble(object[5].toString()));
+	 * reports.setContactNo((BigInteger) object[6]);
+	 * reports.setAddresst(object[7].toString()); reports.setZipCode((BigInteger)
+	 * object[8]); if(object[9] == null) { reports.setResignDateString("N/A"); }
+	 * else { reports.setResignDateString(object[9].toString()); }
+	 * empList.add(reports);
+	 * 
+	 * } } catch (RuntimeException e) {
+	 * 
+	 * } finally {
+	 * 
+	 * hbu.closeSession(session); } return empList; }
+	 */
 	
 	// get All user type 
 		public List getAllUserType() {
@@ -494,5 +481,96 @@ public class EmployeeDetailsDao {
 			return empList;
 		}
 		
-		
+		public List gettodayemplist(HttpServletRequest request)
+		{
+			HttpSession session1 = request.getSession();
+			String shopId = (String) session1.getAttribute("shopId");
+			String pattern = "yyyy-MM-dd";
+		  	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+		  	String todayDate = simpleDateFormat.format(new java.util.Date());
+		  	System.out.println(todayDate);
+		  	
+			System.out.println("` ` ` ` ````   date todayDate -   "+todayDate);
+			
+			HibernateUtility hbu = null;
+			Session session = null;
+			Query query = null;
+			List<EmpAttendenceBean> empList = null;
+			try {
+				hbu = HibernateUtility.getInstance();
+				session = hbu.getHibernateSession();
+				
+				query = session.createSQLQuery("SELECT first_name,middle_name,last_name,date,Attendence from employee_attendence where fkShopId='"+shopId+"' and date='"+todayDate+"' group by fkempid");
+				List<Object[]> list = query.list();
+				 System.out.println("SIZE---------------::::  :"+list.size());
+				 empList = new ArrayList<EmpAttendenceBean>(0);
+					for(Object[] object : list)
+					{
+						EmpAttendenceBean eb=new EmpAttendenceBean();
+						eb.setFirstName(object[0].toString());
+						eb.setMiddleName(object[1].toString());
+						eb.setLastName(object[2].toString());
+						eb.setDate((Date)(object[3]));
+						eb.setEmpAttendence(object[4].toString());
+						empList.add(eb);	
+					}
+					
+					
+				 
+			} catch (RuntimeException e) {
+				Log.error("Error in getAllSupplier ", e);
+			} finally {
+				if (session != null) {
+					hbu.closeSession(session);
+				}
+			}
+
+			return empList;
+		}
+		public List getEmployeeList()
+		{
+			HibernateUtility hbu = null;
+			Session session = null;
+			List<GetEmployeeDetails> empList = null;
+			try {
+
+				hbu = HibernateUtility.getInstance();
+				session = hbu.getHibernateSession();
+
+				Query query = session.createSQLQuery("SELECT first_name, middle_name, last_name, joining_date, email_id, salary, contact_no, address, pin_code, resignDate FROM employee_details;");
+				List<Object[]> list = query.list();
+
+				empList = new ArrayList<GetEmployeeDetails>(0);
+
+				for (Object[] object : list) {
+					GetEmployeeDetails reports = new GetEmployeeDetails();
+
+					reports.setFirstName(object[0].toString());
+					reports.setMiddleName(object[1].toString());
+					reports.setLastName(object[2].toString());
+					reports.setJoiningDate((Date) object[3]);
+					reports.setEmail(object[4].toString());
+					reports.setSalary(Double.parseDouble(object[5].toString()));
+					reports.setContactNo((BigInteger) object[6]);
+					reports.setAddresst(object[7].toString());
+					reports.setZipCode((BigInteger) object[8]);
+					if(object[9] == null)
+					{
+						reports.setResignDateString("N/A");
+					}
+					else
+					{
+						reports.setResignDateString(object[9].toString());
+					}
+					empList.add(reports);
+
+				}
+			} catch (RuntimeException e) {
+
+			} finally {
+
+				hbu.closeSession(session);
+			}
+			return empList;
+		}
 }

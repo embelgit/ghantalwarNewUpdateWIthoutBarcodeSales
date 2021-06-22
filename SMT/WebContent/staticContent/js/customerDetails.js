@@ -268,6 +268,11 @@ function getCustomerDetails(){
 
 function editcustomerDetails()
 {
+	if(document.cstd1.creditCustomer.value == "")
+	{
+		myAlert("Select Customer Name.");
+		return false;
+	}
 	if(document.cstd1.firstName.value == "")
 	{
 		myAlert("Enter Customer First Name.");

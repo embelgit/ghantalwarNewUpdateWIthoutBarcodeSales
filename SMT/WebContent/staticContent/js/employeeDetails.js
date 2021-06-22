@@ -441,18 +441,25 @@ function EmpAttendance(data) {
 	
 	var params={};
 	var  abc = data.id;
+	var name= data.name
 	
 var aa=$("#name").text();
-	//alert(aa);
+//	alert(aa);
 	var fields = abc.split(',');
 
 	var id = fields[0];
-	var type = fields[1];
+	var first = fields[1];
+	var second = fields[2];
+	var third = fields[3];
+	var type = fields[4];
 	
 	params["attendences"] = type;
 	params["attendencesid"] = id;
+	params["first"] = first;
+	params["second"] = second;
+	params["third"] = third;
 	
-	//alert("text==="+id+"====="+type);	
+	//alert("text==="+id+"====="+type+"===="+first+"===="+second+"===="+third);	
 	params["methodName"] = "EmpAttend";
 
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
