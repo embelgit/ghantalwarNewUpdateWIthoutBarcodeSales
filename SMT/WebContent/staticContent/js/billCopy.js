@@ -124,8 +124,9 @@ function generateBillCOPY1() {
 
 	$.post('/SMT/jsp/utility/controller.jsp', params,
 			function(data) {
-		location.reload(true);
+		
 		window.open("ghantalwarMensWearOtherBillPdfCopy.jsp");
+		location.reload(true);
 		//window.open("pehenavaOtherBillPdfCopy.jsp");
 		//window.open("Other_Bill_PDF_Copy_SM.jsp");
 	}).error(function(jqXHR, textStatus, errorThrown) {
@@ -190,8 +191,9 @@ function GenerateBillCOPYForCreditBill()
 	params["methodName"] = "BillCOPYForCreditBill";
 	$.post('/SMT/jsp/utility/controller.jsp', params, function(data)
 	{
-		location.reload(true);
+		
 		window.open("ghantalwarMensWearCreditCustBillingCopyPDF.jsp");
+		location.reload(true);
 		//window.open("creditCustBillingCopyPDF.jsp");
 		//window.open("CreditCustomerBillPDF_Copy_SM.jsp");
 	}).error(function(jqXHR, textStatus, errorThrown)

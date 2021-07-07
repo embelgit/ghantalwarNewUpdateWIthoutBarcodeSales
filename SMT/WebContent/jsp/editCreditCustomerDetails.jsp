@@ -9,12 +9,13 @@
 <script src="/SMT/staticContent/js/jquery-1.12.3.min.js"></script>
 <script type="text/javascript" src="/SMT/staticContent/y_js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/SMT/staticContent/y_js/bootbox.min.js"></script>
-<link rel="stylesheet" href="/SMT/staticContent/css/jquery-ui.min.css">
+<!-- <link rel="stylesheet" href="/SMT/staticContent/css/jquery-ui.min.css">
 <link rel="stylesheet" href="/SMT/staticContent/css/ui.jqgrid.min.css">
 <link rel="stylesheet" href="/SMT/staticContent/css/ui.jqgrid.css">
-<link rel="stylesheet" href="/SMT/staticContent/css/invoice.css">
+
 <script src="/SMT/staticContent/js/jquery.min.js"></script>
-<script src="/SMT/staticContent/js/jquery.jqgrid.min.js"></script>
+<script src="/SMT/staticContent/js/jquery.jqgrid.min.js"></script> -->
+<link rel="stylesheet" href="/SMT/staticContent/css/invoice.css">
 <script type="text/javascript" src="/SMT/staticContent/js/customerDetails.js"></script>
 <script type="text/javascript">
 function Back()

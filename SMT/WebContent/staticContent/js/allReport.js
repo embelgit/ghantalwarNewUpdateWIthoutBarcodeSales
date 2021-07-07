@@ -237,6 +237,19 @@ function advanceBookingrangeWise()
 	var params = {};
 	var aBFisDate = $("#aBFisDate").val();
 	var aBEndDate = $("#aBEndDate").val();
+	
+	
+	
+	if(aBFisDate == null || aBFisDate == "" || aBFisDate == " " || aBFisDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+	if(aBEndDate == null || aBEndDate == "" || aBEndDate == " " || aBEndDate == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
 
 	params["aBFisDate"] = aBFisDate;
 	params["aBEndDate"] = aBEndDate;
@@ -462,7 +475,7 @@ function advanceBookingrangeWise()
 function advanceBookingSupplierAndRangeWise()
 {
 	var params = {};
-	
+
 	var input = document.getElementById('supplierAB'), 
 	list = document.getElementById('sup_dropAB'), i, supplierAB;
 	for (i = 0; i < list.options.length; ++i)
@@ -478,19 +491,19 @@ function advanceBookingSupplierAndRangeWise()
 	
 	if(supplierAB == null || supplierAB == undefined || supplierAB == "" || supplierAB == " ")
 	{
-		alert("Please Select Supplier");
+		myAlertCB("Please Select Supplier");
 		return false;
 	}
 	
 	if(aBFisDateSuppWise == null || aBFisDateSuppWise == undefined || aBFisDateSuppWise == "" || aBFisDateSuppWise == " ")
 	{
-		alert("Please Select Start Date");
+		myAlertCB("Please Select Start Date");
 		return false;
 	}
 	
 	if(aBEndDateSuppWise == null || aBEndDateSuppWise == undefined || aBEndDateSuppWise == "" || aBEndDateSuppWise == " ")
 	{
-		alert("Please Select End Date");
+		myAlertCB("Please Select End Date");
 		return false;
 	}
 
@@ -724,7 +737,7 @@ function advanceBookingBookingNoWise()
 	
 	if(bookingNoAB == null || bookingNoAB == undefined || bookingNoAB == "" || bookingNoAB == " ")
 	{
-		alert("Please Enter Booking Number");
+		myAlertCB("Please Enter Booking Number");
 		return false;
 	}
 
@@ -1268,6 +1281,14 @@ function allWayReport()
 
 function getCategoryWiseStock()
 {
+var supplier = $("#catId123").val();
+	
+	
+	if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+	{
+		myAlertCB("Please Select Category");
+		return false;
+	}
 	var input = document.getElementById('catId123'), list = document
 			.getElementById('catId_drop123'), i, catId;
 	for (i = 0; i < list.options.length; ++i) {
@@ -1411,7 +1432,12 @@ function barcodewisestock()
 	var barcodeNo = $('#barcode').val();
 	var userType = $("#userType").val();
 	var userName = $("#userName").val();
-	
+
+	if(barcodeNo == null || barcodeNo == "" || barcodeNo == " " || barcodeNo == undefined)
+	{
+		myAlertCB("Please Select Barcode No.");
+		return false;
+	}
 	var params = {};
 	params["barcodeNo"] = barcodeNo;
 	params["userType"] = userType;
@@ -1572,7 +1598,11 @@ function singleDateSaleReport()
 	var fisDate = $("#fDate1").val();
 	var userTypeRole = $("#userType").val();
 	var userName = $("#userName").val();
-
+	if(fisDate == null || fisDate == "" || fisDate == " " || fisDate == undefined)
+	{
+		myAlertCB("Please Select Date");
+		return false;
+	}
 	params["userTypeRole"] = userTypeRole;
 	params["userName"] = userName;
 	params["fisDate"] = fisDate;
@@ -2034,6 +2064,16 @@ function twoDateSaleReport()
 	var params = {};
 	var fisDate = $("#fisDate").val();
 	var endDate = $("#endDate").val();
+	if(fisDate == null || fisDate == "" || fisDate == " " || fisDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+if(endDate == null || endDate == "" || endDate == " " || endDate == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
 
 	var userTypeRole = $("#userType").val();
 	var userName = $("#userName").val(); 
@@ -2497,6 +2537,18 @@ function twoDateAndBillNo()
 	var params = {};
 	var fisDate = $("#startDate1").val();
 	var endDate = $("#lastDate1").val();
+	
+	if(fisDate == null || fisDate == "" || fisDate == " " || fisDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+if(endDate == null || endDate == "" || endDate == " " || endDate == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
+
 	
 	var userTypeRole = $("#userType").val();
 	var userName = $("#userName").val(); 
@@ -3206,6 +3258,19 @@ function gstReturn()
 	var params = {};
 	var fisDate = $("#startDategst").val();
 	var endDate = $("#lastDategst").val();
+	if(fisDate == null || fisDate == "" || fisDate == " " || fisDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+if(endDate == null || endDate == "" || endDate == " " || endDate == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
+
+
+
 	
 	var userTypeRole = $("#userType").val();
 	var userName = $("#userName").val(); 
@@ -3467,6 +3532,16 @@ function purchasegstReturn()
 	var params = {};
 	var fisDate = $("#startDatepgst").val();
 	var endDate = $("#lastDatepgst").val();
+	if(fisDate == null || fisDate == "" || fisDate == " " || fisDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+if(endDate == null || endDate == "" || endDate == " " || endDate == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
 	params["fisDate"] = fisDate;
 	params["endDate"] = endDate;
 
@@ -3758,9 +3833,34 @@ function twoDate_UserSaleReport()
 	var fisDate = $("#startDate").val();
 	var endDate = $("#lastDate").val();
 	var utypes = $("#utype").val();	
-	
 	var userType = $("#userType").val();
 	var userName = $("#userName").val();
+
+	if(utypes == null || utypes == "" || utypes == " " || utypes == undefined)
+	{
+		myAlertCB("Please Select User Type");
+		return false;
+	}
+	
+	if(userName == null || userName == "" || userName == " " || userName == undefined)
+	{
+		myAlertCB("Please Select User Name");
+		return false;
+	}
+	
+	if(fisDate == null || fisDate == "" || fisDate == " " || fisDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+if(endDate == null || endDate == "" || endDate == " " || endDate == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
+
+	
+	
 
 	$("#userName123 option:selected").each(function() {
 		selectedVal = $(this).text();
@@ -4207,19 +4307,19 @@ function categorySaleWise()
 	
 	if(catId == null || catId == "" || catId == " " || catId == undefined)
 	{
-		alert("Please Select Category");
+		myAlertCB("Please Select Category");
 		return false;
 	}
 	
 	if(catFirstDate == null || catFirstDate == "" || catFirstDate == " " || catFirstDate == undefined)
 	{
-		alert("Please Select Start Date");
+		myAlertCB("Please Select Start Date");
 		return false;
 	}
 	
 	if(catEndDate == null || catEndDate == "" || catEndDate == " " || catEndDate == undefined)
 	{
-		alert("Please Select End Date");
+		myAlertCB("Please Select End Date");
 		return false;
 	}
 
@@ -4699,6 +4799,14 @@ function mypopup(url)
 function productSaleWise()
 {
 	var params = {};
+var supplier = $("#productIdTinv").val();
+	
+	
+	if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+	{
+		myAlertCB("Please Select Product Name");
+		return false;
+	}
 
 	var input = document.getElementById('productIdTinv'), list = document
 			.getElementById('productId_dropTinv'), i, productId;
@@ -7024,6 +7132,11 @@ function miscellaneousSingleDate()
 	var params = {};
 	var fDate = $("#msDate").val();
 
+	if(fDate == null || fDate == "" || fDate == " " || fDate == undefined)
+	{
+		myAlertCB("Please Select Date");
+		return false;
+	}
 	params["fDate"] = fDate;
 
 	params["methodName"] = "miscellaneousSingleDate";
@@ -7469,6 +7582,11 @@ function CSRSingleDate()
 {
 	var params = {};
 	var fDate = $("#crdDate").val();
+	if(fDate == null || fDate == "" || fDate == " " || fDate == undefined)
+	{
+		myAlertCB("Please Select Date");
+		return false;
+	}
 
 	params["fDate"] = fDate;
 
@@ -7868,6 +7986,16 @@ function miscellaneousTwoDate()
 	var params = {};
 	var fDate = $("#msfisDate").val();
 	var eDate = $("#msendDate").val();
+	if(fDate == null || fDate == "" || fDate == " " || fDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+if(eDate == null || eDate == "" || eDate == " " || eDate == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
 
 	params["fDate"] = fDate;
 	params["eDate"] = eDate;
@@ -8315,6 +8443,17 @@ function CSRTwoDate()
 	var params = {};
 	var fDate = $("#csrfisDate").val();
 	var eDate = $("#csrendDate").val();
+	
+	if(fDate == null || fDate == "" || fDate == " " || fDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+if(eDate == null || eDate == "" || eDate == " " || eDate == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
 
 	params["fDate"] = fDate;
 	params["eDate"] = eDate;
@@ -8579,6 +8718,17 @@ function CSRTwoDate()
 // Category Wise Miscellaneos Sale Report
 function miscellaneousSaleWiseCustomer()
 {
+var supplier = $("#mscatId").val();
+	
+	
+	if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+	{
+		myAlertCB("Please Select Category");
+		return false;
+	}
+
+
+	
 	var input = document.getElementById('mscatId'), list = document
 			.getElementById('mscatId_drop'), i, mscatId;
 	for (i = 0; i < list.options.length; ++i) {
@@ -9027,6 +9177,14 @@ function miscellaneousSaleWiseCustomer()
 // Category Wise credit customer Sale return Report
 function CSRSaleWiseCustomer()
 {
+var supplier = $("#csrcatId").val();
+	
+	
+	if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+	{
+		myAlertCB("Please Select Category");
+		return false;
+	}
 	var input = document.getElementById('csrcatId'), list = document
 			.getElementById('csrcatId_drop'), i, csrcatId;
 	for (i = 0; i < list.options.length; ++i) {
@@ -9436,6 +9594,12 @@ function CSRSaleWiseCustomer()
 // Bill No Wise Miscellaneos Sale Report
 function billnowiseMiscellaneoussell()
 {
+	var billNo = $("#msBillNocust").val();
+	if(billNo == null || billNo == "" || billNo == " " || billNo == undefined)
+	{
+		myAlertCB("Please Select Bill No.");
+		return false;
+	}
 	var input = document.getElementById('msBillNocust'), list = document
 			.getElementById('msBillNocust_id'), i, msBillNocust;
 	for (i = 0; i < list.options.length; ++i) {
@@ -9899,6 +10063,12 @@ function billnowiseMiscellaneoussell()
 // Bill No Wise Credit customer Sale return Report
 function billnowiseCCSR()
 {
+	var billNo = $("#csrBillNocust").val();
+	if(billNo == null || billNo == "" || billNo == " " || billNo == undefined)
+	{
+		myAlertCB("Please Select Bill No.");
+		return false;
+	}
 	var input = document.getElementById('csrBillNocust'), list = document
 			.getElementById('csrBillNocust_id'), i, csrBillNocust;
 	for (i = 0; i < list.options.length; ++i) {
@@ -10327,6 +10497,11 @@ function barcodenowiseMiscellaneoussell()
 {
 	var params = {};
 	var barcodeMiscellaneous = $("#barcodeMiscellaneous").val();
+	if(barcodeMiscellaneous == null || barcodeMiscellaneous == "" || barcodeMiscellaneous == " " || barcodeMiscellaneous == undefined)
+	{
+		myAlertCB("Please Enter BarCode No.");
+		return false;
+	}
 
 	params["barcodeMiscellaneous"] = barcodeMiscellaneous;
 
@@ -10771,6 +10946,12 @@ function barcodenowiseCSR()
 {
 	var params = {};
 	var barcodeMiscellaneous = $("#barcodecsr").val();
+	
+	if(barcodeMiscellaneous == null || barcodeMiscellaneous == "" || barcodeMiscellaneous == " " || barcodeMiscellaneous == undefined)
+	{
+		myAlertCB("Please Enter Barcode No");
+		return false;
+	}
 
 	params["barcodeMiscellaneous"] = barcodeMiscellaneous;
 
@@ -11174,6 +11355,15 @@ function creditSingleDate()
 {
 	var params = {};
 	var fDate = $("#csDate").val();
+	
+
+	
+	
+	if(fDate == null || fDate == "" || fDate == " " || fDate == undefined)
+	{
+		myAlertCB("Please Select Date");
+		return false;
+	}
 
 	params["fDate"] = fDate;
 
@@ -11644,7 +11834,17 @@ function creditTwoDate()
 	var params = {};
 	var fDate = $("#csfisDate").val();
 	var eDate = $("#csendDate").val();
-
+	if(fDate == null || fDate == "" || fDate == " " || fDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+	if(eDate == null || eDate == "" || eDate == " " || eDate == undefined)
+	{
+		myAlertCB("Please Select End Date");
+		return false;
+	}
+	
 	params["fDate"] = fDate;
 	params["eDate"] = eDate;
 
@@ -12099,6 +12299,18 @@ function creditTwoDate()
 // Category Wise Credit Sale Report
 function creditSaleWiseCustomer()
 {
+var supplier = $("#cscatId").val();
+	
+	
+	if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+	{
+		myAlertCB("Please Select Category");
+		return false;
+	}
+
+
+	
+	
 	var input = document.getElementById('cscatId'), list = document
 			.getElementById('cscatId_drop'), i, cscatId;
 	for (i = 0; i < list.options.length; ++i) {
@@ -12557,6 +12769,17 @@ function creditSaleWiseCustomer()
 //PRODUCT Wise Credit Sale Report
 function prtoductWiserCreditCustomerSaleReport()
 {
+	
+var supplier = $("#csproductId").val();
+	
+	
+	if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+	{
+		myAlertCB("Please Select Product Name");
+		return false;
+	}
+
+	
 	var input = document.getElementById('csproductId'), list = document.getElementById('csproductId_drop'), i, cscatId;
 	for (i = 0; i < list.options.length; ++i) {
 		if (list.options[i].value === input.value) {
@@ -13033,6 +13256,14 @@ function prtoductWiserCreditCustomerSaleReport()
 // Bill No Wise Credit Sale Report
 function billnowiseCreditsell()
 {
+	
+	var billNo = $("#csBillNocust").val();
+	if(billNo == null || billNo == "" || billNo == " " || billNo == undefined)
+	{
+		myAlertCB("Please Select Bill No.");
+		return false;
+	}
+	
 	var input = document.getElementById('csBillNocust'), list = document
 			.getElementById('csBillNocust_id'), i, csBillNocust;
 	for (i = 0; i < list.options.length; ++i) {
@@ -13495,6 +13726,13 @@ function billnowiseCreditsell()
 function barcodenowiseCredit()
 {
 	var barcodeCredit = $("#barcodeCredit").val();
+	
+	
+	if(barcodeCredit == null || barcodeCredit == "" || barcodeCredit == " " || barcodeCredit == undefined)
+	{
+		myAlertCB("Please Select BarCode No.");
+		return false;
+	}
 
 	var params = {};
 	params["barcodeCredit"] = barcodeCredit;
@@ -13949,6 +14187,15 @@ function barcodenowiseCredit()
 // Purchase Report Supplier Wise
 function supplierAllPurchase()
 {
+
+	var supplier = $("#supplier7").val();
+		
+		
+		if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+		{
+			myAlertCB("Please Select Supplier Name");
+			return false;
+		}
 	var input = document.getElementById('supplier7'), list = document
 			.getElementById('sup_drop7'), i, supplier;
 	for (i = 0; i < list.options.length; ++i) {
@@ -14367,6 +14614,21 @@ function getAlluser()
 // Purchase Report Supplier Bill No Wise
 function supplierBillWisePurchaseReport()
 {
+var supplier = $("#supplier").val();
+	
+	
+	if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+	{
+		myAlertCB("Please Select Supplier Name");
+		return false;
+	}
+	
+	var billNo = $("#billNo").val();
+	if(billNo == null || billNo == "" || billNo == " " || billNo == undefined)
+	{
+		myAlertCB("Please Select Bill No.");
+		return false;
+	}
 	var input = document.getElementById('supplier'), list = document
 			.getElementById('sup_drop'), i, supplier;
 	for (i = 0; i < list.options.length; ++i) {
@@ -14375,7 +14637,7 @@ function supplierBillWisePurchaseReport()
 
 		}
 	}
-	var billNo = $("#billNo").val();
+
 	var params = {};
 	params["supplier"] = supplier;
 	params["billNo"] = billNo;
@@ -14751,6 +15013,14 @@ function supplierBillWisePurchaseReport()
 
 function VoucherNoWisePurchaseReport()
 {
+var supplier = $("#voucherDrop").val();
+	
+	
+	if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+	{
+		myAlertCB("Please Select voucher No");
+		return false;
+	}
 	var input = document.getElementById('voucherDrop'), list = document
 			.getElementById('voucherNo_drop'), i, voucherNo;
 	for (i = 0; i < list.options.length; ++i) {
@@ -15069,6 +15339,14 @@ function VoucherNoWisePurchaseReport()
 // Purchase Report Category Wise
 function categoryWisePurchaseReport()
 {
+var supplier = $("#catId45").val();
+	
+	
+	if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+	{
+		myAlertCB("Please Select Category");
+		return false;
+	}
 	var input = document.getElementById('catId45'), list = document
 			.getElementById('catId_drop45'), i, catId;
 	for (i = 0; i < list.options.length; ++i) {
@@ -15418,6 +15696,11 @@ function categoryWisePurchaseReport()
 function barcodeWisePurchaseReport()
 {
 	var barcodeNoOurchase = $("#barcodeNoOurchase").val();
+	if(barcodeNoOurchase == null || barcodeNoOurchase == "" || barcodeNoOurchase == " " || barcodeNoOurchase == undefined)
+	{
+		myAlertCB("Please Enter Barcode Number");
+		return false;
+	}
 	var params = {};
 	params["barcodeNoOurchase"] = barcodeNoOurchase;
 
@@ -15765,7 +16048,11 @@ function barcodeWisePurchaseReport()
 function singleDatePurchase45()
 {
 	var purDate = $("#purDate").val();
-
+	if(purDate == null || purDate == "" || purDate == " " || purDate == undefined)
+	{
+		myAlertCB("Please Select Date");
+		return false;
+	}
 	var params = {};
 	params["purDate"] = purDate;
 
@@ -16106,7 +16393,16 @@ function twoDatePurchase45()
 {
 	var pFisDate = $("#pFisDate").val();
 	var pEndDate = $("#pEndDate").val();
-
+	if(pFisDate == null || pFisDate == "" || pFisDate == " " || pFisDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+if(pEndDate == null || pEndDate == "" || pEndDate == " " || pEndDate == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
 	var params = {};
 	params["pFisDate"] = pFisDate;
 	params["pEndDate"] = pEndDate;
@@ -16459,7 +16755,11 @@ function purchaseReturnSingleDate()
 {
 	var params = {};
 	var pRDate = $("#pRDate").val();
-
+	if(pRDate == null || pRDate == "" || pRDate == " " || pRDate == undefined)
+	{
+		myAlertCB("Please Select Date");
+		return false;
+	}
 	params["pRDate"] = pRDate;
 
 	params["methodName"] = "purchaseReturnSingleDate";
@@ -16915,6 +17215,16 @@ function purchaseReturnTwoDate()
 	var params = {};
 	var pRFisDate = $("#pRFisDate").val();
 	var pREndDate = $("#pREndDate").val();
+	if(pRFisDate == null || pRFisDate == "" || pRFisDate == " " || pRFisDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+if(pREndDate == null || pREndDate == "" || pREndDate == " " || pREndDate == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
 
 	params["pRFisDate"] = pRFisDate;
 	params["pREndDate"] = pREndDate;
@@ -17369,6 +17679,24 @@ function purchaseReturnBillNoWise()
 	var supplierpR = $("#supplierpR").val();
 	var pRBillNo = $("#pRBillNo").val();
 
+
+	
+	
+	if(supplierpR == null || supplierpR == "" || supplierpR == " " || supplierpR == undefined)
+	{
+		myAlertCB("Please Select Supplier Name");
+		return false;
+	}
+
+
+
+	if(pRBillNo == null || pRBillNo == "" || pRBillNo == " " || pRBillNo == undefined)
+	{
+		myAlertCB("Please Select Bill No.");
+		return false;
+	}
+	
+	
 	var input = document.getElementById('supplierpR'), list = document
 			.getElementById('sup_drop2'), i, suppId;
 	for (i = 0; i < list.options.length; ++i) {
@@ -17866,6 +18194,19 @@ function paymentModeWiseReport()
 	var paymentMode = $("#paymentMode").val();
 	var userTypeRole = $("#userType").val();
 	var userName = $("#userName").val();
+	
+	if(pmDate == null || pmDate == "" || pmDate == " " || pmDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+if(pmDate22 == null || pmDate22 == "" || pmDate22 == " " || pmDate22 == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
+
+	
 
 	params["pmDate"] = pmDate;
 	params["pmDate22"] = pmDate22;
@@ -18568,6 +18909,14 @@ function paymentModeRangeWiseReport() {
 //Purchase Report Category Wise
 function productWisePurchaseReport()
 {
+var supplier = $("#prodIdDrop").val();
+	
+	
+	if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+	{
+		myAlertCB("Please Select Product Name");
+		return false;
+	}
 	var input = document.getElementById('prodIdDrop'), 
 	list = document.getElementById('productId_drop'), i, productId;
 	for (i = 0; i < list.options.length; ++i) {
@@ -18922,6 +19271,16 @@ function paymentModeWiseReportForCC()
 	var paymentModeForCC = $("#paymentModeForCC").val();
 	var userTypeRole = $("#userType").val();
 	var userName = $("#userName").val();
+	if(startDateForCC == null || startDateForCC == "" || startDateForCC == " " || startDateForCC == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+if(endDateForCC == null || endDateForCC == "" || endDateForCC == " " || endDateForCC == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
 
 	params["startDateForCC"] = startDateForCC;
 	params["endDateForCC"] = endDateForCC;
@@ -19180,7 +19539,16 @@ function paymentDueDateWiseFn()
 {
 	var pddwFisDate = $("#pddwFisDate").val();
 	var pddwEndDate = $("#pddwEndDate").val();
-
+	if(pddwFisDate == null || pddwFisDate == "" || pddwFisDate == " " || pddwFisDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+if(pddwEndDate == null || pddwEndDate == "" || pddwEndDate == " " || pddwEndDate == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
 	var params = {};
 	params["pddwFisDate"] = pddwFisDate;
 	params["pddwEndDate"] = pddwEndDate;
@@ -19195,7 +19563,7 @@ function paymentDueDateWiseFn()
 						var catmap = jsonData.list;
 						if(catmap == null || catmap == "" || catmap == " " || catmap == undefined)
 						{
-							alert("NO Data");
+							myAlertCB("NO Data");
 							return false;
 						}
 
@@ -19565,19 +19933,19 @@ function taxinvoice()
 	
 	if(TaxvoiceId == null || TaxvoiceId == "" || TaxvoiceId == " " || TaxvoiceId == undefined)
 	{
-		alert("Please Select Bill no");
+		myAlertCB("Please Select Bill no");
 		return false;
 	}
 	
 	if(BillFirstDate == null || BillFirstDate == "" || BillFirstDate == " " || BillFirstDate == undefined)
 	{
-		alert("Please Select Start Date");
+		myAlertCB("Please Select Start Date");
 		return false;
 	}
 	
 	if(BillEndDate == null || BillEndDate == "" || BillEndDate == " " || BillEndDate == undefined)
 	{
-		alert("Please Select End Date");
+		myAlertCB("Please Select End Date");
 		return false;
 	}
 

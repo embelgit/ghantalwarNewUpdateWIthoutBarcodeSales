@@ -3,6 +3,8 @@
 %>
 <%@include file="y_commons/header1.jsp"%>
 <script src="/SMT/staticContent/js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="/SMT/staticContent/y_js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/SMT/staticContent/y_js/bootbox.min.js"></script>
 <script type="text/javascript" src="/SMT/staticContent/js/selectjj.js"></script>
 <script type="text/javascript" src="/SMT/staticContent/js/buttom.js"></script>
 <script src="/SMT/staticContent/js/jquery.min.js"></script>

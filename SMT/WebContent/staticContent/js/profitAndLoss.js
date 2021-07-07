@@ -1,4 +1,14 @@
+function myAlert(msg)
+{
+	var dialog = bootbox.dialog({
+    message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'</p>',
+    closeButton: false
+   });
 
+   setTimeout(function() {
+	dialog.modal('hide');
+   }, 1500);
+}
 function validateProfitAndLoss()
 {
 	var fisDateExpense = $("#fisDateExpense").val();
@@ -6,13 +16,13 @@ function validateProfitAndLoss()
 	
 	if(fisDateExpense == null || fisDateExpense == "" || fisDateExpense == " " || fisDateExpense == undefined)
 	{
-		alert("Please Select Start Date");
+		myAlert("Please Select Start Date");
 		return false;
 	}else{}
 		
 	if(endDateExpense == null || endDateExpense == "" || endDateExpense == " " || endDateExpense == undefined)
 	{
-		alert("Please Select End Date");
+		myAlert("Please Select End Date");
 		return false;		
 	}else{}
 	
@@ -202,7 +212,7 @@ function totalProfitAndLoss()
 
     //gets rows of table
     var rowLength = oTable.rows.length;
-    alert("rowLength ===> "+rowLength);
+    myAlert("rowLength ===> "+rowLength);
 
     //loops through rows    
     for (i = 0; i < rowLength; i++)
@@ -219,7 +229,7 @@ function totalProfitAndLoss()
        {
               // get your cell info here
               var cellVal = oCells.item(j).innerHTML;
-              alert("cellVal ===> "+cellVal);
+              myAlert("cellVal ===> "+cellVal);
        }       
     }
 	
@@ -249,19 +259,19 @@ function validateProfitAndLossForExp()
 	
 	if(fisDateExpense == null || fisDateExpense == "" || fisDateExpense == " " || fisDateExpense == undefined)
 	{
-		alert("Please Select Start Date");
+		myAlert("Please Select Start Date");
 		return false;
 	}else{}
 		
 	if(endDateExpense == null || endDateExpense == "" || endDateExpense == " " || endDateExpense == undefined)
 	{
-		alert("Please Select End Date");
+		myAlert("Please Select End Date");
 		return false;		
 	}else{}
 	
 	if(expTypeName == null || expTypeName == "" || expTypeName == " " || expTypeName == undefined)
 	{
-		alert("Please Select Expenditure Type");
+		myAlert("Please Select Expenditure Type");
 		return false;		
 	}else{}
 	

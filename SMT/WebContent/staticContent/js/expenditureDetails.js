@@ -26,19 +26,6 @@ function successAlert(msg)
 //Adding expense detail
 function addExpenseDetails()
 {
-	if(document.expenseDetails.expenseName.value == "")
-	{
-		myAlert("Please Select Expense Type");
-		return false;
-	}	
-	var letterNumber = /^[a-zA-Z0-9, ]+$/;
-	if(document.expenseDetails.expenseName.value.match(letterNumber))
-	{}
-	else
-	{
-		myAlert("Enter Only Alphabates And Numbers in Expense name field..!!");
-		return false;
-	}
 	
 	if(document.expenseDetails.expTypeName.value == "")
 	{
@@ -53,6 +40,20 @@ function addExpenseDetails()
 		myAlert("Enter Only Alphabates And Numbers in Expense Type field..!!");
 		return false;
 	}
+	if(document.expenseDetails.expenseName.value == "")
+	{
+		myAlert("Please Enter Expense Name");
+		return false;
+	}	
+	var letterNumber = /^[a-zA-Z0-9, ]+$/;
+	if(document.expenseDetails.expenseName.value.match(letterNumber))
+	{}
+	else
+	{
+		myAlert("Enter Only Alphabates And Numbers in Expense name field..!!");
+		return false;
+	}
+	
 	
 	addExpense();
 	

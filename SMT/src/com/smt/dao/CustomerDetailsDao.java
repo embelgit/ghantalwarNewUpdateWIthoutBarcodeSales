@@ -24,7 +24,7 @@ import com.smt.hibernate.OtherBill;
 import com.smt.hibernate.SaleReturn;
 import com.smt.utility.HibernateUtility;
 
-import groovy.ui.SystemOutputInterceptor;
+/*import groovy.ui.SystemOutputInterceptor;*/
 
 public class CustomerDetailsDao {
 

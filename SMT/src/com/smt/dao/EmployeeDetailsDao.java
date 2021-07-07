@@ -2,7 +2,7 @@ package com.smt.dao;
 
 import java.math.BigInteger;
 import java.sql.Date;
-
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -572,5 +572,40 @@ public class EmployeeDetailsDao {
 				hbu.closeSession(session);
 			}
 			return empList;
+		}
+		
+		public List getAllMainTableNo(Long shopid)
+		{
+			
+			
+			HibernateUtility hbu=null;
+			Session session=null;
+			List list=null;
+			try{
+			 hbu = HibernateUtility.getInstance();
+			 session = hbu.getHibernateSession();
+//			 DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+			 DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			 java.util.Date dateobj = new java.util.Date();
+			 System.out.println("df.format(dateobj) -   "+df.format(dateobj));
+			 String datee = df.format(dateobj);
+			 System.out.println("datee -   "+datee);
+	
+			 Query query = session.createQuery("from EmpAttendenceBean where  date='"+datee+"' and fkShopId= '"+shopid+"'");
+			 list = query.list();
+			 System.out.println(" list size in getting table no ----  "+list.size());
+			}
+			catch(Exception e){	
+				e.printStackTrace();
+		}
+			finally
+			{
+					if(session!=null){
+					hbu.closeSession(session);
+				}
+			}
+			
+		return list;
+		
 		}
 }

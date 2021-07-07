@@ -545,7 +545,7 @@ function editsupplier1()
 		}
 	}
 	
-	if(pin.length > 0)
+	/*if(pin.length > 0)
 	{
 		var checkPin = /^[0-9]{6}$/;
 		if(pin.match(checkPin))
@@ -555,7 +555,7 @@ function editsupplier1()
 			myAlert("Please Enter Valid Pin Code");
 			return false;
 		}
-	}
+	}*/
 	
 	var params= {};
 

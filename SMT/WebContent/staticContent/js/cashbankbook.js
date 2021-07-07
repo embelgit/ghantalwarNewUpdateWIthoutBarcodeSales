@@ -823,6 +823,11 @@ var custBill = new getCreditCustomerBillDetails();
 function supplierReportForSingleDate(){
 	var params= {};
 	var fDate = $("#fDate11").val();
+	if(fDate == null || fDate == "" || fDate == " " || fDate == undefined)
+	{
+		myAlertCB("Please Select Date");
+		return false;
+	}else{}
 	params["fDate"]= fDate;
 	params["methodName"] = "getSupplierPaymentDetailsForSingleDate";
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
@@ -954,6 +959,18 @@ function getSupplierDetailsBetweenTwoDates(){
 	var params= {};
 	var startDate = $("#fisDate1").val();
 	var endDate = $("#endDate1").val();
+	
+	if(startDate == null || startDate == "" || startDate == " " || startDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+	if(endDate == null || endDate == "" || endDate == " " || endDate == undefined)
+	{
+		myAlertCB("Please Select End Date");
+		return false;
+	}
+	
 	params["fisDate"]= startDate;
 	params["endDate"]= endDate;
 	params["methodName"] = "getSupplierPaymentReportBetweenTwoDates";
@@ -1087,6 +1104,19 @@ function getSupplierDetailsBetweenTwoDates(){
 
 /*Bill number Wise supplier payment report*/
 function getBillWiseReport(){
+	
+	var billNo = $("#billNo").val();
+	var supplier = $("#supplier").val();
+	if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+	{
+		myAlertCB("Please Select supplier Name");
+		return false;
+	}
+	if(billNo == null || billNo == "" || billNo == " " || billNo == undefined)
+	{
+		myAlertCB("Please Select Bill No");
+		return false;
+	}
 	var input = document.getElementById('supplier'),
 	list = document.getElementById('sup_drop'),
 	i,supplier;
@@ -1098,7 +1128,7 @@ function getBillWiseReport(){
 	var fkSupplierId = supplier;
 
 	var params= {};
-	var billNo = $("#billNo").val();
+	
 	params["fkSupplierId"]= fkSupplierId;
 	params["billNo"]= billNo;
 	params["methodName"] = "getSupplierPaymentDetailsAsPerBillNumber";
@@ -1213,6 +1243,13 @@ function getBillWiseReport(){
 /*Supplier Name wise*/
 function getSupNameWiseReport()
 {
+	var supplier = $("#supplier7").val();
+	if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+	{
+		myAlertCB("Please Select supplier Name");
+		return false;
+	}
+	
 	var input = document.getElementById('supplier7'),
 	list = document.getElementById('sup_drop7'),
 	i,supplier;
@@ -1353,6 +1390,13 @@ function getSupNameWiseReport()
 /*++++++ Customer Name wise +++++*/
 function getCreditCustomerReportNameWise()
 {
+
+	var supplier = $("#creditCustomer5").val();
+	if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+	{
+		myAlertCB("Please Select Customer Name");
+		return false;
+	}
 	var input = document.getElementById('creditCustomer5'),
 	list = document.getElementById('cust_drop5'),
 	i,customer;
@@ -1486,7 +1530,19 @@ function getCreditCustomerReportNameWise()
 
 /* Bill Wise */
 function getBillWiseCreditReport(){
-
+	
+	var supplier = $("#creditCustomer").val();
+	if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+	{
+		myAlertCB("Please Select Customer Name");
+		return false;
+	}
+	var billNo = $("#billNo1").val();
+	if(billNo == null || billNo == "" || billNo == " " || billNo == undefined)
+	{
+		myAlertCB("Please Select Bill No.");
+		return false;
+	}
 	var input = document.getElementById('creditCustomer'),
 	list = document.getElementById('cust_drop'),
 	i,creditCustomer;
@@ -1497,7 +1553,7 @@ function getBillWiseCreditReport(){
 	}
 	var fkCustomerId = creditCustomer;
 	var params= {};
-	var billNo = $("#billNo1").val();
+	
 
 
 	params["billNo"]= billNo;
@@ -1605,6 +1661,15 @@ function creditCustReportForSingleDate()
 	var params= {};
 	var fDate = $("#fDate1").val();
 
+	
+	
+	if(fDate == null || fDate == "" || fDate == " " || fDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+	
+	
 	params["fDate"]= fDate;
 	params["methodName"] = "getCreditCustPaymentDetailsForSingleDate";
 
@@ -1725,6 +1790,17 @@ function getCreditCustomerDetailsBetweenTwoDates()
 	var startDate = $("#fisDate").val();
 	var endDate = $("#endDate").val();
 
+	
+	if(startDate == null || startDate == "" || startDate == " " || startDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+	if(endDate == null || endDate == "" || endDate == " " || endDate == undefined)
+	{
+		myAlertCB("Please Select End Date");
+		return false;
+	}
 
 	params["fisDate"]= startDate;
 	params["endDate"]= endDate;
@@ -1849,6 +1925,13 @@ function getCreditCustomerDetailsBetweenTwoDates()
 function employeePaymentReportForSingleDate(){
 	var params= {};
 	var fDate = $("#fDate2").val();
+	
+
+	if(fDate == null || fDate == "" || fDate == " " || fDate == undefined)
+	{
+		myAlertCB("Please Select Date");
+		return false;
+	}
 	params["fDate"]= fDate;
 
 	params["methodName"] = "getEmpPaymentDetailsForSingleDate";
@@ -1948,7 +2031,24 @@ function getEmpPaymentDetailsBetTwoDays()
 	var params= {};
 	var startDate = $("#fisDate2").val();
 	var endDate = $("#endDate2").val();
-
+	var employee = $("#employee").val();
+	if(employee == null || employee == "" || employee == " " || employee == undefined)
+	{
+		myAlertCB("Please Select Employee Name");
+		return false;
+	}
+	if(startDate == null || startDate == "" || startDate == " " || startDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+	if(endDate == null || endDate == "" || endDate == " " || endDate == undefined)
+	{
+		myAlertCB("Please Select End Date");
+		return false;
+	}
+	
+	
 	var input = document.getElementById('employee'),
 	list = document.getElementById('emp_drop'),
 	i,fkRootempId;
@@ -2059,6 +2159,13 @@ function expensePaymentReportForSingleDate(){
 	var params= {};
 	var fDate = $("#fDate4").val();
 
+	if(fDate == null || fDate == "" || fDate == " " || fDate == undefined)
+	{
+		myAlertCB("Please Select Date");
+		return false;
+	}
+	
+	
 	params["fDate"]= fDate;
 	params["methodName"] = "getExpensePaymentDetailsForSingleDate";
 
@@ -2174,6 +2281,23 @@ function getExpensePaymentDetailsBetTwoDays(){
 	var params= {};
 	var startDate = $("#fisDate4").val();
 	var endDate = $("#endDate4").val();
+	var expenseName = $("#expenseName").val();
+	if(expenseName == null || expenseName == "" || expenseName == " " || expenseName == undefined)
+	{
+		myAlertCB("Please Select Expense Name");
+		return false;
+	}
+	if(startDate == null || startDate == "" || startDate == " " || startDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+	if(endDate == null || endDate == "" || endDate == " " || endDate == undefined)
+	{
+		myAlertCB("Please Select End Date");
+		return false;
+	}
+	
 
 	var input = document.getElementById('expenseName'),
 	list = document.getElementById('exp_drop'),
@@ -2445,7 +2569,12 @@ function creditdebitForsingleDate(){
 
 	var params= {};
 	var fDate = $("#fDate").val();
-
+	if(fDate == null || fDate == "" || fDate == " " || fDate == undefined)
+	{
+		myAlertCB("Please Select Date");
+		return false;
+	}
+	
 	params["fDate"]= fDate;
 	params["methodName"] = "creditdebitForsingleDate";
 
@@ -2526,6 +2655,11 @@ function creditdebitForsingleDate(){
 function creditdebitForsingleDate1(){
 	var params= {};
 	var fDate = $("#fDate").val();
+	if(fDate == null || fDate == "" || fDate == " " || fDate == undefined)
+	{
+		myAlertCB("Please Select Date");
+		return false;
+	}
 	params["fDate"]= fDate;
 	params["methodName"] = "creditdebitForsingleDate1";
 
@@ -2608,7 +2742,16 @@ function creditdebitForBetTowDate(){
 	var params= {};
 	var fisDate = $("#fisDate").val();
 	var endDate = $("#endDate").val();
-
+	if(fisDate == null || fisDate == "" || fisDate == " " || fisDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+	if(endDate == null || endDate == "" || endDate == " " || endDate == undefined)
+	{
+		myAlertCB("Please Select End Date");
+		return false;
+	}
 	params["fisDate"]= fisDate;
 	params["endDate"]= endDate;
 	params["methodName"] = "creditdebitForBetTowDate";
@@ -2691,6 +2834,17 @@ function creditdebitForBetTowDate1(){
 	var params= {};
 	var fisDate = $("#fisDate").val();
 	var endDate = $("#endDate").val();
+	
+	if(fisDate == null || fisDate == "" || fisDate == " " || fisDate == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+	if(endDate == null || endDate == "" || endDate == " " || endDate == undefined)
+	{
+		myAlertCB("Please Select End Date");
+		return false;
+	}
 	params["fisDate"]= fisDate;
 	params["endDate"]= endDate;
 	params["methodName"] = "creditdebitForBetTowDate1";
@@ -3083,6 +3237,11 @@ function getAllBills1()
 function getUnBillnoTotalAmount()
 {
 	var supName = $("#supplier").val();
+	if(supName == null || supName == "" || supName == " " || supName == undefined)
+	{
+		myAlertCB("Please Select Supplier Name");
+		return false;
+	}
 	var input = document.getElementById('supplier'),
 	list = document.getElementById('sup_drop'),
 	i,supplier;
@@ -3191,6 +3350,12 @@ function shreeDemo()
 function getCreditCustomerBalanceReportNameWise()
 {
 	var customerName = $("#creditCustomer5").val();
+	
+	if(customerName == null || customerName == "" || customerName == " " || customerName == undefined)
+	{
+		myAlertCB("Please Select Credit Customer Name");
+		return false;
+	}
 	var input = document.getElementById('creditCustomer5'),
 	list = document.getElementById('cust_drop5'),
 	i,customer;
@@ -3292,7 +3457,16 @@ function creditDebitReportRangeWise()
 	var params= {};
 	var startDateCD = $("#startDateCD").val();
 	var endDateCD = $("#endDateCD").val();
-
+	if(startDateCD == null || startDateCD == "" || startDateCD == " " || startDateCD == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+	if(endDateCD == null || endDateCD == "" || endDateCD == " " || endDateCD == undefined)
+	{
+		myAlertCB("Please Select End Date");
+		return false;
+	}
 	params["startDateCD"]= startDateCD;
 	params["endDateCD"]= endDateCD;
 	params["methodName"] = "creditDebitReportRangeWiseController";
@@ -3612,7 +3786,14 @@ function regBankTransaction()
 }
 
 function bankNameWiseReport11()
+
 {
+	var bankName1 = $("#bankName1").val();
+	if(bankName1 == null || bankName1 == "" || bankName1 == " " || bankName1 == undefined)
+	{
+		myAlertCB("Please Select Bank Name");
+		return false;
+	}
 	var input = document.getElementById('bankName1'),
 	list = document.getElementById('bank_drop7'),
 	i,bankId;
@@ -3705,6 +3886,17 @@ function getBankTransactionBetweenTwoDates()
 	var bankStartDate1 = $('#bankStartDate1').val()
 	var bankEndDate1 = $('#bankEndDate1').val()
 
+	if(bankStartDate1 == null || bankStartDate1 == "" || bankStartDate1 == " " || bankStartDate1 == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+	if(bankEndDate1 == null || bankEndDate1 == "" || bankEndDate1 == " " || bankEndDate1 == undefined)
+	{
+		myAlertCB("Please Select End Date");
+		return false;
+	}
+	
 	var params= {};
 
 	params["bankStartDate1"] = bankStartDate1;

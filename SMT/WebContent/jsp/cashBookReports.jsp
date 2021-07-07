@@ -29,6 +29,8 @@
 	type="text/javascript"></script>
 <script src="/SMT/staticContent/shree/buttons.html5.min.js"
 	type="text/javascript"></script>
+	<script type="text/javascript" src="/SMT/staticContent/y_js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/SMT/staticContent/y_js/bootbox.min.js"></script>
 <script src="/SMT/staticContent/shree/buttons.print.min.js"
 	type="text/javascript"></script>
 <link href="/SMT/staticContent/y_css/jquery.dataTables.min.css"

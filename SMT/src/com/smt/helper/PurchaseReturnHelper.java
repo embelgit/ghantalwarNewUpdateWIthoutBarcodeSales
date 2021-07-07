@@ -64,13 +64,13 @@ public class PurchaseReturnHelper
 				if(checkReturnQty > 0)
 				{
 					Long shopId = Long.parseLong(request.getParameter("shopId" + i));
-					System.out.println("shopId ====> "+shopId);
+					
 					gd.setFkShopId(shopId);
 					
 					gd.setTransactionId(transactionId);
 					
 					String itemName = request.getParameter("itemName" + i);
-					System.out.println("hi in purchase return helper "+itemName);
+		
 					gd.setItemName(itemName);
 		
 					String catName = request.getParameter("catName" + i);
@@ -87,11 +87,11 @@ public class PurchaseReturnHelper
 					gd.setOringnalQuantity(Long.parseLong(editQuantity));
 					
 					String rollsize = request.getParameter("rollsize"+ i);
-					System.out.println("GRID rollsize ==> "+rollsize);
+					
 					gd.setRollSize(Double.parseDouble(rollsize));
 					
 					String discount = request.getParameter("discount"+ i);
-					System.out.println("GRID DISCOUNT ==> "+discount);
+					
 					gd.setDiscount(Double.parseDouble(discount));
 		
 					String buyPrice = request.getParameter("buyPrice" + i);
@@ -269,7 +269,7 @@ public class PurchaseReturnHelper
 					String billNo = request.getParameter("billNo"+i);
 					gd.setBillNoStr(billNo);
 		
-					System.out.println("billNo =****=****=****=> "+billNo);
+					
 					
 					
 					supplierId = request.getParameter("supplierName2"+i);
@@ -279,15 +279,15 @@ public class PurchaseReturnHelper
 					gd.setGrossTotal(Double.parseDouble(totalAmount));
 		
 					String totalAmount1 = request.getParameter("totalAmount1");
-					System.out.println("GRID TOTAL AMOUNT ========>  "+totalAmount1);
+					
 					gd.setReturnGrossTotal(Double.parseDouble(totalAmount1));
 									
 					String supplierIdLong = request.getParameter("supplierId"+ i);
-					System.out.println("GRID supplierId ==> "+supplierIdLong);
+					
 					gd.setFkSupplierId(Long.parseLong(supplierIdLong));
 					
 					String prReason = request.getParameter("prReason");
-					System.out.println("GRID supplierId ==> "+prReason);
+					
 					if(prReason.isEmpty() || prReason == null)
 					{
 						gd.setPurchaseReturnReason("Purchase Return");
@@ -314,7 +314,7 @@ public class PurchaseReturnHelper
 					dao.regGoodReceive(gd);
 		
 					Long PkGoodRecId = Long.parseLong(request.getParameter("PkGoodRecId" + i));
-					System.out.println("item_id" + PkGoodRecId);
+				
 									
 					String newGrossTotal = request.getParameter("newGrossTotal");
 					System.out.println("newGrossTotal "+newGrossTotal);
@@ -336,8 +336,10 @@ public class PurchaseReturnHelper
 						Long fkShopId = st.getFkShopId();
 		
 						/* If ItemName Is Already Exists In Stock Table */
-						if (fkProductId == productId && fkCatId == catId && fkShopId == shopId)
+						if ((fkProductId .equals(productId))  && (fkCatId .equals(catId)) &&( fkShopId .equals(shopId) ))
 						{
+							
+						
 							Double qunty = st.getQuantity();
 		
 							Double updatequnty = (Double)(qunty - Double.parseDouble(editQuantity));
@@ -361,7 +363,7 @@ public class PurchaseReturnHelper
 						good.getTotalAndPendingBillPayment(supplierIdLong, todayDate, totalAmount1, barcodeNo, shopId);
 						//good.getCreditDebitAmt(supplierIdLong);
 					}
-					System.out.println("");
+					
 					HttpSession sessionHS = request.getSession(true);
 					sessionHS.setAttribute("transactionId", transactionId);
 				}

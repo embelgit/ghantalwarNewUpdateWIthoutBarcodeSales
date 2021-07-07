@@ -1,7 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html>
-<html>
+
+<%
+	boolean isHome = false;
+%>
 <%@include file="y_commons/header1.jsp"%>
 <head>
 
@@ -390,7 +390,7 @@ position: fixed;
 			<div class="row">
 			
 			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport">	
-	                    <input type="date" id='pDate' name="pDate" class="" id="jander" placeholder="Purchase Date" value="<%=todayDate%>" />
+	                    <input type="date" id='pDate' name="pDate" class="" id="jander" placeholder="Purchase Date" value="<%=todayDate1%>" />
 						<label>Purchase Date<sup style="color: red">*</sup></label>
 			</div>
 			

@@ -43,7 +43,7 @@ public class StockDao
 			Query query = session.createQuery("from Stock");
 			list = query.list();
 			
-			System.out.println("hi ankit inside stock dao"+list.toString());
+		
 		}
 		catch (Exception e)
 		{			

@@ -47,7 +47,7 @@
 %>
 <%
 	String path = "";
-/* boolean isHome = false;  */
+/*  boolean isHome = false;  */ 
 	if (isHome)
 		path = "jsp\\";
 %>

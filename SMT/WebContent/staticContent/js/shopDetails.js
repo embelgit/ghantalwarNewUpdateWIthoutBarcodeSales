@@ -60,13 +60,13 @@ function addShop()
 		{}
 		else
 		{
-			alert("Please Enter valid Contact Number");
+			myAlert("Please Enter valid Contact Number");
 			return false;
 		}
 	}
 	else
 	{
-		alert("Please Enter Valid 10 Digit Cotact Number");
+		myAlert("Please Enter Valid 10 Digit Cotact Number");
 		return false;
 	}
 	
@@ -126,6 +126,12 @@ function billcancel() {
 	//var billNo=$('#billno').val;
 	
 	//var billNoo= $('#BillNOOO').val;
+	if(billno == "" || billno ==null || billno==undefined || billno == " " )
+    {
+		myAlert("Please Enter Bill No");
+		return false;
+    }
+	
 	
 	if(billno == "" || billno ==null || billno==undefined)
     {

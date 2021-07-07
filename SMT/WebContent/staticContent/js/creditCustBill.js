@@ -1137,7 +1137,7 @@ function getitemData1()
 				colModel:[ 
 				          {
 				        	  name:'pkTempid',
-				        	 // hidden:true,
+				        	  hidden:true,
 				        	  width:80,
 				          },				          
 				          {
@@ -1227,7 +1227,7 @@ function getitemData1()
 				          },				          
 				          {
 				        	  name:'goodReceiveQuantity',
-				        	 // hidden:true,
+				        	  hidden:true,
 				          },				          
 				          {	
 				        	  name:'salePrice',
@@ -1354,7 +1354,7 @@ function getitemData1()
 				        	  name:"Billno",
 				        	  width:170,
 				        	  sortable: false,
-				        	 // hidden:true,
+				        	  hidden:true,
 				          },
 				          ],
 				          sortorder : 'desc',
@@ -1377,7 +1377,7 @@ function getitemData1()
 			            	    var deletedPkTempId = rowData['pkTempid'];
 								//alert(rowData['pkTempId']);
 								updateItemId=rowData['item_id'];
-				            	alert("temp id-----"+deletedPkTempId+"item id-----"+updateItemId);
+				            	//alert("temp id-----"+deletedPkTempId+"item id-----"+updateItemId);
 			               },		
 				          
 				          
@@ -1936,7 +1936,7 @@ function getitemData1()
 
 function updateNewDataDelete(itemId)
 {
-alert("inside updateNewDataDelete");
+//alert("inside updateNewDataDelete");
 
 var tota = 0;
 var params= {};

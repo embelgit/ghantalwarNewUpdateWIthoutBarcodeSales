@@ -1,3 +1,14 @@
+function myAlert(msg)
+{
+	var dialog = bootbox.dialog({
+    message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'</p>',
+    closeButton: false
+   });
+
+   setTimeout(function() {
+	dialog.modal('hide');
+   }, 1500);
+}
 function currentStock()
 {
 	var params= {};
@@ -357,6 +368,14 @@ function barcodewisestock(){
 
 function billwisestock()
 {
+	var catId = $('#catId').val();
+	
+	if(catId == null || catId == "" || catId == " " || catId == undefined)
+	{
+		myAlert("Please select Bill Number");
+		return false;
+	}
+	
 	var input = document.getElementById('catId'),
 	list = document.getElementById('catId_drop'),
 	i,Billno;
@@ -488,6 +507,19 @@ function getCategoryWiseItemName(){
 function getCategoryWiseItemnameStock()
 {
 	var params = {};
+	
+var catId = $('#catId').val();
+var itemId =$("#itemId").val();
+	if(catId == null || catId == "" || catId == " " || catId == undefined)
+	{
+		myAlert("Please select Category");
+		return false;
+	}
+	if(itemId == null || itemId == "" || itemId == " " || itemId == undefined)
+	{
+		myAlert("Please select Item Name");
+		return false;
+	}
 	var input = document.getElementById('catId'),
 	list = document.getElementById('catId_drop'),
 	i,catId,categoryName;
@@ -498,7 +530,7 @@ function getCategoryWiseItemnameStock()
 		}
 	}
 	
-	var itemId =$("#itemId").val();
+	
 	var catId =catId;
 	params["catId"] = catId;
 	params["categoryName"] = categoryName;

@@ -877,7 +877,17 @@ function gstsaleReportBetweenTwoDates()
 	var params= {};
 	var fisDate = $("#firstDate").val();
 	var endDate = $("#secondDate").val();
-
+	if(fisDate == "" || fisDate == undefined || fisDate == " " || fisDate == null)
+	{
+		myAlert("Please Select Start Date");
+		return false;
+	}
+	
+	if(endDate == "" || endDate == undefined || endDate == " " || endDate == null)
+	{
+		myAlert("Please Select End Date");
+		return false;
+	}
 	params["fisDate"]= fisDate;
 	params["endDate"]= endDate;
 	params["methodName"] = "gstSaleReportBetweenTwoDates";
@@ -1141,6 +1151,20 @@ function purchaseReportBetweenTwoDatesNonGst()
 	var params= {};
 	var fisDate = $("#fisDateNoGst").val();
 	var endDate = $("#endDateNoGst").val();
+	
+	if(fisDate == "" || fisDate == undefined || fisDate == " " || fisDate == null)
+	{
+		myAlert("Please Select Start Date");
+		return false;
+	}
+	
+	if(endDate == "" || endDate == undefined || endDate == " " || endDate == null)
+	{
+		myAlert("Please Select End Date");
+		return false;
+	}
+	
+	
 	params["fisDate"]= fisDate;
 	params["endDate"]= endDate;
 
@@ -1794,6 +1818,18 @@ function purchaseB2BGSTReport()
 	var fisDateB2bP = $("#fisDateB2bP").val();
 	var endDateB2bP = $("#endDateB2bP").val();
 
+	if(fisDateB2bP == "" || fisDateB2bP == undefined || fisDateB2bP == " " || fisDateB2bP == null)
+	{
+		myAlert("Please Select Start Date");
+		return false;
+	}
+	
+	if(endDateB2bP == "" || endDateB2bP == undefined || endDateB2bP == " " || endDateB2bP == null)
+	{
+		myAlert("Please Select End Date");
+		return false;
+	}
+	
 	params["fisDateB2bP"]= fisDateB2bP;
 	params["endDateB2bP"]= endDateB2bP;
 	params["methodName"] = "purchaseReportBetweenTwoDatesB2BPurchaseReport";

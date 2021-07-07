@@ -339,7 +339,7 @@
 									%>
 								
 							</datalist>
-							<label>Product</label>
+							<label>Product<sup style="color: red;">*</sup></label>
 						</div>
 					</div>
 					<div class="col-md-1"></div>

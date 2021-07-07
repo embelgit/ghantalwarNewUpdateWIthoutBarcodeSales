@@ -243,7 +243,7 @@ width: 110px;
 		<div class="col-md-1"></div>
 			<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4" id="dayreport" >
 			<select class="" id="type" name="type" name="Select Type">
-			
+			<option value="selectoption" >Select Supplier Type </option>
 			<option value="registered">Registered</option>
 			<option value="unregistered">Unregistered</option>
 			<option value="registeredcomposite">Registered Composite</option>

@@ -1604,11 +1604,11 @@ function regCreditCustomerBill123()
 
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 	{
-		successAlert(data);
+		successAlert("Tempoaray Bill Added Successfully");
 		//window.open("ghantalwarMensWearCreditCustBillingPDF.jsp");
 		//window.open("creditCustBillingPDF.jsp");
 		//window.open("CreditCustomerBillPDF_SM.jsp");
-		location.reload(true);
+		//location.reload(true);
 	}
 	).error(function(jqXHR, textStatus, errorThrown)
 	{

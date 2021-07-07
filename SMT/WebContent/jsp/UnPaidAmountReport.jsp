@@ -6,8 +6,11 @@
 <% boolean isHome=false;%>
 <%@include file="y_commons/header1.jsp"%>
 <script src="/SMT/staticContent/js/jquery-1.12.3.min.js"></script>
+<script type="text/javascript" src="/SMT/staticContent/y_js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/SMT/staticContent/y_js/bootbox.min.js"></script>
 <script src="/SMT/staticContent/shree/jquery.dataTables.min.js"
 	type="text/javascript"></script>
+	
 <script src="/SMT/staticContent/shree/dataTables.buttons.min.js"
 	type="text/javascript"></script>
 <script src="/SMT/staticContent/shree/buttons.flash.min.js"

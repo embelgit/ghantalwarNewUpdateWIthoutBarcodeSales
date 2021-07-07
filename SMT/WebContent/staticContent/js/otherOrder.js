@@ -3829,7 +3829,7 @@ function resOtherBill123()
 		}
 	}
 	var TempBillNo = TempBillNo;
-	alert(TempBillNo);
+	//alert(TempBillNo);
 	var count = jQuery("#list5").jqGrid('getGridParam', 'records');
 	if(count == "0" || count == null || count == undefined || count == "")
 	{

@@ -798,6 +798,16 @@ function rangeWisePurchaseGraph()
 	var userName = $("#userName").val();
 	var startDateRangeGraph = $("#startDateRangeGraph").val();
 	var endDateRangeGraph = $("#endDateRangeGraph").val();
+	if(startDateRangeGraph == null || startDateRangeGraph == "" || startDateRangeGraph == " " || startDateRangeGraph == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+if(endDateRangeGraph == null || endDateRangeGraph == "" || endDateRangeGraph == " " || endDateRangeGraph == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
 	
 	var params = {};
 	
@@ -879,6 +889,25 @@ function supplierWiseSaleGraph()
 	var startDateSuppGraph = $("#startDateSuppGraph").val();
 	var endDateSuppGraph = $("#endDateSuppGraph").val();
 	
+	if(startDateSuppGraph == null || startDateSuppGraph == "" || startDateSuppGraph == " " || startDateSuppGraph == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+if(endDateSuppGraph == null || endDateSuppGraph == "" || endDateSuppGraph == " " || endDateSuppGraph == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
+var supplier = $("#supplierSpGraph").val();
+
+
+if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+{
+	myAlertCB("Please Select Supplier Name");
+	return false;
+}
+
 	var userTypeRole = $("#userType").val();
 	var userName = $("#userName").val();
 
@@ -970,6 +999,26 @@ function supplierWisePurchaseGraph()
 	var userTypeRole = $("#userType").val();
 	var userName = $("#userName").val();
 
+	
+	if(startDateSuppGraph == null || startDateSuppGraph == "" || startDateSuppGraph == " " || startDateSuppGraph == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+if(endDateSuppGraph == null || endDateSuppGraph == "" || endDateSuppGraph == " " || endDateSuppGraph == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
+var supplier = $("#sup_dropSpGraph").val();
+
+
+if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+{
+	myAlertCB("Please Select Sub Category");
+	return false;
+}
+	
 	var input = document.getElementById('supplierSpGraph'), list = document.getElementById('sup_dropSpGraph'), i, supplierId;
 	for (i = 0; i < list.options.length; ++i) {
 	if (list.options[i].value === input.value) {
@@ -1061,6 +1110,24 @@ function subCatRangeWisePurchaseGraph()
 	var userTypeRole = $("#userType").val();
 	var userName = $("#userName").val();
 
+	if(startDateSubCatGraph == null || startDateSubCatGraph == "" || startDateSubCatGraph == " " || startDateSubCatGraph == undefined)
+	{
+		myAlertCB("Please Select Start Date");
+		return false;
+	}
+if(endDateSubCatGraph == null || endDateSubCatGraph == "" || endDateSubCatGraph == " " || endDateSubCatGraph == undefined)
+	{
+		myAlertCB("Please Select End Date ");
+		return false;
+	}
+var supplier = $("#subCatSpGraph").val();
+
+
+if(supplier == null || supplier == "" || supplier == " " || supplier == undefined)
+{
+	myAlertCB("Please Select Sub Category");
+	return false;
+}
 	var input = document.getElementById('subCatSpGraph'), 
 	list = document.getElementById('subCatdropSpGraph'), i, subcatId;
 	for (i = 0; i < list.options.length; ++i) {

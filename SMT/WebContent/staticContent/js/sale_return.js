@@ -309,7 +309,7 @@ function saleReturn2()
 	$.post('/SMT/jsp/utility/controller.jsp', params, function(data) 
 	{
 		successAlert(data);
-		location.reload();
+		//location.reload();
 		//window.open("PDFSaleReturn.jsp");
 		window.open("ghantalwarMensWearPDFSaleReturn.jsp");
 	}).error(function(jqXHR, textStatus, errorThrown) {

@@ -1,3 +1,7 @@
+<%@page import="com.smt.hibernate.EmpAttendenceBean"%>
+<%@page import="com.smt.helper.EmployeeDetailsHelper"%>
+<%@page import="java.util.Date"%>
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="java.util.List"%>
 <%@page import="com.smt.bean.GetEmployeeDetails"%>
 <%@page import="com.smt.dao.EmployeeDetailsDao"%>
@@ -32,6 +36,13 @@
 	
 	<script type="text/javascript"	src="/SMT/staticContent/js/employeeDetails.js"></script>
 <html>
+<%
+String pattern = "yyyy-MM-dd";
+	SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
+	String todayDate = simpleDateFormat.format(new Date());
+	System.out.println(todayDate);
+%>
+
 <head>
 <title>Credit Customer List</title>
 <script type="text/javascript">
@@ -45,29 +56,67 @@
 		window.location = "AttendanceList.jsp";
 	}
 </script>
+
 </head>
+
+
 <script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						var table = $("#list").dataTable();
-						var tableTools = new $.fn.dataTable.TableTools(
-								table,
-								{
-									'sSwfPath' : '//cdn.datatables.net/tabletools/2.2.4/swf/copy_csv_xls_pdf.swf',
-									'aButtons' : [ 'copy', 'print', 'csv', {
-										'sExtends' : 'xls',
-										'sFileName' : 'Data.xls',
-										'sButtonText' : 'Save to Excel'
-									} ],
-									dom : 'Bfrtip',
-									buttons : [ 'copy', 'csv', 'excel', 'pdf',
-											'print' ],
-								});
-						$(tableTools.fnContainer()).insertBefore(
-								'#list_wrapper');
-					});
+ 
+$(document).ready(function(){
+ 	$("#list").on('click','.pbtn',function(){
+        
+		var attendance = $(this).val();
+		
+        var currentRow=$(this).closest("tr");
+        var id=currentRow.find("td:eq(0)").text();
+   }); 
+ 
+	<%
+	   EmployeeDetailsHelper catHelper = new EmployeeDetailsHelper();
+		  List catList = catHelper.getAllMainTableNo(request,response);
+  %>
+  <%
+	    for(int i=0;i<catList.size();i++){
+		EmpAttendenceBean category = (EmpAttendenceBean)catList.get(i);
+  %>
+
+      var type ="<%=category.getEmpAttendence()%>";
+    var id1="<%=category.getEmpId() %>";
+
+   
+ <%
+	  }
+ %>
+});  
+ 
+$(document)
+		.ready(
+				function() {
+					var table = $("#list").dataTable();
+					var tableTools = new $.fn.dataTable.TableTools(
+							table,
+							{
+								'sSwfPath' : '//cdn.datatables.net/tabletools/2.2.4/swf/copy_csv_xls_pdf.swf',
+								'aButtons' : [ 'copy', 'print', 'csv', {
+									'sExtends' : 'xls',
+									'sFileName' : 'Data.xls',
+									'sButtonText' : 'Save to Excel'
+								} ],
+								dom : 'Bfrtip',
+								buttons : [ 'copy', 'csv', 'excel', 'pdf',
+										'print' ],
+							});
+					$(tableTools.fnContainer()).insertBefore(
+							'#list_wrapper');
+				});
+
+
+
+
 </script>
+
+
+
 
 <style>
 #logoutButton {
@@ -260,6 +309,8 @@
 		opacity: 0.6;
 	}
 }
+
+
 </style>
 <body id="dt_example" style="min-height: 300px;" class="vColor">
 	<div class="row">
@@ -297,12 +348,16 @@
 		<table id="list" class="display" border="1">
 			<thead>
 				<tr>
+					<th style="display: none;">Id</th>
 					<th>First Name</th>
-					<th>Middle Name</th>
+					<th style="display: none;">Middle Name</th>
 					<th>Last Name</th>
+					<th>Date</th>
 					<th>Present</th>
 					<th>Absent</th>
 					<th>HalfDay</th>
+					<th>HoliDay</th>
+					<th>PaidLeave</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -311,12 +366,16 @@
 						GetEmployeeDetails sr = (GetEmployeeDetails) list12.get(i);
 				%>
 				<tr>
-					<td class="align" id="name"><%=sr.getFirstName()%></td>
-					<td class="align"><%=sr.getMiddleName()%></td>
+					<td class="align" style="display: none;"><%=sr.getEmpPkId()%></td>
+					<td class="align"><%=sr.getFirstName()%></td>
+					<td class="align" style="display: none;"><%=sr.getMiddleName()%></td>
 					<td class="align"><%=sr.getLastName()%></td>
-					<td class="align"><input type="button" value="Present" id="<%=sr.getEmpPkId()%>,<%=sr.getFirstName()%>,<%=sr.getMiddleName()%>,<%=sr.getLastName()%>,present" onclick="EmpAttendance(this)" style="color: blue;margin-left: 50px; font-size: 21px;" ></td>
-					<td class="align"><input type="button" value="Apsent"id="<%=sr.getEmpPkId()%>,<%=sr.getFirstName()%>,<%=sr.getMiddleName()%>,<%=sr.getLastName()%>,absent"onclick="EmpAttendance(this)" style="color: blue;margin-left: 50px; font-size: 21px;"></td>
-					<td class="align"><input type="button" value="HalfDay"id="<%=sr.getEmpPkId()%>,<%=sr.getFirstName()%>,<%=sr.getMiddleName()%>,<%=sr.getLastName()%>,halfday" onclick="EmpAttendance(this)"style="color: blue;margin-left: 50px; font-size: 21px;"></td>
+					<td class="align" ><input type="date" id="date" value="<%=todayDate%>" ></td>
+					<td class="align "><input type="button" class="pbtn" value="Present" name="p"<%-- id="<%=sr.getEmpPkId()%>,<%=sr.getFirstName()%>,<%=sr.getMiddleName()%>,<%=sr.getLastName()%>,present" onclick="EmpAttendance(this)" --%> style="color: blue;margin-left: 50px; font-size: 21px;" ></td>
+					<td class="align"><input type="button" class="pbtn" value="Absent"name="p"<%-- id="<%=sr.getEmpPkId()%>,<%=sr.getFirstName()%>,<%=sr.getMiddleName()%>,<%=sr.getLastName()%>,absent" onclick="EmpAttendance(this)"  --%>style="color: blue;margin-left: 50px; font-size: 21px;"></td>
+					<td class="align"><input type="button" class="pbtn" value="HalfDay" name="p"<%-- id="<%=sr.getEmpPkId()%>,<%=sr.getFirstName()%>,<%=sr.getMiddleName()%>,<%=sr.getLastName()%>,halfday" onclick="EmpAttendance(this)" --%>style="color: blue;margin-left: 50px; font-size: 21px;"></td>
+					<td class="align"><input type="button" class="pbtn" value="HoliDay" name="p"<%-- id="<%=sr.getEmpPkId()%>,<%=sr.getFirstName()%>,<%=sr.getMiddleName()%>,<%=sr.getLastName()%>,absent" onclick="EmpAttendance(this)"  --%>style="color: blue;margin-left: 50px; font-size: 21px;"></td>
+					<td class="align"><input type="button" class="pbtn" value="PaidLeave" name="p"<%-- id="<%=sr.getEmpPkId()%>,<%=sr.getFirstName()%>,<%=sr.getMiddleName()%>,<%=sr.getLastName()%>,absent" onclick="EmpAttendance(this)"  --%>style="color: blue;margin-left: 50px; font-size: 21px;"></td>
 				</tr>
 				<%
 					}
@@ -332,15 +391,15 @@
 							class="btn btn-large btn-success btn-md button_hw button_margin_right"
 							onclick="update()" value="Update">
 					</div>
-					<div class="col-md-2"  style="display:inline-block;">
+					<!-- <div class="col-md-2"  style="display:inline-block;">
 							<input type="button" value="Back"
 							style="border-radius: 10px; padding: 10px; margin-bottom: 4%;margin-left: 200%;"
 							id="listBtn" class="btn btn-large btn-primary btn-md button_hw button_margin_right" onclick="Back()" />
-					</div>
+					</div> -->
 					
 <div class="col-md-2"  style="display:inline-block;">
 							<input type="button" value="List"
-							style="border-radius: 10px; padding: 10px; margin-bottom: 4%;margin-left: 151%;"
+							style="border-radius: 10px; padding: 10px; margin-bottom: 4%;margin-left: 200%;"
 							id="listBtn" class="btn btn-large btn-primary btn-md button_hw button_margin_right" onclick="List()" />
 					</div>
 

@@ -1,3 +1,16 @@
+function myAlert(msg)
+{
+	var dialog = bootbox.dialog({
+		//title: "Embel Technologies Says :",
+	   /* message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'<img src="/Shop/staticContent/images/s1.jpg" height="50" width="50"/></p>',*/
+	    message: '<p class="text-center">'+msg.fontcolor("red").fontsize(5)+'</p>',
+	    closeButton: false
+	   });
+	   setTimeout(function()
+	  {
+		dialog.modal('hide');
+	   }, 1500);
+}
 
 function successAlert(msg)
 {
@@ -15,12 +28,12 @@ function printbarcode()
 {
 	if(document.barcodeCopy.barcodeId.value == "")
 	{
-		alert("Enter Barcode No.");
+		myAlert("Enter Barcode No.");
 		return false;
 	}
 	if(document.barcodeCopy.quantity.value == "")
 	{
-		alert("Enter Quantity.");
+		myAlert("Enter Quantity.");
 		return false;
 	}
 	printBarcode();
@@ -62,7 +75,6 @@ function printBarcode()
 
 function billcancel() {
 
-	alert("ok");
 	var billNo=$('#billno').val;
 	
 	var billNoo= $('#BillNOOO').val;

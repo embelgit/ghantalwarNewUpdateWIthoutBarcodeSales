@@ -280,6 +280,11 @@ function getEmployeeDetails(){
 function editEmployee()
 {
 	//myAlert("ok");
+	if(document.empd1.employee.value == "")
+	{
+		myAlert("Select Employee  Name.");
+		return false;
+	}
 	if(document.empd1.firstName.value == "")
 	{
 		myAlert("Enter Employee First Name.");
@@ -436,15 +441,60 @@ function updateEmployeeDetails(){
 	});
 }	
 
+$(document).ready(function(){
+	
+    // code to read selected table row cell data (values).
+    $("#list").on('click','.pbtn',function(){
+    	var params={};
+    	// get the current row
+    	var attendance = $(this).val();
+    //    alert(attendance);
+         var currentRow=$(this).closest("tr"); 
+         var id=currentRow.find("td:eq(0)").text();
+         var first=currentRow.find("td:eq(1)").text(); // get current row 1st TD value
+         var second=currentRow.find("td:eq(2)").text();
+         var third=currentRow.find("td:eq(3)").text(); // get current row 2nd TD
+         var date=currentRow.find("td:eq(4) input[type='date']").val(); // get current row 3rd TD
+       
+      //   var data=id+"\n"+first+"\n"+second;+"\n"+third+"\n"+date;
+         
+         params["attendences"] = attendance;
+     	params["attendencesid"] = id;
+     	params["first"] = first;
+     	params["second"] = second;
+     	params["third"] = third;
+     	params["date"] = date;
+     	
+     	params["methodName"] = "EmpAttend";
 
+    	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
+    	{
+    		
+    		successAlert("Employee Attendance Registered Successfully");
+    		//alert(data);
+    		//successAlert(data);
+    		//location.reload();
+    	}
+    	).error(function(jqXHR, textStatus, errorThrown){
+
+    		if(textStatus==="timeout") {
+    			$(loaderObj).hide();
+    			$(loaderObj).find('#errorDiv').show();
+    		}
+    	});
+         
+         
+        // alert(data);
+    });
+});
 function EmpAttendance(data) {
-	
 	var params={};
-	var  abc = data.id;
-	var name= data.name
+	  
 	
-var aa=$("#name").text();
-//	alert(aa);
+	
+	
+	var  abc = data.id;
+	
 	var fields = abc.split(',');
 
 	var id = fields[0];
@@ -452,6 +502,8 @@ var aa=$("#name").text();
 	var second = fields[2];
 	var third = fields[3];
 	var type = fields[4];
+	
+	//params["date"]=col3;
 	
 	params["attendences"] = type;
 	params["attendencesid"] = id;

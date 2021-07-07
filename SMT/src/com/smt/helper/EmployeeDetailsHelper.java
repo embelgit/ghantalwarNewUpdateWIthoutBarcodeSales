@@ -1,4 +1,6 @@
 package com.smt.helper;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -304,58 +306,19 @@ public class EmployeeDetailsHelper {
 			String second = request.getParameter("second");
 			
 			String thrid = request.getParameter("third");
-			Date date=new Date();
+			
+			String Date = request.getParameter("date");
+			Date date = new SimpleDateFormat("yyyy-MM-dd").parse(Date);
+			System.out.println("date is"+date);
 		
 			Map<Long, EmployeeDetailsBean> map = new HashMap<Long, EmployeeDetailsBean>();
 
 			EmpAttendenceBean eb= new EmpAttendenceBean();		
 			
-		//	Map<Long, EmployeeDetailsBean> map = new HashMap<Long, EmployeeDetailsBean>();
-		/*
-		 * EmployeeDetailsDao dao = new EmployeeDetailsDao(); List stkList2 =
-		 * dao.getEmpAttend(shopId,Empid);
-		 * 
-		 * EmpAttendenceBean eb= new EmpAttendenceBean(); for(int
-		 * i=0;i<stkList2.size();i++) { EmployeeDetailsBean bean=(EmployeeDetailsBean)
-		 * stkList2.get(i); String firstName=bean.getFirstName(); String
-		 * MiddleName=bean.getMiddleName(); String lastName=bean.getLastName();
-		 * eb.setEmpId(Long.parseLong(Empid)); eb.setFirstName(firstName);
-		 * eb.setMiddleName(MiddleName); eb.setLastName(lastName);
-		 * eb.setEmpAttendence(EmpAttend); eb.setFkShopId(Long.parseLong(shopId));
-		 * eb.setDate(date);
-		 * System.out.println("Empolyeeid--"+Empid+"--first--"+firstName+"--middle--"+
-		 * MiddleName+"--last--"+lastName+"--date--"+date+"--attendencetype--"+EmpAttend
-		 * +"--fkshpid--"+shopId); EmployeeDetailsDao edo = new EmployeeDetailsDao();
-		 * edo.EmpAttendence(eb); } return true;
-		 */
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			
-			String adate = null;
-			try {
-				
-				//Date date12 = new SimpleDateFormat("yyyy-MM-dd").parse(date);
-			    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-			     adate = formatter.format(date);  
-			    System.out.println("Date Format with MM/dd/yyyy : "+adate);  
-				
-				
-				
-				System.out.println("Date for other bill Sale report "+adate);
-			} catch (Exception e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 		
-			SimpleDateFormat formatter2=new SimpleDateFormat("yyyy-MM-dd");
-			
-			Date date21=formatter2.parse(adate); 
-			String strDate = formatter2.format(date21);
-			
-			System.out.println("========================"+date21);
-			
 		
 		EmployeeDetailsDao dao1 = new EmployeeDetailsDao();
-		List stkList21  = dao1.getEmpAttend1(shopId,Empid,adate);
+		List stkList21  = dao1.getEmpAttend1(shopId,Empid,Date);
 		
 		if(stkList21.size()==0) {
 			eb.setEmpId(Long.parseLong(Empid));	
@@ -386,8 +349,8 @@ public class EmployeeDetailsHelper {
 			DateFormat df = new SimpleDateFormat(pattern);
 			String todayAsString = df.format(date11);
 			System.out.println("database date"+todayAsString);
-			System.out.println("Sting date"+adate);
-		if(todayAsString.equals(adate) && fkempid.equals(Empid1) && fkshop.equals(shopid) )
+			System.out.println("Sting date"+Date);
+		if(todayAsString.equals(Date) && fkempid.equals(Empid1) && fkshop.equals(shopid) )
 		{
 			System.out.println("inside if of for loop");
 			HibernateUtility hbu = null;
@@ -401,7 +364,7 @@ public class EmployeeDetailsHelper {
 			
 
 			
-			Query query = session.createSQLQuery("UPDATE employee_attendence SET Attendence = '"+EmpAttend+"' WHERE date='"+adate+"' AND fkempid="+Empid+" and fkShopId="+shopId);
+			Query query = session.createSQLQuery("UPDATE employee_attendence SET Attendence = '"+EmpAttend+"' WHERE date='"+Date+"' AND fkempid="+Empid+" and fkShopId="+shopId);
 			query.executeUpdate();
 			transaction.commit();
 
@@ -523,5 +486,18 @@ public class EmployeeDetailsHelper {
 		
 			}
 	
+		
+		public List getAllMainTableNo(HttpServletRequest request, HttpServletResponse response)throws IOException
+		{
+			PrintWriter out = response.getWriter();
+			HttpSession session1 = request.getSession();
+			String shopId = (String) session1.getAttribute("shopId");
+			Long shopid=Long.parseLong(shopId);
+		
+			EmployeeDetailsDao dao1 = new EmployeeDetailsDao();
+			System.out.println("in temp helper -- ");
+			return dao1.getAllMainTableNo(shopid);
+		} 
+		
 		}
 

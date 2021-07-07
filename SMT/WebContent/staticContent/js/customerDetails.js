@@ -354,6 +354,7 @@ function editcustomerDetails()
 
 function updateCustomerDetails()
 {
+	document.cstd1.btn.disabled =true;
 	var input = document.getElementById('creditCustomer'),
 	list = document.getElementById('cust_drop'),
 	i,fkRootCustId;
@@ -410,6 +411,11 @@ function updateCustomerDetails()
 	$.post('/SMT/jsp/utility/controller.jsp',params,function(data)
 	{
 		successAlert(data);	
+		if(document.cstd1)
+		{
+			document.cstd1.reset();
+		}	
+		document.cstd1.btn.disabled =false;
 	}
 	).error(function(jqXHR, textStatus, errorThrown)
 	{

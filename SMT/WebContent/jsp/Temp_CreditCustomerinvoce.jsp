@@ -480,7 +480,7 @@ width: auto;
 			</div>
 			<div class="col-md-4 col-md-offset-6 align" style="width: auto;"
 				align="center" id="saleinvceh2">
-				<span class="form-name style_heading" style="font-size: 30px;">Credit
+				<span class="form-name style_heading" style="font-size: 30px;">Temporary Credit
 					Customer Invoice</span>
 			</div>
 			<div class="col-sm-offset-1 col-md-10">
@@ -841,7 +841,7 @@ width: auto;
 							<input type="button"
 								class="btn btn-large btn-success button_hw button_margin_right"
 								style="width: 124; padding-top: 8px;" id="btnSubmit"
-								value="Print Bill" onclick="regcreditcustomerbill();" />
+								value="Save Bill" onclick="regcreditcustomerbill();" />
 						</div>
 
 						<div class="col-lg-2" style="display: inline-block;">

@@ -1,4 +1,4 @@
-<%@page import="com.smt.bean.ProductNameBean"%>
+-<%@page import="com.smt.bean.ProductNameBean"%>
 <%@page import="com.smt.helper.ProductDetailHelper"%>
 <%@page import="com.smt.hibernate.Stock"%>
 <%@page import="com.smt.dao.StockDao"%>

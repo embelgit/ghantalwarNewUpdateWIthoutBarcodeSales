@@ -396,7 +396,8 @@ h3 {
 												}
 											%>
 										</datalist>
-										<label for="creditCustomer5">Customer Name</label> <input
+										<label for="creditCustomer5">Customer Name<sup style="color: red">*</sup></label>
+										 <input
 											type="text" disabled="disabled" hidden="true" />
 									</div>
 								</div>
@@ -406,7 +407,7 @@ h3 {
 								<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
 									id="dayreport">
 									<select id='billNo' name="billNo" onchange="getSaleItems()">
-									</select> <label for="bill_no"> Bill No: </label>
+									</select> <label for="bill_no"> Bill No:<sup style="color: red">*</sup> </label>
 									<h3 align="center"
 										style="color: red; font-weight: bold; margin-top: -8%;">"Use
 										Tab key for get Bill Information"</h3>
@@ -482,7 +483,7 @@ h3 {
 
 
 									<input type="text" id="billNoBW" onfocusout="getSaleItems2()">
-									<label for="billnowsr"> Bill No </label>
+									<label for="billnowsr"> Bill No <sup style="color: red">*</sup></label>
 									<h3 align="center"
 										style="color: red;font-weight: bold; margin-top: -8%;">"Use
 										Tab key for get Bill Information"</h3>
@@ -561,7 +562,7 @@ h3 {
 											%>
 										</datalist>
 										
-										<label for="customerName">Customer Name</label> <input
+										<label for="customerName">Customer Name <sup style="color: red">*</sup></label> <input
 											type="text" disabled="disabled" hidden="true" />
 									</div>
 								</div>
@@ -571,7 +572,7 @@ h3 {
 								<div class="col-md-6 col-sm-12 col-xs-12 col-xl-4 col-lg-4"
 									id="dayreport">
 									<select id='billNo2' name="billNo2" onchange="getSaleItems1()">
-									</select> <label for="bill_no"> Bill No</label>
+									</select> <label for="bill_no"> Bill No<sup style="color: red">*</sup></label>
 									<h3 align="center"
 										style="color: red;font-weight: bold; margin-top: -8%;">"Use
 										Tab key for get Bill Information"</h3>
